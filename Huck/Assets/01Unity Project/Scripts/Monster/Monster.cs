@@ -7,8 +7,8 @@ public class Monster : MonoBehaviour
     //! 몬스터 타입
     public enum MonsterType
     {
-        MELEE = 0,
-        RANGER,
+        NOMAL = 0,
+        ELITE,
         NAMEED,
         BOSS
     } // MonsterType
