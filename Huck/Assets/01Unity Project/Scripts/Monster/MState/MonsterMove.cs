@@ -11,9 +11,10 @@ public class MonsterMove : IMonsterState
     {
         this.mController = _mController;
         mController.enumState = MonsterController.MonsterState.MOVE;
-        Debug.Log($"{mController.monster.monsterName}이 Move상태 시작");
+        Debug.Log($"무브상태 시작 : {mController.monster.monsterName}");
         exitState = false;
-        mController.CoroutineDeligate(RandomMovePos());
+        mController.CoroutineDeligate(Move());
+        //mController.CoroutineDeligate(RandomMovePos());
     }
     public void StateFixedUpdate()
     {
@@ -26,12 +27,24 @@ public class MonsterMove : IMonsterState
     }
     public void StateExit()
     {
+        mController.monsterAni.SetBool("isWalk", false);
         exitState = true;
-        /*Do Nothing*/
     }
 
-    private void Move()
+    private IEnumerator Move()
     {
+        mController.monsterAni.SetBool("isWalk", true);
+        while (exitState == false)
+        {
+            if (exitState == true)
+            {
+                yield break;
+            }
+            dir = (mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
+            mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
+            mController.transform.position += dir * mController.monster.moveSpeed * Time.deltaTime;
+            yield return null;
+        }
     }
 
     private IEnumerator RandomMovePos()
@@ -51,7 +64,7 @@ public class MonsterMove : IMonsterState
 
             dir = (movePos - mController.transform.position).normalized;
             Debug.Log($"좌표값: {movePos}, 방향: {dir}");
-            // dir 뱡향으로 부드럽게 바라보게 함
+            // dir 뱡향으로 바라보게 함
             mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
             mController.transform.position += dir * mController.monster.moveSpeed * Time.deltaTime;
 

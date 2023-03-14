@@ -18,6 +18,6 @@ MonoBehaviour:
   moveSpeed: 5
   minDamage: 4
   maxDamage: 6
-  searchRange: 10
-  attackRange: 8
+  searchRange: 15
+  attackRange: 10
   meleeAttackRange: 3

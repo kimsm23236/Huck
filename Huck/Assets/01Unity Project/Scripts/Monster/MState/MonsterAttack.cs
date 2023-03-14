@@ -9,6 +9,8 @@ public class MonsterAttack : IMonsterState
     {
         this.mController = _mController;
         mController.enumState = MonsterController.MonsterState.ATTACK;
+        Debug.Log($"공격상태 시작 : {mController.monster.monsterName}");
+        SelectAttack();
     }
     public void StateFixedUpdate()
     {
@@ -20,6 +22,30 @@ public class MonsterAttack : IMonsterState
     }
     public void StateExit()
     {
-        /*Do Nothing*/
+        mController.monsterAni.SetBool("isAttackA", false);
+        mController.monsterAni.SetBool("isAttackB", false);
+        mController.monsterAni.SetBool("isAttackC_End", false);
+        mController.isAttack = false;
+    }
+
+    private void SelectAttack()
+    {
+        if (mController.distance >= mController.monster.meleeAttackRange)
+        {
+            mController.monsterAni.SetBool("isAttackC_Start", true);
+        }
+        else
+        {
+            int number = Random.Range(0, 10);
+            if (number <= 6)
+            {
+                mController.monsterAni.SetBool("isAttackA", true);
+            }
+            else
+            {
+                mController.monsterAni.SetBool("isAttackB", true);
+            }
+        }
+        mController.isAttack = true;
     }
 }

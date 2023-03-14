@@ -26,7 +26,7 @@ public class TestPlayer : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
         Vector3 move = new Vector3(x, 0, z).normalized;
-        playerRb.velocity = move * 5f;
+        playerRb.velocity = move * 10f;
         transform.LookAt(transform.position + move);
     }
 }

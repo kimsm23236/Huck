@@ -25,10 +25,10 @@ public class MonsterController : MonoBehaviour
     public Animator monsterAni = default;
     public AudioSource monsterAudio = default;
     public TargetSearchRay targetSearch = default;
-    //public NavMeshAgent mAgent;
-
+    public bool isAttack = false;
     //Test
     public Transform targetPos;
+    public float distance; // 타겟과의 거리 변수
     //Test
 
     // Start is called before the first frame update
@@ -39,7 +39,6 @@ public class MonsterController : MonoBehaviour
         monsterAni = gameObject.GetComponent<Animator>();
         monsterAudio = gameObject.GetComponent<AudioSource>();
         targetSearch = gameObject.GetComponent<TargetSearchRay>();
-        //mAgent = gameObject.GetComponent<NavMeshAgent>();
 
         // { 각 상태를 Dictionary에 저장
         IMonsterState idle = new MonsterIdle();
@@ -83,14 +82,27 @@ public class MonsterController : MonoBehaviour
 
     private void MonsterSetState()
     {
-        float distance = Vector3.Distance(this.transform.position, targetSearch.hit.gameObject.transform.position);
-        if (distance > monster.searchRange)
+        float _distance = Vector3.Distance(this.transform.position, targetPos.position);
+        // 타겟이 몬스터의 탐색범위 밖에 있으면 추적
+        if (_distance > monster.searchRange)
         {
             MStateMachine.SetState(dicState[MonsterState.SEARCH]);
+            return;
         }
-        else
+
+        // 타겟이 몬스터의 탐색범위 안에 있을 때
+        distance = Vector3.Distance(this.transform.position, targetSearch.hit.transform.position);
+        // 타겟과의 거리가 공격거리보다 크면 이동상태 시작
+        if (distance > monster.attackRange || (isAttack == true && monsterAni.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f))
         {
             MStateMachine.SetState(dicState[MonsterState.MOVE]);
         }
+
+        if (distance <= monster.attackRange && isAttack == false)
+        {
+            MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+        }
+
+
     }
 }

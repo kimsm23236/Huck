@@ -29,7 +29,7 @@ public class TargetSearchRay : MonoBehaviour
             foreach (var _hit in hits)
             {
                 hit = _hit;
-                Debug.Log($"{hit.tag}, {hit.name} 찾음");
+                //Debug.Log($"{hit.tag}, {hit.name} 찾음");
             }
         }
     } // TagetCheckRay
