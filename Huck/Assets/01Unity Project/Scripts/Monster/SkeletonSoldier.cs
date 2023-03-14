@@ -12,4 +12,9 @@ public class SkeletonSoldier : Monster
         InitMonsterData(MonsterType.NOMAL, monsterData);
         mController.monster = this;
     } // Awake
+
+    private void AttackA()
+    {
+        
+    }
 }

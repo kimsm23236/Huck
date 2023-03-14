@@ -20,7 +20,7 @@ public class Monster : MonoBehaviour
     [HideInInspector] public float moveSpeed;
     [HideInInspector] public float minDamage;
     [HideInInspector] public float maxDamage;
-    [HideInInspector] public Vector3 searchRange;
+    [HideInInspector] public float searchRange;
     [HideInInspector] public float attackRange;
     [HideInInspector] public float meleeAttackRange;
 

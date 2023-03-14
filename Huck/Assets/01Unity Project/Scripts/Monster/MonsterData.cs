@@ -30,8 +30,8 @@ public class MonsterData : ScriptableObject
     public float MaxDamage { get { return maxDamage; } }
 
     [SerializeField]
-    private Vector3 searchRange; //몬스터 탐색 범위
-    public Vector3 SearchRange { get { return searchRange; } }
+    private float searchRange; //몬스터 탐색 범위
+    public float SearchRange { get { return searchRange; } }
 
     [SerializeField]
     private float attackRange; //몬스터 공격 범위

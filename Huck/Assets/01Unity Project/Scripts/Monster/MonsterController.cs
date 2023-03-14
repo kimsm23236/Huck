@@ -24,6 +24,12 @@ public class MonsterController : MonoBehaviour
     public Rigidbody monsterRb = default;
     public Animator monsterAni = default;
     public AudioSource monsterAudio = default;
+    public TargetSearchRay targetSearch = default;
+    //public NavMeshAgent mAgent;
+
+    //Test
+    public Transform targetPos;
+    //Test
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +38,8 @@ public class MonsterController : MonoBehaviour
         monsterRb = gameObject.GetComponent<Rigidbody>();
         monsterAni = gameObject.GetComponent<Animator>();
         monsterAudio = gameObject.GetComponent<AudioSource>();
+        targetSearch = gameObject.GetComponent<TargetSearchRay>();
+        //mAgent = gameObject.GetComponent<NavMeshAgent>();
 
         // { 각 상태를 Dictionary에 저장
         IMonsterState idle = new MonsterIdle();
@@ -56,6 +64,9 @@ public class MonsterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // { Test
+        MonsterSetState();
+        // } Test
         MStateMachine.DoUpdate();
     } // Update
 
@@ -69,4 +80,17 @@ public class MonsterController : MonoBehaviour
     {
         StartCoroutine(func);
     } // CoroutineDeligate
+
+    private void MonsterSetState()
+    {
+        float distance = Vector3.Distance(this.transform.position, targetSearch.hit.gameObject.transform.position);
+        if (distance > monster.searchRange)
+        {
+            MStateMachine.SetState(dicState[MonsterState.SEARCH]);
+        }
+        else
+        {
+            MStateMachine.SetState(dicState[MonsterState.MOVE]);
+        }
+    }
 }
