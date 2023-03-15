@@ -7,3 +7,4 @@
 2023-03-14 / v0.0.3 / [KKS] Work on MonsterMove
 2023-03-15 / v0.0.4 / [KKS] Work on MonsterAttack
 2023-03-15 / v0.0.5 / [KKS] Work on Monster
+2023-03-16 / v0.0.6 / [KKS] Work on MonsterSkill

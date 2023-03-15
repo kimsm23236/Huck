@@ -18,10 +18,10 @@ MonoBehaviour:
   moveSpeed: 7
   minDamage: 4
   maxDamage: 6
-  skillACooldown: 30
-  skillBCooldown: 0
+  skillA: 1
+  skillB: 0
+  skillA_MaxCooldown: 40
+  skillB_MaxCooldown: 0
   searchRange: 25
   attackRange: 20
   meleeAttackRange: 2
-  skillAType: 0
-  skillBType: 0

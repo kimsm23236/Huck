@@ -30,12 +30,20 @@ public class MonsterData : ScriptableObject
     public float MaxDamage { get { return maxDamage; } }
 
     [SerializeField]
-    private float skillACooldown; //몬스터 스킬A 쿨다운
-    public float SkillACooldown { get { return skillACooldown; } }
+    private bool skillA; //몬스터 스킬A 존재 유무
+    public bool SkillA { get { return skillA; } }
 
     [SerializeField]
-    private float skillBCooldown; //몬스터 스킬B 쿨다운
-    public float SkillBCooldown { get { return skillBCooldown; } }
+    private bool skillB; //몬스터 스킬B 존재 유무
+    public bool SkillB { get { return skillB; } }
+
+    [SerializeField]
+    private float skillA_MaxCooldown; //몬스터 스킬A 쿨다운
+    public float SkillA_MaxCooldown { get { return skillA_MaxCooldown; } }
+
+    [SerializeField]
+    private float skillB_MaxCooldown; //몬스터 스킬B 쿨다운
+    public float SkillB_MaxCooldown { get { return skillB_MaxCooldown; } }
 
     [SerializeField]
     private float searchRange; //몬스터 탐색 범위
@@ -48,19 +56,4 @@ public class MonsterData : ScriptableObject
     [SerializeField]
     private float meleeAttackRange; //몬스터 근접공격 사거리
     public float MeleeAttackRange { get { return meleeAttackRange; } }
-
-    //! 몬스터 스킬 타입
-    public enum SkillType
-    {
-        MELEE = 0,
-        RANGE
-    } // SkillType
-
-    [SerializeField]
-    private SkillType skillAType; // 몬스터 스킬A 타입
-    public SkillType SkillAType { get { return skillAType; } }
-
-    [SerializeField]
-    private SkillType skillBType; // 몬스터 스킬B 타입
-    public SkillType SkillBType { get { return skillBType; } }
 }

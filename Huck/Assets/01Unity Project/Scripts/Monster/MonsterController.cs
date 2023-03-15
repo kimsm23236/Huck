@@ -12,7 +12,7 @@ public class MonsterController : MonoBehaviour
         MOVE,
         SEARCH,
         ATTACK,
-        SkillA,
+        Skill,
         HIT,
         DEAD
     }; //MonsterState
