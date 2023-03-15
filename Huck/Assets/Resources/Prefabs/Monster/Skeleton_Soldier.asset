@@ -15,9 +15,13 @@ MonoBehaviour:
   monsterName: "\uD574\uACE8\uBCD1\uC0AC"
   monsterHp: 100
   monsterMaxHp: 100
-  moveSpeed: 5
+  moveSpeed: 7
   minDamage: 4
   maxDamage: 6
-  searchRange: 15
-  attackRange: 10
-  meleeAttackRange: 3
+  skillACooldown: 30
+  skillBCooldown: 0
+  searchRange: 25
+  attackRange: 20
+  meleeAttackRange: 2
+  skillAType: 0
+  skillBType: 0

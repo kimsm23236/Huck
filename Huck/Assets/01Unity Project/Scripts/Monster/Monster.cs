@@ -7,13 +7,13 @@ public class Monster : MonoBehaviour
     //! 몬스터 타입
     public enum MonsterType
     {
-        NOMAL = 0,
-        ELITE,
-        NAMEED,
-        BOSS
+        MELEE = 0,
+        RANGE
     } // MonsterType
 
     [HideInInspector] public MonsterType monsterType;
+    [HideInInspector] public MonsterData.SkillType skillA_Type;
+    [HideInInspector] public MonsterData.SkillType skillB_Type;
     [HideInInspector] public string monsterName;
     [HideInInspector] public float monsterHp;
     [HideInInspector] public float monsterMaxHp;
@@ -28,6 +28,8 @@ public class Monster : MonoBehaviour
     public void InitMonsterData(MonsterType _monsterType, MonsterData monsterData)
     {
         this.monsterType = _monsterType;
+        this.skillA_Type = monsterData.SkillAType;
+        this.skillB_Type = monsterData.SkillBType;
         this.monsterName = monsterData.MonsterName;
         this.monsterHp = monsterData.MonsterHp;
         this.monsterMaxHp = monsterData.MonsterMaxHp;

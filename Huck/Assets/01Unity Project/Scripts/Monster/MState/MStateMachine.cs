@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MStateMachine : MonoBehaviour
 {
-    MonsterController mController;
+    private MonsterController mController;
+    public Action<IMonsterState> onChangeState;
+
     public IMonsterState currentState
     {
         get;
@@ -13,6 +16,7 @@ public class MStateMachine : MonoBehaviour
 
     public MStateMachine(IMonsterState defaultState, MonsterController _mController)
     {
+        onChangeState += SetState;
         currentState = defaultState;
         mController = _mController;
         SetState(currentState);

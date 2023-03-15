@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MonsterController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class MonsterController : MonoBehaviour
         MOVE,
         SEARCH,
         ATTACK,
+        SkillA,
         HIT,
         DEAD
     }; //MonsterState
@@ -25,6 +27,7 @@ public class MonsterController : MonoBehaviour
     public Animator monsterAni = default;
     public AudioSource monsterAudio = default;
     public TargetSearchRay targetSearch = default;
+    public NavMeshAgent mAgent;
     public bool isAttack = false;
     //Test
     public Transform targetPos;
@@ -39,6 +42,7 @@ public class MonsterController : MonoBehaviour
         monsterAni = gameObject.GetComponent<Animator>();
         monsterAudio = gameObject.GetComponent<AudioSource>();
         targetSearch = gameObject.GetComponent<TargetSearchRay>();
+        mAgent = gameObject.GetComponent<NavMeshAgent>();
 
         // { 각 상태를 Dictionary에 저장
         IMonsterState idle = new MonsterIdle();
@@ -80,6 +84,7 @@ public class MonsterController : MonoBehaviour
         StartCoroutine(func);
     } // CoroutineDeligate
 
+    //! 몬스터 상태 정하는 함수
     private void MonsterSetState()
     {
         float _distance = Vector3.Distance(this.transform.position, targetPos.position);
@@ -92,17 +97,22 @@ public class MonsterController : MonoBehaviour
 
         // 타겟이 몬스터의 탐색범위 안에 있을 때
         distance = Vector3.Distance(this.transform.position, targetSearch.hit.transform.position);
-        // 타겟과의 거리가 공격거리보다 크면 이동상태 시작
-        if (distance > monster.attackRange || (isAttack == true && monsterAni.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f))
+        // 공격상태가 아니면 이동상태 시작
+        if (enumState != MonsterState.ATTACK)
         {
             MStateMachine.SetState(dicState[MonsterState.MOVE]);
         }
-
-        if (distance <= monster.attackRange && isAttack == false)
+        // 타겟이 공격사거리 안에 있고 공격중이 아니라면 공격상태 시작
+        if (distance <= monster.attackRange)
         {
-            MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+            if (distance > monster.meleeAttackRange && isAttack == false)
+            {
+                MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+            }
+            if (distance <= monster.meleeAttackRange)
+            {
+                MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+            }
         }
-
-
-    }
+    } // MonsterSetState
 }

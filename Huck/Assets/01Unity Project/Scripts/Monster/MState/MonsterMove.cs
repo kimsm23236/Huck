@@ -27,13 +27,13 @@ public class MonsterMove : IMonsterState
     }
     public void StateExit()
     {
-        mController.monsterAni.SetBool("isWalk", false);
+        mController.monsterAni.SetBool("isRun", false);
         exitState = true;
     }
 
     private IEnumerator Move()
     {
-        mController.monsterAni.SetBool("isWalk", true);
+        mController.monsterAni.SetBool("isRun", true);
         while (exitState == false)
         {
             if (exitState == true)
