@@ -14,14 +14,8 @@ public class TargetSearchRay : MonoBehaviour
         mController = gameObject.GetComponent<MonsterController>();
     } // Start
 
-    // Update is called once per frame
-    void Update()
-    {
-        SearchTarget();
-    } // Update
-
     //! 감지범위 안에 타겟을 찾는 함수
-    private void SearchTarget()
+    public void SearchTarget()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, mController.monster.searchRange, LayerMask.GetMask("Player"));
         if (hits != null)

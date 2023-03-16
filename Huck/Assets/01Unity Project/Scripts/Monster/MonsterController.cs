@@ -12,7 +12,7 @@ public class MonsterController : MonoBehaviour
         MOVE,
         SEARCH,
         ATTACK,
-        Skill,
+        SKILL,
         HIT,
         DEAD
     }; //MonsterState
@@ -20,15 +20,14 @@ public class MonsterController : MonoBehaviour
     private Dictionary<MonsterState, IMonsterState> dicState = new Dictionary<MonsterState, IMonsterState>(); // 몬스터의 상태를 담을 딕셔너리
     private MStateMachine mStateMachine; // 몬스터의 상태를 처리할 스테이트머신
     public MStateMachine MStateMachine { get; private set; }
-    public Monster monster;
+    [HideInInspector] public Monster monster;
     public MonsterState enumState = MonsterState.IDLE; // 몬스터의 현재 상태를 체크하기 위한 변수
     public float currentHp; // 몬스터의 현재 HP 변수
-    public Rigidbody monsterRb = default;
-    public Animator monsterAni = default;
-    public AudioSource monsterAudio = default;
-    public TargetSearchRay targetSearch = default;
-    public NavMeshAgent mAgent;
-    public bool isAttack = false;
+    [HideInInspector] public Rigidbody monsterRb = default;
+    [HideInInspector] public Animator monsterAni = default;
+    [HideInInspector] public AudioSource monsterAudio = default;
+    [HideInInspector] public TargetSearchRay targetSearch = default;
+    [HideInInspector] public NavMeshAgent mAgent;
     //Test
     public Transform targetPos;
     public float distance; // 타겟과의 거리 변수
@@ -49,6 +48,7 @@ public class MonsterController : MonoBehaviour
         IMonsterState move = new MonsterMove();
         IMonsterState search = new MonsterSearch();
         IMonsterState attack = new MonsterAttack();
+        IMonsterState skill = new MonsterSkill();
         IMonsterState hit = new MonsterHit();
         IMonsterState dead = new MonsterDead();
 
@@ -56,6 +56,7 @@ public class MonsterController : MonoBehaviour
         dicState.Add(MonsterState.MOVE, move);
         dicState.Add(MonsterState.SEARCH, search);
         dicState.Add(MonsterState.ATTACK, attack);
+        dicState.Add(MonsterState.SKILL, skill);
         dicState.Add(MonsterState.HIT, hit);
         dicState.Add(MonsterState.DEAD, dead);
         // } 각 상태를 Dictionary에 저장
@@ -67,9 +68,7 @@ public class MonsterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // { Test
         MonsterSetState();
-        // } Test
         MStateMachine.DoUpdate();
     } // Update
 
@@ -95,23 +94,54 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        // 타겟이 몬스터의 탐색범위 안에 있을 때
+        // 타겟이 몬스터의 탐색범위 안에 있을 때 탐색 실행
+        targetSearch.SearchTarget();
         distance = Vector3.Distance(this.transform.position, targetSearch.hit.transform.position);
-        // 공격상태가 아니면 이동상태 시작
-        if (enumState != MonsterState.ATTACK)
+        // 공격, 스킬 상태가 아니면 이동상태로 전환
+        if (enumState != MonsterState.ATTACK && enumState != MonsterState.SKILL)
         {
             MStateMachine.SetState(dicState[MonsterState.MOVE]);
         }
-        // 타겟이 공격사거리 안에 있고 공격중이 아니라면 공격상태 시작
+        // 타겟이 공격사거리 안에 있으면 공격상태로 전환
         if (distance <= monster.attackRange)
         {
-            if (distance > monster.meleeAttackRange && isAttack == false)
+            // 몬스터의 스킬이 사용가능할 때
+            if (enumState != MonsterState.ATTACK && (monster.useSkillA == true || monster.useSkillB == true))
             {
-                MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+                // 몬스터의 원거리 스킬 유무에 따라 실행
+                switch (monster.isNoRangeSkill)
+                {
+                    case true:
+                        if (distance <= monster.meleeAttackRange)
+                        {
+                            MStateMachine.SetState(dicState[MonsterState.SKILL]);
+                            return;
+                        }
+                        break;
+                    case false:
+                        if (distance > monster.meleeAttackRange)
+                        {
+                            MStateMachine.SetState(dicState[MonsterState.SKILL]);
+                        }
+                        break;
+                }
             }
-            if (distance <= monster.meleeAttackRange)
+            // if : 스킬이 모두 사용불가능하면 공격
+            if (enumState != MonsterState.SKILL)
             {
-                MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+                // 몬스터의 원거리 공격 유무에 따라 실행
+                switch (monster.isNoRangeAttack)
+                {
+                    case true:
+                        if (distance <= monster.meleeAttackRange)
+                        {
+                            MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+                        }
+                        break;
+                    case false:
+                        MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+                        break;
+                }
             }
         }
     } // MonsterSetState

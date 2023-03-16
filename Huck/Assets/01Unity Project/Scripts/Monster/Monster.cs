@@ -18,8 +18,10 @@ public class Monster : MonoBehaviour
     [HideInInspector] public float moveSpeed;
     [HideInInspector] public float minDamage;
     [HideInInspector] public float maxDamage;
-    [HideInInspector] public bool skillA;
-    [HideInInspector] public bool skillB;
+    [HideInInspector] public bool isNoRangeAttack;
+    [HideInInspector] public bool isNoRangeSkill;
+    [HideInInspector] public bool useSkillA;
+    [HideInInspector] public bool useSkillB;
     [HideInInspector] public float skillA_MaxCool;
     [HideInInspector] public float skillB_MaxCool;
     [HideInInspector] public float searchRange;
@@ -36,14 +38,28 @@ public class Monster : MonoBehaviour
         this.moveSpeed = monsterData.MoveSpeed;
         this.minDamage = monsterData.MinDamage;
         this.maxDamage = monsterData.MaxDamage;
-        this.skillA = monsterData.SkillA;
-        this.skillB = monsterData.SkillB;
+        this.isNoRangeAttack = monsterData.IsNoRangeAttack;
+        this.isNoRangeSkill = monsterData.IsNoRangeSkill;
+        this.useSkillA = monsterData.UseSkillA;
+        this.useSkillB = monsterData.UseSkillB;
         this.skillA_MaxCool = monsterData.SkillA_MaxCooldown;
         this.skillB_MaxCool = monsterData.SkillB_MaxCooldown;
         this.searchRange = monsterData.SearchRange;
         this.attackRange = monsterData.AttackRange;
         this.meleeAttackRange = monsterData.MeleeAttackRange;
     } // InitMonsterData
+
+    //! 공격 함수
+    public virtual void Attack()
+    {
+        /* Do Nothing */
+    } // Attack
+
+    //! 스킬공격 함수
+    public virtual void Skill()
+    {
+        /* Do Nothing */
+    } // Skill
 
     //! 공격딜레이 주는 코루틴함수
     protected IEnumerator AttackDelay(MonsterController mController)
@@ -59,7 +75,7 @@ public class Monster : MonoBehaviour
                 while (isBackMove == false)
                 {
                     checkTime += Time.deltaTime;
-                    if (checkTime >= 2f)
+                    if (checkTime >= 1.5f)
                     {
                         isBackMove = true;
                     }
@@ -76,7 +92,6 @@ public class Monster : MonoBehaviour
                 float checkTime2 = 0f;
                 bool isIdle = false;
                 Debug.Log($"대기 시작");
-                mController.monsterAni.SetBool("isIdle", true);
                 while (isIdle == false)
                 {
                     checkTime2 += Time.deltaTime;
@@ -90,8 +105,6 @@ public class Monster : MonoBehaviour
                     yield return null;
                 }
                 Debug.Log($"대기 종료");
-                mController.monsterAni.SetBool("isIdle", false);
-
                 break;
             case 2:
                 float checkTime3 = 0f;

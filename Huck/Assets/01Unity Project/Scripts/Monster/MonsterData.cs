@@ -30,12 +30,20 @@ public class MonsterData : ScriptableObject
     public float MaxDamage { get { return maxDamage; } }
 
     [SerializeField]
-    private bool skillA; //몬스터 스킬A 존재 유무
-    public bool SkillA { get { return skillA; } }
+    private bool isNoRangeAttack; //몬스터 원거리 공격 유무
+    public bool IsNoRangeAttack { get { return isNoRangeAttack; } }
 
     [SerializeField]
-    private bool skillB; //몬스터 스킬B 존재 유무
-    public bool SkillB { get { return skillB; } }
+    private bool isNoRangeSkill; //몬스터 원거리 스킬 유무
+    public bool IsNoRangeSkill { get { return isNoRangeSkill; } }
+
+    [SerializeField]
+    private bool useSkillA; //몬스터 스킬A 사용가능 체크
+    public bool UseSkillA { get { return useSkillA; } }
+
+    [SerializeField]
+    private bool useSkillB; //몬스터 스킬B 사용가능 체크
+    public bool UseSkillB { get { return useSkillB; } }
 
     [SerializeField]
     private float skillA_MaxCooldown; //몬스터 스킬A 쿨다운
