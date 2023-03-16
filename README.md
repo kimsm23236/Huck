@@ -4,3 +4,4 @@
 2023-03-10 / v0.0.0 / Dev Branch Setup  
 2023-03-10 / v0.0.0 / Dev project merge test
 2023-03-15 / v0.0.1KMS / Add Player Version One
+2023-03-16 / v0.0.2KMS / Player Version One Debug

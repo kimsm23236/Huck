@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     private float moveSpeed = 20;
     private bool isGrounded = default;
     private bool isDead = false;
+    private int curJumpCnt = 0;
 
     private void Start()
     {
@@ -20,6 +21,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        // fixedUpdate로 이전 요함
         Move();
         Jump();
         PlayerRotate();
@@ -50,6 +52,17 @@ public class PlayerMove : MonoBehaviour
                 playerAnim.SetInteger("WalkFB", (int)vertical);
                 playerAnim.SetInteger("WalkRL", (int)horizontal);
             }
+
+            // { inclined plane issue
+            if(Input.GetKeyUp(KeyCode.W)||Input.GetKeyUp(KeyCode.S))
+            {
+                playerAnim.SetInteger("WalkFB", 0);
+            }
+            if(Input.GetKeyUp(KeyCode.A)||Input.GetKeyUp(KeyCode.D))
+            {
+                playerAnim.SetInteger("WalkRL", 0);
+            }
+            // } inclined plane issue
 
             // { Player Velocity Move to Behind
             if(Input.GetKey(KeyCode.S))
@@ -91,19 +104,19 @@ public class PlayerMove : MonoBehaviour
     // { Player Jump
     private void Jump()
     {
-        if(isGrounded == true && Input.GetKeyDown(KeyCode.Space) && PlayerAtk.isAttacking == false)
+        if(Input.GetKeyDown(KeyCode.Space) && PlayerAtk.isAttacking == false)
         {
-            playerAnim.SetBool("isGround",false);
-            playerRigid.AddForce(Vector3.up * jumpForce);
+            if(curJumpCnt == 0)
+            {
+                curJumpCnt++;
+                playerAnim.SetBool("isGround",false);
+                playerRigid.AddForce(Vector3.up * jumpForce);
+            }
         }
-    }   
+    }  
     // } Player Jump
 
     // { Player Die
-    private void Die()
-    {
-        isDead = true;        
-    }
     // { Player Die
 
     // { Player Grounded Check
@@ -112,9 +125,11 @@ public class PlayerMove : MonoBehaviour
         if(other.gameObject.tag == "Floor")
         {
             isGrounded = true;
+            curJumpCnt = 0;
             playerAnim.SetBool("isGround",true);
         }
     }
+    
     private void OnCollisionExit(Collision other) 
     {
         if(other.gameObject.tag == "Floor")
