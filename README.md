@@ -9,3 +9,4 @@
 2023-03-15 / v0.0.5 / [KKS] Work on Monster
 2023-03-16 / v0.0.6 / [KKS] Work on MonsterSkill
 2023-03-16 / v0.0.7 / [KKS] Work on MonsterPrefabs
+2023-03-17 / v0.0.8 / [KKS] Work on Arrow
