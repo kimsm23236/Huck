@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     private float offsetY = 10f;
-    private float offsetZ = -3f;
+    private float offsetZ = -10f;
     private float speed = 10f;
     public GameObject target;
     private Vector3 targetPos;

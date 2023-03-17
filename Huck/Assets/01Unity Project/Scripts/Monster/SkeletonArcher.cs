@@ -7,7 +7,6 @@ public class SkeletonArcher : Monster
     private MonsterController mController = default;
     public MonsterData monsterData;
     private float skillACool = 0f;
-    private float skillBCool = 0f;
     private void Awake()
     {
         mController = gameObject.GetComponent<MonsterController>();
@@ -21,7 +20,7 @@ public class SkeletonArcher : Monster
 
     } // OnDamage
 
-    //! 공격 오버라이드 함수
+    //! 해골궁수 공격 오버라이드
     public override void Attack()
     {
         if (mController.distance > meleeAttackRange)
@@ -35,7 +34,7 @@ public class SkeletonArcher : Monster
         }
     } // Attack
 
-    //! 스킬 오버라이드 함수
+    //! 해골궁수 스킬 오버라이드
     public override void Skill()
     {
         SkillA();
@@ -57,7 +56,7 @@ public class SkeletonArcher : Monster
         mController.monsterAni.SetBool("isSkillA", true);
         StartCoroutine(LookTarget());
         StartCoroutine(SkillACooldown());
-    }
+    } // SkillA
 
     //! 스킬A 쿨다운 코루틴함수
     private IEnumerator SkillACooldown()

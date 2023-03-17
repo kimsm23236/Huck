@@ -21,7 +21,7 @@ public class SkeletonSoldier : Monster
 
     } // OnDamage
 
-    //! 공격 오버라이드 함수
+    //! 해골병사 공격 오버라이드
     public override void Attack()
     {
         // 모션 2개 중 랜덤으로 한개 실행
@@ -36,7 +36,7 @@ public class SkeletonSoldier : Monster
         }
     } // Attack
 
-    //! 스킬 오버라이드 함수
+    //! 해골병사 스킬 오버라이드
     public override void Skill()
     {
         if (useSkillA == true)
@@ -92,8 +92,8 @@ public class SkeletonSoldier : Monster
         // 돌진 준비 모션 끝나면 돌진 시작
         mController.monsterAni.SetBool("isSkillA_Start", false);
         mController.monsterAni.SetBool("isSkillA_Loop", true);
-        bool isAttackC = false;
-        while (isAttackC == false)
+        bool isSkillA = false;
+        while (isSkillA == false)
         {
             Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
             mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
@@ -103,7 +103,7 @@ public class SkeletonSoldier : Monster
             {
                 mController.monsterAni.SetBool("isSkillA_Loop", false);
                 mController.monsterAni.SetBool("isSkillA_End", true);
-                isAttackC = true;
+                isSkillA = true;
             }
             yield return null;
         }

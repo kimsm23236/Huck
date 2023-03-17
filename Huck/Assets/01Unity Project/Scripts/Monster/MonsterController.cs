@@ -27,11 +27,11 @@ public class MonsterController : MonoBehaviour
     [HideInInspector] public Animator monsterAni = default;
     [HideInInspector] public AudioSource monsterAudio = default;
     [HideInInspector] public TargetSearchRay targetSearch = default;
-    [HideInInspector] public NavMeshAgent mAgent;
-    //Test
+    [HideInInspector] public NavMeshAgent mAgent = default;
+    // { Test
     public Transform targetPos;
     public float distance; // 타겟과의 거리 변수
-    //Test
+    // } Test
 
     // Start is called before the first frame update
     void Start()
@@ -86,6 +86,11 @@ public class MonsterController : MonoBehaviour
     //! 몬스터 상태 정하는 함수
     private void MonsterSetState()
     {
+        if (monster.monsterHp < currentHp)
+        {
+            MStateMachine.SetState(dicState[MonsterState.HIT]);
+        }
+
         float _distance = Vector3.Distance(this.transform.position, targetPos.position);
         // 타겟이 몬스터의 탐색범위 밖에 있으면 추적
         if (_distance > monster.searchRange)
@@ -102,7 +107,7 @@ public class MonsterController : MonoBehaviour
         {
             MStateMachine.SetState(dicState[MonsterState.MOVE]);
         }
-        // 타겟이 공격사거리 안에 있으면 공격상태로 전환
+        // { 타겟이 공격사거리 안에 있으면 공격상태로 전환
         if (distance <= monster.attackRange)
         {
             // 몬스터의 스킬이 사용가능할 때
@@ -124,8 +129,8 @@ public class MonsterController : MonoBehaviour
                             MStateMachine.SetState(dicState[MonsterState.SKILL]);
                         }
                         break;
-                }
-            }
+                } // switch end
+            } // if end
             // if : 스킬이 모두 사용불가능하면 공격
             if (enumState != MonsterState.SKILL)
             {
@@ -141,8 +146,10 @@ public class MonsterController : MonoBehaviour
                     case false:
                         MStateMachine.SetState(dicState[MonsterState.ATTACK]);
                         break;
-                }
-            }
+                } // switch end
+            } // if end
         }
+        // } 타겟이 공격사거리 안에 있으면 공격상태로 전환
+
     } // MonsterSetState
 }

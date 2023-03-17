@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
     private Rigidbody arrowRb;
     private CapsuleCollider arrowCollider;
+    private bool isHit = false;
     public GameObject target;
 
     // Start is called before the first frame update
@@ -19,23 +21,24 @@ public class Arrow : MonoBehaviour
         SetForce(velocity);
     }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    transform.forward = arrowRb.velocity;
-    //}
-
     private void FixedUpdate()
     {
-        transform.forward = arrowRb.velocity;
+        if (isHit == false)
+        {
+            transform.forward = arrowRb.velocity;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other != null)
         {
-            Debug.Log($"플레이어 맞춤! {other.tag}");
-            arrowRb.velocity = Vector3.zero;
+            if (other.tag == "Player")
+            {
+                Debug.Log($"플레이어 맞춤! {other.tag}");
+            }
+            isHit = true;
             arrowCollider.isTrigger = false;
+            arrowRb.velocity = Vector3.zero;
         }
     }
 
