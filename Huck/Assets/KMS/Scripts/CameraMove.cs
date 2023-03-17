@@ -14,20 +14,23 @@ public class CameraMove : MonoBehaviour
 
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         CameraPos();
         CameraRotate();
     }
 
     // { Camera Position
+#region Position
     private void CameraPos()
     {
         gameObject.transform.position = head.transform.position;
     }
+#endregion
     // } Camera Position
 
     // { Camera Rotation
+#region Rotate
     private void CameraRotate()
     {
         cameraX = -Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivity /2;
@@ -40,5 +43,6 @@ public class CameraMove : MonoBehaviour
 
         transform.eulerAngles = new Vector3(rotateX,rotateY,0);
     }
+#endregion
     // } Camera Rotation
 }
