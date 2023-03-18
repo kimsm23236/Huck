@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,11 +28,14 @@ public class MonsterSearch : IMonsterState
     {
         exitState = true;
         mController.mAgent.ResetPath();
+        mController.mAgent.speed = mController.monster.moveSpeed;
         mController.monsterAni.SetBool("isWalk", false);
     }
 
     private IEnumerator TargetChase()
     {
+        mController.mAgent.speed = mController.monster.moveSpeed * 0.7f;
+
         exitState = false;
         mController.monsterAni.SetBool("isWalk", true);
         while (exitState == false)

@@ -47,7 +47,7 @@ public class SkeletonArcher : Monster
         mController.monsterAni.SetBool("isAttackB", false);
         mController.monsterAni.SetBool("isSkillA", false);
         // 공격종료 후 딜레이 시작
-        StartCoroutine(AttackDelay(mController));
+        StartCoroutine(AttackDelay(mController, 4));
     } // ExitAttack
 
     //! 스킬A 함수

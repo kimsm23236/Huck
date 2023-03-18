@@ -62,9 +62,9 @@ public class Monster : MonoBehaviour
     } // Skill
 
     //! 공격딜레이 주는 코루틴함수
-    protected IEnumerator AttackDelay(MonsterController mController)
+    protected IEnumerator AttackDelay(MonsterController mController, int _number)
     {
-        int number = Random.Range(0, 3);
+        int number = Random.Range(0, _number);
         switch (number)
         {
             case 0:
@@ -81,8 +81,7 @@ public class Monster : MonoBehaviour
                     }
                     Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
                     mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
-                    mController.transform.position += -dir * moveSpeed * Time.deltaTime;
-
+                    mController.mAgent.Move(-dir * moveSpeed * Time.deltaTime);
                     yield return null;
                 }
                 Debug.Log($"백무빙 종료");
@@ -123,12 +122,12 @@ public class Monster : MonoBehaviour
                     if (sideNumber == 0)
                     {
                         mController.monsterAni.SetBool("isRight", true);
-                        mController.transform.position += mController.transform.right.normalized * moveSpeed * Time.deltaTime;
+                        mController.mAgent.Move(mController.transform.right.normalized * moveSpeed * Time.deltaTime);
                     }
                     else
                     {
                         mController.monsterAni.SetBool("isLeft", true);
-                        mController.transform.position += -mController.transform.right.normalized * moveSpeed * Time.deltaTime;
+                        mController.mAgent.Move(-mController.transform.right.normalized * moveSpeed * Time.deltaTime);
                     }
 
                     yield return null;
@@ -137,9 +136,14 @@ public class Monster : MonoBehaviour
                 mController.monsterAni.SetBool("isLeft", false);
                 Debug.Log($"사이드무빙 종료");
                 break;
+            case 3:
+                mController.monsterAni.SetTrigger("isRoar");
+                yield return new WaitForSeconds(mController.monsterAni.GetCurrentAnimatorStateInfo(0).length);
+                break;
         }
+
+        // 공격딜레이가 끝났으면 Idle상태로 초기화
         IMonsterState nextState = new MonsterIdle();
-        Debug.Log($"상태 변경 : {nextState}");
         mController.MStateMachine.onChangeState?.Invoke(nextState);
     } // AttackDelay
 }

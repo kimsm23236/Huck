@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MonsterMove : IMonsterState
 {
@@ -14,7 +16,6 @@ public class MonsterMove : IMonsterState
         Debug.Log($"무브상태 시작 : {mController.monster.monsterName}");
         exitState = false;
         mController.CoroutineDeligate(Move());
-        //mController.CoroutineDeligate(RandomMovePos());
     }
     public void StateFixedUpdate()
     {
@@ -28,9 +29,11 @@ public class MonsterMove : IMonsterState
     public void StateExit()
     {
         mController.monsterAni.SetBool("isRun", false);
+        mController.mAgent.ResetPath();
         exitState = true;
     }
 
+    //! 몬스터 이동 코루틴함수
     private IEnumerator Move()
     {
         mController.monsterAni.SetBool("isRun", true);
@@ -40,45 +43,11 @@ public class MonsterMove : IMonsterState
             {
                 yield break;
             }
-            dir = (mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
-            mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
-            mController.transform.position += dir * mController.monster.moveSpeed * Time.deltaTime;
+            mController.mAgent.SetDestination(mController.targetSearch.hit.transform.position);
+            //dir = (mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
+            //mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
+            //mController.mAgent.Move(dir * mController.monster.moveSpeed * Time.deltaTime);
             yield return null;
         }
-    }
-
-    private IEnumerator RandomMovePos()
-    {
-        Vector3 movePos = new Vector3();
-        movePos.x = Random.Range(-5, 5);
-        movePos.z = Random.Range(-5, 5);
-        mController.monsterAni.SetBool("isWalk", true);
-        while (exitState == false)
-        {
-            // Move상태 나갈 때 while 탈출
-            if (exitState == true)
-            {
-                mController.monsterAni.SetBool("isWalk", false);
-                yield break;
-            }
-
-            dir = (movePos - mController.transform.position).normalized;
-            Debug.Log($"좌표값: {movePos}, 방향: {dir}");
-            // dir 뱡향으로 바라보게 함
-            mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
-            mController.transform.position += dir * mController.monster.moveSpeed * Time.deltaTime;
-
-            float distance = Vector3.Distance(mController.transform.position, movePos);
-            // 목표지점에 근접하면 대기 후 새로운 좌표로 이동
-            if (distance <= 0.1f)
-            {
-                mController.monsterAni.SetBool("isWalk", false);
-                yield return new WaitForSeconds(Random.Range(1f, 4f));
-                mController.monsterAni.SetBool("isWalk", true);
-                movePos.x = Random.Range(-5, 5);
-                movePos.z = Random.Range(-5, 5);
-            }
-            yield return null;
-        }
-    } // RandomMovePos
+    } // Move
 }

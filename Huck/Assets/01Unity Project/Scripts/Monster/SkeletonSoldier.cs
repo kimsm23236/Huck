@@ -5,7 +5,9 @@ using UnityEngine;
 public class SkeletonSoldier : Monster
 {
     private MonsterController mController = default;
-    public MonsterData monsterData;
+    [SerializeField] private MonsterData monsterData = default;
+    [SerializeField] private GameObject weapon = default;
+    [SerializeField] private GameObject shield = default;
     private float skillACool = 0f;
     private float skillBCool = 0f;
     void Awake()
@@ -15,11 +17,31 @@ public class SkeletonSoldier : Monster
         mController.monster = this;
     } // Awake
 
-    //! 공격 데미지 처리 함수
-    private void OnDamage()
+    //! 공격 처리 이벤트함수 (Collider)
+    private void EnableWeapon()
     {
-
+        weapon.SetActive(true);
     } // OnDamage
+
+    //! 공격 처리 이벤트함수 (RayCast)
+    private void EnableAttack()
+    {
+        RaycastHit[] hits = Physics.BoxCastAll(shield.transform.position, new Vector3(1f, 1f, 0.3f) * 0.5f, Vector3.up, shield.transform.rotation, 0f, LayerMask.GetMask("Player"));
+        if (hits != null)
+        {
+            if (hits[0].collider.tag == "Player")
+            {
+                Debug.Log("쉴드배쉬 맞춤!");
+            }
+        }
+    } // EnableAttack
+
+    //! EnableAttack() 기즈모
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(shield.transform.position, new Vector3(1f, 1f, 0.3f));
+    } // OnDrawGizmos
 
     //! 해골병사 공격 오버라이드
     public override void Attack()
@@ -42,14 +64,12 @@ public class SkeletonSoldier : Monster
         if (useSkillA == true)
         {
             SkillA();
-            Debug.Log($"스킬A 발동 {isNoRangeSkill}");
             return;
         }
 
         if (useSkillB == true)
         {
             SkillB();
-            Debug.Log($"스킬B 발동 {isNoRangeSkill}");
             return;
         }
     } // SKILL
@@ -82,8 +102,9 @@ public class SkeletonSoldier : Monster
         mController.monsterAni.SetBool("isAttackB", false);
         mController.monsterAni.SetBool("isSkillA_End", false);
         mController.monsterAni.SetBool("isSkillB", false);
+        weapon.SetActive(false);
         // 공격종료 후 딜레이 시작
-        StartCoroutine(AttackDelay(mController));
+        StartCoroutine(AttackDelay(mController, 4));
     } // ExitAttack
 
     //! 스킬A 돌진 공격 코루틴함수
@@ -92,18 +113,19 @@ public class SkeletonSoldier : Monster
         // 돌진 준비 모션 끝나면 돌진 시작
         mController.monsterAni.SetBool("isSkillA_Start", false);
         mController.monsterAni.SetBool("isSkillA_Loop", true);
-        bool isSkillA = false;
-        while (isSkillA == false)
+        bool isSkillA = true;
+        mController.mAgent.speed = moveSpeed * 2f;
+        while (isSkillA == true)
         {
-            Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
-            mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
-            mController.transform.position += dir * (moveSpeed * 2f) * Time.deltaTime;
+            mController.mAgent.SetDestination(mController.targetPos.position);
             // 돌진 중 타겟이 근접공격사거리 안이라면 돌진 마무리 시작
             if (mController.distance <= meleeAttackRange)
             {
+                mController.mAgent.speed = moveSpeed;
+                mController.mAgent.ResetPath();
                 mController.monsterAni.SetBool("isSkillA_Loop", false);
                 mController.monsterAni.SetBool("isSkillA_End", true);
-                isSkillA = true;
+                isSkillA = false;
             }
             yield return null;
         }
@@ -113,7 +135,7 @@ public class SkeletonSoldier : Monster
     private IEnumerator SkillACooldown()
     {
         useSkillA = false;
-        // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 스킬 쿨 적용
+        // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 스킬 사용가능
         isNoRangeSkill = true;
         while (true)
         {

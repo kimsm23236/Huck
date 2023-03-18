@@ -6,10 +6,11 @@ using static Monster;
 public class SkeletonGrunt : Monster
 {
     private MonsterController mController = default;
-    public MonsterData monsterData;
     private float skillACool = 0f;
     private float skillBCool = 0f;
     private float rushCool = 0f;
+    public MonsterData monsterData;
+    public GameObject weapon;
     void Awake()
     {
         mController = gameObject.GetComponent<MonsterController>();
@@ -67,6 +68,25 @@ public class SkeletonGrunt : Monster
         StartCoroutine(SkillACooldown());
     } // SkillA
 
+    //! 스킬A 데미지판정 함수
+    private void SkillA_Damage()
+    {
+        RaycastHit[] hits = Physics.SphereCastAll(weapon.transform.position, 3f, Vector3.up, 0f, LayerMask.GetMask("Player"));
+        if (hits != null)
+        {
+            if (hits[0].collider.tag == "Player")
+            {
+                Debug.Log("플레이어 맞춤");
+            }
+        }
+    } // SkillA_Damage
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(weapon.transform.position, 3f);
+    }
+
     //! 해골그런트 스킬B 함수
     private void SkillB()
     {
@@ -84,7 +104,7 @@ public class SkeletonGrunt : Monster
         mController.monsterAni.SetBool("isSkillA", false);
         mController.monsterAni.SetBool("isSkillB_End", false);
         // 공격종료 후 딜레이 시작
-        StartCoroutine(AttackDelay(mController));
+        StartCoroutine(AttackDelay(mController, 4));
     } // ExitAttack
 
     //! 돌진 공격 코루틴 함수

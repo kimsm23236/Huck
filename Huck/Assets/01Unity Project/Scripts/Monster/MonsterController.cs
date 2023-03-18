@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class MonsterController : MonoBehaviour
 
     private Dictionary<MonsterState, IMonsterState> dicState = new Dictionary<MonsterState, IMonsterState>(); // 몬스터의 상태를 담을 딕셔너리
     private MStateMachine mStateMachine; // 몬스터의 상태를 처리할 스테이트머신
+    private bool isSpawn = false;
     public MStateMachine MStateMachine { get; private set; }
     [HideInInspector] public Monster monster;
     public MonsterState enumState = MonsterState.IDLE; // 몬스터의 현재 상태를 체크하기 위한 변수
@@ -42,6 +44,8 @@ public class MonsterController : MonoBehaviour
         monsterAudio = gameObject.GetComponent<AudioSource>();
         targetSearch = gameObject.GetComponent<TargetSearchRay>();
         mAgent = gameObject.GetComponent<NavMeshAgent>();
+        mAgent.acceleration = 100f;
+        mAgent.speed = monster.moveSpeed;
 
         // { 각 상태를 Dictionary에 저장
         IMonsterState idle = new MonsterIdle();
@@ -63,12 +67,16 @@ public class MonsterController : MonoBehaviour
 
         // 입력받은 상태를 처리할 MStateMachine 초기화 
         MStateMachine = new MStateMachine(idle, this);
-    }
+        StartCoroutine(Spawn());
+    } // Start
 
     // Update is called once per frame
     void Update()
     {
-        MonsterSetState();
+        if (isSpawn == false)
+        {
+            MonsterSetState();
+        }
         MStateMachine.DoUpdate();
     } // Update
 
@@ -77,7 +85,16 @@ public class MonsterController : MonoBehaviour
         MStateMachine.DoFixedUpdate();
     } // FixedUpdate
 
-    //interface를 상속받은 클래스는 MonoBehaviour를 상속 받지 못해서 코루틴을 대신 실행시켜줄 함수
+    //! 몬스터 스폰 코루틴함수
+    private IEnumerator Spawn()
+    {
+        monsterAni.SetTrigger("isSpawn");
+        isSpawn = true;
+        yield return new WaitForSeconds(monsterAni.GetCurrentAnimatorStateInfo(0).length);
+        isSpawn = false;
+    } // Spawn
+
+    //! interface를 상속받은 클래스는 MonoBehaviour를 상속 받지 못해서 코루틴을 대신 실행시켜줄 함수
     public void CoroutineDeligate(IEnumerator func)
     {
         StartCoroutine(func);
