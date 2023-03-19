@@ -8,6 +8,7 @@ public class InventoryArray : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> itemSlots = new List<GameObject>();
+    public GameObject slotPrefab = null;
 
 
     #region 인벤토리 드래그 & 드랍을 위한 변수
@@ -22,9 +23,35 @@ public class InventoryArray : MonoBehaviour
     private Vector3 beginDragIconPoint;   // 드래그 시작 시 슬롯의 위치
     private Vector3 beginDragCursorPoint; // 드래그 시작 시 커서의 위치
     private int beginDragSlotSiblingIndex;
-
     #endregion
 
+
+    private int horizonSlotCount = 8;
+    private int verticalSlotCount = 4;
+    private float paddingSlot = 10f;
+    private float slotWidth = 0f;
+    private float slotHeight = 0f;
+
+    private Vector2 beginSlotPos = default;
+
+    private void Awake()
+    {
+        slotWidth = slotPrefab.GetComponent<RectTransform>().sizeDelta.x;
+        slotHeight = slotPrefab.GetComponent<RectTransform>().sizeDelta.y;
+        beginSlotPos = new Vector2(slotWidth / 2 + 10f, slotHeight / -2 - 10f);
+        int slotIdx = 1;
+        for (int y = 0; y < verticalSlotCount; y++)
+        {
+            for (int x = 0; x < horizonSlotCount; x++)
+            {
+                GameObject slotGo = Instantiate(slotPrefab);
+                slotGo.transform.SetParent(this.transform, false);
+                slotGo.GetComponent<RectTransform>().anchoredPosition = beginSlotPos + new Vector2((slotWidth + paddingSlot) * x, (slotHeight + paddingSlot) * y * -1);
+                slotGo.name = $"{slotPrefab.name}{slotIdx}";
+                slotIdx++;
+            }
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -42,9 +69,14 @@ public class InventoryArray : MonoBehaviour
     {
         pointEvent.position = Input.mousePosition;
         OnPointerDown();
+        OnPointerDrag();
+        OnPointerUp();
     }
 
+    private void InitSlots()
+    {
 
+    }
     private T RaycastGetFirstComponent<T>() where T : Component
     {
         rayList.Clear();
@@ -71,7 +103,6 @@ public class InventoryArray : MonoBehaviour
                 // 맨 위에 보이기
                 beginDragSlotSiblingIndex = beginDragSlot.transform.GetSiblingIndex();
                 beginDragSlot.transform.SetAsLastSibling();
-
             }
         }
     }
@@ -84,11 +115,10 @@ public class InventoryArray : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             // 위치 이동
-            beginItemTrans.position =
-                beginDragIconPoint + (Input.mousePosition - beginDragCursorPoint);
+            beginItemTrans.position = beginDragIconPoint + (Input.mousePosition - beginDragCursorPoint);
         }
     }
-    /// <summary> 클릭을 뗄 경우 </summary>
+
     private void OnPointerUp()
     {
         if (Input.GetMouseButtonUp(0))
@@ -103,7 +133,7 @@ public class InventoryArray : MonoBehaviour
                 beginDragSlot.transform.SetSiblingIndex(beginDragSlotSiblingIndex);
 
                 // 드래그 완료 처리
-                // EndDrag();
+                EndDrag();
 
                 // 참조 제거
                 beginDragSlot = null;
@@ -127,5 +157,24 @@ public class InventoryArray : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private void EndDrag()
+    {
+
+        ItemSlot endDragSlot = RaycastGetFirstComponent<ItemSlot>();
+
+        if (endDragSlot != null)
+        {
+            SwapItems(beginDragSlot, endDragSlot);
+        }
+    }
+
+    private void SwapItems(ItemSlot startItem, ItemSlot endItem)
+    {
+        ItemData tempItem = default;
+        tempItem = startItem.Item;
+        startItem.Item = endItem.Item;
+        endItem.Item = tempItem;
     }
 }

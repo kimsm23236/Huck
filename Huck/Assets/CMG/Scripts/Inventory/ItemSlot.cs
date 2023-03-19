@@ -7,6 +7,7 @@ public class ItemSlot : MonoBehaviour
 {
     public bool HasItem { get; private set; } = false;
     public ItemData Item = default;
+    public int itemAmount = 0;
 
 
     private Color defaultAlpha = new Color(1f, 1f, 1f, 0f);
