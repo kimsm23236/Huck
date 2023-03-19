@@ -125,4 +125,4 @@ public class SkeletonMage : Monster
             yield return null;
         }
     } // LookTarget
-}
+} // SkeletonMage

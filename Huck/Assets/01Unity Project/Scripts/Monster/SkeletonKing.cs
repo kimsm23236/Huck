@@ -99,4 +99,4 @@ public class SkeletonKing : Monster
             yield return null;
         }
     } // SkillACooldown
-}
+} // SkeletonKing

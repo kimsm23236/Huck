@@ -21,11 +21,6 @@ public class TargetSearchRay : MonoBehaviour
         if (hits != null)
         {
             hit = hits[0];
-            //foreach (var _hit in hits)
-            //{
-            //    hit = _hit;
-            //    //Debug.Log($"{hit.tag}, {hit.name} Ã£À½");
-            //}
         }
     } // TagetCheckRay
 
@@ -38,4 +33,4 @@ public class TargetSearchRay : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, mController.monster.searchRange);
         }
     } // OnDrawGizmos
-}
+} // TargetSearchRay

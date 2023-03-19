@@ -207,4 +207,4 @@ public class SkeletonGrunt : Monster
             yield return null;
         }
     } // SkillBCooldown
-}
+} // SkeletonGrunt

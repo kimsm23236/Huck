@@ -20,7 +20,7 @@ public class MonsterController : MonoBehaviour
 
     private Dictionary<MonsterState, IMonsterState> dicState = new Dictionary<MonsterState, IMonsterState>(); // 몬스터의 상태를 담을 딕셔너리
     private MStateMachine mStateMachine; // 몬스터의 상태를 처리할 스테이트머신
-    private bool isSpawn = false;
+    private bool isSpawn = true;
     public MStateMachine MStateMachine { get; private set; }
     [HideInInspector] public Monster monster;
     public MonsterState enumState = MonsterState.IDLE; // 몬스터의 현재 상태를 체크하기 위한 변수
@@ -90,6 +90,10 @@ public class MonsterController : MonoBehaviour
     {
         monsterAni.SetTrigger("isSpawn");
         isSpawn = true;
+        // 기본상태가 Idle이기 때문에 현재Clip이 Spawn으로 갱신되도록 0.1초 기다림
+        yield return null;
+        //Debug.Log($"{monsterAni.GetCurrentAnimatorClipInfo(0)[0].clip.name}");
+        //Debug.Log($"{monster.monsterName}, {monsterAni.GetCurrentAnimatorStateInfo(0).length}");
         yield return new WaitForSeconds(monsterAni.GetCurrentAnimatorStateInfo(0).length);
         isSpawn = false;
     } // Spawn
@@ -169,4 +173,4 @@ public class MonsterController : MonoBehaviour
         // } 타겟이 공격사거리 안에 있으면 공격상태로 전환
 
     } // MonsterSetState
-}
+} // MonsterController

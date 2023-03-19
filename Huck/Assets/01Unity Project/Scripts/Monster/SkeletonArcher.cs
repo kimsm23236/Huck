@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkeletonArcher : Monster
 {
     private MonsterController mController = default;
+    [SerializeField] private GameObject weapon = default;
     public MonsterData monsterData;
     private float skillACool = 0f;
     private void Awake()
@@ -14,19 +16,28 @@ public class SkeletonArcher : Monster
         mController.monster = this;
     } // Awake
 
-    //! 공격 데미지 처리 함수
-    private void OnDamage()
+    //! 공격 처리 이벤트함수 (Collider)
+    private void EnableWeapon()
     {
+        weapon.SetActive(true);
+    } // EnableWeapon
 
-    } // OnDamage
+    //! 화살 쏘는 함수
+    private void ShootArrow()
+    {
+        GameObject arrow = ArrowPool.instance.GetArrow();
+        arrow.transform.position = weapon.transform.position;
+        arrow.SetActive(true);
+    } // ShootArrow
 
     //! 해골궁수 공격 오버라이드
     public override void Attack()
     {
+        mController.transform.LookAt(mController.targetSearch.hit.transform.position);
         if (mController.distance > meleeAttackRange)
         {
             mController.monsterAni.SetBool("isAttackB", true);
-            StartCoroutine(LookTarget());
+            StartCoroutine(LookAtTarget());
         }
         else
         {
@@ -37,6 +48,7 @@ public class SkeletonArcher : Monster
     //! 해골궁수 스킬 오버라이드
     public override void Skill()
     {
+        mController.transform.LookAt(mController.targetSearch.hit.transform.position);
         SkillA();
     } // Skill
 
@@ -54,7 +66,7 @@ public class SkeletonArcher : Monster
     private void SkillA()
     {
         mController.monsterAni.SetBool("isSkillA", true);
-        StartCoroutine(LookTarget());
+        StartCoroutine(LookAtTarget());
         StartCoroutine(SkillACooldown());
     } // SkillA
 
@@ -77,7 +89,7 @@ public class SkeletonArcher : Monster
     } // SkillACooldown
 
     //! 타겟을 바라보는 코루틴함수
-    private IEnumerator LookTarget()
+    private IEnumerator LookAtTarget()
     {
         bool isLookAt = true;
         while (isLookAt == true)
@@ -93,4 +105,4 @@ public class SkeletonArcher : Monster
             yield return null;
         }
     } // LookTarget
-}
+} // SkeletonArcher

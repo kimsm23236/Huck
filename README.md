@@ -12,3 +12,4 @@
 2023-03-17 / v0.0.8 / [KKS] Work on Arrow</br>
 2023-03-17 / v0.0.9 / [KKS] Work on Monster</br>
 2023-03-19 / v0.1.0 / [KKS] 몬스터 이동 로직 네비메쉬로 변경, 공격딜레이 상태 및 Spwan 추가</br>
+2023-03-19 / v0.1.1 / [KKS] Arrow Setup, Attack direction 수정<br/>

@@ -21,7 +21,7 @@ public class SkeletonSoldier : Monster
     private void EnableWeapon()
     {
         weapon.SetActive(true);
-    } // OnDamage
+    } // EnableWeapon
 
     //! 공격 처리 이벤트함수 (RayCast)
     private void EnableAttack()
@@ -46,8 +46,9 @@ public class SkeletonSoldier : Monster
     //! 해골병사 공격 오버라이드
     public override void Attack()
     {
-        // 모션 2개 중 랜덤으로 한개 실행
+        //모션 2개 중 랜덤으로 한개 실행
         int number = Random.Range(0, 10);
+        mController.transform.LookAt(mController.targetSearch.hit.transform.position);
         if (number <= 6)
         {
             mController.monsterAni.SetBool("isAttackA", true);
@@ -61,6 +62,7 @@ public class SkeletonSoldier : Monster
     //! 해골병사 스킬 오버라이드
     public override void Skill()
     {
+        mController.transform.LookAt(mController.targetSearch.hit.transform.position);
         if (useSkillA == true)
         {
             SkillA();
@@ -167,4 +169,4 @@ public class SkeletonSoldier : Monster
             yield return null;
         }
     } // SkillBCooldown
-}
+} // SkeletonSoldier

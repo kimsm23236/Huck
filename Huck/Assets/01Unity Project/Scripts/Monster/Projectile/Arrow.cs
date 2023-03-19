@@ -5,29 +5,45 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    private Rigidbody arrowRb;
-    private CapsuleCollider arrowCollider;
+    private Rigidbody arrowRb = default;
+    private CapsuleCollider arrowCollider = default;
+    private MonsterController mController = default;
+    private GameObject target = default;
     private bool isHit = false;
-    public GameObject target;
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         arrowRb = gameObject.GetComponent<Rigidbody>();
         arrowCollider = gameObject.GetComponent<CapsuleCollider>();
-        Vector3 dir = (target.transform.position - transform.position).normalized;
+        mController = transform.parent.gameObject.GetComponent<MonsterController>();
+        target = mController.targetSearch.hit.gameObject;
+    } // Awake
+
+    private void OnEnable()
+    {
+        // 부모오브젝트의 포지션을 따라가는걸 방지하기 위한 처리
+        transform.parent = default;
+        // 활성화될 때 초기화
+        arrowRb.useGravity = false;
+        isHit = false;
+        arrowCollider.isTrigger = true;
+        Vector3 targetPos = target.transform.position;
+        Vector3 dir = (targetPos - transform.position).normalized;
         transform.forward = dir;
-        Vector3 velocity = GetVelocity(transform.position, target.transform.position, 10f);
-        SetForce(velocity);
-    }
+        arrowRb.AddForce(dir * 20f, ForceMode.VelocityChange);
+        //Vector3 velocity = GetVelocity(transform.position, targetPos, 10f);
+        //SetForce(velocity);
+        StartCoroutine(EnqueueArrow());
+    } // OnEnable
 
     private void FixedUpdate()
     {
-        if (isHit == false)
+        // 화살의 방향이 힘을 받는 방향으로 향하도록 하는 처리
+        if (isHit == false && arrowRb.velocity != Vector3.zero)
         {
             transform.forward = arrowRb.velocity;
         }
-    }
+    } // FixedUpdate
+
     private void OnTriggerEnter(Collider other)
     {
         if (other != null)
@@ -39,10 +55,18 @@ public class Arrow : MonoBehaviour
             isHit = true;
             arrowCollider.isTrigger = false;
             arrowRb.velocity = Vector3.zero;
+            arrowRb.useGravity = true;
         }
+    } // OnTriggerEnter
+
+    private IEnumerator EnqueueArrow()
+    {
+        yield return new WaitForSeconds(5f);
+        arrowRb.velocity = Vector3.zero;
+        ArrowPool.instance.ReturnArrow(gameObject);
     }
 
-    void SetForce(Vector3 force)
+    private void SetForce(Vector3 force)
     {
         GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
     }
@@ -73,5 +97,4 @@ public class Arrow : MonoBehaviour
 
         return finalVelocity;
     }
-
 }

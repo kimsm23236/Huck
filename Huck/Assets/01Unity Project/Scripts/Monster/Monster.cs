@@ -64,7 +64,8 @@ public class Monster : MonoBehaviour
     //! 공격딜레이 주는 코루틴함수
     protected IEnumerator AttackDelay(MonsterController mController, int _number)
     {
-        int number = Random.Range(0, _number);
+        //int number = Random.Range(0, _number);
+        int number = 3;
         switch (number)
         {
             case 0:
@@ -129,7 +130,6 @@ public class Monster : MonoBehaviour
                         mController.monsterAni.SetBool("isLeft", true);
                         mController.mAgent.Move(-mController.transform.right.normalized * moveSpeed * Time.deltaTime);
                     }
-
                     yield return null;
                 }
                 mController.monsterAni.SetBool("isRight", false);
@@ -138,12 +138,12 @@ public class Monster : MonoBehaviour
                 break;
             case 3:
                 mController.monsterAni.SetTrigger("isRoar");
+                yield return new WaitForSeconds(0.1f) ;
                 yield return new WaitForSeconds(mController.monsterAni.GetCurrentAnimatorStateInfo(0).length);
                 break;
         }
-
         // 공격딜레이가 끝났으면 Idle상태로 초기화
         IMonsterState nextState = new MonsterIdle();
         mController.MStateMachine.onChangeState?.Invoke(nextState);
     } // AttackDelay
-}
+} // Monster
