@@ -1128,7 +1128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: bc9603f43065c4c46aa5fcf16c931a13, type: 2}
   targetTerrain: {fileID: 1114249688}
-  DEBUG_TurnOffObjectPlacers: 1
+  DEBUG_TurnOffObjectPlacers: 0
 --- !u!114 &9092503528081200850
 MonoBehaviour:
   m_ObjectHideFlags: 0
