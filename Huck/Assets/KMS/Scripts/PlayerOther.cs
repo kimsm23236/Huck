@@ -11,8 +11,11 @@ public class PlayerOther : MonoBehaviour
     public static bool isInvenOpen = false;
     public static bool isMapOpen = false;
 
+    private InventoryArray invenSlot = default;
+
     private void Start()
     {
+        invenSlot = inven.transform.GetChild(0).GetChild(0).GetComponent<InventoryArray>();
         CursorSet();
     }
 

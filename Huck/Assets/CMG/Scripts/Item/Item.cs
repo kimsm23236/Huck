@@ -5,5 +5,5 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public ItemData itemData = null;
-
+    public int itemCount = 3;
 }
