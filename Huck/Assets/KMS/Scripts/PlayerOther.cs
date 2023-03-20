@@ -6,6 +6,8 @@ public class PlayerOther : MonoBehaviour
 {
     public GameObject inven = default;
     public GameObject map = default;
+    public GameObject GUI = default;
+
     public static bool isInvenOpen = false;
     public static bool isMapOpen = false;
 
@@ -31,18 +33,21 @@ public class PlayerOther : MonoBehaviour
             if(isInvenOpen == true)
             {
                 Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 inven.SetActive(true);
+                GUI.SetActive(false);
             }
             if(isInvenOpen == false)
             {
                 Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
                 inven.SetActive(false);
+                GUI.SetActive(true);
             }
         }
     }
 #endregion
     // } Player Inventory 
-      
 
     // { Player Interaction 
 #region Interact
@@ -65,24 +70,25 @@ public class PlayerOther : MonoBehaviour
             isMapOpen = !isMapOpen;
             if(isMapOpen == true)
             {
-                Cursor.visible = true;
                 map.SetActive(true);
+                GUI.SetActive(false);
             }
             if(isMapOpen == false)
             {
-                Cursor.visible = false;
                 map.SetActive(false);
+                GUI.SetActive(true);
             }
         }
     }
 #endregion
     // } Player Map
+
     // { Cursor Setting
 #region Cursor
     private void CursorSet()
     {
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 #endregion
     // } Cursor Setting
