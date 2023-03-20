@@ -7,8 +7,9 @@ public class SkeletonArcher : Monster
 {
     private MonsterController mController = default;
     [SerializeField] private GameObject weapon = default;
-    public MonsterData monsterData;
+    [SerializeField] private MonsterData monsterData;
     private float skillACool = 0f;
+    private bool isAttackDelay = false;
     private void Awake()
     {
         mController = gameObject.GetComponent<MonsterController>();
@@ -25,9 +26,8 @@ public class SkeletonArcher : Monster
     //! 화살 쏘는 함수
     private void ShootArrow()
     {
-        GameObject arrow = ArrowPool.instance.GetArrow();
-        arrow.transform.position = weapon.transform.position;
-        arrow.SetActive(true);
+        Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
+        ArrowPool.Instance.GetArrow(dir, weapon.transform.position);
     } // ShootArrow
 
     //! 해골궁수 공격 오버라이드
@@ -91,18 +91,25 @@ public class SkeletonArcher : Monster
     //! 타겟을 바라보는 코루틴함수
     private IEnumerator LookAtTarget()
     {
+        isAttackDelay = false;
         bool isLookAt = true;
         while (isLookAt == true)
         {
-            if (mController.enumState != MonsterController.MonsterState.SKILL
-                && mController.enumState != MonsterController.MonsterState.ATTACK)
+            // 공격딜레이가 시작되면 종료
+            if (isAttackDelay == true)
             {
                 isLookAt = false;
                 yield break;
             }
             Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
-            mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
+            mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
             yield return null;
         }
     } // LookTarget
+
+    //! 타겟 바라보기 중지하는 이벤트함수
+    private void OffLookAtTarget()
+    {
+        isAttackDelay = true;
+    } // OffLookAtTarget
 } // SkeletonArcher

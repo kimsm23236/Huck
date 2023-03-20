@@ -63,9 +63,18 @@ public class SkeletonSoldier : Monster
     public override void Skill()
     {
         mController.transform.LookAt(mController.targetSearch.hit.transform.position);
-        if (useSkillA == true)
+
+        if (useSkillA == true && mController.distance >= 10f)
         {
             SkillA();
+            return;
+        }
+        else if (useSkillA == true && mController.distance < 10f)
+        {
+            // 돌진스킬이 사용가능하지만 타겟이 최소사거리 안에있을때 돌진스킬X Idle상태로 전환
+            isNoRangeAttack = true;
+            IMonsterState nextState = new MonsterIdle();
+            mController.MStateMachine.onChangeState?.Invoke(nextState);
             return;
         }
 
@@ -95,7 +104,6 @@ public class SkeletonSoldier : Monster
         mController.monsterAni.SetBool("isSkillB", true);
         StartCoroutine(SkillBCooldown());
     } // SkillB
-
 
     //! 공격종료 이벤트함수
     private void ExitAttack()

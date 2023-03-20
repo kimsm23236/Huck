@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Monster;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SkeletonGrunt : Monster
 {
     private MonsterController mController = default;
+    [SerializeField] private MonsterData monsterData = default;
+    [SerializeField] private GameObject weapon = default;
+    [SerializeField] private GameObject shoulder = default;
     private float skillACool = 0f;
     private float skillBCool = 0f;
     private float rushCool = 0f;
-    public MonsterData monsterData;
-    public GameObject weapon;
     void Awake()
     {
         mController = gameObject.GetComponent<MonsterController>();
@@ -18,27 +20,43 @@ public class SkeletonGrunt : Monster
         mController.monster = this;
     } // Awake
 
+    //! 무기 공격 처리 이벤트함수 (Collider)
+    private void EnableWeapon()
+    {
+        weapon.SetActive(true);
+    } // EnableWeapon
+
+    //! 어깨 공격 처리 이벤트함수 (Collider)
+    private void EnableShoulderAttack()
+    {
+        shoulder.SetActive(true);
+    } // EnableShoulderAttack
+
     //! 해골그런트 공격 오버라이드
     public override void Attack()
     {
-        if (mController.distance > meleeAttackRange)
+        mController.transform.LookAt(mController.targetSearch.hit.transform.position);
+        if (mController.distance >= 10f)
         {
             StartCoroutine(RushAttack());
+            return;
         }
-        else
+        if (mController.distance <= meleeAttackRange)
         {
             int number = Random.Range(0, 10);
-            if (number <= 4)
+            if (number > 7)
             {
-                mController.monsterAni.SetBool("isAttackA", true);
+                mController.monsterAni.SetBool("isAttackC", true);
+                return;
             }
-            else if (number > 4 && number <= 7)
+            else if (number > 4)
             {
                 mController.monsterAni.SetBool("isAttackB", true);
+                return;
             }
             else
             {
-                mController.monsterAni.SetBool("isAttackC", true);
+                mController.monsterAni.SetBool("isAttackA", true);
             }
         }
     } // Attack
@@ -46,6 +64,7 @@ public class SkeletonGrunt : Monster
     //! 해골그런트 스킬 오버라이드
     public override void Skill()
     {
+        mController.transform.LookAt(mController.targetSearch.hit.transform.position);
         if (useSkillA == true)
         {
             SkillA();
@@ -97,6 +116,8 @@ public class SkeletonGrunt : Monster
     //! 공격종료 이벤트함수
     private void ExitAttack()
     {
+        weapon.SetActive(false);
+        shoulder.SetActive(false);
         mController.monsterAni.SetBool("isAttackA", false);
         mController.monsterAni.SetBool("isAttackB", false);
         mController.monsterAni.SetBool("isAttackC", false);
@@ -115,28 +136,30 @@ public class SkeletonGrunt : Monster
         bool isRush = true;
         bool isFinishRush = false;
         float timeCheck = 0f;
+        mController.mAgent.speed = moveSpeed * 2f;
         while (isRush == true)
         {
-            // if : 마무리 공격 시작 전까지
+            // if : 돌진 마무리 공격 시작 전까지
             if (isFinishRush == false)
             {
-                Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
-                mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
-                mController.transform.position += dir * (moveSpeed * 2f) * Time.deltaTime;
+                mController.mAgent.SetDestination(mController.targetSearch.hit.transform.position);
+
             }
             else
             {
-                // 마무리 공격 시작되면 돌진하던 방향 그대로 1초간 돌진
+                // 돌진 마무리 공격 시작되면 돌진하던 방향 그대로 1초간 돌진
                 timeCheck += Time.deltaTime;
-                mController.transform.position += transform.forward * (moveSpeed * 1.5f) * Time.deltaTime;
+                mController.mAgent.Move(mController.transform.forward * moveSpeed * Time.deltaTime);
                 if (timeCheck >= 1f)
                 {
                     isRush = false;
                 }
             }
-
+            // 돌진 마무리 공격 시작
             if (mController.distance <= meleeAttackRange && isFinishRush == false)
             {
+                mController.mAgent.speed = moveSpeed;
+                mController.mAgent.ResetPath();
                 mController.monsterAni.SetBool("isRun", false);
                 mController.monsterAni.SetBool("isRushAttack", true);
                 isFinishRush = true;

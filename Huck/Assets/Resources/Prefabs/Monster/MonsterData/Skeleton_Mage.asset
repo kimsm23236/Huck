@@ -24,6 +24,6 @@ MonoBehaviour:
   useSkillB: 1
   skillA_MaxCooldown: 30
   skillB_MaxCooldown: 20
-  searchRange: 20
-  attackRange: 15
+  searchRange: 30
+  attackRange: 20
   meleeAttackRange: 2

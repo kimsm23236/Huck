@@ -5,7 +5,8 @@ using UnityEngine;
 public class SkeletonKing : Monster
 {
     private MonsterController mController = default;
-    public MonsterData monsterData;
+    [SerializeField] private MonsterData monsterData = default;
+    [SerializeField] private GameObject weapon = default;
     private float skillACool = 0f;
     void Awake()
     {
