@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     public GameObject head = default;
-    public static float sensitivity = 400f;
+    public static float sensitivity = 300f;
     private float limitAngle = 80;
     private float cameraX,cameraY,rotateX,rotateY;
 
