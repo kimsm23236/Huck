@@ -16,6 +16,7 @@ public class InventoryArray : MonoBehaviour
     private GraphicRaycaster graphicRay = default;
     private PointerEventData pointEvent = default;
     private Canvas myCanvas = default;
+    private GameObject dividedItemIcon = default;
 
     private ItemSlot beginDragSlot = default;
     private Transform beginItemTrans = default;
@@ -36,21 +37,7 @@ public class InventoryArray : MonoBehaviour
 
     private void Awake()
     {
-        slotWidth = slotPrefab.GetComponent<RectTransform>().sizeDelta.x;
-        slotHeight = slotPrefab.GetComponent<RectTransform>().sizeDelta.y;
-        beginSlotPos = new Vector2(slotWidth / 2 + 10f, slotHeight / -2 - 10f);
-        int slotIdx = 1;
-        for (int y = 0; y < verticalSlotCount; y++)
-        {
-            for (int x = 0; x < horizonSlotCount; x++)
-            {
-                GameObject slotGo = Instantiate(slotPrefab);
-                slotGo.transform.SetParent(this.transform, false);
-                slotGo.GetComponent<RectTransform>().anchoredPosition = beginSlotPos + new Vector2((slotWidth + paddingSlot) * x, (slotHeight + paddingSlot) * y * -1);
-                slotGo.name = $"{slotPrefab.name}{slotIdx}";
-                slotIdx++;
-            }
-        }
+        InitSlots();
     }
     // Start is called before the first frame update
     void Start()
@@ -71,11 +58,28 @@ public class InventoryArray : MonoBehaviour
         OnPointerDown();
         OnPointerDrag();
         OnPointerUp();
+        DividItem();
+        DividDrag();
+        DividDragEnd();
     }
 
     private void InitSlots()
     {
-
+        slotWidth = slotPrefab.GetComponent<RectTransform>().sizeDelta.x;
+        slotHeight = slotPrefab.GetComponent<RectTransform>().sizeDelta.y;
+        beginSlotPos = new Vector2(slotWidth / 2 + 10f, slotHeight / -2 - 10f);
+        int slotIdx = 1;
+        for (int y = 0; y < verticalSlotCount; y++)
+        {
+            for (int x = 0; x < horizonSlotCount; x++)
+            {
+                GameObject slotGo = Instantiate(slotPrefab);
+                slotGo.transform.SetParent(this.transform, false);
+                slotGo.GetComponent<RectTransform>().anchoredPosition = beginSlotPos + new Vector2((slotWidth + paddingSlot) * x, (slotHeight + paddingSlot) * y * -1);
+                slotGo.name = $"{slotPrefab.name}{slotIdx}";
+                slotIdx++;
+            }
+        }
     }
     private T RaycastGetFirstComponent<T>() where T : Component
     {
@@ -110,9 +114,9 @@ public class InventoryArray : MonoBehaviour
 
     private void OnPointerDrag()
     {
-        if (beginDragSlot == null) return;
+        if (beginDragSlot == null || beginDragSlot == default) return;
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && beginItemTrans != null)
         {
             // 위치 이동
             beginItemTrans.position = beginDragIconPoint + (Input.mousePosition - beginDragCursorPoint);
@@ -121,10 +125,10 @@ public class InventoryArray : MonoBehaviour
 
     private void OnPointerUp()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && beginItemTrans != null)
         {
             // End Drag
-            if (beginDragSlot != null)
+            if (beginDragSlot != null || beginDragSlot != default)
             {
                 // 위치 복원
                 beginItemTrans.position = beginDragIconPoint;
@@ -144,19 +148,44 @@ public class InventoryArray : MonoBehaviour
 
     public void AddItem(Item item_)
     {
-        for (int i = 0; i < transform.childCount; i++)
+        if (item_.itemData.itemType == ItemType.CombineAble)
         {
-            // 비었는지 검사
-            if (transform.GetChild(i).GetComponent<ItemSlot>().Item != null)
-            { /* To Do (type검사해서 합칠수 있으면 합침) */ }
+            bool isCombine = false;
             // 같은게 있는지 검사
-            // 비어있는 칸에 추가
-            else
+            for (int i = 0; i < transform.childCount; i++)
             {
-                transform.GetChild(i).GetComponent<ItemSlot>().Item = item_.itemData;
-                break;
+                if (transform.GetChild(i).GetComponent<ItemSlot>().Item != null && transform.GetChild(i).GetComponent<ItemSlot>().Item.itemName == item_.itemData.itemName)
+                {
+                    transform.GetChild(i).GetComponent<ItemSlot>().itemAmount += item_.itemCount;
+                    isCombine = true;
+                    break;
+                } // 획득한 아이템과 같은 이름의 아이템이 있는지 확인
             }
+            if (!isCombine)
+            {
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    if (transform.GetChild(i).GetComponent<ItemSlot>().Item == null)
+                    {
+                        transform.GetChild(i).GetComponent<ItemSlot>().Item = item_.itemData;
+                        transform.GetChild(i).GetComponent<ItemSlot>().itemAmount += item_.itemCount;
+                        break;
+                    }
+                }
+            } // 합쳐질 아이템이 없을 경우
         }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).GetComponent<ItemSlot>().Item != null)
+                {
+                    transform.GetChild(i).GetComponent<ItemSlot>().Item = item_.itemData;
+                    break;
+                }
+            }
+        } // 합쳐질 수 없는 아이템의 경우
+
     }
 
     private void EndDrag()
@@ -172,9 +201,89 @@ public class InventoryArray : MonoBehaviour
 
     private void SwapItems(ItemSlot startItem, ItemSlot endItem)
     {
-        ItemData tempItem = default;
-        tempItem = startItem.Item;
-        startItem.Item = endItem.Item;
-        endItem.Item = tempItem;
+        if (startItem != endItem && endItem.Item != null && startItem.Item.itemName == endItem.Item.itemName)
+        {
+            endItem.itemAmount += startItem.itemAmount;
+            startItem.Item = default;
+            startItem.itemAmount = 0;
+        }
+        else
+        {
+            ItemData tempItem = default;
+            tempItem = startItem.Item;
+            startItem.Item = endItem.Item;
+            endItem.Item = tempItem;
+
+            int tmepItemCount = 0;
+            tmepItemCount = startItem.itemAmount;
+            startItem.itemAmount = endItem.itemAmount;
+            endItem.itemAmount = tmepItemCount;
+        }
     }
+
+    private void DividItem()
+    {
+        if (Input.GetMouseButtonUp(1) && dividedItemIcon == null)
+        {
+            ItemSlot dividSlot = RaycastGetFirstComponent<ItemSlot>();
+            if (dividSlot != null && dividSlot.HasItem && dividSlot.Item.itemType == ItemType.CombineAble)
+            {
+                if (dividSlot.itemAmount <= 1)
+                {
+                    // Do nothing
+                }
+                else
+                {
+                    int dividedItemAmount = 0;
+                    dividedItemAmount = dividSlot.itemAmount / 2;
+                    dividSlot.itemAmount -= dividedItemAmount;
+                    dividedItemIcon = Instantiate(slotPrefab);
+                    dividedItemIcon.transform.SetParent(this.transform, false);
+                    dividedItemIcon.GetComponent<ItemSlot>().itemAmount = dividedItemAmount;
+                    dividedItemIcon.GetComponent<ItemSlot>().Item = dividSlot.Item;
+                    dividedItemIcon.GetComponent<Image>().raycastTarget = false;
+                    // dividedItemIcon.GetComponent<Image>().sprite = dividSlot.Item.itemIcon;
+                }
+            }
+        }
+    }
+
+    private void DividDrag()
+    {
+        if (dividedItemIcon != null)
+        {
+            dividedItemIcon.transform.position = Input.mousePosition;
+        }
+    }
+
+    private void DividDragEnd()
+    {
+        if (Input.GetMouseButtonUp(0) && dividedItemIcon != null)
+        {
+            ItemSlot clickSlot = RaycastGetFirstComponent<ItemSlot>();
+            if (clickSlot.HasItem && dividedItemIcon.GetComponent<ItemSlot>().Item.itemType == ItemType.CombineAble
+                && clickSlot.Item.itemName == dividedItemIcon.GetComponent<ItemSlot>().Item.itemName)
+            {
+                clickSlot.itemAmount += dividedItemIcon.GetComponent<ItemSlot>().itemAmount;
+                Destroy(dividedItemIcon.gameObject);
+            } // 아이템이 들어있고 합칠 수 있는 아이템이면서 이름이 같은 경우
+            else if (clickSlot.HasItem && dividedItemIcon.GetComponent<ItemSlot>().Item.itemType == ItemType.NoneCombineAble
+                    && clickSlot.Item.itemName != dividedItemIcon.GetComponent<ItemSlot>().Item.itemName)
+            {
+                SwapItems(dividedItemIcon.GetComponent<ItemSlot>(), clickSlot);
+            } // 아이템이 들어있고 합칠 수 없는 아이템이면서 이름이 같은 경우
+            else if (clickSlot.HasItem && dividedItemIcon.GetComponent<ItemSlot>().Item.itemType == ItemType.CombineAble
+                    && clickSlot.Item.itemName != dividedItemIcon.GetComponent<ItemSlot>().Item.itemName)
+            {
+                SwapItems(dividedItemIcon.GetComponent<ItemSlot>(), clickSlot);
+            } // 아이템이 들어있고 합칠 수 있으면서 이름이 다른 경우
+            else
+            {
+                clickSlot.Item = dividedItemIcon.GetComponent<ItemSlot>().Item;
+                clickSlot.itemAmount = dividedItemIcon.GetComponent<ItemSlot>().itemAmount;
+                Destroy(dividedItemIcon.gameObject);
+            } // 아이템이 없는 경우
+        }
+    }
+
 }
