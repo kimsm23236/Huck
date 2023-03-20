@@ -38,7 +38,7 @@ public class PlayerAtk : MonoBehaviour
         if(isAttack == true && PlayerOther.isInvenOpen == false
             && PlayerOther.isMapOpen == false)
         {
-            if(PlayerMove.isGrounded == true && isAttacking == false)
+            if(isAttacking == false)
             {
                 atkAnim.SetTrigger("Attack");
                 isAttacking = true;

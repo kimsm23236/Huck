@@ -4,18 +4,19 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Floor
-  - Monster
-  - AttackRange
-  - Weapon
-  - Item
+  - Enemy
+  - Gather
+  - build
+  - Terrain
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - 
   - Water
   - UI
+  - Player
+  - Enemy
   - 
   - 
   - 
@@ -24,6 +25,8 @@ TagManager:
   - 
   - 
   - 
+  - Gather
+  - Terrain
   - 
   - 
   - 
@@ -32,12 +35,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - buildThings
+  - build
   - 
   - 
   - 
@@ -45,7 +44,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: 1
-    uniqueID: 1784216151
     locked: 0

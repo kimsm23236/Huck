@@ -32,6 +32,7 @@ public class PlayerOther : MonoBehaviour
             isInvenOpen = !isInvenOpen;
             if(isInvenOpen == true)
             {
+                gameObject.GetComponent<PlayerAtk>().enabled = false;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 inven.SetActive(true);
@@ -39,6 +40,7 @@ public class PlayerOther : MonoBehaviour
             }
             if(isInvenOpen == false)
             {
+                gameObject.GetComponent<PlayerAtk>().enabled = true;
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 inven.SetActive(false);
@@ -70,11 +72,13 @@ public class PlayerOther : MonoBehaviour
             isMapOpen = !isMapOpen;
             if(isMapOpen == true)
             {
+                gameObject.GetComponent<PlayerAtk>().enabled = false;
                 map.SetActive(true);
                 GUI.SetActive(false);
             }
             if(isMapOpen == false)
             {
+                gameObject.GetComponent<PlayerAtk>().enabled = true;
                 map.SetActive(false);
                 GUI.SetActive(true);
             }
