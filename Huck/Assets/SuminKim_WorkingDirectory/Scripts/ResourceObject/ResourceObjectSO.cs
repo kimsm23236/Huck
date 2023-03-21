@@ -6,7 +6,7 @@ public enum EResourceType
 {
     NONE = -1,
     WOOD,
-    ORE
+    ORE,
 }
 public enum EResourceLevel
 {
