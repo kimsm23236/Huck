@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
-using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class BuildObjDir : MonoBehaviour
 {
@@ -46,7 +43,7 @@ public class BuildObjDir : MonoBehaviour
         Size[2] = sizeZ;
     }
 
-    //Á¤»ç°¢Çü »çÀÌÁî ÁÖ±â
+    //ï¿½ï¿½ï¿½ç°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
     private void SizeToType()
     {
         switch (PrevType)
@@ -83,15 +80,15 @@ public class BuildObjDir : MonoBehaviour
 
     private void setPoint()
     {
-        dotPoint[0] = new Vector3(middlePos.x, middlePos.y, middlePos.z); //Áß°£
+        dotPoint[0] = new Vector3(middlePos.x, middlePos.y, middlePos.z); //ï¿½ß°ï¿½
         dotPoint[1] = new Vector3(middlePos.x - Size[0] / 2 + BorderSize,
-            middlePos.y + Size[1] / 2 - BorderSize, middlePos.z); //ÁÂÃø»ó´Ü
+            middlePos.y + Size[1] / 2 - BorderSize, middlePos.z); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         dotPoint[2] = new Vector3(middlePos.x + Size[0] / 2 - BorderSize,
-            middlePos.y + Size[1] / 2 - BorderSize, middlePos.z); //¿ìÃø»ó´Ü
+            middlePos.y + Size[1] / 2 - BorderSize, middlePos.z); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         dotPoint[3] = new Vector3(middlePos.x - Size[0] / 2 + BorderSize,
-            middlePos.y - Size[1] / 2 + BorderSize, middlePos.z); //ÁÂÃøÇÏ´Ü
+            middlePos.y - Size[1] / 2 + BorderSize, middlePos.z); //ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½
         dotPoint[4] = new Vector3(middlePos.x + Size[0] / 2 - BorderSize,
-            middlePos.y - Size[1] / 2 + BorderSize, middlePos.z); //¿ìÃøÇÏ´Ü
+            middlePos.y - Size[1] / 2 + BorderSize, middlePos.z); //ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½
     }
 
     private bool IsOnSlope(Vector3 Pos)
