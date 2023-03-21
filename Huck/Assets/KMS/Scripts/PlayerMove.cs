@@ -49,12 +49,6 @@ public class PlayerMove : MonoBehaviour
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
 
-            if(PlayerAtk.isAttacking == true)
-            {
-                horizontal = 0;
-                vertical = 0;
-            }
-
             Vector3 move_H = transform.right * horizontal;
             Vector3 move_V = transform.forward * vertical;
             Vector3 velocity_P = (move_H + move_V).normalized * moveSpeed;
@@ -129,7 +123,7 @@ public class PlayerMove : MonoBehaviour
 #region Jump
     private void JumpInput()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && PlayerAtk.isAttacking == false)
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             isJump = true;
         }
@@ -181,7 +175,7 @@ public class PlayerMove : MonoBehaviour
 #region Grounded
     private void OnCollisionEnter(Collision other) 
     {
-        if(other.gameObject.tag == "Floor")
+        if(other.gameObject.tag == "Terrain")
         {
             isGrounded = true;
             isJump = false;

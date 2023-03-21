@@ -10,30 +10,33 @@ public class PlayerOther : MonoBehaviour
 
     public static bool isInvenOpen = false;
     public static bool isMapOpen = false;
-
+    [SerializeField]
     private InventoryArray invenSlot = default;
-
+    [SerializeField]
+    private Item itemInfo = default;
     private void Start()
     {
-        invenSlot = inven.transform.GetChild(0).GetChild(0).GetComponent<InventoryArray>();
         CursorSet();
+        inven.SetActive(false);
+        invenSlot = inven.transform.GetChild(0).GetChild(0).GetComponent<InventoryArray>();
     }
 
-    private void Update() 
+    private void Update()
     {
         InvenOpen();
         MapOpen();
+        Interaction();
     }
-    
+
     // { Player Inventory
-#region Inven
+    #region Inven
     public void InvenOpen()
     {
 
-        if(Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false)
+        if (Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false)
         {
             isInvenOpen = !isInvenOpen;
-            if(isInvenOpen == true)
+            if (isInvenOpen == true)
             {
                 gameObject.GetComponent<PlayerAtk>().enabled = false;
                 Cursor.visible = true;
@@ -41,7 +44,7 @@ public class PlayerOther : MonoBehaviour
                 inven.SetActive(true);
                 GUI.SetActive(false);
             }
-            if(isInvenOpen == false)
+            if (isInvenOpen == false)
             {
                 gameObject.GetComponent<PlayerAtk>().enabled = true;
                 Cursor.visible = false;
@@ -51,35 +54,36 @@ public class PlayerOther : MonoBehaviour
             }
         }
     }
-#endregion
+    #endregion
     // } Player Inventory 
 
     // { Player Interaction 
-#region Interact
+    #region Interact
     public void Interaction()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            
+
         }
+        RootItem();
     }
-#endregion
+    #endregion
     // } Player Interaction
 
     // { Player Map
-#region Map
+    #region Map
     public void MapOpen()
     {
-        if(Input.GetKeyDown(KeyCode.M) && isInvenOpen == false)
+        if (Input.GetKeyDown(KeyCode.M) && isInvenOpen == false)
         {
             isMapOpen = !isMapOpen;
-            if(isMapOpen == true)
+            if (isMapOpen == true)
             {
                 gameObject.GetComponent<PlayerAtk>().enabled = false;
                 map.SetActive(true);
                 GUI.SetActive(false);
             }
-            if(isMapOpen == false)
+            if (isMapOpen == false)
             {
                 gameObject.GetComponent<PlayerAtk>().enabled = true;
                 map.SetActive(false);
@@ -87,16 +91,31 @@ public class PlayerOther : MonoBehaviour
             }
         }
     }
-#endregion
+    #endregion
     // } Player Map
 
     // { Cursor Setting
-#region Cursor
+    #region Cursor
     private void CursorSet()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
-#endregion
+    #endregion
     // } Cursor Setting
+
+    #region  RootItem
+    private void RootItem()
+    {
+        if (Camera.main.GetComponent<ItemRange>().getItem != null)
+        {
+            itemInfo = Camera.main.GetComponent<ItemRange>().getItem.GetComponent<Item>();
+        }
+        if (itemInfo != null && Input.GetKeyDown(KeyCode.E))
+        {
+            invenSlot.AddItem(itemInfo);
+            Destroy(itemInfo.gameObject);
+        }
+    }
+    #endregion
 }

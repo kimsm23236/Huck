@@ -23,6 +23,8 @@ public class InventoryArray : MonoBehaviour
     private Vector3 beginDragIconPoint;   // 드래그 시작 시 슬롯의 위치
     private Vector3 beginDragCursorPoint; // 드래그 시작 시 커서의 위치
     private int beginDragSlotSiblingIndex;
+    private GameObject inventoryUi = default;
+
     #endregion
 
 
@@ -66,7 +68,7 @@ public class InventoryArray : MonoBehaviour
     {
         slotWidth = slotPrefab.GetComponent<RectTransform>().sizeDelta.x;
         slotHeight = slotPrefab.GetComponent<RectTransform>().sizeDelta.y;
-        beginSlotPos = new Vector2(slotWidth / 2 + 10f, slotHeight / -2 - 10f);
+        beginSlotPos = new Vector2(slotWidth / 2 + paddingSlot, slotHeight / -2 - paddingSlot);
         int slotIdx = 1;
         for (int y = 0; y < verticalSlotCount; y++)
         {
@@ -124,24 +126,43 @@ public class InventoryArray : MonoBehaviour
 
     private void OnPointerUp()
     {
-        if (Input.GetMouseButtonUp(0) && beginItemTrans != null)
+        if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject() && dividedItemIcon == null)
+        {
+            GameObject createItem = Instantiate(beginDragSlot.Item.originPrefab);
+            createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
+            createItem.transform.position = GameManager.Instance.playerObj.transform.position;
+            createItem.GetComponent<Item>().itemCount = beginDragSlot.itemAmount;
+            beginDragSlot.Item = default;
+            beginDragSlot.itemAmount = 0;
+
+            // 위치 복원
+            beginItemTrans.position = beginDragIconPoint;
+
+            // UI 순서 복원
+            beginDragSlot.transform.SetSiblingIndex(beginDragSlotSiblingIndex);
+
+            // 드래그 완료 처리
+            EndDrag();
+
+            // 참조 제거
+            beginDragSlot = null;
+            beginItemTrans = null;
+        }
+        else if (Input.GetMouseButtonUp(0) && beginItemTrans != null)
         {
             // End Drag
-            if (beginDragSlot != null || beginDragSlot != default)
-            {
-                // 위치 복원
-                beginItemTrans.position = beginDragIconPoint;
+            // 위치 복원
+            beginItemTrans.position = beginDragIconPoint;
 
-                // UI 순서 복원
-                beginDragSlot.transform.SetSiblingIndex(beginDragSlotSiblingIndex);
+            // UI 순서 복원
+            beginDragSlot.transform.SetSiblingIndex(beginDragSlotSiblingIndex);
 
-                // 드래그 완료 처리
-                EndDrag();
+            // 드래그 완료 처리
+            EndDrag();
 
-                // 참조 제거
-                beginDragSlot = null;
-                beginItemTrans = null;
-            }
+            // 참조 제거
+            beginDragSlot = null;
+            beginItemTrans = null;
         }
     }
 
@@ -266,7 +287,15 @@ public class InventoryArray : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && dividedItemIcon != null)
         {
             ItemSlot clickSlot = RaycastGetFirstComponent<ItemSlot>();
-            if (clickSlot != null)
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                GameObject createItem = Instantiate(dividedItemIcon.GetComponent<ItemSlot>().Item.originPrefab);
+                createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
+                createItem.transform.position = GameManager.Instance.playerObj.transform.position;
+                createItem.GetComponent<Item>().itemCount = dividedItemIcon.GetComponent<ItemSlot>().itemAmount;
+                Destroy(dividedItemIcon.gameObject);
+            }
+            else if (clickSlot != null)
             {
                 if (clickSlot.HasItem && dividedItemIcon.GetComponent<ItemSlot>().Item.itemType == ItemType.CombineAble
                     && clickSlot.Item.itemName == dividedItemIcon.GetComponent<ItemSlot>().Item.itemName)
