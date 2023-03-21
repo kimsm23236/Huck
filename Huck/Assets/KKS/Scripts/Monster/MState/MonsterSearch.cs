@@ -39,7 +39,7 @@ public class MonsterSearch : IMonsterState
         mController.monsterAni.SetBool("isWalk", true);
         while (exitState == false)
         {
-            mController.mAgent.SetDestination(mController.targetPos.position);
+            mController.mAgent.SetDestination(mController.target.transform.position);
             yield return null;
         }
     } // TargetChase

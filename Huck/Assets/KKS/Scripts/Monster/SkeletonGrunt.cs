@@ -36,11 +36,20 @@ public class SkeletonGrunt : Monster
     public override void Attack()
     {
         mController.transform.LookAt(mController.targetSearch.hit.transform.position);
-        if (mController.distance > meleeAttackRange)
+        if (mController.distance >= 13f)
         {
             StartCoroutine(RushAttack());
             return;
         }
+        else if(mController.distance > meleeAttackRange)
+        {
+            // 돌진공격이 사용가능하지만 타겟이 최소사거리 안에 있을때 돌진공격X Idle상태로 전환
+            StartCoroutine(CheckRushDistance());
+            IMonsterState nextState = new MonsterIdle();
+            mController.MStateMachine.onChangeState?.Invoke(nextState);
+            return;
+        }
+
         if (mController.distance <= meleeAttackRange)
         {
             int number = Random.Range(0, 10);
@@ -90,10 +99,10 @@ public class SkeletonGrunt : Monster
     //! 스킬A 데미지판정 함수
     private void SkillA_Damage()
     {
-        RaycastHit[] hits = Physics.SphereCastAll(weapon.transform.position, 3f, Vector3.up, 0f, LayerMask.GetMask("Player"));
-        if (hits != null)
+        RaycastHit[] hits = Physics.SphereCastAll(weapon.transform.position, 3f, Vector3.up, 0f, LayerMask.GetMask(GData.PLAYER_MASK));
+        if (hits.Length > 0)
         {
-            if (hits[0].collider.tag == "Player")
+            if (hits[0].collider.tag == GData.PLAYER_MASK)
             {
                 Debug.Log("플레이어 맞춤");
             }
@@ -128,6 +137,24 @@ public class SkeletonGrunt : Monster
         StartCoroutine(AttackDelay(mController, 4));
     } // ExitAttack
 
+    //! 돌진 공격 사용 거리 체크하는 코루틴함수
+    private IEnumerator CheckRushDistance()
+    {
+        isNoRangeAttack = true;
+        while (isNoRangeAttack == true)
+        {
+            float distance = Vector3.Distance(mController.targetSearch.hit.transform.position, mController.transform.position);
+            // 타겟이 돌진 최소사거리 밖에 있으면 돌진 사용가능
+            if (distance >= 13f)
+            {
+                Debug.Log($"거리 : {distance}");
+                isNoRangeAttack = false;
+                yield break;
+            }
+            yield return null;
+        }
+    } // CheckRushDistance
+
     //! 돌진 공격 코루틴 함수
     private IEnumerator RushAttack()
     {
@@ -143,7 +170,6 @@ public class SkeletonGrunt : Monster
             if (isFinishRush == false)
             {
                 mController.mAgent.SetDestination(mController.targetSearch.hit.transform.position);
-
             }
             else
             {
@@ -183,7 +209,7 @@ public class SkeletonGrunt : Monster
     {
         // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 스킬 쿨 적용
         isNoRangeAttack = true;
-        while (true)
+        while (isNoRangeAttack == true)
         {
             rushCool += Time.deltaTime;
             if (rushCool >= 20f)

@@ -26,7 +26,7 @@ public class SkeletonArcher : Monster
     //! 화살 쏘는 함수
     private void ShootArrow()
     {
-        Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
+        Vector3 dir = (mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
         ArrowPool.Instance.GetArrow(dir, weapon.transform.position);
     } // ShootArrow
 
@@ -101,7 +101,7 @@ public class SkeletonArcher : Monster
                 isLookAt = false;
                 yield break;
             }
-            Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
+            Vector3 dir = (mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
             mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
             yield return null;
         }

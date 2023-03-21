@@ -17,3 +17,5 @@ MonoBehaviour:
   itemCount: 0
   parentsTransform: {fileID: 0}
   itemIcon: {fileID: 21300000, guid: d3132daa443712141bab22448a1df718, type: 3}
+  originPrefab: {fileID: 3633769257149104590, guid: 14867fafdf6ee55459921996d601fd41,
+    type: 3}

@@ -10,6 +10,7 @@ public class ItemData : ScriptableObject
     public int itemCount;
     public Transform parentsTransform;
     public Sprite itemIcon;
+    public GameObject originPrefab;
 }
 
 public enum ItemType

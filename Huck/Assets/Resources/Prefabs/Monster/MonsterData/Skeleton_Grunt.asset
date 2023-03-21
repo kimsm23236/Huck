@@ -20,8 +20,8 @@ MonoBehaviour:
   maxDamage: 6
   isNoRangeAttack: 0
   isNoRangeSkill: 1
-  useSkillA: 0
-  useSkillB: 0
+  useSkillA: 1
+  useSkillB: 1
   skillA_MaxCooldown: 40
   skillB_MaxCooldown: 50
   searchRange: 25
