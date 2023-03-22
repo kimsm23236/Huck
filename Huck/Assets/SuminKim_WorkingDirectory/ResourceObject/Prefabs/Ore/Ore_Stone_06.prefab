@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5759039726148701572}
   - component: {fileID: 6537731631776451988}
+  - component: {fileID: -2733654803594910786}
+  - component: {fileID: 7416810097403871550}
   m_Layer: 0
   m_Name: Ore_Stone_06
   m_TagString: Untagged
@@ -60,6 +62,33 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8593487856464375659}
   m_Enabled: 1
+--- !u!114 &-2733654803594910786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525703396560854713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b040d56ccca6841b55dade2c2f3951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resConfig: {fileID: 11400000, guid: 61614773e5e3d62418aa757b96317aef, type: 2}
+--- !u!64 &7416810097403871550
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525703396560854713}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: cf44b1dd5728383478551adbe7f7fd52, type: 2}
 --- !u!1 &1974520593587031792
 GameObject:
   m_ObjectHideFlags: 0
