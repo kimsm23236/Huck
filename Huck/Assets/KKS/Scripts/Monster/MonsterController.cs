@@ -31,7 +31,7 @@ public class MonsterController : MonoBehaviour
     [HideInInspector] public TargetSearchRay targetSearch = default;
     [HideInInspector] public NavMeshAgent mAgent = default;
     // { Test
-    public Transform targetPos;
+    public GameObject target;
     public float distance; // 타겟과의 거리 변수
     // } Test
 
@@ -67,6 +67,8 @@ public class MonsterController : MonoBehaviour
 
         // 입력받은 상태를 처리할 MStateMachine 초기화 
         MStateMachine = new MStateMachine(idle, this);
+        // 매프레임마다 실행 시켜줄 필요가 없어서 0.5초마다 타겟 정보 갱신
+        InvokeRepeating("GetTarget", 0f, 0.5f);
         StartCoroutine(Spawn());
     } // Start
 
@@ -84,6 +86,12 @@ public class MonsterController : MonoBehaviour
     {
         MStateMachine.DoFixedUpdate();
     } // FixedUpdate
+
+    //! 타겟의 정보를 가져오는 함수
+    private void GetTarget()
+    {
+        target = GameManager.Instance.playerObj;
+    } // GetTarget
 
     //! 몬스터 스폰 코루틴함수
     private IEnumerator Spawn()
@@ -112,7 +120,7 @@ public class MonsterController : MonoBehaviour
             MStateMachine.SetState(dicState[MonsterState.HIT]);
         }
 
-        float _distance = Vector3.Distance(this.transform.position, targetPos.position);
+        float _distance = Vector3.Distance(this.transform.position, target.transform.position);
         // 타겟이 몬스터의 탐색범위 밖에 있으면 추적
         if (_distance > monster.searchRange)
         {
@@ -128,7 +136,7 @@ public class MonsterController : MonoBehaviour
         {
             MStateMachine.SetState(dicState[MonsterState.MOVE]);
         }
-        // { 타겟이 공격사거리 안에 있으면 공격상태로 전환
+        // { 타겟이 공격사거리 안에 있으면 공격 및 스킬 상태로 전환
         if (distance <= monster.attackRange)
         {
             // 몬스터의 스킬이 사용가능할 때
@@ -141,7 +149,6 @@ public class MonsterController : MonoBehaviour
                         if (distance <= monster.meleeAttackRange)
                         {
                             MStateMachine.SetState(dicState[MonsterState.SKILL]);
-                            return;
                         }
                         break;
                     case false:
@@ -165,12 +172,15 @@ public class MonsterController : MonoBehaviour
                         }
                         break;
                     case false:
-                        MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+                        if (distance > monster.meleeAttackRange)
+                        {
+                            MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+                        }
                         break;
                 } // switch end
             } // if end
         }
-        // } 타겟이 공격사거리 안에 있으면 공격상태로 전환
+        // } 타겟이 공격사거리 안에 있으면 공격 및 스킬 상태로 전환
 
     } // MonsterSetState
 } // MonsterController

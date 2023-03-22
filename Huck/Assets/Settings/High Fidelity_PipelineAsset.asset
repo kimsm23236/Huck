@@ -17,7 +17,11 @@ MonoBehaviour:
   m_RendererType: 1
   m_RendererData: {fileID: 0}
   m_RendererDataList:
+<<<<<<< HEAD
   - {fileID: 11400000, guid: 5b5f5e7a6ec6a014990149fbe4aab9ef, type: 2}
+=======
+  - {fileID: 11400000, guid: 60fb67abb90668148a6d4132ea1e7efd, type: 2}
+>>>>>>> origin/SuminKim
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 0
   m_RequireOpaqueTexture: 0

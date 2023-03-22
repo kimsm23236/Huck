@@ -1870,7 +1870,6 @@ GameObject:
   - component: {fileID: 7715587921698663986}
   - component: {fileID: 7715587921698664013}
   - component: {fileID: 7715587921698664012}
-  - component: {fileID: 4621979998536162761}
   m_Layer: 7
   m_Name: Skeleton_Soldier
   m_TagString: Enemy
@@ -2036,18 +2035,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
---- !u!114 &4621979998536162761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7715587921698663988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cbcbfcc647cc1f46ab0bece09a6c93b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7735548388582168317
 GameObject:
   m_ObjectHideFlags: 0

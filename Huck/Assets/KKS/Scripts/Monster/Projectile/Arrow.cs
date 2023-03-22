@@ -50,7 +50,7 @@ public class Arrow : MonoBehaviour
     {
         if (other != null)
         {
-            if (other.tag == "Player")
+            if (other.tag == GData.PLAYER_MASK || other.tag == GData.BUILD_MASK)
             {
                 Debug.Log($"플레이어 맞춤! {other.tag}");
             }

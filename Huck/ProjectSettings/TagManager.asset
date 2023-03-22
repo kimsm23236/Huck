@@ -8,8 +8,6 @@ TagManager:
   - Gather
   - build
   - Terrain
-  - AttackRange
-  - Item
   layers:
   - Default
   - TransparentFX
@@ -21,7 +19,7 @@ TagManager:
   - Enemy
   - 
   - 
-  - Item
+  - 
   - 
   - 
   - 

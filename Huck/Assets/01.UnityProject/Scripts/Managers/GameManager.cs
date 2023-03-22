@@ -5,17 +5,11 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public GameObject playerObj;
-    public void PlayerObj()
+    public GameObject playerObj = default;
+    //! { [김광성] 플레이어 오브젝트 시작시 캐싱
+    private void Awake()
     {
-        Debug.Log($"게임매니져 잘작동? {playerObj.transform.position}");
+        playerObj = GFunc.GetRootObj(GData.PLAYER_MASK);
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayerObj();
-        }
-    }
+    // } [김광성] 플레이어 오브젝트 시작시 캐싱
 }

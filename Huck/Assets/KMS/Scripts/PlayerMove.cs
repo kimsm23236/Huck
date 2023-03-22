@@ -86,19 +86,22 @@ public class PlayerMove : MonoBehaviour
             playerAnim.SetBool("isRunning", false);
             moveSpeed = 3;
         }
-        if(Input.GetKeyUp(KeyCode.S))
-        {
-            moveSpeed = 5;
-        }
         // } Player Velocity Move to Behind
 
         // { Player Run
-        if(Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
+        if(Input.GetKey(KeyCode.LeftShift))
         {
-            playerAnim.SetBool("isRunning", true);
-            moveSpeed = 8;
+            if(Input.GetKey(KeyCode.W) 
+            || Input.GetKey(KeyCode.A) 
+            || Input.GetKey(KeyCode.D))
+            {
+                playerAnim.SetBool("isRunning", true);
+                moveSpeed = 8;
+            }
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.W))
+        if(Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.W) 
+         || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) 
+         || Input.GetKeyUp(KeyCode.S))
         {
             playerAnim.SetBool("isRunning", false);
             moveSpeed = 5;
