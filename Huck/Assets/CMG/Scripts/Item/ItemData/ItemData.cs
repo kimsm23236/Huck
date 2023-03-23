@@ -46,6 +46,7 @@ public class ItemData : ScriptableObject
     {
         get { return itemDamage; }
     }
+
 }
 public enum EItemTool
 {

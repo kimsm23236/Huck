@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1424431501439496000}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3049851706620068505}
@@ -108,6 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3049851706620068505}
   - component: {fileID: -4420840173062383047}
+  - component: {fileID: 4358585653224364792}
   m_Layer: 0
   m_Name: Iron
   m_TagString: Item
@@ -147,3 +148,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4358585653224364792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384919178894448675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d75de5786b5eb3b4abe1752348485e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: a3e56a5a92868f7428a9fecd48250ec8, type: 2}
+  itemCount: 1
