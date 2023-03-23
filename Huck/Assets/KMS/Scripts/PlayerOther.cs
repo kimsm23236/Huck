@@ -4,27 +4,35 @@ using UnityEngine;
 
 public class PlayerOther : MonoBehaviour
 {
+    [SerializeField]
+    private InventoryArray invenSlot = default;
+
+    [SerializeField]
+    private Item itemInfo = default;
+
+    public GameObject menu = default;
     public GameObject inven = default;
     public GameObject map = default;
     public GameObject GUI = default;
+    public GameObject invenCam = default;
 
     public static bool isInvenOpen = false;
     public static bool isMapOpen = false;
-    [SerializeField]
-    private InventoryArray invenSlot = default;
-    [SerializeField]
-    private Item itemInfo = default;
+    public static bool isMenuOpen = false;
+
     private void Start()
     {
         CursorSet();
         inven.SetActive(false);
-        invenSlot = inven.transform.GetChild(0).GetChild(0).GetComponent<InventoryArray>();
+        invenSlot = inven.transform.GetChild(0)
+            .GetChild(1).GetComponent<InventoryArray>();
     }
 
     private void Update()
     {
         InvenOpen();
         MapOpen();
+        MenuOpen();
         Interaction();
     }
 
@@ -41,6 +49,7 @@ public class PlayerOther : MonoBehaviour
                 gameObject.GetComponent<PlayerAtk>().enabled = false;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                invenCam.SetActive(true);
                 inven.SetActive(true);
                 GUI.SetActive(false);
             }
@@ -49,6 +58,7 @@ public class PlayerOther : MonoBehaviour
                 gameObject.GetComponent<PlayerAtk>().enabled = true;
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
+                invenCam.SetActive(false);
                 inven.SetActive(false);
                 GUI.SetActive(true);
             }
@@ -104,6 +114,34 @@ public class PlayerOther : MonoBehaviour
     #endregion
     // } Cursor Setting
 
+    //{ Game Menu
+    #region Menu
+    private void MenuOpen()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) || UiManager.isResumeOn == true)
+        {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen == true)
+            {
+                gameObject.GetComponent<PlayerAtk>().enabled = false;
+                Cursor.lockState = CursorLockMode.None;
+                menu.SetActive(true);
+                Time.timeScale = 0;
+            }
+            if (isMenuOpen == false)
+            {
+                gameObject.GetComponent<PlayerAtk>().enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+                UiManager.isResumeOn = false;
+                menu.SetActive(false);
+                Time.timeScale = 1;
+            }
+        }
+    }
+    #endregion
+    //} Game Menu
+
+    // { Item Root
     #region  RootItem
     private void RootItem()
     {
@@ -118,4 +156,5 @@ public class PlayerOther : MonoBehaviour
         }
     }
     #endregion
+    // } Item Root
 }

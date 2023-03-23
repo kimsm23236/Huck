@@ -26,10 +26,20 @@ public class ItemSlot : MonoBehaviour
     {
         if (Item != null && Item != default)
         {
-            transform.GetChild(0).GetComponent<Image>().sprite = Item.itemIcon;
-            transform.GetChild(0).GetComponent<Image>().color = itemAlpha;
-            HasItem = true;
-            ItemCountText();
+            if (Item.ItemType == EItemType.CombineAble)
+            {
+                transform.GetChild(0).GetComponent<Image>().sprite = Item.ItemIcon;
+                transform.GetChild(0).GetComponent<Image>().color = itemAlpha;
+                HasItem = true;
+                ItemCountText();
+            }
+            else
+            {
+                transform.GetChild(0).GetComponent<Image>().sprite = Item.ItemIcon;
+                transform.GetChild(0).GetComponent<Image>().color = itemAlpha;
+                HasItem = true;
+                itemAmountObj.SetActive(false);
+            }
         }
         else
         {
@@ -42,7 +52,7 @@ public class ItemSlot : MonoBehaviour
 
     private void ItemCountText()
     {
-        if (Item.itemType == ItemType.CombineAble)
+        if (Item.ItemType == EItemType.CombineAble)
         {
             itemAmountObj.SetActive(true);
             itemAmountText.text = $"{itemAmount}";

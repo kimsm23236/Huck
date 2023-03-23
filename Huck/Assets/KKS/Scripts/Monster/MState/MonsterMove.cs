@@ -44,9 +44,6 @@ public class MonsterMove : IMonsterState
                 yield break;
             }
             mController.mAgent.SetDestination(mController.targetSearch.hit.transform.position);
-            //dir = (mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
-            //mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
-            //mController.mAgent.Move(dir * mController.monster.moveSpeed * Time.deltaTime);
             yield return null;
         }
     } // Move

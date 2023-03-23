@@ -14,6 +14,7 @@ public class PlaceableObjectConfig
     public float maxHeightToSpawn = 0f;
     public bool canGoInWater = false;
     public bool canGoAboveWater = true;
+    public bool isEmbedded = false;
     [Range(0f, 1f)] public float weighting;
     public List<GameObject> prefabs;
 
@@ -42,9 +43,8 @@ public class BaseObjectPlacer : MonoBehaviour
 
                 float height = heightMap[x,y] * heightmapScale.y;
 
-                
-
-                locations.Add(new Vector3(y * heightmapScale.z, heightMap[x, y] * heightmapScale.y, x * heightmapScale.x));
+                Vector3 newLocs = new Vector3(y * heightmapScale.z, heightMap[x, y] * heightmapScale.y, x * heightmapScale.x);
+                locations.Add(newLocs);
             }
         }
 
@@ -116,6 +116,10 @@ public class BaseObjectPlacer : MonoBehaviour
                 // remove the location if chosen
                 candidateLocations.RemoveAt(randomLocationIndex);
 
+                // 땅에 박히는 오브젝트는 랜덤으로 Y좌표 조절
+                if (spawnConfig.isEmbedded)
+                    spawnLocation -= new Vector3(0, Mathf.Clamp(Random.Range(-1f, 1f), 0f, 1f), 0);
+
                 SpawnObject(prefab, spawnLocation, objectRoot);
             }
             Debug.Log($"Placed : {numPlaced} objects out of {numToSpawn}");
@@ -128,7 +132,7 @@ public class BaseObjectPlacer : MonoBehaviour
         Vector3 positionOffset = new Vector3(Random.Range(  -maxPositionJitter, maxPositionJitter),
                                                             0,
                                                             Random.Range(-maxPositionJitter, maxPositionJitter));
-
+        
         // instantiate the prefab
 #if UNITY_EDITOR
         if (Application.isPlaying)

@@ -10,35 +10,35 @@ public class PlayerAtk : MonoBehaviour
     public static bool isAttacking = false;
     private bool isAttack = false;
 
-    private void Start() 
+    private void Start()
     {
         atkAnim = GetComponent<Animator>();
     }
 
-    private void Update() 
-    {        
+    private void Update()
+    {
         AtkInput();
     }
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
-        Attack();        
+        Attack();
     }
 
     // { Player Attack
-#region Player Attack
+    #region Player Attack
     private void AtkInput()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             isAttack = true;
         }
     }
     private void Attack()
     {
-        if(isAttack == true && PlayerOther.isInvenOpen == false
+        if (isAttack == true && PlayerOther.isInvenOpen == false
             && PlayerOther.isMapOpen == false)
         {
-            if(isAttacking == false)
+            if (isAttacking == false)
             {
                 atkAnim.SetTrigger("Attack");
                 isAttacking = true;
@@ -54,11 +54,11 @@ public class PlayerAtk : MonoBehaviour
         attackRange.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         attackRange.SetActive(false);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         atkAnim.SetTrigger("AtkCancel");
         isAttacking = false;
         isAttack = false;
     }
-#endregion
+    #endregion
     // } Player Attack
 }

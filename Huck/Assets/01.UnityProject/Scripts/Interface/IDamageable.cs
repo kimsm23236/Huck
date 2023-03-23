@@ -7,12 +7,9 @@ public struct DamageMessage
     public GameObject causer;
     public float damageAmount;
 
-    // ´õ ÇÊ¿äÇÒ¸¸ÇÑ°Å ¾Ë¾Æ¼­ Ãß°¡ÇÏ±â
+    // ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ò¸ï¿½ï¿½Ñ°ï¿½ ï¿½Ë¾Æ¼ï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½
 }
 public interface IDamageable
 {
-    public virtual void TakeDamage(DamageMessage message)
-    {
-        /* virtual method */
-    }
+    public void TakeDamage(GameObject attacker, int damage);
 }

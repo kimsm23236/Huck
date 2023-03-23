@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa53b156d8943264ba7cc27fa83bc7c3, type: 3}
+  m_Name: NormalWood
+  m_EditorClassIdentifier: 
+  itemType: 0
+  itemName: NormalWood
+  itemIcon: {fileID: 21300000, guid: 787b8db678ed3934f9d902d8728052d8, type: 3}
+  originPrefab: {fileID: 255731329423510458, guid: 3bc827205b22bc742b4bb467df42ca7e,
+    type: 3}
+  itemUseAble: 0
+  itemDamage: 0

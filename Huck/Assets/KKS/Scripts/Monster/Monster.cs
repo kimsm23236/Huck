@@ -70,7 +70,7 @@ public class Monster : MonoBehaviour
             case 0:
                 float checkTime = 0f;
                 bool isBackMove = false;
-                Debug.Log($"백무빙 시작");
+                //Debug.Log($"백무빙 시작");
                 mController.monsterAni.SetBool("isBack", true);
                 while (isBackMove == false)
                 {
@@ -79,18 +79,18 @@ public class Monster : MonoBehaviour
                     {
                         isBackMove = true;
                     }
-                    Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
+                    Vector3 dir = (mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
                     mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
                     mController.mAgent.Move(-dir * moveSpeed * Time.deltaTime);
                     yield return null;
                 }
-                Debug.Log($"백무빙 종료");
+                //Debug.Log($"백무빙 종료");
                 mController.monsterAni.SetBool("isBack", false);
                 break;
             case 1:
                 float checkTime2 = 0f;
                 bool isIdle = false;
-                Debug.Log($"대기 시작");
+                //Debug.Log($"대기 시작");
                 while (isIdle == false)
                 {
                     checkTime2 += Time.deltaTime;
@@ -98,18 +98,18 @@ public class Monster : MonoBehaviour
                     {
                         isIdle = true;
                     }
-                    Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
+                    Vector3 dir = (mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
                     mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
 
                     yield return null;
                 }
-                Debug.Log($"대기 종료");
+                //Debug.Log($"대기 종료");
                 break;
             case 2:
                 float checkTime3 = 0f;
                 bool isSideMove = false;
                 int sideNumber = Random.Range(0, 2);
-                Debug.Log("사이드무빙 시작");
+                //Debug.Log("사이드무빙 시작");
                 while (isSideMove == false)
                 {
                     checkTime3 += Time.deltaTime;
@@ -117,7 +117,7 @@ public class Monster : MonoBehaviour
                     {
                         isSideMove = true;
                     }
-                    Vector3 dir = (mController.targetPos.position - mController.transform.position).normalized;
+                    Vector3 dir = (mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
                     mController.transform.rotation = Quaternion.Lerp(mController.transform.rotation, Quaternion.LookRotation(dir), 2f * Time.deltaTime);
                     if (sideNumber == 0)
                     {
@@ -133,7 +133,7 @@ public class Monster : MonoBehaviour
                 }
                 mController.monsterAni.SetBool("isRight", false);
                 mController.monsterAni.SetBool("isLeft", false);
-                Debug.Log($"사이드무빙 종료");
+                //Debug.Log($"사이드무빙 종료");
                 break;
             case 3:
                 mController.monsterAni.SetTrigger("isRoar");

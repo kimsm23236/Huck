@@ -5,8 +5,9 @@ using UnityEngine;
 public class ItemRange : MonoBehaviour
 {
     public GameObject ItemFound = default;
-    private float Range = 5;
     public GameObject getItem = default;
+
+    private float Range = 5;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class ItemRange : MonoBehaviour
         ItemGet();
     }
 
+    // { Found Item & Get Item
     void ItemGet()
     {
         ItemFound.SetActive(false);
@@ -38,4 +40,5 @@ public class ItemRange : MonoBehaviour
             }
         }
     }
+    // } Found Item & Get Item
 }

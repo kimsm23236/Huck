@@ -26,10 +26,11 @@ public class SkeletonSoldier : Monster
     //! 공격 처리 이벤트함수 (RayCast)
     private void EnableAttack()
     {
-        RaycastHit[] hits = Physics.BoxCastAll(shield.transform.position, new Vector3(1f, 1f, 0.3f) * 0.5f, Vector3.up, shield.transform.rotation, 0f, LayerMask.GetMask("Player"));
-        if (hits != null)
+        RaycastHit[] hits = Physics.BoxCastAll(shield.transform.position, new Vector3(1f, 1f, 0.3f) * 0.5f,
+            Vector3.up, shield.transform.rotation, 0f, LayerMask.GetMask(GData.PLAYER_MASK));
+        if (hits.Length > 0)
         {
-            if (hits[0].collider.tag == "Player")
+            if (hits[0].collider.tag == GData.PLAYER_MASK)
             {
                 Debug.Log("쉴드배쉬 맞춤!");
             }
@@ -64,17 +65,18 @@ public class SkeletonSoldier : Monster
     {
         mController.transform.LookAt(mController.targetSearch.hit.transform.position);
 
-        if (useSkillA == true && mController.distance >= 10f)
+        if (useSkillA == true && mController.distance >= 13f)
         {
             SkillA();
             return;
         }
-        else if (useSkillA == true && mController.distance < 10f)
+        else if (useSkillA == true && mController.distance > meleeAttackRange)
         {
-            // 돌진스킬이 사용가능하지만 타겟이 최소사거리 안에있을때 돌진스킬X Idle상태로 전환
-            isNoRangeAttack = true;
+            // 돌진스킬이 사용가능하지만 타겟이 최소사거리 안에 있을때 돌진스킬X Idle상태로 전환
+            StartCoroutine(CheckSkillADistance());
             IMonsterState nextState = new MonsterIdle();
             mController.MStateMachine.onChangeState?.Invoke(nextState);
+            Debug.Log("돌진 최소사거리 안에있음");
             return;
         }
 
@@ -84,6 +86,26 @@ public class SkeletonSoldier : Monster
             return;
         }
     } // SKILL
+
+    //! 스킬A 돌진 사용 거리체크하는 코루틴함수
+    private IEnumerator CheckSkillADistance()
+    {
+        useSkillA = false;
+        isNoRangeSkill = true;
+        while (isNoRangeSkill == true)
+        {
+            float distance = Vector3.Distance(mController.targetSearch.hit.transform.position, mController.transform.position);
+            // 타겟이 돌진 최소사거리 밖에 있으면 돌진 사용가능
+            if (distance >= 13f)
+            {
+                useSkillA = true;
+                isNoRangeSkill = false;
+                Debug.Log($"거리 : {distance}, 스킬A :{useSkillA}, {isNoRangeSkill}");
+                yield break;
+            }
+            yield return null;
+        }
+    } // CheckSkillADistance
 
     //! 스킬A 함수
     private void SkillA()
@@ -127,7 +149,7 @@ public class SkeletonSoldier : Monster
         mController.mAgent.speed = moveSpeed * 2f;
         while (isSkillA == true)
         {
-            mController.mAgent.SetDestination(mController.targetPos.position);
+            mController.mAgent.SetDestination(mController.targetSearch.hit.transform.position);
             // 돌진 중 타겟이 근접공격사거리 안이라면 돌진 마무리 시작
             if (mController.distance <= meleeAttackRange)
             {

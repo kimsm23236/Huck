@@ -5,17 +5,11 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public GameObject playerObj;
-    public void PlayerObj()
+    public GameObject playerObj = default;
+    //! { [ï¿½è±¤ï¿½ï¿½] ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½Û½ï¿½ Ä³ï¿½ï¿½
+    private void Awake()
     {
-        Debug.Log($"°ÔÀÓ¸Å´ÏÁ® ÀßÀÛµ¿? {playerObj.transform.position}");
+        playerObj = GFunc.GetRootObj(GData.PLAYER_MASK);
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayerObj();
-        }
-    }
+    // } [ï¿½è±¤ï¿½ï¿½] ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½Û½ï¿½ Ä³ï¿½ï¿½
 }

@@ -5,5 +5,11 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public ItemData itemData = null;
-    public int itemCount = 3;
+    public int itemCount = 1;
+    public virtual void OnUseItem()
+    {
+
+    }
+
+
 }

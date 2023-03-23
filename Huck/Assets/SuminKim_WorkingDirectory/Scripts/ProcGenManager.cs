@@ -91,7 +91,7 @@ public class ProcGenManager : MonoBehaviour
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.BuildDetailMap, "Building detail map");
         yield return new WaitForSeconds(1f);
 
-        // Generate the texture mapping
+        // Generate the terrain detail mapping
         Perform_GenerateTerrainDetailMapping();
 
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.BuildLowResolutionBiomeMap, "Build low res biome map");
