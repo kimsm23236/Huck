@@ -1204,7 +1204,7 @@ GameObject:
   - component: {fileID: 2489101731569596175}
   - component: {fileID: 2524385002189878541}
   - component: {fileID: 519985256560640034}
-  - component: {fileID: 68747970418074929}
+  - component: {fileID: 4900606683571141070}
   - component: {fileID: 825168674315377679}
   - component: {fileID: 1151638901316464909}
   - component: {fileID: 825168674315377676}
@@ -1317,7 +1317,7 @@ MonoBehaviour:
   damage: 10
   armor: 0
   critical: 5
---- !u!114 &68747970418074929
+--- !u!114 &4900606683571141070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1326,12 +1326,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3439561805880025763}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2b6fd231dc5dbf49924cd590483a777, type: 3}
+  m_Script: {fileID: 11500000, guid: 74a201f0e53898647b4c2aea8b7ede40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   handTrans: {fileID: 5215066782662483296}
   inventory: {fileID: 0}
   selectedQuitSlot: 0
+  playerStat: {fileID: 0}
 --- !u!54 &825168674315377679
 Rigidbody:
   m_ObjectHideFlags: 0

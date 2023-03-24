@@ -29,6 +29,7 @@ public class CameraMove : MonoBehaviour
             CameraPos();
             CameraRotate();
         }
+
         // if Player Dead
         if (PlayerStat.curHp == 0)
         {

@@ -9,3 +9,5 @@
 2023-03-20 / v0.0.4KMS / Player Version Four Update
 2023-03-20 / v0.0.5KMS / Player Version Five Update & First Merge
 2023-03-21 / v0.0.6KMS / Build Possible Check Ok
+2023-03-23 / v0.1.0KMS / Add UI & Quick Slot
+2023-03-24 / v0.1.1KMS / Add Current Quick Slot Mark

@@ -20,10 +20,14 @@ public class PlayerOther : MonoBehaviour
     public static bool isMapOpen = false;
     public static bool isMenuOpen = false;
 
+    private Vector3 enableScale = new Vector3(0.00001f, 0.00001f, 0.00001f);
+    private Vector3 ableScale = new Vector3(1f, 1f, 1f);
+
+
     private void Start()
     {
         CursorSet();
-        inven.SetActive(false);
+        inven.SetLocalScale(enableScale);
         invenSlot = inven.transform.GetChild(0)
             .GetChild(1).GetComponent<InventoryArray>();
     }
@@ -50,7 +54,7 @@ public class PlayerOther : MonoBehaviour
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 invenCam.SetActive(true);
-                inven.SetActive(true);
+                inven.SetLocalScale(ableScale);
                 GUI.SetActive(false);
             }
             if (isInvenOpen == false)
@@ -59,7 +63,7 @@ public class PlayerOther : MonoBehaviour
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 invenCam.SetActive(false);
-                inven.SetActive(false);
+                inven.SetLocalScale(enableScale);
                 GUI.SetActive(true);
             }
         }

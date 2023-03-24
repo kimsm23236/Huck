@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Apple : Item
 {
-    // Start is called before the first frame update
-    void Start()
+
+    protected override void ItemUse(ItemSlot itemslot_, PlayerStat playerStat_)
     {
+        base.ItemUse(itemslot_, playerStat_);
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        itemslot_.itemAmount--;
+        PlayerStat.curHp += 10;
+        Debug.Log("사과");
     }
 }

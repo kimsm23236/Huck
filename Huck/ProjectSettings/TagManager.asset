@@ -8,7 +8,6 @@ TagManager:
   - Gather
   - build
   - Terrain
-  - AttackRange
   - Item
   layers:
   - Default
@@ -37,11 +36,11 @@ TagManager:
   - 
   - 
   - 
-  - buildThings
-  - build
-  - 
-  - 
-  - 
+  - BuildThings
+  - BuilFloor
+  - BuildWall
+  - BuildObj
+  - Build
   - 
   m_SortingLayers:
   - name: Default

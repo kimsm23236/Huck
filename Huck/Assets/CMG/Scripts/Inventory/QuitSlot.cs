@@ -6,10 +6,16 @@ public class QuitSlot : MonoBehaviour
 {
     [SerializeField]
     private GameObject inven = default;
+    private ItemSlot[] quitSlotsItem = new ItemSlot[8];
+    private ItemSlot[] inventorySlotItem = new ItemSlot[8];
     // Start is called before the first frame update
     void Start()
     {
-
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            quitSlotsItem[i] = transform.GetChild(i).GetComponent<ItemSlot>();
+            inventorySlotItem[i] = inven.GetComponent<InventoryArray>().itemSlots[24 + i].GetComponent<ItemSlot>();
+        }
     }
 
     // Update is called once per frame
@@ -17,8 +23,8 @@ public class QuitSlot : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).GetComponent<ItemSlot>().Item = inven.GetComponent<InventoryArray>().itemSlots[24 + i].GetComponent<ItemSlot>().Item;
-            transform.GetChild(i).GetComponent<ItemSlot>().itemAmount = inven.GetComponent<InventoryArray>().itemSlots[24 + i].GetComponent<ItemSlot>().itemAmount;
+            quitSlotsItem[i].itemData = inventorySlotItem[i].itemData;
+            quitSlotsItem[i].itemAmount = inventorySlotItem[i].itemAmount;
         }
     }
 }

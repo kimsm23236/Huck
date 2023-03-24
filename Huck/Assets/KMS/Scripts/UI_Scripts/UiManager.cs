@@ -10,18 +10,18 @@ public class UiManager : MonoBehaviour
     public void OnResume_Btn()
     {
         isResumeOn = true;
-        Debug.Log("1버튼 눌림");
     }
 
     public void OnSetting_Btn()
     {
-        Debug.Log("2버튼 눌림");
+        GameObject settingMenu = GetComponent<GameObject>();
+        settingMenu = GameObject.Find("SettingMenu");
+        settingMenu.SetActive(true);
     }
 
     public void OnExitGame_Btn()
     {
         GFunc.QuitThisGame();
-        Debug.Log("3버튼 눌림");
     }
     // } Game Menu Btn
 }

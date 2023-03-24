@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class YellowMushroom : Item
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void ItemUse(ItemSlot itemslot_, PlayerStat playerStat_)
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        base.ItemUse(itemslot_, playerStat_);
+        itemslot_.itemAmount--;
+        PlayerStat.curHungry += 10;
+        Debug.Log("버섯");
     }
 }
