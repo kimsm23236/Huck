@@ -12,6 +12,8 @@ public class InHand : MonoBehaviour
     private GameObject inHandObj = default;
     private ItemData inHnadItem = default;
     public int selectedQuitSlot = 0;
+    [SerializeField]
+    private PlayerStat playerStat = default;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,7 @@ public class InHand : MonoBehaviour
         {
             inventorySlotItem[i] = inventory.GetComponent<InventoryArray>().itemSlots[24 + i].GetComponent<ItemSlot>();
         }
+        playerStat = GetComponent<PlayerStat>();
     }
 
     // Update is called once per frame
@@ -26,11 +29,15 @@ public class InHand : MonoBehaviour
     {
         OnHandItem();
         QuitSlotChange();
+        UseItem();
     }
 
     private void UseItem()
     {
-        // inventorySlotItem[selectedQuitSlot].GetComponent<Item>().i
+        if (Input.GetKeyDown(KeyCode.J) && inventorySlotItem[selectedQuitSlot].itemData != null)
+        {
+            inventorySlotItem[selectedQuitSlot].itemUseDel(inventorySlotItem[selectedQuitSlot], playerStat);
+        }
     }
     private void OnHandItem()
     {

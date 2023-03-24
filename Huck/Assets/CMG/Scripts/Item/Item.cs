@@ -9,6 +9,7 @@ public class Item : MonoBehaviour
     public bool itemInHand = false;
 
 
+
     public void OnUse(ItemSlot itemSlot_, PlayerStat playerstat_)
     {
         if (itemData.ItemUseAble)

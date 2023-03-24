@@ -27,7 +27,6 @@ public class InventoryArray : MonoBehaviour
 
     #endregion
 
-
     private int horizonSlotCount = 8;
     private int verticalSlotCount = 4;
     private float paddingSlot = 10f;
@@ -35,6 +34,7 @@ public class InventoryArray : MonoBehaviour
     private float slotHeight = 0f;
 
     private Vector2 beginSlotPos = default;
+    private PlayerStat playerStat = default;
 
     private void Awake()
     {
@@ -50,6 +50,7 @@ public class InventoryArray : MonoBehaviour
         myCanvas = transform.parent.parent.parent.GetComponent<Canvas>();
         graphicRay = myCanvas.GetComponent<GraphicRaycaster>();
         pointEvent = new PointerEventData(null);
+        playerStat = GameManager.Instance.playerObj.GetComponent<PlayerStat>();
     }
 
     // Update is called once per frame
@@ -134,6 +135,7 @@ public class InventoryArray : MonoBehaviour
             createItem.GetComponent<Item>().itemCount = beginDragSlot.itemAmount;
             beginDragSlot.itemData = default;
             beginDragSlot.itemAmount = 0;
+            beginDragSlot.itemUseDel = default;
 
             // 위치 복원
             beginItemTrans.position = beginDragIconPoint;
@@ -174,10 +176,12 @@ public class InventoryArray : MonoBehaviour
             // 같은게 있는지 검사
             for (int i = 0; i < transform.childCount; i++)
             {
-                if (transform.GetChild(i).GetComponent<ItemSlot>().itemData != null && transform.GetChild(i).GetComponent<ItemSlot>().itemData.ItemName == item_.itemData.ItemName)
+                ItemSlot nowSlot = transform.GetChild(i).GetComponent<ItemSlot>();
+                if (nowSlot.itemData != null && nowSlot.itemData.ItemName == item_.itemData.ItemName)
                 {
-                    transform.GetChild(i).GetComponent<ItemSlot>().itemAmount += item_.itemCount;
+                    nowSlot.itemAmount += item_.itemCount;
                     isCombine = true;
+
                     break;
                 } // 획득한 아이템과 같은 이름의 아이템이 있는지 확인
             }
@@ -185,10 +189,12 @@ public class InventoryArray : MonoBehaviour
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    if (transform.GetChild(i).GetComponent<ItemSlot>().itemData == null)
+                    ItemSlot nowSlot = transform.GetChild(i).GetComponent<ItemSlot>();
+                    if (nowSlot.itemData == null)
                     {
-                        transform.GetChild(i).GetComponent<ItemSlot>().itemData = item_.itemData;
-                        transform.GetChild(i).GetComponent<ItemSlot>().itemAmount += item_.itemCount;
+                        nowSlot.itemData = item_.itemData;
+                        nowSlot.itemAmount += item_.itemCount;
+                        nowSlot.itemUseDel = item_.OnUse;
                         break;
                     }
                 }
@@ -198,10 +204,12 @@ public class InventoryArray : MonoBehaviour
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                if (transform.GetChild(i).GetComponent<ItemSlot>().itemData == null)
+                ItemSlot nowSlot = transform.GetChild(i).GetComponent<ItemSlot>();
+                if (nowSlot.itemData == null)
                 {
-                    transform.GetChild(i).GetComponent<ItemSlot>().itemData = item_.itemData;
-                    transform.GetChild(i).GetComponent<ItemSlot>().itemAmount += item_.itemCount;
+                    nowSlot.itemData = item_.itemData;
+                    nowSlot.itemAmount += item_.itemCount;
+                    nowSlot.itemUseDel = item_.OnUse;
                     break;
                 }
             }
@@ -232,18 +240,22 @@ public class InventoryArray : MonoBehaviour
             endItem.itemAmount += startItem.itemAmount;
             startItem.itemData = default;
             startItem.itemAmount = 0;
+            startItem.itemUseDel = default;
         }
         else
         {
-            ItemData tempItem = default;
-            tempItem = startItem.itemData;
-            startItem.itemData = endItem.itemData;
-            endItem.itemData = tempItem;
+            // ItemData tempItem = default;
+            // tempItem = startItem.itemData;
+            // startItem.itemData = endItem.itemData;
+            // endItem.itemData = tempItem;
 
-            int tmepItemCount = 0;
-            tmepItemCount = startItem.itemAmount;
-            startItem.itemAmount = endItem.itemAmount;
-            endItem.itemAmount = tmepItemCount;
+            (startItem.itemData, endItem.itemData) = (endItem.itemData, startItem.itemData);
+            // int tmepItemCount = 0;
+            // tmepItemCount = startItem.itemAmount;
+            // startItem.itemAmount = endItem.itemAmount;
+            // endItem.itemAmount = tmepItemCount;
+            (startItem.itemAmount, endItem.itemAmount) = (endItem.itemAmount, startItem.itemAmount);
+            (startItem.itemUseDel, endItem.itemUseDel) = (endItem.itemUseDel, startItem.itemUseDel);
         }
     }
 

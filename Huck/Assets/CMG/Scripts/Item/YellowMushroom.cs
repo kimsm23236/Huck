@@ -6,7 +6,9 @@ public class YellowMushroom : Item
 {
     protected override void ItemUse(ItemSlot itemslot_, PlayerStat playerStat_)
     {
+        base.ItemUse(itemslot_, playerStat_);
         itemslot_.itemAmount--;
         playerStat_.curHp += 10;
+        Debug.Log("버섯");
     }
 }
