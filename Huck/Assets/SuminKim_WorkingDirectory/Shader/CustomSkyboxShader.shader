@@ -16,6 +16,8 @@ Shader "Custom/CustomSkyboxShader"
         _RightTex2("2 Right (-X)", 2D) = "white" {}
         _UpTex2("2 Up (+Y)", 2D) = "white" {}
         _DownTex2("2 Down (-Y)", 2D) = "white" {}
+
+
     }
 
     SubShader

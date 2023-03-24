@@ -69,7 +69,7 @@ public class TimeController : MonoBehaviour
         UpdateTimeOfDay();
         RotateSun();
         UpdateLightSettings();
-        TransitionCheck();
+        // TransitionCheck();
     }
 
     private void UpdateTimeOfDay()
