@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa53b156d8943264ba7cc27fa83bc7c3, type: 3}
+  m_Name: WoodCut
+  m_EditorClassIdentifier: 
+  itemType: 0
+  itemLevel: 0
+  itemTool: 0
+  itemName: WoodCut
+  itemIcon: {fileID: 21300000, guid: e9f530fe240ab1d418790730743506f6, type: 3}
+  originPrefab: {fileID: 6484739349999710427, guid: 8b286aa09c484484e9abbdabb8bf628f,
+    type: 3}
+  itemUseAble: 0
+  itemDamage: 0
+  isBuild: 1

@@ -8,7 +8,7 @@ public static partial class GData
     // Layer Mask
     public const string PLAYER_MASK = "Player";
     public const string ENEMY_MASK = "Enemy";
-    public const string BUILD_MASK = "build";
+    public const string BUILD_MASK = "Build";
     public const string GATHER_MASK = "Gather";
     public const string TERRAIN_MASK = "Terrain";
 

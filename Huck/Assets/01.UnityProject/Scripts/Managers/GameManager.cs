@@ -6,10 +6,10 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public GameObject playerObj = default;
-    //! { [±è±¤¼º] ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® ½ÃÀÛ½Ã Ä³½Ì
+    //! { [ï¿½è±¤ï¿½ï¿½] ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½Û½ï¿½ Ä³ï¿½ï¿½
     private void Awake()
     {
         playerObj = GFunc.GetRootObj(GData.PLAYER_MASK);
     }
-    // } [±è±¤¼º] ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® ½ÃÀÛ½Ã Ä³½Ì
+    // } [ï¿½è±¤ï¿½ï¿½] ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½Û½ï¿½ Ä³ï¿½ï¿½
 }

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class YellowMushroom : Item
 {
-    protected override void ItemUse(ItemSlot itemslot_, PlayerStat playerStat_)
+    protected override void ItemUse(ItemSlot itemslot_)
     {
-        base.ItemUse(itemslot_, playerStat_);
+        base.ItemUse(itemslot_);
         itemslot_.itemAmount--;
-        playerStat_.curHp += 10;
-        Debug.Log("버섯");
+        PlayerStat.curHungry += 10;
     }
 }
