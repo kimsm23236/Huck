@@ -1,53 +1,102 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Video;
 
 public class Test : MonoBehaviour
 {
-    public GameObject targetObj;
-    public Rigidbody rb;
-    public Vector3 startPos;
-    public float timer;
-    public float h;
-    public bool isJump = false;
-
-    private void Start()
+    public GameObject target;
+    // Start is called before the first frame update
+    void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
+
     }
-    private void Update()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, 0.5f, LayerMask.GetMask(GData.TERRAIN_MASK));
-        if (hits.Length > 0 && isJump == true)
-        {
-            rb.isKinematic = true;
-            isJump = false;
-        }
 
+    // Update is called once per frame
+    void Update()
+    {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            isJump = true;
-            rb.isKinematic = false;
-            rb.velocity = Vector3.zero;
-            Vector3 a = CalculateBestThrowSpeed(transform.position, targetObj.transform.position, 2f);
-            Debug.Log($"{a}");
-            rb.AddForce(a, ForceMode.Impulse);
+            Debug.Log("점프시작");
+            //StartCoroutine(MoveToTargetCoroutine(transform.position, target.transform.position, 1.5f));
+            float distance = 1.0f;
+
+            // 타겟의 현재 위치와 바라보는 방향 벡터
+            Vector3 targetPosition = target.transform.position;
+            Vector3 targetDirection = -(target.transform.position - transform.position).normalized;
+
+            // 타겟 앞의 위치 구하기
+            Vector3 targetFrontPosition = targetPosition + targetDirection * distance;
+            Parabola a = new Parabola();
+            StartCoroutine(a.ParabolaMoveToTarget(transform.position, targetFrontPosition, 2f, gameObject));
         }
     }
-    static Vector3 CalculateBestThrowSpeed(Vector3 origin, Vector3 target, float timeToTarget)
+
+    public IEnumerator MoveToTarget(Vector3 start, Vector3 target, float totalTime)
     {
-        Vector3 toTarget = target - origin;
+        // 중력 가속도
+        float gravity = Physics.gravity.magnitude;
+
+        // 시작 위치와 목표 위치의 거리
+        float distance = Vector3.Distance(start, target);
+
+        // 수직 방향 초기 속도
+        float initialVerticalSpeed = (distance / totalTime + 0.5f * gravity * totalTime) / totalTime;
+
+        // 수평 방향 초기 속도
+        Vector3 initialHorizontalVelocity = (target - start) / totalTime;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < totalTime)
+        {
+            // 시간이 흐름에 따라 위치를 계산
+            float verticalPosition = start.y + initialVerticalSpeed * elapsedTime - 0.5f * gravity * elapsedTime * elapsedTime;
+            float horizontalPosition = start.x + initialHorizontalVelocity.x * elapsedTime;
+            float depthPosition = start.z + initialHorizontalVelocity.z * elapsedTime;
+
+            // 위치 업데이트
+            transform.position = new Vector3(horizontalPosition, verticalPosition, depthPosition);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    private IEnumerator MoveToTargetCoroutine(Vector3 start, Vector3 target, float totalTime)
+    {
+        // 중력 가속도
+        float gravity = Physics.gravity.magnitude;
+
+        // 시작 위치와 목표 위치의 거리
+        float distance = Vector3.Distance(start, target);
+        Vector3 toTarget = target - start;
         Vector3 toTargetXZ = toTarget;
-        toTargetXZ.y = 0;
-        float y = toTarget.y;
-        float xz = toTargetXZ.magnitude;
-        float v0y = y / timeToTarget + 0.5f * Physics.gravity.magnitude * timeToTarget;
-        float v0xz = xz / timeToTarget;
-        Vector3 result = toTargetXZ.normalized;
-        result *= v0xz;
-        result.y = v0y;
-        return result;
+        toTargetXZ.y = 0f;
+        float y = target.y - start.y;
+        float xzDistance = toTargetXZ.magnitude;
+
+        // 수직 방향 초기 속도
+        //float initialVerticalSpeed = (y / totalTime + 0.5f * gravity * totalTime) / totalTime;
+        float initialVerticalSpeed = (y + 0.5f * gravity * totalTime * totalTime) / totalTime;
+
+        // 수평 방향 초기 속도
+        Vector3 initialHorizontalVelocity = toTargetXZ / totalTime;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < totalTime)
+        {
+            elapsedTime += Time.deltaTime;
+            // 시간이 흐름에 따라 위치를 계산
+            float verticalPosition = start.y + initialVerticalSpeed * elapsedTime - 0.5f * gravity * elapsedTime * elapsedTime;
+            float horizontalPosition = start.x + initialHorizontalVelocity.x * elapsedTime;
+            float depthPosition = start.z + initialHorizontalVelocity.z * elapsedTime;
+
+            // 위치 업데이트
+            transform.position = new Vector3(horizontalPosition, verticalPosition, depthPosition);
+
+            yield return null;
+        }
     }
 }

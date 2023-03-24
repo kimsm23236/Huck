@@ -41,6 +41,10 @@ public class PlayerStat : MonoBehaviour
         {
             curHp = 0;
         }
+        if (curHp > maxHp)
+        {
+            curHp = maxHp;
+        }
     }
 
     private void Hungry()
@@ -58,6 +62,10 @@ public class PlayerStat : MonoBehaviour
         {
             curHungry = 0;
             isHgEmpty = true;
+        }
+        if (curHungry > maxHungry)
+        {
+            curHungry = maxHungry;
         }
 
         // +Act decrease
@@ -84,6 +92,10 @@ public class PlayerStat : MonoBehaviour
         {
             curEnergy = maxEnergy;
             isEgFull = true;
+        }
+        if (curEnergy < 0)
+        {
+            curEnergy = 0;
         }
         if (curEnergy < 1 && Input.GetKey(KeyCode.LeftShift))
         {

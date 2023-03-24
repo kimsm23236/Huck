@@ -52,7 +52,7 @@ public class PlayerAtk : MonoBehaviour
     {
         yield return new WaitForSeconds(0.4f);
         attackRange.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         attackRange.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         atkAnim.SetTrigger("AtkCancel");

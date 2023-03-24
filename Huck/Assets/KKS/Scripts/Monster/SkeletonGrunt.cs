@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Monster;
-using static UnityEngine.Rendering.DebugUI;
 
 public class SkeletonGrunt : Monster
 {
@@ -10,6 +8,10 @@ public class SkeletonGrunt : Monster
     [SerializeField] private MonsterData monsterData = default;
     [SerializeField] private GameObject weapon = default;
     [SerializeField] private GameObject shoulder = default;
+    [SerializeField] private bool useSkillA = default;
+    [SerializeField] private bool useSkillB = default;
+    [SerializeField] private float skillA_MaxCool = default;
+    [SerializeField] private float skillB_MaxCool = default;
     private float skillACool = 0f;
     private float skillBCool = 0f;
     private float rushCool = 0f;
@@ -41,9 +43,9 @@ public class SkeletonGrunt : Monster
             StartCoroutine(RushAttack());
             return;
         }
-        else if(mController.distance > meleeAttackRange)
+        else if (mController.distance < 13f)
         {
-            // 돌진공격이 사용가능하지만 타겟이 최소사거리 안에 있을때 돌진공격X Idle상태로 전환
+            // 돌진공격이 사용가능하지만 타겟이 최소사거리 안에 있을때 돌진공격 사용X Idle상태로 초기화
             StartCoroutine(CheckRushDistance());
             IMonsterState nextState = new MonsterIdle();
             mController.MStateMachine.onChangeState?.Invoke(nextState);
@@ -74,37 +76,100 @@ public class SkeletonGrunt : Monster
     public override void Skill()
     {
         mController.transform.LookAt(mController.targetSearch.hit.transform.position);
-        if (useSkillA == true)
+        if (useSkillA == true && mController.distance >= 13f)
         {
+            useSkillA = false;
             SkillA();
-            Debug.Log($"스킬A 발동 {isNoRangeSkill}");
+            CheckUseSkill();
+            return;
+        }
+        else if (useSkillA == true && mController.distance > meleeAttackRange)
+        {
+            useSkillA = false;
+            // 스킬A가 사용가능하지만 타겟이 최소사거리 안에 있을때 스킬A 사용X Idle상태로 초기화
+            StartCoroutine(CheckSkillADistance());
+            CheckUseSkill();
+            IMonsterState nextState = new MonsterIdle();
+            mController.MStateMachine.onChangeState?.Invoke(nextState);
             return;
         }
 
         if (useSkillB == true)
         {
+            useSkillB = false;
             SkillB();
-            Debug.Log($"스킬B 발동 {isNoRangeSkill}");
+            CheckUseSkill();
             return;
         }
     } // Skill
 
-    //! 해골그런트 스킬A 함수
+    //! 사용가능한 스킬이 있는지 체크하는 함수 (몬스터컨트롤러에서 상태진입 체크하기 위함)
+    private void CheckUseSkill()
+    {
+        if (useSkillA == false && useSkillB == false)
+        {
+            useSkill = false;
+        }
+        else
+        {
+            useSkill = true;
+        }
+    } // CheckUseSkill
+
+    //! 해골그런트 스킬A 함수 (도약 공격)
     private void SkillA()
     {
+        // 포물선 이동함수를 사용하기 위한 Parabola 초기화
+        Parabola parabola = new Parabola();
+        // 몬스터가 타겟을 바라보는 방향의 반대방향을 구함
+        Vector3 dir = -(mController.targetSearch.hit.transform.position - mController.transform.position).normalized;
+        // 목표위치를 dir방향으로 meleeAttackRange만큼 이동된 좌표로 설정
+        Vector3 targetPos = mController.targetSearch.hit.transform.position + dir * meleeAttackRange;
+        StartCoroutine(parabola.ParabolaMoveToTarget(mController.transform.position, targetPos, 1.5f, gameObject));
         mController.monsterAni.SetBool("isSkillA", true);
         StartCoroutine(SkillACooldown());
     } // SkillA
 
+    //! 스킬A 사용 거리체크하는 코루틴함수
+    private IEnumerator CheckSkillADistance()
+    {
+        isNoRangeSkill = true;
+        while (isNoRangeSkill == true)
+        {
+            // 타겟이 스킬A 최소사거리 밖에 있으면 스킬A 사용가능
+            if (mController.distance >= 13f)
+            {
+                useSkillA = true;
+                isNoRangeSkill = false;
+                CheckUseSkill();
+                yield break;
+            }
+            yield return null;
+        }
+    } // CheckSkillADistance
+
+    //! SkillA 사용 중 특정 구간에서 애니메이션 멈추는 이벤트함수
+    private void StopSkillA_Ani()
+    {
+        StartCoroutine(PlaySkillA_Ani());
+    } // StopSkillA_Ani
+    //! SkillA 멈췄던 애니메이션 재생하는 코루틴함수
+    private IEnumerator PlaySkillA_Ani()
+    {
+        mController.monsterAni.StartPlayback();
+        yield return new WaitForSeconds(0.5f);
+        mController.monsterAni.StopPlayback();
+    } // PlaySkillA
+
     //! 스킬A 데미지판정 함수
     private void SkillA_Damage()
     {
-        RaycastHit[] hits = Physics.SphereCastAll(weapon.transform.position, 3f, Vector3.up, 0f, LayerMask.GetMask(GData.PLAYER_MASK));
+        RaycastHit[] hits = Physics.SphereCastAll(weapon.transform.position, 3f, Vector3.up, 0f, LayerMask.GetMask(GData.PLAYER_MASK, GData.BUILD_MASK));
         if (hits.Length > 0)
         {
-            if (hits[0].collider.tag == GData.PLAYER_MASK)
+            foreach (var _hit in hits)
             {
-                Debug.Log("플레이어 맞춤");
+                Debug.Log($"{_hit.collider.name} 맞춤!");
             }
         }
     } // SkillA_Damage
@@ -113,12 +178,12 @@ public class SkeletonGrunt : Monster
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(weapon.transform.position, 3f);
-    }
+    } // OnDrawGizmos
 
-    //! 해골그런트 스킬B 함수
+    //! 해골그런트 스킬B 함수 (대지 가르기)
     private void SkillB()
     {
-        mController.monsterAni.SetBool("isSkillB_Start", true);
+        StartCoroutine(UseSkillB());
         StartCoroutine(SkillBCooldown());
     } // SkillB
 
@@ -134,7 +199,7 @@ public class SkeletonGrunt : Monster
         mController.monsterAni.SetBool("isSkillA", false);
         mController.monsterAni.SetBool("isSkillB_End", false);
         // 공격종료 후 딜레이 시작
-        StartCoroutine(AttackDelay(mController, 4));
+        mController.isDelay = true;
     } // ExitAttack
 
     //! 돌진 공격 사용 거리 체크하는 코루틴함수
@@ -143,11 +208,9 @@ public class SkeletonGrunt : Monster
         isNoRangeAttack = true;
         while (isNoRangeAttack == true)
         {
-            float distance = Vector3.Distance(mController.targetSearch.hit.transform.position, mController.transform.position);
             // 타겟이 돌진 최소사거리 밖에 있으면 돌진 사용가능
-            if (distance >= 13f)
+            if (mController.distance >= 13f)
             {
-                Debug.Log($"거리 : {distance}");
                 isNoRangeAttack = false;
                 yield break;
             }
@@ -159,14 +222,18 @@ public class SkeletonGrunt : Monster
     private IEnumerator RushAttack()
     {
         StartCoroutine(RushCooldown());
+        // 돌진 공격 전 함성 시작
+        mController.monsterAni.SetTrigger("isRoar");
+        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(mController.monsterAni.GetCurrentAnimatorStateInfo(0).length);
         mController.monsterAni.SetBool("isRun", true);
         bool isRush = true;
         bool isFinishRush = false;
         float timeCheck = 0f;
-        mController.mAgent.speed = moveSpeed * 2f;
+        mController.mAgent.speed = moveSpeed * 2.5f;
         while (isRush == true)
         {
-            // if : 돌진 마무리 공격 시작 전까지
+            // 돌진 마무리 공격 시작 전까지 타겟을 향하여 돌진
             if (isFinishRush == false)
             {
                 mController.mAgent.SetDestination(mController.targetSearch.hit.transform.position);
@@ -194,20 +261,32 @@ public class SkeletonGrunt : Monster
         }
     } // RushAttack
 
-    //! 스킬A 연계 공격 코루틴함수
-    private IEnumerator UseSkillA()
+    //! 스킬B 공격 코루틴함수
+    private IEnumerator UseSkillB()
     {
-        mController.monsterAni.SetBool("isSkillB_Start", false);
-        mController.monsterAni.SetBool("isSkillB_Loop", true);
-        yield return new WaitForSeconds(2f);
+        mController.monsterAni.SetBool("isSkillB_Start", true);
+        bool isStart = true;
+        float time = 0f;
+        while (time <= 2.5f)
+        {
+            time += Time.deltaTime;
+            mController.transform.LookAt(mController.targetSearch.hit.transform.position);
+            if (time >= 0.24f && isStart == true)
+            {
+                mController.monsterAni.SetBool("isSkillB_Start", false);
+                mController.monsterAni.SetBool("isSkillB_Loop", true);
+                isStart = false;
+            }
+            yield return null;
+        }
         mController.monsterAni.SetBool("isSkillB_Loop", false);
         mController.monsterAni.SetBool("isSkillB_End", true);
-    } // UseSkillA
+    } // UseSkillB
 
     //! 돌진 쿨다운 코루틴함수
     private IEnumerator RushCooldown()
     {
-        // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 스킬 쿨 적용
+        // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 공격 유무 체크
         isNoRangeAttack = true;
         while (isNoRangeAttack == true)
         {
@@ -225,7 +304,7 @@ public class SkeletonGrunt : Monster
     //! 스킬A 쿨다운 코루틴함수
     private IEnumerator SkillACooldown()
     {
-        useSkillA = false;
+        isNoRangeSkill = true;
         // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 스킬 쿨 적용
         while (true)
         {
@@ -234,6 +313,8 @@ public class SkeletonGrunt : Monster
             {
                 skillACool = 0f;
                 useSkillA = true;
+                isNoRangeSkill = false;
+                CheckUseSkill();
                 yield break;
             }
             yield return null;
@@ -243,7 +324,6 @@ public class SkeletonGrunt : Monster
     //! 스킬B 쿨다운 코루틴함수
     private IEnumerator SkillBCooldown()
     {
-        useSkillB = false;
         while (true)
         {
             skillBCool += Time.deltaTime;
@@ -251,6 +331,7 @@ public class SkeletonGrunt : Monster
             {
                 skillBCool = 0f;
                 useSkillB = true;
+                CheckUseSkill();
                 yield break;
             }
             yield return null;
