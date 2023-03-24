@@ -6,19 +6,18 @@ public class Item : MonoBehaviour
 {
     public ItemData itemData = null;
     public int itemCount = 1;
-    public bool itemInHand = false;
 
 
 
-    public void OnUse(ItemSlot itemSlot_, PlayerStat playerstat_)
+    public void OnUse(ItemSlot itemSlot_)
     {
         if (itemData.ItemUseAble)
         {
-            ItemUse(itemSlot_, playerstat_);
+            ItemUse(itemSlot_);
         }
     }
 
-    protected virtual void ItemUse(ItemSlot itemSlot_, PlayerStat playerStat_)
+    protected virtual void ItemUse(ItemSlot itemSlot_)
     {
 
     }

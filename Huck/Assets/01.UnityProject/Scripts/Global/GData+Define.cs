@@ -6,15 +6,15 @@ public static partial class GData
 {
     public const string PLAYER_MASK = "Player";
     public const string ENEMY_MASK = "Enemy";
-    public const string BUILD_MASK = "build";
+    public const string BUILD_MASK = "Build";
     public const string GATHER_MASK = "Gather";
     public const string TERRAIN_MASK = "Terrain";
 }
 
-//! ÁöÇüÀÇ ¼Ó¼ºÀ» Á¤ÀÇÇÏ±â À§ÇÑ Å¸ÀÔ
+//! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
 public enum TerrainType
 {
-    NONE = -1, 
+    NONE = -1,
     PLAIN_PASS,
     OCEAN_N_PASS
 }       // PuzzleType

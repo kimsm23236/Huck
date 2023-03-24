@@ -17,7 +17,7 @@ public class ItemSlot : MonoBehaviour
     private Color defaultAlpha = new Color(1f, 1f, 1f, 0f);
     private Color itemAlpha = new Color(1f, 1f, 1f, 1f);
 
-    public delegate void OnUseDel(ItemSlot itemSlot_, PlayerStat playerstat_);
+    public delegate void OnUseDel(ItemSlot itemSlot_);
     public OnUseDel itemUseDel = default;
     // 델리게이트로 지금 캐싱하고 있는 아이템이 사용되었을 때의 동작을 캐싱하고 있음.
     // 델리게이트 = default;
@@ -63,9 +63,6 @@ public class ItemSlot : MonoBehaviour
                 itemData = default;
                 itemUseDel = default;
                 itemAmountObj.SetActive(false);
-
-                Debug.Log("default Test");
-                itemUseDel?.Invoke(null, null);
             }
         } // 아이템 데이터가 있는지 없는지 판단
         else
@@ -78,7 +75,6 @@ public class ItemSlot : MonoBehaviour
                 HasItem = false;
                 itemData = default;
                 isEmpty = true;
-                Debug.Log("??");
             }
         }
     }

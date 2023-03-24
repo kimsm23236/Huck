@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: WoodAxe
   m_EditorClassIdentifier: 
   itemType: 1
+  itemLevel: 1
+  itemTool: 1
   itemName: WoodAxe
   itemIcon: {fileID: 21300000, guid: 22fb70e82f85fb741bcd8fd549d82b43, type: 3}
   originPrefab: {fileID: 4688822697307977516, guid: bb44a652abf31c2448a6b5413d4599a0,
