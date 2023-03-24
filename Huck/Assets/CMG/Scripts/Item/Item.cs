@@ -5,10 +5,20 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public ItemData itemData = null;
-    public int itemCount = 3;
+    public int itemCount = 1;
+    public bool itemInHand = false;
 
 
-    public virtual void OnUseItem()
+
+    public void OnUse(ItemSlot itemSlot_, PlayerStat playerstat_)
+    {
+        if (itemData.ItemUseAble)
+        {
+            ItemUse(itemSlot_, playerstat_);
+        }
+    }
+
+    protected virtual void ItemUse(ItemSlot itemSlot_, PlayerStat playerStat_)
     {
 
     }

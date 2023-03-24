@@ -114,6 +114,8 @@ public class PlayerOther : MonoBehaviour
         if (itemInfo != null && Input.GetKeyDown(KeyCode.E))
         {
             invenSlot.AddItem(itemInfo);
+            // 여기서 저 슬롯 불러와서 펑션을 캐싱함.
+            // 저슬롯.델리게이트 = itemInfo.OnUse();
             Destroy(itemInfo.gameObject);
         }
     }

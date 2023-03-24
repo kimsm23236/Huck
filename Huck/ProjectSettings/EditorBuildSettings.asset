@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/KMS/Scene/PlayerScene.unity
-    guid: f4e34883e62efaf4e88db14cea43cc52
+    path: Assets/CMG/Scenes/MinTest.unity
+    guid: e73684b666a48b44ab817b59cb83759e
   m_configObjects: {}
