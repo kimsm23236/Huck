@@ -13,6 +13,20 @@ public class ItemData : ScriptableObject
     }
 
     [SerializeField]
+    private EItemLevel itemLevel;
+    public EItemLevel ItemLevel
+    {
+        get { return itemLevel; }
+    }
+
+    [SerializeField]
+    private EItemTool itemTool;
+    public EItemTool ItemTool
+    {
+        get { return itemTool; }
+    }
+
+    [SerializeField]
     private string itemName;
     public string ItemName
     {
@@ -47,10 +61,20 @@ public class ItemData : ScriptableObject
         get { return itemDamage; }
     }
 
+    [SerializeField]
+    private bool isBuild;
+    public bool IsBuild
+    {
+        get { return isBuild; }
+    }
+
+
 }
 public enum EItemTool
 {
-    NONE = -1
+    NONE = 0,
+    AXE = 1,
+    PICKAXE = 2
 }
 
 public enum EItemType

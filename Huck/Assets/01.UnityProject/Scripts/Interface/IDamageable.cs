@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct DamageMessage
+public class DamageMessage
 {
     public GameObject causer;
     public float damageAmount;
-
-    // �� �ʿ��Ҹ��Ѱ� �˾Ƽ� �߰��ϱ�
+    public Item item;
+    public DamageMessage(GameObject causer, float damageAmount, Item item = default)
+    {
+        this.causer = causer;
+        this.damageAmount = damageAmount;
+        this.item = item;
+    }
 }
 public interface IDamageable
 {
-    public void TakeDamage(GameObject attacker, int damage);
+    public void TakeDamage(DamageMessage message)
+    {
+        /* virtual method */
+    }
 }

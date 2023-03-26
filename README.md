@@ -11,3 +11,4 @@
 2023-03-21 / v0.0.6KMS / Build Possible Check Ok
 2023-03-23 / v0.1.0KMS / Add UI & Quick Slot
 2023-03-24 / v0.1.1KMS / Add Current Quick Slot Mark
+2023-03-25 / v0.1.2KMS / Add Find Object_Scripts

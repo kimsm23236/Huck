@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class ItemRange : MonoBehaviour
 {
-    public GameObject ItemFound = default;
+    private GameObject ItemFound = default;
     public GameObject getItem = default;
 
     private float Range = 5;
 
     void Start()
     {
-
+        //Find Object & Cashing
+        GameObject UiObjs = GameObject.Find("UiObjs");
+        ItemFound = UiObjs.FindChildObj("ItemFound");
     }
 
     void Update()

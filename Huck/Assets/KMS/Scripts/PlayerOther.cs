@@ -10,11 +10,11 @@ public class PlayerOther : MonoBehaviour
     [SerializeField]
     private Item itemInfo = default;
 
-    public GameObject menu = default;
-    public GameObject inven = default;
-    public GameObject map = default;
-    public GameObject GUI = default;
-    public GameObject invenCam = default;
+    private GameObject menu = default;
+    private GameObject inven = default;
+    private GameObject map = default;
+    private GameObject GUI = default;
+    private GameObject invenCam = default;
 
     public static bool isInvenOpen = false;
     public static bool isMapOpen = false;
@@ -26,6 +26,15 @@ public class PlayerOther : MonoBehaviour
 
     private void Start()
     {
+        GameObject UiObjs = GameObject.Find("UiObjs");
+        GameObject player = GameObject.Find("Player");
+
+        menu = GFunc.FindChildObj(UiObjs, "Menu");
+        inven = GFunc.FindChildObj(UiObjs, "Inventory");
+        map = GFunc.FindChildObj(UiObjs, "Map");
+        GUI = GFunc.FindChildObj(UiObjs, "GUI");
+        invenCam = GFunc.FindChildObj(player, "Camera");
+
         CursorSet();
         inven.SetLocalScale(enableScale);
         invenSlot = inven.transform.GetChild(0)

@@ -1281,11 +1281,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   invenSlot: {fileID: 0}
   itemInfo: {fileID: 0}
-  menu: {fileID: 0}
-  inven: {fileID: 0}
-  map: {fileID: 0}
-  GUI: {fileID: 0}
-  invenCam: {fileID: 9002851133012207251}
 --- !u!114 &2524385002189878541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1298,7 +1293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470349f6a9e1f6d4886bc1a84dade97b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: {fileID: 7889988663123414058}
 --- !u!114 &519985256560640034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1331,8 +1325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handTrans: {fileID: 5215066782662483296}
   inventory: {fileID: 0}
+  inHandItem: {fileID: 0}
   selectedQuitSlot: 0
-  playerStat: {fileID: 0}
 --- !u!54 &825168674315377679
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2695,7 +2689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5cb5c02f8ad3b4c94d490134afbfeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera_1p: {fileID: 0}
 --- !u!1 &7896376340048578666
 GameObject:
   m_ObjectHideFlags: 0

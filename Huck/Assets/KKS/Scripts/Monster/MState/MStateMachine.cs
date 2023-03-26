@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MStateMachine : MonoBehaviour
+public class MStateMachine
 {
     private MonsterController mController;
     public Action<IMonsterState> onChangeState;

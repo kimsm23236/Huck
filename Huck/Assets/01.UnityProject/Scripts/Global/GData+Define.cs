@@ -4,17 +4,15 @@ using UnityEngine;
 
 public static partial class GData
 {
+
+    // Layer Mask
     public const string PLAYER_MASK = "Player";
     public const string ENEMY_MASK = "Enemy";
     public const string BUILD_MASK = "Build";
     public const string GATHER_MASK = "Gather";
     public const string TERRAIN_MASK = "Terrain";
-}
 
-//! ������ �Ӽ��� �����ϱ� ���� Ÿ��
-public enum TerrainType
-{
-    NONE = -1,
-    PLAIN_PASS,
-    OCEAN_N_PASS
-}       // PuzzleType
+    // Asset Path
+    public const string PREFAB_PATH = "Prefabs/";
+    public const string UI_PATH = "UI/";
+}

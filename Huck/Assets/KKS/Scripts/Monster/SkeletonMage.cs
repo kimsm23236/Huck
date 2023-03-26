@@ -6,9 +6,13 @@ using static Monster;
 public class SkeletonMage : Monster
 {
     private MonsterController mController = default;
+    [SerializeField] private MonsterData monsterData = default;
+    [SerializeField] private bool useSkillA = default;
+    [SerializeField] private bool useSkillB = default;
+    [SerializeField] private float skillA_MaxCool = default;
+    [SerializeField] private float skillB_MaxCool = default;
     private float skillACool = 0f;
     private float skillBCool = 0f;
-    public MonsterData monsterData;
     public GameObject attackA_Effect;
     private void Awake()
     {
@@ -38,16 +42,33 @@ public class SkeletonMage : Monster
         mController.transform.LookAt(mController.targetSearch.hit.transform.position);
         if (useSkillA == true)
         {
+            useSkillA = false;
             SkillA();
+            CheckUseSkill();
             return;
         }
 
         if (useSkillB == true)
         {
+            useSkillB = false;
             SkillB();
+            CheckUseSkill();
             return;
         }
     } // Skill
+
+    //! 사용가능한 스킬이 있는지 체크하는 함수 (몬스터컨트롤러에서 상태진입 체크하기 위함)
+    private void CheckUseSkill()
+    {
+        if (useSkillA == false && useSkillB == false)
+        {
+            useSkill = false;
+        }
+        else
+        {
+            useSkill = true;
+        }
+    } // CheckUseSkill
 
     //! 공격종료 이벤트함수
     private void ExitAttack()
@@ -57,7 +78,7 @@ public class SkeletonMage : Monster
         mController.monsterAni.SetBool("isSkillA", false);
         mController.monsterAni.SetBool("isSkillB", false);
         // 공격종료 후 딜레이 시작
-        StartCoroutine(AttackDelay(mController, 4));
+        mController.isDelay = true;
     } // ExitAttack
 
     //! 스킬A 함수
@@ -77,8 +98,6 @@ public class SkeletonMage : Monster
     //! 스킬A 쿨다운 코루틴함수
     private IEnumerator SkillACooldown()
     {
-        useSkillA = false;
-        // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 스킬 쿨 적용
         while (true)
         {
             skillACool += Time.deltaTime;
@@ -86,6 +105,7 @@ public class SkeletonMage : Monster
             {
                 skillACool = 0f;
                 useSkillA = true;
+                CheckUseSkill();
                 yield break;
             }
             yield return null;
@@ -95,8 +115,6 @@ public class SkeletonMage : Monster
     //! 스킬B 쿨다운 코루틴함수
     private IEnumerator SkillBCooldown()
     {
-        useSkillB = false;
-        // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 스킬 쿨 적용
         while (true)
         {
             skillBCool += Time.deltaTime;
@@ -104,6 +122,7 @@ public class SkeletonMage : Monster
             {
                 skillBCool = 0f;
                 useSkillB = true;
+                CheckUseSkill();
                 yield break;
             }
             yield return null;

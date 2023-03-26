@@ -104,4 +104,18 @@ public class PlayerStat : MonoBehaviour
     }
     #endregion
     // } Hp, Hungry, Energy
+
+    // { TakeDamage
+    public void TakeDamage(GameObject _attacker, int _damage)
+    {
+        if (_attacker.tag == "Enemy" && PlayerMove.isHit == true)
+        {
+            curHp -= _damage;
+        }
+        if (curHp <= 0f)
+        {
+            PlayerMove.isDead = true;
+        }
+    } 
+    // } TakeDamage
 }

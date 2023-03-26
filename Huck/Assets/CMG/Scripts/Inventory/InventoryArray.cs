@@ -75,11 +75,22 @@ public class InventoryArray : MonoBehaviour
         {
             for (int x = 0; x < horizonSlotCount; x++)
             {
-                GameObject slotGo = Instantiate(slotPrefab);
-                slotGo.transform.SetParent(this.transform, false);
-                slotGo.GetComponent<RectTransform>().anchoredPosition = beginSlotPos + new Vector2((slotWidth + paddingSlot) * x, (slotHeight + paddingSlot) * y * -1);
-                slotGo.name = $"{slotPrefab.name}{slotIdx}";
-                slotIdx++;
+                if (y == verticalSlotCount - 1)
+                {
+                    GameObject slotGo = Instantiate(slotPrefab);
+                    slotGo.transform.SetParent(this.transform, false);
+                    slotGo.GetComponent<RectTransform>().anchoredPosition = beginSlotPos + new Vector2((slotWidth + paddingSlot) * x, (slotHeight + paddingSlot + 10f) * y * -1);
+                    slotGo.name = $"{slotPrefab.name}{slotIdx}";
+                    slotIdx++;
+                }
+                else
+                {
+                    GameObject slotGo = Instantiate(slotPrefab);
+                    slotGo.transform.SetParent(this.transform, false);
+                    slotGo.GetComponent<RectTransform>().anchoredPosition = beginSlotPos + new Vector2((slotWidth + paddingSlot) * x, (slotHeight + paddingSlot) * y * -1);
+                    slotGo.name = $"{slotPrefab.name}{slotIdx}";
+                    slotIdx++;
+                }
             }
         }
     }

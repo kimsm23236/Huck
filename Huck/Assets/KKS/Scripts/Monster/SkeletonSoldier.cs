@@ -8,6 +8,10 @@ public class SkeletonSoldier : Monster
     [SerializeField] private MonsterData monsterData = default;
     [SerializeField] private GameObject weapon = default;
     [SerializeField] private GameObject shield = default;
+    [SerializeField] private bool useSkillA = default;
+    [SerializeField] private bool useSkillB = default;
+    [SerializeField] private float skillA_MaxCool = default;
+    [SerializeField] private float skillB_MaxCool = default;
     private float skillACool = 0f;
     private float skillBCool = 0f;
     void Awake()
@@ -67,60 +71,69 @@ public class SkeletonSoldier : Monster
 
         if (useSkillA == true && mController.distance >= 13f)
         {
+            useSkillA = false;
             SkillA();
+            CheckUseSkill();
             return;
         }
-        else if (useSkillA == true && mController.distance > meleeAttackRange)
+        else if (useSkillA == true && mController.distance < 13f)
         {
-            // 돌진스킬이 사용가능하지만 타겟이 최소사거리 안에 있을때 돌진스킬X Idle상태로 전환
+            useSkillA = false;
+            // 돌진스킬이 사용가능하지만 타겟이 최소사거리 안에 있을때 돌진스킬 사용X Idle상태로 초기화
             StartCoroutine(CheckSkillADistance());
+            CheckUseSkill();
             IMonsterState nextState = new MonsterIdle();
             mController.MStateMachine.onChangeState?.Invoke(nextState);
-            Debug.Log("돌진 최소사거리 안에있음");
             return;
         }
 
         if (useSkillB == true)
         {
+            useSkillB = false;
             SkillB();
+            CheckUseSkill();
             return;
         }
     } // SKILL
 
+    //! 사용가능한 스킬이 있는지 체크하는 함수 (몬스터컨트롤러에서 상태진입 체크하기 위함)
+    private void CheckUseSkill()
+    {
+        if(useSkillA == false && useSkillB == false)
+        {
+            useSkill = false;
+        }
+        else
+        {
+            useSkill = true;
+        }
+    } // CheckUseSkill
+
     //! 스킬A 돌진 사용 거리체크하는 코루틴함수
     private IEnumerator CheckSkillADistance()
     {
-        useSkillA = false;
         isNoRangeSkill = true;
         while (isNoRangeSkill == true)
         {
-            float distance = Vector3.Distance(mController.targetSearch.hit.transform.position, mController.transform.position);
             // 타겟이 돌진 최소사거리 밖에 있으면 돌진 사용가능
-            if (distance >= 13f)
+            if (mController.distance >= 13f)
             {
                 useSkillA = true;
                 isNoRangeSkill = false;
-                Debug.Log($"거리 : {distance}, 스킬A :{useSkillA}, {isNoRangeSkill}");
+                CheckUseSkill();
                 yield break;
             }
             yield return null;
         }
     } // CheckSkillADistance
 
-    //! 스킬A 함수
+    //! 스킬A 함수 (돌진 공격)
     private void SkillA()
     {
-        mController.monsterAni.SetBool("isSkillA_Start", true);
-        StartCoroutine(SkillACooldown());
+        StartCoroutine(UseSkillA());
     } // SkillA
 
-    //! 스킬A 연계 공격 이벤트함수
-    private void SkillA_Combo()
-    {
-        StartCoroutine(UseSkillA());
-    } // SkillA_Combo
-
-    //! 스킬B 함수
+    //! 스킬B 함수 (연속 베기)
     private void SkillB()
     {
         mController.monsterAni.SetBool("isSkillB", true);
@@ -136,25 +149,39 @@ public class SkeletonSoldier : Monster
         mController.monsterAni.SetBool("isSkillB", false);
         weapon.SetActive(false);
         // 공격종료 후 딜레이 시작
-        StartCoroutine(AttackDelay(mController, 4));
+        mController.isDelay = true;
     } // ExitAttack
 
     //! 스킬A 돌진 공격 코루틴함수
     private IEnumerator UseSkillA()
     {
+        // 돌진 쿨타임 시작
+        StartCoroutine(SkillACooldown());
+        // 돌진 공격 전 함성 시작
+        mController.monsterAni.SetTrigger("isRoar");
+        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(mController.monsterAni.GetCurrentAnimatorStateInfo(0).length);
+        mController.monsterAni.SetBool("isSkillA_Start", true);
         // 돌진 준비 모션 끝나면 돌진 시작
-        mController.monsterAni.SetBool("isSkillA_Start", false);
-        mController.monsterAni.SetBool("isSkillA_Loop", true);
+        bool isStart = true;
         bool isSkillA = true;
         mController.mAgent.speed = moveSpeed * 2f;
         while (isSkillA == true)
         {
+            if(mController.monsterAni.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && isStart == true)
+            {
+                // 돌진 시작 모션 끝나면 Loop모션으로 전환
+                mController.monsterAni.SetBool("isSkillA_Start", false);
+                mController.monsterAni.SetBool("isSkillA_Loop", true);
+                isStart = false;
+            }
             mController.mAgent.SetDestination(mController.targetSearch.hit.transform.position);
             // 돌진 중 타겟이 근접공격사거리 안이라면 돌진 마무리 시작
             if (mController.distance <= meleeAttackRange)
             {
                 mController.mAgent.speed = moveSpeed;
                 mController.mAgent.ResetPath();
+                mController.monsterAni.SetBool("isSkillA_Start", false);
                 mController.monsterAni.SetBool("isSkillA_Loop", false);
                 mController.monsterAni.SetBool("isSkillA_End", true);
                 isSkillA = false;
@@ -166,7 +193,6 @@ public class SkeletonSoldier : Monster
     //! 스킬A 쿨다운 코루틴함수
     private IEnumerator SkillACooldown()
     {
-        useSkillA = false;
         // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 스킬 사용가능
         isNoRangeSkill = true;
         while (true)
@@ -177,6 +203,7 @@ public class SkeletonSoldier : Monster
                 skillACool = 0f;
                 useSkillA = true;
                 isNoRangeSkill = false;
+                CheckUseSkill();
                 yield break;
             }
             yield return null;
@@ -186,7 +213,6 @@ public class SkeletonSoldier : Monster
     //! 스킬B 쿨다운 코루틴함수
     private IEnumerator SkillBCooldown()
     {
-        useSkillB = false;
         while (true)
         {
             skillBCool += Time.deltaTime;
@@ -194,6 +220,7 @@ public class SkeletonSoldier : Monster
             {
                 skillBCool = 0f;
                 useSkillB = true;
+                CheckUseSkill();
                 yield break;
             }
             yield return null;

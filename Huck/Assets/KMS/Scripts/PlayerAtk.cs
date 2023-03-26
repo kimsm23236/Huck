@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAtk : MonoBehaviour
 {
     private Animator atkAnim = default;
-    public GameObject attackRange = default;
+    private GameObject attackRange = default;
 
     public static bool isAttacking = false;
     private bool isAttack = false;
@@ -13,6 +13,7 @@ public class PlayerAtk : MonoBehaviour
     private void Start()
     {
         atkAnim = GetComponent<Animator>();
+        attackRange = GFunc.FindChildObj(gameObject,"AttackRange");
     }
 
     private void Update()

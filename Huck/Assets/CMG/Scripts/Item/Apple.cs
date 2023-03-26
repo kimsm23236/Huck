@@ -5,12 +5,11 @@ using UnityEngine;
 public class Apple : Item
 {
 
-    protected override void ItemUse(ItemSlot itemslot_, PlayerStat playerStat_)
+    protected override void ItemUse(ItemSlot itemslot_)
     {
-        base.ItemUse(itemslot_, playerStat_);
+        base.ItemUse(itemslot_);
 
         itemslot_.itemAmount--;
         PlayerStat.curHp += 10;
-        Debug.Log("사과");
     }
 }

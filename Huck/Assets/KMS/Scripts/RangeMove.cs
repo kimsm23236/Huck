@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class RangeMove : MonoBehaviour
 {
-    public GameObject camera_1p = default;
+    private GameObject camera_1p = default;
 
     void Start()
     {
-
+        camera_1p = Camera.main.gameObject;
     }
 
     void Update()

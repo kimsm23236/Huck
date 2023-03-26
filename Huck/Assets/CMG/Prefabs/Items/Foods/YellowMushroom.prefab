@@ -64,7 +64,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 9062266efc42297479ef78e13bfbe5c4, type: 2}
   itemCount: 1
-  itemInHand: 0
 --- !u!1 &5261689275362812625
 GameObject:
   m_ObjectHideFlags: 0

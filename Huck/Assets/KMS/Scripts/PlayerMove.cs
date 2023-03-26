@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     public static bool isGrounded = default;
     public static bool isRunning = default;
     public static bool isDead = false;
+    public static bool isHit = false;
     public static bool isJump = false;
 
     private float jumpForce = 150;
