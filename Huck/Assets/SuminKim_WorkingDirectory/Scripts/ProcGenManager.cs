@@ -580,7 +580,7 @@ public class ProcGenManager : MonoBehaviour
         }
 
         // run heightmap generation for each biome
-        for(int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
+        for (int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
         {
             var biome = config.Biomes[biomeIndex].Biome;
 
@@ -603,7 +603,7 @@ public class ProcGenManager : MonoBehaviour
 
             foreach (var modifier in modifiers)
             {
-                modifier.Execute(config, mapResolution, heightMap, targetTerrain.terrainData.heightmapScale);
+                modifier.Execute(config, mapResolution, heightMap, targetTerrain.terrainData.heightmapScale, BiomeMap);
             }
         }
 

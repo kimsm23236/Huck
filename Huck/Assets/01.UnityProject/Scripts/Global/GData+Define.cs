@@ -16,3 +16,16 @@ public static partial class GData
     public const string PREFAB_PATH = "Prefabs/";
     public const string UI_PATH = "UI/";
 }
+
+public enum EBiome
+{
+    BUSH,
+    GRASSYPLAINS,
+    RAINFOREST,
+    SCRUB,
+    SWAMP,
+    DECAY,
+    HIGHMOUNTAIN,
+    MIDDLEMOUNTAIN,
+    LOWMOUNTAIN
+}
