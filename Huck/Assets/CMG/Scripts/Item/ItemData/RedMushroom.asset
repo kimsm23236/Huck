@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: RedMushroom
   m_EditorClassIdentifier: 
   itemType: 0
+  itemLevel: 0
+  itemTool: 0
   itemName: RedMushroom
   itemIcon: {fileID: 21300000, guid: 59d7e0e4e26b16f469e2609205dbe0dc, type: 3}
   originPrefab: {fileID: 254842831832662856, guid: 858507d58f4fc6e4fb97bc6a9862b6d2,
     type: 3}
   itemUseAble: 1
-  itemDamage: 0
+  itemDamage: 5
+  isBuild: 0

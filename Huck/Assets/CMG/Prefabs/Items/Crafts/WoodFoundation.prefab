@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 5813617977811829677}
   - component: {fileID: 5825371646064844135}
   - component: {fileID: 5832547972000126419}
-  - component: {fileID: 5783833801809238043}
+  - component: {fileID: 4773796302690939207}
   m_Layer: 0
   m_Name: woodFloorForFoundationPrev
   m_TagString: Untagged
@@ -148,8 +148,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5783833801809238043
-MeshCollider:
+--- !u!65 &4773796302690939207
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -158,7 +158,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43850282638961380, guid: 3ef8865f574b81d4c9636e5174868630, type: 2}
+  serializedVersion: 2
+  m_Size: {x: 2.4999971, y: 0.1485136, z: 2.5}
+  m_Center: {x: -1.2499986, y: 0.000000230968, z: 1.25}

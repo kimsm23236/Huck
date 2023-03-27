@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Iron
   m_EditorClassIdentifier: 
   itemType: 0
+  itemLevel: 0
+  itemTool: 0
   itemName: Iron
   itemIcon: {fileID: 21300000, guid: a29d9ba49c5aec349884edaa4505f31a, type: 3}
   originPrefab: {fileID: 2384919178894448675, guid: d3734b6b06dad8f4e85f1a9d2ff233ff,
     type: 3}
   itemUseAble: 0
-  itemDamage: 0
+  itemDamage: 10
+  isBuild: 0

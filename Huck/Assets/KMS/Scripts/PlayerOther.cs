@@ -153,6 +153,10 @@ public class PlayerOther : MonoBehaviour
         {
             itemInfo = Camera.main.GetComponent<ItemRange>().getItem.GetComponent<Item>();
         }
+        else
+        {
+            itemInfo = default;
+        }
         if (itemInfo != null && Input.GetKeyDown(KeyCode.E))
         {
             invenSlot.AddItem(itemInfo);

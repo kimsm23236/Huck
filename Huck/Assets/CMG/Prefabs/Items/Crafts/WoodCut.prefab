@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3715035625686343343}
   - component: {fileID: 3745170330300716623}
   - component: {fileID: 3735122240509466587}
-  - component: {fileID: 3703161710013706381}
+  - component: {fileID: 4518462123194725289}
   m_Layer: 0
   m_Name: woodCutPrev
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3703161710013706381
+--- !u!64 &4518462123194725289
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,7 +97,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 43947658742497174, guid: cbf2a7c8f15546f41bb0e834c7d3e1e8, type: 2}
+  m_Mesh: {fileID: 4300000, guid: b016953ef90011441b176d7e48b81518, type: 3}
 --- !u!1 &6484739349999710427
 GameObject:
   m_ObjectHideFlags: 0

@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 8540364033894259932}
   - component: {fileID: 8569346569335032132}
   - component: {fileID: 8558647258368700660}
-  - component: {fileID: 8536343324313489270}
+  - component: {fileID: 8754967796922870304}
   m_Layer: 8
   m_Name: woodRoofPrev
   m_TagString: Untagged
@@ -148,7 +148,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8536343324313489270
+--- !u!64 &8754967796922870304
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,6 +159,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 43408921412955600, guid: 71cce8d52c7e22a4eaa3175d583e2e71, type: 2}
+  m_Mesh: {fileID: 4300000, guid: 5d75f9a97aa0651429e835f8430afb2f, type: 3}

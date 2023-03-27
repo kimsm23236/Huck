@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 6669260481803277971}
   - component: {fileID: 422471499853203500}
   - component: {fileID: 5124348192223616123}
-  - component: {fileID: 4809733965583667869}
+  - component: {fileID: 5572225397840084402}
   m_Layer: 0
   m_Name: WoodPiece_0
   m_TagString: Untagged
@@ -148,8 +148,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4809733965583667869
-MeshCollider:
+--- !u!65 &5572225397840084402
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -158,7 +158,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5434914345893646050, guid: eba005ab0101eb94685ad279cb6e01a9, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.3808177, y: 0.67130256, z: 2.5983791}
+  m_Center: {x: 0.044172652, y: 0.0009174496, z: 0.035031497}

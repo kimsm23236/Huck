@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: RawMeat
   m_EditorClassIdentifier: 
   itemType: 0
+  itemLevel: 0
+  itemTool: 0
   itemName: RawMeat
   itemIcon: {fileID: 21300000, guid: 2e931086c4f5a55479e31993d2603546, type: 3}
   originPrefab: {fileID: 2799591175037521271, guid: 95c7f8750c4802c4586015dbf9661fa2,
     type: 3}
   itemUseAble: 1
-  itemDamage: 0
+  itemDamage: 5
+  isBuild: 0

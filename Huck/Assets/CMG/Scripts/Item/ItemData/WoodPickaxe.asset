@@ -20,4 +20,5 @@ MonoBehaviour:
   originPrefab: {fileID: 1324070297227769802, guid: 0c85507050a8c414d95bdbce0d1a4a53,
     type: 3}
   itemUseAble: 0
-  itemDamage: 0
+  itemDamage: 20
+  isBuild: 0

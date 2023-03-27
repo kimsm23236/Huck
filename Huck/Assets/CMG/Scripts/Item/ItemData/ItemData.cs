@@ -68,6 +68,13 @@ public class ItemData : ScriptableObject
         get { return isBuild; }
     }
 
+    public virtual void OnUseData(ItemSlot itemSlot_)
+    {
+        if (itemUseAble)
+        {
+            itemSlot_.itemAmount--;
+        }
+    }
 
 }
 public enum EItemTool

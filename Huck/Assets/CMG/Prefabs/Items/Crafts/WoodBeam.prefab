@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 82512921448274855}
   - component: {fileID: 2829288979500736822}
   - component: {fileID: 8419706572361750701}
-  - component: {fileID: 4581888465072486759}
+  - component: {fileID: 1631312434301653077}
   m_Layer: 0
   m_Name: woodBeamPrev
   m_TagString: Untagged
@@ -91,7 +91,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5481370122516338768}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.363, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -148,8 +148,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4581888465072486759
-MeshCollider:
+--- !u!65 &1631312434301653077
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -158,7 +158,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43567914654907048, guid: 19e1db129386d534fa21e0d9a75bc4b9, type: 2}
+  serializedVersion: 2
+  m_Size: {x: 0.31929627, y: 2.502138, z: 0.3192932}
+  m_Center: {x: 0, y: 1.251069, z: 0}
