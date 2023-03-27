@@ -14,7 +14,7 @@ public class ResObjHPBar : MonoBehaviour
     private float timer = 0f;
     private float ratio;
 
-    
+
 
     public delegate void EventHandler_OneParam(float floatValue);
     public EventHandler_OneParam onResObjTakeDamage;
@@ -24,12 +24,12 @@ public class ResObjHPBar : MonoBehaviour
         resourceNameText = gameObject.FindChildComponent<TMP_Text>("Text_ResName");
         hpBarSlider = gameObject.FindChildComponent<Slider>("HPBar");
 
-        
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -63,7 +63,7 @@ public class ResObjHPBar : MonoBehaviour
     {
         timer += Time.deltaTime;
         if (timer > hideRate)
-            HideUI();   
+            HideUI();
     }
     void ChangeHPRatio(float ratio)
     {

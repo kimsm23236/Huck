@@ -12,7 +12,7 @@ public class PlayerStat : MonoBehaviour
     public float maxHungry = 100;
     public float maxEnergy = 100;
 
-    public int damage = 10;
+    public int damage = 1;
     public int armor = 0;
     public float critical = 5;
 
@@ -116,6 +116,6 @@ public class PlayerStat : MonoBehaviour
         {
             PlayerMove.isDead = true;
         }
-    } 
+    }
     // } TakeDamage
 }

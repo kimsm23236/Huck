@@ -5,12 +5,20 @@ using UnityEngine;
 
 public class BaseResourceObject : MonoBehaviour, IDamageable
 {
-    [SerializeField] 
+    [SerializeField]
     protected ResourceObjectSO resConfig;
 
     // Status
-    protected float maxHealthPoint;
-    protected float currentHealthPoint;
+    protected int maxHealthPoint;
+    protected int currentHealthPoint;
+
+    //
+    public int HP
+    {
+        get { return currentHealthPoint; }
+    }
+    // 
+
     protected EResourceType resType;
     protected EResourceLevel resLevel;
     // UI
@@ -20,7 +28,7 @@ public class BaseResourceObject : MonoBehaviour, IDamageable
     // Effect Variable
     protected GameObject childMeshObj;
     protected Vector3 defaultScale;
-    
+
     public ResourceObjectSO ResourceConfig
     {
         get { return resConfig; }
@@ -38,14 +46,14 @@ public class BaseResourceObject : MonoBehaviour, IDamageable
         string hpBarPrefabFileName = "ResObjHPBar UI";
         string damageTextPrefabFileName = "DamageText";
         string prefabPath = GData.PREFAB_PATH + GData.UI_PATH;
-        hpBarPrefab = Resources.Load<GameObject>(prefabPath+ hpBarPrefabFileName);
+        hpBarPrefab = Resources.Load<GameObject>(prefabPath + hpBarPrefabFileName);
         damageTextPrefab = Resources.Load<GameObject>(prefabPath + damageTextPrefabFileName);
         childMeshObj = gameObject.GetComponentInChildren<MeshFilter>().gameObject;
         defaultScale = childMeshObj.transform.localScale;
 
         GameObject UIObj = Instantiate(hpBarPrefab);
         hpBarUI = UIObj.GetComponentMust<ResObjHPBar>();
-        if(hpBarUI != null && hpBarUI != default)
+        if (hpBarUI != null && hpBarUI != default)
             hpBarUI.BindResObj(gameObject);
 
     }
@@ -53,17 +61,17 @@ public class BaseResourceObject : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    // Ã¼·Â 0 ÀÏ ¶§ ÆÄ±« ÇÔ¼ö
+    // Ã¼ï¿½ï¿½ 0 ï¿½ï¿½ ï¿½ï¿½ ï¿½Ä±ï¿½ ï¿½Ô¼ï¿½
     protected virtual void Die()
     {
         Debug.Log($"{resConfig.ResourceName} Die");
         Destroy(gameObject, 0.3f);
     }
 
-    // µ¥¹ÌÁö Ã³¸® ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½Ô¼ï¿½
     public virtual void TakeDamage(DamageMessage message)
     {
         currentHealthPoint = Mathf.Clamp(currentHealthPoint - message.damageAmount, 0, maxHealthPoint);
@@ -74,17 +82,17 @@ public class BaseResourceObject : MonoBehaviour, IDamageable
         StartCoroutine(HitEffect());
 
         hpBarUI.onResObjTakeDamage(currentHealthPoint / maxHealthPoint);
-        GameObject hudText = Instantiate(damageTextPrefab); // »ý¼ºÇÒ ÅØ½ºÆ® ¿ÀºêÁ§Æ®
+        GameObject hudText = Instantiate(damageTextPrefab); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         hudText.transform.SetParent(transform);
-        hudText.transform.position = transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), Random.Range(-2f, 2f)); // Ç¥½ÃµÉ À§Ä¡
-        hudText.GetComponent<DamageText>().damage = (int)message.damageAmount; // µ¥¹ÌÁö Àü´Þ
+        hudText.transform.position = transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), Random.Range(-2f, 2f)); // Ç¥ï¿½Ãµï¿½ ï¿½ï¿½Ä¡
+        hudText.GetComponent<DamageText>().damage = (int)message.damageAmount; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
-    // °ø°Ý ´çÇÒ ½Ã ÀÛ¾ÆÁ³´Ù°¡ Ä¿Áö´Â ÀÌÆåÆ®
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ Ä¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
     IEnumerator HitEffect()
     {
         childMeshObj.SetLocalScale(defaultScale * 0.8f);
-        while(true)
+        while (true)
         {
             yield return null;
             childMeshObj.SetLocalScale(Vector3.Lerp(childMeshObj.transform.localScale, defaultScale, Time.deltaTime * 10f));
