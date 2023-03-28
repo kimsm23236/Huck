@@ -135,9 +135,9 @@ public class PlayerOther : MonoBehaviour
     #region Menu
     private void MenuOpen()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || UiManager.isResumeOn == true)
+        if (Input.GetKeyDown(KeyCode.Escape) || UIManager.Instance.isResumeOn == true)
         {
-            if (UiManager.isSetMenuOpen == false)
+            if (UIManager.Instance.isSetMenuOpen == false)
             {
                 isMenuOpen = !isMenuOpen;
                 if (isMenuOpen == true)
@@ -151,16 +151,16 @@ public class PlayerOther : MonoBehaviour
                 {
                     gameObject.GetComponent<PlayerAtk>().enabled = true;
                     Cursor.lockState = CursorLockMode.Locked;
-                    UiManager.isResumeOn = false;
+                    UIManager.Instance.isResumeOn = false;
                     menu.SetActive(false);
                     Time.timeScale = 1;
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape) && UiManager.isSetMenuOpen == true)
+        if (Input.GetKeyDown(KeyCode.Escape) && UIManager.Instance.isSetMenuOpen == true)
         {
             settingMenu.SetActive(false);
-            UiManager.isSetMenuOpen = false;
+            UIManager.Instance.isSetMenuOpen = false;
         }
     }
     #endregion

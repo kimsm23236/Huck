@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CraftInven : InventoryArray
 {
-    public InventoryArray inven = default;
+    private InventoryArray inven = default;
     private List<ItemSlot> nowInventory = new List<ItemSlot>();
     [SerializeField]
     private bool isOpen = false;
@@ -19,6 +19,7 @@ public class CraftInven : InventoryArray
 
     protected override void Start()
     {
+        inven = UIManager.Instance.inventory.GetComponent<InventoryArray>();
         for (int i = 0; i < transform.childCount; i++)
         {
             nowInventory.Add(transform.GetChild(i).GetComponent<ItemSlot>());
@@ -28,17 +29,20 @@ public class CraftInven : InventoryArray
             itemSlots.Add(inven.transform.GetChild(i).gameObject);
             itemSlotScripts.Add(inven.itemSlots[i].GetComponent<ItemSlot>());
         }
-        myCanvas = transform.parent.parent.parent.parent.GetComponent<Canvas>();
-        graphicRay = myCanvas.GetComponent<GraphicRaycaster>();
-        pointEvent = new PointerEventData(null);
-        playerStat = GameManager.Instance.playerObj.GetComponent<PlayerStat>();
-        playerPos = GameManager.Instance.playerObj.transform;
+        CanvasSetting();
+        InvenSetting();
     }
 
     protected override void Update()
     {
         base.Update();
     }
+
+    protected override void CanvasSetting()
+    {
+        myCanvas = UIManager.Instance.UiObjs.GetComponent<Canvas>();
+    }
+
     protected override void InitSlots()
     {
         slotWidth = slotPrefab.GetComponent<RectTransform>().sizeDelta.x;

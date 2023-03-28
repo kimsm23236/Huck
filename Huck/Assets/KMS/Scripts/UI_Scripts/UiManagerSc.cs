@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UiManager : MonoBehaviour
+public class UiManagerSc : MonoBehaviour
 {
     private GameObject UiObjs = default;
     private GameObject settingMenu = default;

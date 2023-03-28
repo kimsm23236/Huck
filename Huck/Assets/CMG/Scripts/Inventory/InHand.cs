@@ -6,7 +6,6 @@ public class InHand : MonoBehaviour
 {
     [SerializeField]
     private Transform handTrans = default;
-    [SerializeField]
     private GameObject inventory = default;
     [HideInInspector]
     public ItemSlot[] inventorySlotItem = new ItemSlot[8];
@@ -21,6 +20,7 @@ public class InHand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        inventory = UIManager.Instance.inventory;
         playerStat = GetComponent<PlayerStat>();
         for (int i = 0; i < 8; i++)
         {

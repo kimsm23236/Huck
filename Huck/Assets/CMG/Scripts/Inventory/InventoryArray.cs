@@ -46,15 +46,13 @@ public class InventoryArray : MonoBehaviour
             itemSlots.Add(transform.GetChild(i).gameObject);
             itemSlotScripts.Add(itemSlots[i].GetComponent<ItemSlot>());
         }
+        UIManager.Instance.inventory = this.gameObject;
+        CanvasSetting();
     }
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        myCanvas = transform.parent.parent.parent.GetComponent<Canvas>();
-        graphicRay = myCanvas.GetComponent<GraphicRaycaster>();
-        pointEvent = new PointerEventData(null);
-        playerStat = GameManager.Instance.playerObj.GetComponent<PlayerStat>();
-        playerPos = GameManager.Instance.playerObj.transform;
+        InvenSetting();
     }
 
     // Update is called once per frame
@@ -70,6 +68,18 @@ public class InventoryArray : MonoBehaviour
             DividDrag();
             DividDragEnd();
         }
+    }
+    protected virtual void CanvasSetting()
+    {
+        myCanvas = transform.parent.parent.parent.GetComponent<Canvas>();
+        UIManager.Instance.UiObjs = myCanvas.gameObject;
+    }
+    protected void InvenSetting()
+    {
+        graphicRay = myCanvas.GetComponent<GraphicRaycaster>();
+        pointEvent = new PointerEventData(null);
+        playerStat = GameManager.Instance.playerObj.GetComponent<PlayerStat>();
+        playerPos = GameManager.Instance.playerObj.transform;
     }
 
     protected virtual void InitSlots()
