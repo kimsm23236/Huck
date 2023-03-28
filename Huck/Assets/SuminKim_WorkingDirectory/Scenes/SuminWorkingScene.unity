@@ -550,10 +550,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeMultiplier: 2000
-  startHour: 12
+  iStartHour: 12
   timeText: {fileID: 1495504502}
-  sunriseHour: 7
-  sunsetHour: 20
+  sunriseHour: 6
+  sunsetHour: 22
   dayAmbientLight: {r: 0.76862746, g: 0.8156863, b: 0.76862746, a: 0}
   nightAmbientLight: {r: 0.0064079626, g: 0.22940025, b: 0.4528302, a: 0}
   lightChangeCurve:

@@ -131,6 +131,10 @@ public class ProcGenManager : MonoBehaviour
         Perform_DetailPainting(mapResolution, alphaMapResolution, detailMapResolution, maxDetailsPerPatch);
 
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Complete, "Generation complete");
+
+        //
+        // targetTerrain.terrainData.deta
+        //
     }
 
     void Perform_GenerateTextureMapping()

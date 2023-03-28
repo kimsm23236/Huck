@@ -20,18 +20,18 @@ MonoBehaviour:
   - Biome: {fileID: 11400000, guid: 7733ead31faabf94fa360794e895b1ac, type: 2}
     Weighting: 0.2
   - Biome: {fileID: 11400000, guid: 2e69509d739cde5479f121b5ef6ccb24, type: 2}
-    Weighting: 0.6
+    Weighting: 0.3
   - Biome: {fileID: 11400000, guid: 1e2dd08719348c34ca804f7812a3c0d9, type: 2}
-    Weighting: 0.2
+    Weighting: 0.3
   - Biome: {fileID: 11400000, guid: e69914d054b3dd448a59226c645327f0, type: 2}
-    Weighting: 1
+    Weighting: 0.6
   - Biome: {fileID: 11400000, guid: fbcb2ac32955e7e49a5d5e96ecf28a0a, type: 2}
     Weighting: 0.3
   - Biome: {fileID: 11400000, guid: 2636ad9785854a543bd930481cd2c60f, type: 2}
     Weighting: 0.5
   - Biome: {fileID: 11400000, guid: d6b92a33aa9018e418067b581095c51d, type: 2}
-    Weighting: 1
-  BiomeSeedPointDensity: 0.2
+    Weighting: 0.8
+  BiomeSeedPointDensity: 0.5
   biomeMapResolution: 128
   InitialHeightModifier: {fileID: 9427664555903813, guid: 91f045b2de989754e8444710dd538e38,
     type: 3}
