@@ -8,16 +8,16 @@ public class InventoryArray : MonoBehaviour
 {
 
     public List<GameObject> itemSlots = new List<GameObject>();
-    private List<ItemSlot> itemSlotScripts = new List<ItemSlot>();
+    public List<ItemSlot> itemSlotScripts = new List<ItemSlot>();
     public GameObject slotPrefab = null;
     private ItemSlot nowSlot = default;
 
 
     #region 인벤토리 드래그 & 드랍을 위한 변수
     private List<RaycastResult> rayList = new List<RaycastResult>();
-    private GraphicRaycaster graphicRay = default;
-    private PointerEventData pointEvent = default;
-    private Canvas myCanvas = default;
+    protected GraphicRaycaster graphicRay = default;
+    protected PointerEventData pointEvent = default;
+    protected Canvas myCanvas = default;
     private ItemSlot beginDragSlot = default;
     private Transform beginItemTrans = default;
     private GameObject dividedItemIcon = default;
@@ -28,17 +28,17 @@ public class InventoryArray : MonoBehaviour
     private GameObject inventoryUi = default;
     #endregion
 
-    private int horizonSlotCount = 8;
-    private int verticalSlotCount = 4;
-    private float paddingSlot = 10f;
-    private float slotWidth = 0f;
-    private float slotHeight = 0f;
+    protected int horizonSlotCount = 8;
+    protected int verticalSlotCount = 4;
+    protected float paddingSlot = 10f;
+    protected float slotWidth = 0f;
+    protected float slotHeight = 0f;
 
-    private Vector2 beginSlotPos = default;
-    private PlayerStat playerStat = default;
-    private Transform playerPos = default;
+    protected Vector2 beginSlotPos = default;
+    protected PlayerStat playerStat = default;
+    protected Transform playerPos = default;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         InitSlots();
         for (int i = 0; i < transform.childCount; i++)
@@ -48,7 +48,7 @@ public class InventoryArray : MonoBehaviour
         }
     }
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         myCanvas = transform.parent.parent.parent.GetComponent<Canvas>();
         graphicRay = myCanvas.GetComponent<GraphicRaycaster>();
@@ -58,18 +58,21 @@ public class InventoryArray : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        pointEvent.position = Input.mousePosition;
-        OnPointerDown();
-        OnPointerDrag();
-        OnPointerUp();
-        DividItem();
-        DividDrag();
-        DividDragEnd();
+        if (PlayerOther.isInvenOpen)
+        {
+            pointEvent.position = Input.mousePosition;
+            OnPointerDown();
+            OnPointerDrag();
+            OnPointerUp();
+            DividItem();
+            DividDrag();
+            DividDragEnd();
+        }
     }
 
-    private void InitSlots()
+    protected virtual void InitSlots()
     {
         slotWidth = slotPrefab.GetComponent<RectTransform>().sizeDelta.x;
         slotHeight = slotPrefab.GetComponent<RectTransform>().sizeDelta.y;
@@ -140,35 +143,39 @@ public class InventoryArray : MonoBehaviour
         }
     }
 
-    private void DropItem()
+    private void DropItem(ItemSlot itemSlot_)
     {
         GameObject createItem = default;
         // RaycastHit[] hit = Physics.RaycastAll(createItem.transform.position, playerPos.forward, 3f);
         RaycastHit hit = default;
         if (Physics.Raycast(playerPos.position + Vector3.up, playerPos.forward, out hit, 3f, LayerMask.GetMask(GData.TERRAIN_MASK)) == true)
         {
-            createItem = Instantiate(beginDragSlot.itemData.OriginPrefab);
+            createItem = Instantiate(itemSlot_.itemData.OriginPrefab);
             createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
             createItem.transform.position = hit.point + Vector3.up;
         }
         else
         {
-            createItem = Instantiate(beginDragSlot.itemData.OriginPrefab);
+            createItem = Instantiate(itemSlot_.itemData.OriginPrefab);
             createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
             createItem.transform.position = SetItemPos(playerPos, 3f);
         }
 
-        createItem.GetComponent<Item>().itemCount = beginDragSlot.itemAmount;
-        beginDragSlot.itemData = default;
-        beginDragSlot.itemAmount = 0;
-        beginDragSlot.itemUseDel = default;
+        createItem.GetComponent<Item>().itemCount = itemSlot_.itemAmount;
+        itemSlot_.itemData = default;
+        itemSlot_.itemAmount = 0;
+        itemSlot_.itemUseDel = default;
+        if (dividedItemIcon != null)
+        {
+            Destroy(dividedItemIcon.gameObject);
+        }
     }
 
     private void OnPointerUp()
     {
         if (Input.GetMouseButtonUp(0) && beginDragSlot != null && beginDragSlot.itemData != null && !EventSystem.current.IsPointerOverGameObject() && dividedItemIcon == null)
         {
-            DropItem();
+            DropItem(beginDragSlot);
             // 위치 복원
             beginItemTrans.position = beginDragIconPoint;
 
@@ -264,6 +271,7 @@ public class InventoryArray : MonoBehaviour
     }
     private void SwapItems(ItemSlot startItem, ItemSlot endItem)
     {
+        Debug.Log(gameObject);
         if (startItem != endItem && endItem.itemData != null && startItem.itemData.ItemName == endItem.itemData.ItemName && endItem.itemData.ItemType == EItemType.CombineAble)
         {
             endItem.itemAmount += startItem.itemAmount;
@@ -322,25 +330,26 @@ public class InventoryArray : MonoBehaviour
             ItemSlot clickSlot = RaycastGetFirstComponent<ItemSlot>();
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                GameObject createItem = default;
-                // RaycastHit[] hit = Physics.RaycastAll(createItem.transform.position, playerPos.forward, 3f);
-                RaycastHit hit = default;
-                if (Physics.Raycast(playerPos.position + Vector3.up, playerPos.forward, out hit, 3f, LayerMask.GetMask(GData.TERRAIN_MASK)) == true)
-                {
-                    createItem = Instantiate(dividedItemIcon.GetComponent<ItemSlot>().itemData.OriginPrefab);
-                    createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
-                    createItem.transform.position = hit.point + Vector3.up;
-                    Destroy(dividedItemIcon.gameObject);
-                }
-                else
-                {
-                    createItem = Instantiate(dividedItemIcon.GetComponent<ItemSlot>().itemData.OriginPrefab);
-                    createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
-                    createItem.transform.position = SetItemPos(playerPos, 3f);
-                    Destroy(dividedItemIcon.gameObject);
-                }
+                DropItem(dividedItemIcon.GetComponent<ItemSlot>());
+                // GameObject createItem = default;
+                // // RaycastHit[] hit = Physics.RaycastAll(createItem.transform.position, playerPos.forward, 3f);
+                // RaycastHit hit = default;
+                // if (Physics.Raycast(playerPos.position + Vector3.up, playerPos.forward, out hit, 3f, LayerMask.GetMask(GData.TERRAIN_MASK)) == true)
+                // {
+                //     createItem = Instantiate(dividedItemIcon.GetComponent<ItemSlot>().itemData.OriginPrefab);
+                //     createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
+                //     createItem.transform.position = hit.point + Vector3.up;
+                //     Destroy(dividedItemIcon.gameObject);
+                // }
+                // else
+                // {
+                //     createItem = Instantiate(dividedItemIcon.GetComponent<ItemSlot>().itemData.OriginPrefab);
+                //     createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
+                //     createItem.transform.position = SetItemPos(playerPos, 3f);
+                //     Destroy(dividedItemIcon.gameObject);
+                // }
 
-                createItem.GetComponent<Item>().itemCount = dividedItemIcon.GetComponent<ItemSlot>().itemAmount;
+                // createItem.GetComponent<Item>().itemCount = dividedItemIcon.GetComponent<ItemSlot>().itemAmount;
             }
             else if (clickSlot != null)
             {

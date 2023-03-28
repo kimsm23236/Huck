@@ -11,8 +11,8 @@ public class BuildSystem : MonoBehaviour
     private const string BUILD_OBJ_LAYER = "BuildObj";
     private const string BUILD_LAYER = GData.BUILD_MASK;
 
-    private List<GameObject> buildObjs;
-    private List<Material> buildMats;
+    private List<GameObject> BuildLoadObjs;
+    private List<Material> BuildLoadMats;
 
     private const float HIT_DISTANCE = 10.0f;
     private RaycastHit hit;
@@ -36,26 +36,25 @@ public class BuildSystem : MonoBehaviour
     private bool debugMode = false;
     private bool IsDefaultLayer = false;
 
-    //private int Building_index;
-    //private List<GameObject> BuildingsList;
+    private List<GameObject> BuildingList;
 
     void Awake()
     {
-        buildObjs = new List<GameObject>();
-        buildMats = new List<Material>();
-        //BuildingsList = new List<GameObject>();
+        BuildLoadObjs = new List<GameObject>();
+        BuildLoadMats = new List<Material>();
+        BuildingList = new List<GameObject>();
 
         GameObject[] loadObjs = Resources.LoadAll<GameObject>("PBS/BuildPreFab/prevBuild");
         Material[] loadMats = Resources.LoadAll<Material>("PBS/BuildPreFab/Materials");
 
         for (int i = 0; i < loadObjs.GetLength(0); i++)
         {
-            buildObjs.Add(loadObjs[i]);
+            BuildLoadObjs.Add(loadObjs[i]);
         }
 
         for (int i = 0; i < loadMats.GetLength(0); i++)
         {
-            buildMats.Add(loadMats[i]);
+            BuildLoadMats.Add(loadMats[i]);
         }
 
         //reset
@@ -69,13 +68,6 @@ public class BuildSystem : MonoBehaviour
         //raycast rayerSet
         layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER));
         DefaultLayerMask = (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) | 1 << LayerMask.NameToLayer("Default"));
-
-        //Building_index = 0;
-    }
-
-    void Start()
-    {
-
     }
 
     void Update()
@@ -87,6 +79,7 @@ public class BuildSystem : MonoBehaviour
     public void CallingPrev()
     {
         D_prevObj();
+        CollidersOnOff();
     }
 
 
@@ -121,6 +114,15 @@ public class BuildSystem : MonoBehaviour
             case "WoodStairs":
                 prevType = buildType.stairs;
                 break;
+            case "Anvil":
+                prevType = buildType.Anvil;
+                break;
+            case "Stove":
+                prevType = buildType.Stove;
+                break;
+            case "Workbench":
+                prevType = buildType.Workbench;
+                break;
 
         }
 
@@ -130,8 +132,9 @@ public class BuildSystem : MonoBehaviour
         }
         else if (IsBuildTime == true)
         {
-            C_prevObj(prevType, 1);
+            C_prevObj(prevType);
         }
+        CollidersOnOff();
     }
 
     private void ControlKey()
@@ -142,23 +145,9 @@ public class BuildSystem : MonoBehaviour
             else if (debugMode) debugMode = false;
         }
 
-        // if (Input.GetKeyDown(KeyCode.B))
-        // {
-        //     if (IsBuildTime == true)
-        //     {
-        //         D_prevObj();
-        //         IsBuildTime = false;
-        //     }
-        //     else if (IsBuildTime == false)
-        //     {
-        //         IsBuildTime = true;
-        //         C_prevObj(prevType, 1);
-        //     }
-        // }
-
         if (!IsBuildTime)
         {
-            if (Input.GetKeyDown(KeyCode.N))
+            if (Input.GetKeyDown(KeyCode.G))
             {
                 //정가운데 화면 레이 쏘기
                 Ray DeleteRAY = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
@@ -170,13 +159,13 @@ public class BuildSystem : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 //정가운데 화면 레이 쏘기
-                Ray DeleteRAY = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+                Ray DoorRAY = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
                 RaycastHit hitD;
 
-                if (Physics.Raycast(DeleteRAY, out hitD, HIT_DISTANCE, LayerMask.NameToLayer(BUILD_LAYER)))
+                if (Physics.Raycast(DoorRAY, out hitD, HIT_DISTANCE))
                 {
                     if (hitD.transform.name == "DoorCollider")
                     {
@@ -189,14 +178,6 @@ public class BuildSystem : MonoBehaviour
         }
         else if (IsBuildTime)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                D_prevObj();
-                prevType++;
-                if ((int)prevType > 8) prevType = 0;
-                C_prevObj(prevType, 1);
-            }
-
             if (Input.GetKeyDown(KeyCode.E))
             {
                 prevYAngle += 45.0f;
@@ -205,7 +186,6 @@ public class BuildSystem : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))
             {
-                //설치
                 BuildObj();
             }
         }
@@ -233,6 +213,12 @@ public class BuildSystem : MonoBehaviour
             layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) |
                                 1 << LayerMask.NameToLayer(BUILD_WALL_LAYER) |
                                 1 << LayerMask.NameToLayer(BUILD_FLOOR_LAYER));
+        }
+        else
+        {
+            layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_WALL_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_FLOOR_LAYER));
         }
 
         if (Physics.Raycast(ray, out hit, HIT_DISTANCE, layerMask))
@@ -306,83 +292,17 @@ public class BuildSystem : MonoBehaviour
         }
     }
 
-    //public Vector3 SetPrevFloorOffset(string objName)
-    //{
-    //    Vector3 Result = default;
-    //    float offsetSize = 1.25f;
-    //    switch (objName)
-    //    {
-    //        //case "LeftBot":
-    //        //    Result = new Vector3(offsetSize, 0.0f, offsetSize);
-    //        //    break;
-    //        //case "LeftTop":
-    //        //    Result = new Vector3(offsetSize, 0.0f, offsetSize);
-    //        //    break;
-    //        //case "RightBot":
-    //        //    Result = new Vector3(offsetSize, 0.0f, offsetSize);
-    //        //    break;
-    //        //case "RightTop":
-    //        //    Result = new Vector3(offsetSize, 0.0f, offsetSize);
-    //            //break;
-    //        case "Top":
-    //            Result = new Vector3(0.0f, 0.0f, -offsetSize);
-    //            break;
-    //        case "Bottom":
-    //            Result = new Vector3(0.0f, 0.0f, offsetSize);
-    //            break;
-    //        case "Left":
-    //            Result = new Vector3(offsetSize, 0.0f, 0.0f);
-    //            break;
-    //        case "Right":
-    //            Result = new Vector3(-offsetSize, 0.0f, 0.0f);
-    //            break;
-    //        default:
-    //            Result = new Vector3(0.0f, 0.0f, 0.0f);
-    //            break;
-    //    }
-    //    return Result;
-    //}
-
     private void prevUpdate(RaycastHit hit2)
     {
         if (prevObj != null || prevObj != default)
         {
-            if (hit2.transform.gameObject.layer == LayerMask.NameToLayer(BUILD_FLOOR_LAYER))
+            if (hit2.transform.gameObject.layer == LayerMask.NameToLayer(BUILD_FLOOR_LAYER) ||
+                hit2.transform.gameObject.layer == LayerMask.NameToLayer(BUILD_WALL_LAYER) ||
+                hit2.transform.gameObject.layer == LayerMask.NameToLayer(BUILD_OBJ_LAYER))
             {
                 if (prevType == buildType.Foundation)
                 {
                     prevPos = hit2.transform.position + new Vector3(0, -0.5f, 0);
-                    prevObj.transform.position = prevPos;
-                    prevRot = new Vector3(0, hit2.transform.rotation.eulerAngles.y + prevYAngle, 0);
-                    prevObj.transform.rotation = Quaternion.Euler(prevRot);
-                    lastBuildObj = hit2.transform.gameObject;
-                }
-                else
-                {
-                    prevPos = hit2.transform.position;
-                    prevObj.transform.position = prevPos;
-                    prevRot = new Vector3(0, hit2.transform.rotation.eulerAngles.y + prevYAngle, 0);
-                    prevObj.transform.rotation = Quaternion.Euler(prevRot);
-                    lastBuildObj = hit2.transform.gameObject;
-                }
-            }
-            else if (hit2.transform.gameObject.layer == LayerMask.NameToLayer(BUILD_WALL_LAYER))
-            {
-                prevPos = hit2.transform.position;
-                prevObj.transform.position = prevPos;
-                prevRot = new Vector3(0, hit2.transform.rotation.eulerAngles.y + prevYAngle, 0);
-                prevObj.transform.rotation = Quaternion.Euler(prevRot);
-                lastBuildObj = hit2.transform.gameObject;
-            }
-            else if (hit2.transform.gameObject.layer == LayerMask.NameToLayer(BUILD_OBJ_LAYER))
-            {
-                if (prevType == buildType.stairs && hit2.transform.name != "RoofLeft" ||
-                    prevType == buildType.stairs && hit2.transform.name != "RoofRight" ||
-                    prevType == buildType.stairs && hit2.transform.name != "RoofUp" ||
-                    prevType == buildType.stairs && hit2.transform.name != "RoofDown" ||
-                    prevType == buildType.stairs && hit2.transform.name != "RoofTurnning")
-                {
-                    prevPos = hit2.transform.position;
                     prevObj.transform.position = prevPos;
                     prevRot = new Vector3(0, hit2.transform.rotation.eulerAngles.y + prevYAngle, 0);
                     prevObj.transform.rotation = Quaternion.Euler(prevRot);
@@ -418,29 +338,17 @@ public class BuildSystem : MonoBehaviour
             Destroy(prevObj);
     }
 
-    private void C_prevObj(buildType buildtype, int type)
+    private void C_prevObj(buildType buildtype)
     {
-        if (type == 0)
-        {
-            prevObj = Instantiate(buildObjs[(int)buildtype]);
-            prevObj.transform.parent = this.transform;
-            prevObj.layer = LayerMask.NameToLayer(BUILD_LAYER);
-            SetPrevMat(buildtype, 0, buildTypeMat.none);
-            prevObj.GetComponent<MeshCollider>().convex = true;
-            prevObj.GetComponent<MeshCollider>().isTrigger = false;
-        }
-        else if (type == 1)
-        {
-            prevObj = Instantiate(buildObjs[(int)buildtype]);
-            prevObj.transform.parent = this.transform;
-            prevObj.name = "prevObj";
-            SetLayer();
-            SetTrigger(buildtype, 0);
-            SetPrevMat(buildtype, 1, buildTypeMat.green);
-            prevInfo = prevObj.FindChildObj("BuildCollider").GetComponent<PrevObjInfo>();
-            prevDefaultInfo = prevObj.FindChildObj("BuildDefaultCollider").GetComponent<PrevObjInfo>();
-            prevYAngle = 0.0f;
-        }
+        prevObj = Instantiate(BuildLoadObjs[(int)buildtype]);
+        prevObj.transform.parent = this.transform;
+        prevObj.name = "prevObj";
+        SetLayer();
+        SetTrigger(buildtype, 0);
+        SetPrevMat(buildtype, 1, buildTypeMat.green);
+        prevInfo = prevObj.FindChildObj("BuildCollider").GetComponent<PrevObjInfo>();
+        prevDefaultInfo = prevObj.FindChildObj("BuildDefaultCollider").GetComponent<PrevObjInfo>();
+        prevYAngle = 0.0f;
     }
 
     private void SetTrigger(buildType buildtemp, int type)
@@ -496,13 +404,21 @@ public class BuildSystem : MonoBehaviour
 
     private void BuildObj()
     {
+        GameObject buildObj = default;
+
         if (!IsDefaultLayer)
         {
             if (prevInfo != null && prevInfo != default && prevInfo.isBuildAble == true)
             {
-                GameObject buildObj = Instantiate(buildObjs[(int)prevType], prevPos, Quaternion.Euler(prevRot));
+                buildObj = Instantiate(BuildLoadObjs[(int)prevType], prevPos, Quaternion.Euler(prevRot));
                 buildObj.transform.parent = this.transform;
                 buildObj.layer = 0;
+
+                //foreach (Transform child in prevObj.GetComponentsInChildren<Transform>())
+                //{
+                //    child.transform.gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                //}
+
                 buildObj.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
 
                 switch (prevType)
@@ -525,9 +441,15 @@ public class BuildSystem : MonoBehaviour
         {
             if (prevDefaultInfo != null && prevDefaultInfo != default && prevDefaultInfo.isBuildAble == true)
             {
-                GameObject buildObj = Instantiate(buildObjs[(int)prevType], prevPos, Quaternion.Euler(prevRot));
+                buildObj = Instantiate(BuildLoadObjs[(int)prevType], prevPos, Quaternion.Euler(prevRot));
                 buildObj.transform.parent = this.transform;
                 buildObj.layer = 0;
+
+                //foreach (Transform child in prevObj.GetComponentsInChildren<Transform>())
+                //{
+                //    child.transform.gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                //}
+
                 buildObj.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
 
                 switch (prevType)
@@ -546,10 +468,35 @@ public class BuildSystem : MonoBehaviour
                 }
             }
         }
-        //if(lastBuildObj != null)
-        //{
-        //    lastBuildObj.SetActive(false);
-        //}
+
+        if (buildObj != null || buildObj != default)
+        {
+            BuildingList.Add(buildObj);
+        }
+    }
+
+    private void CollidersOnOff()
+    {
+        if (IsBuildTime)
+        {
+            if (BuildingList.Count > 0)
+            {
+                for (int i = 0; i < BuildingList.Count; i++)
+                {
+                    BuildingList[i].FindChildObj("BuildPart").SetActive(true);
+                }
+            }
+        }
+        else if(!IsBuildTime)
+        {
+            if (BuildingList.Count > 0)
+            {
+                for (int i = 0; i < BuildingList.Count; i++)
+                {
+                    BuildingList[i].FindChildObj("BuildPart").SetActive(false);
+                }
+            }
+        }
     }
 
     public void SetPrevMat(buildType buildtemp, int type, buildTypeMat mat)
@@ -561,21 +508,21 @@ public class BuildSystem : MonoBehaviour
                 switch (buildtemp)
                 {
                     case buildType.door:
-                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.none];
-                        prevObj.FindChildObj("Door").GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.none];
+                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
+                        prevObj.FindChildObj("Door").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
                         break;
                     case buildType.windowswall:
-                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.none];
-                        prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.GlassNone];
+                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
+                        prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.GlassNone];
                         break;
                     case buildType.Foundation:
                         for (int i = 0; i < 5; i++)
                         {
-                            prevObj.transform.GetChild(i).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.none];
+                            prevObj.transform.GetChild(i).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
                         }
                         break;
                     default:
-                        prevObj.transform.GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.none];
+                        prevObj.transform.GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
                         break;
                 }
             }
@@ -586,25 +533,25 @@ public class BuildSystem : MonoBehaviour
                     case buildType.door:
                         if (mat == buildTypeMat.green)
                         {
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.green];
-                            prevObj.FindChildObj("Door").GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.green];
+                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
+                            prevObj.FindChildObj("Door").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
                         }
                         else if (mat == buildTypeMat.red)
                         {
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.red];
-                            prevObj.FindChildObj("Door").GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.red];
+                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
+                            prevObj.FindChildObj("Door").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
                         }
                         break;
                     case buildType.windowswall:
                         if (mat == buildTypeMat.green)
                         {
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.green];
-                            prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.GlassGreen];
+                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
+                            prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.GlassGreen];
                         }
                         else if (mat == buildTypeMat.red)
                         {
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.red];
-                            prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.red];
+                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
+                            prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
                         }
                         break;
                     case buildType.Foundation:
@@ -612,68 +559,35 @@ public class BuildSystem : MonoBehaviour
                         {
                             for (int i = 0; i < 5; i++)
                             {
-                                prevObj.transform.GetChild(i).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.green];
+                                prevObj.transform.GetChild(i).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
                             }
                         }
                         else if (mat == buildTypeMat.red)
                         {
                             for (int i = 0; i < 5; i++)
                             {
-                                prevObj.transform.GetChild(i).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.red];
+                                prevObj.transform.GetChild(i).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
                             }
                         }
                         break;
                     default:
                         if (mat == buildTypeMat.green)
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.green];
+                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
                         else if (mat == buildTypeMat.red)
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = buildMats[(int)buildTypeMat.red];
+                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
                         break;
                 }
             }
         }
     }
-
-    //public Vector3 SetPrevOffset(buildType buildtemp)
-    //{
-    //    Vector3 Result = default;
-    //    switch (buildtemp)
-    //    {
-    //        case buildType.beam:
-    //            Result = new Vector3(0.0f, 0.0f, 0.0f);
-    //            break;
-    //        case buildType.cut:
-    //            Result = new Vector3(12.5f, 0.0f, 0.0f);
-    //            break;
-    //        case buildType.door:
-    //            Result = new Vector3(12.5f, 0.0f, 0.0f);
-    //            break;
-    //        case buildType.floor:
-    //            Result = new Vector3(12.5f, 1.0f, 12.5f);
-    //            break;
-    //        case buildType.roof:
-    //            Result = new Vector3(12.5f, 0.0f, 12.5f);
-    //            break;
-    //        case buildType.stairs:
-    //            Result = new Vector3(14.0f, 0.0f, 0.0f);
-    //            break;
-    //        case buildType.wall:
-    //            Result = new Vector3(12.5f, 0.0f, 0.0f);
-    //            break;
-    //        case buildType.windowswall:
-    //            Result = new Vector3(12.5f, 0.0f, 0.0f);
-    //            break;
-    //    }
-    //    return Result;
-    //}
 }
 
 public enum buildType
 {
-    none = -1, beam, cut, door, floor, roof, stairs, wall, windowswall, Foundation
+    none = -1, beam, cut, door, floor, roof, stairs, wall, windowswall, Foundation, Anvil, Stove, Workbench
 }
 
 public enum buildTypeMat
 {
-    none, green, red, GlassNone, GlassGreen, GlassRed
+    none, green, red, GlassNone, GlassGreen, GlassRed, Viking,VikingGreen,VikingRed
 }

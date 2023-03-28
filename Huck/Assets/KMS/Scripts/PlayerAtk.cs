@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAtk : MonoBehaviour
 {
     private Animator atkAnim = default;
-    public GameObject attackRange = default;
+    private GameObject attackRange = default;
 
     public static bool isAttacking = false;
     private bool isAttack = false;
@@ -13,12 +13,14 @@ public class PlayerAtk : MonoBehaviour
     private void Start()
     {
         atkAnim = GetComponent<Animator>();
+        attackRange = GFunc.FindChildObj(gameObject, "AttackRange");
     }
 
     private void Update()
     {
         AtkInput();
     }
+
     private void FixedUpdate()
     {
         Attack();
@@ -42,19 +44,30 @@ public class PlayerAtk : MonoBehaviour
             {
                 atkAnim.SetTrigger("Attack");
                 isAttacking = true;
-                StartCoroutine(AtkDelay());
+                //StartCoroutine(AtkDelay());
             }
         }
     }
 
+    // private IEnumerator AtkDelay()
+    // {
+    //     yield return new WaitForSeconds(0.4f);
+    //     attackRange.SetActive(true);
+    //     yield return new WaitForSeconds(0.1f);
+    //     attackRange.SetActive(false);
+    //     yield return new WaitForSeconds(0.5f);
+    //     atkAnim.SetTrigger("AtkCancel");
+    //     isAttacking = false;
+    //     isAttack = false;
+    // }
 
-    private IEnumerator AtkDelay()
+    private void TestAtk()
     {
-        yield return new WaitForSeconds(0.4f);
         attackRange.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
+    }
+    private void TestEndAtk()
+    {
         attackRange.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
         atkAnim.SetTrigger("AtkCancel");
         isAttacking = false;
         isAttack = false;

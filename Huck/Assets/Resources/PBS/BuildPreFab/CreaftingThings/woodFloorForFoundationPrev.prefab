@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8794508198072402950}
   - component: {fileID: 7328381862443517645}
   - component: {fileID: 7042749952074664449}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 2182989267167180182}
   - component: {fileID: 2888967841646442015}
   - component: {fileID: 5916638924524982737}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: TopUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4621069500510127862}
   - component: {fileID: 9155113109469184176}
   - component: {fileID: 5383162754473480791}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: BottomDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 1351479373308044108}
   - component: {fileID: 232428237982933679}
   - component: {fileID: 6430148677501412111}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 6180507314184629636}
   - component: {fileID: 1842976642610130261}
   - component: {fileID: 664264645460798467}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: LeftTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 728413787610554501}
   - component: {fileID: 7292855076803821343}
   - component: {fileID: 5712662253580351336}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: BottomUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,6 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa88712cab83d7f4e84957e3168255d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuildAble: 0
   Size:
   - 0
   - 0
@@ -445,7 +446,7 @@ GameObject:
   - component: {fileID: 1824199540268839151}
   - component: {fileID: 7160642775879674837}
   - component: {fileID: 7266480138594274706}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -507,7 +508,7 @@ GameObject:
   - component: {fileID: 1173607919299931581}
   - component: {fileID: 7130227202218811948}
   - component: {fileID: 4573335635522820625}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +570,7 @@ GameObject:
   - component: {fileID: 978830653558611386}
   - component: {fileID: 3660851485647808281}
   - component: {fileID: 1747949318906939931}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +632,7 @@ GameObject:
   - component: {fileID: 7898809087970275467}
   - component: {fileID: 5698030055358402075}
   - component: {fileID: 4974549244755810860}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: RightTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -693,7 +694,7 @@ GameObject:
   - component: {fileID: 3370517172010200969}
   - component: {fileID: 2999854808613472335}
   - component: {fileID: 7539068669493490808}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: RightDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -802,6 +803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa88712cab83d7f4e84957e3168255d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuildAble: 0
   Size:
   - 0
   - 0
@@ -817,7 +819,7 @@ GameObject:
   - component: {fileID: 8074179593090299591}
   - component: {fileID: 7500044734633896177}
   - component: {fileID: 7353465412481543965}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -868,6 +870,103 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!1 &3262211545570391631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1204763033448934826}
+  - component: {fileID: 530092202997177958}
+  - component: {fileID: 26174050132755252}
+  - component: {fileID: 3303744451879142176}
+  m_Layer: 0
+  m_Name: FoundationCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1204763033448934826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262211545570391631}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.25, y: 0, z: 1.25}
+  m_LocalScale: {x: 2.5, y: 0.2, z: 2.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5075683093251206420}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &530092202997177958
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262211545570391631}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &26174050132755252
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262211545570391631}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3303744451879142176
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262211545570391631}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3449154488921500640
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,7 +978,7 @@ GameObject:
   - component: {fileID: 7543085250429691105}
   - component: {fileID: 4582615559816697770}
   - component: {fileID: 8275488002861804648}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -941,7 +1040,7 @@ GameObject:
   - component: {fileID: 3764649188315221177}
   - component: {fileID: 4419692286513719192}
   - component: {fileID: 1374601673225309743}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1003,7 +1102,7 @@ GameObject:
   - component: {fileID: 469842937261841190}
   - component: {fileID: 5978782140706156297}
   - component: {fileID: 4155179890783926496}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: LeftDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1065,7 +1164,7 @@ GameObject:
   - component: {fileID: 3593429497749298609}
   - component: {fileID: 6482128776075817658}
   - component: {fileID: 7827921062705899723}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: RightTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1127,7 +1226,7 @@ GameObject:
   - component: {fileID: 678562252016625516}
   - component: {fileID: 4675264120731987693}
   - component: {fileID: 2849645892256952717}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: LeftBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1250,6 +1349,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8673451999291229400}
+  - {fileID: 1204763033448934826}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1312,9 +1412,9 @@ MeshCollider:
   m_GameObject: {fileID: 5077875400085334494}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 43850282638961380, guid: 3ef8865f574b81d4c9636e5174868630, type: 2}
 --- !u!114 &4563590650556626259
@@ -1411,7 +1511,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2128035205192330305}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: floorPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1453,7 +1553,7 @@ GameObject:
   - component: {fileID: 1223572876720060560}
   - component: {fileID: 8890102632824774927}
   - component: {fileID: 7958625436633261517}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1513,7 +1613,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 805808628790142290}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: WallPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1552,7 +1652,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5419049395271576351}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: ObjPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,7 +1694,7 @@ GameObject:
   - component: {fileID: 1331916110377162812}
   - component: {fileID: 8216005133785387856}
   - component: {fileID: 6769945108766112207}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: LeftBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1656,7 +1756,7 @@ GameObject:
   - component: {fileID: 8716578212506821877}
   - component: {fileID: 3412011825881610080}
   - component: {fileID: 6315179902501459940}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: LeftUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1718,7 +1818,7 @@ GameObject:
   - component: {fileID: 5037361901728832511}
   - component: {fileID: 3163478152183260810}
   - component: {fileID: 6636001174138870390}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: RightBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1780,7 +1880,7 @@ GameObject:
   - component: {fileID: 1273409912232827167}
   - component: {fileID: 4584495198930853785}
   - component: {fileID: 1108051911572715013}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1842,7 +1942,7 @@ GameObject:
   - component: {fileID: 1339200382510839609}
   - component: {fileID: 4513816000182078593}
   - component: {fileID: 1452378852779427485}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: TopDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1904,7 +2004,7 @@ GameObject:
   - component: {fileID: 2599018529730297625}
   - component: {fileID: 5273713200671055693}
   - component: {fileID: 6736511242778810953}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: RightBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1966,7 +2066,7 @@ GameObject:
   - component: {fileID: 6643132498473551429}
   - component: {fileID: 5993049312529494579}
   - component: {fileID: 4031404421275826403}
-  m_Layer: 30
+  m_Layer: 29
   m_Name: RightUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2028,7 +2128,7 @@ GameObject:
   - component: {fileID: 7840611372612455422}
   - component: {fileID: 4399712506920551692}
   - component: {fileID: 8582718378288229890}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: LeftTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -6,8 +6,8 @@ public class DamageMessage
 {
     public GameObject causer;
     public float damageAmount;
-    public Item item;
-    public DamageMessage(GameObject causer, float damageAmount, Item item = default)
+    public ItemData item;
+    public DamageMessage(GameObject causer, float damageAmount, ItemData item = default)
     {
         this.causer = causer;
         this.damageAmount = damageAmount;

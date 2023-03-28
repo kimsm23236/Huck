@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7075643047725749886}
   - component: {fileID: 1160333690407813831}
   - component: {fileID: 1309881173519237601}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 8806957750233734285}
   - component: {fileID: 2439861501350968749}
   - component: {fileID: 8638403470160152117}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 1844687262583409543}
   - component: {fileID: 372578826317663164}
   - component: {fileID: 2709006627735146731}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 5038465733196354112}
   - component: {fileID: 3975529232938172009}
   - component: {fileID: 1113226684889947641}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 79305738660152444}
   - component: {fileID: 6850947141017062437}
   - component: {fileID: 3754642658820134785}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -568,6 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa88712cab83d7f4e84957e3168255d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuildAble: 0
   Size:
   - 0
   - 0
@@ -583,7 +584,7 @@ GameObject:
   - component: {fileID: 1060386022867862773}
   - component: {fileID: 8049204690230437456}
   - component: {fileID: 6515662362799119473}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -728,6 +729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa88712cab83d7f4e84957e3168255d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuildAble: 0
   Size:
   - 0
   - 0
@@ -741,7 +743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7487838859468835540}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: WallPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -776,7 +778,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448054597400343653}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: floorPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

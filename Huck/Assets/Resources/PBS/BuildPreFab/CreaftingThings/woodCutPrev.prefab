@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa88712cab83d7f4e84957e3168255d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuildAble: 0
   Size:
   - 0
   - 0
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa88712cab83d7f4e84957e3168255d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuildAble: 0
   Size:
   - 0
   - 0
@@ -136,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4177628214351079553}
   - component: {fileID: 2583794142873414688}
-  m_Layer: 30
+  m_Layer: 28
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6388198900779568840}
   - component: {fileID: 5867614200517838738}
-  m_Layer: 30
+  m_Layer: 28
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7956049100476995915}
-  m_Layer: 30
+  m_Layer: 28
   m_Name: RoofBuildCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

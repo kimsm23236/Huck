@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8157475658996774795}
   - component: {fileID: 2611860305106604738}
   - component: {fileID: 2330845011516104991}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 2201608714503394785}
   - component: {fileID: 1285308250346348307}
   - component: {fileID: 5422388249699347446}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5899376917054146573}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: floorPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa88712cab83d7f4e84957e3168255d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuildAble: 0
   Size:
   - 0
   - 0
@@ -230,7 +231,7 @@ GameObject:
   - component: {fileID: 1410220280183785579}
   - component: {fileID: 3144080486793723541}
   - component: {fileID: 8348582700280474363}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +329,7 @@ GameObject:
   - component: {fileID: 1528079703124636763}
   - component: {fileID: 9208008336542544535}
   - component: {fileID: 8597452543318979476}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +391,7 @@ GameObject:
   - component: {fileID: 93772807482011881}
   - component: {fileID: 1053896453782054395}
   - component: {fileID: 5022233002979600169}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6127617273446871191}
-  m_Layer: 29
+  m_Layer: 28
   m_Name: WallPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,6 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa88712cab83d7f4e84957e3168255d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuildAble: 0
   Size:
   - 0
   - 0
@@ -696,7 +698,7 @@ GameObject:
   - component: {fileID: 3698550387331183420}
   - component: {fileID: 3787562427898871382}
   - component: {fileID: 6622357875067569397}
-  m_Layer: 28
+  m_Layer: 27
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

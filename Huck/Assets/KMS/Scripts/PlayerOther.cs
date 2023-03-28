@@ -10,11 +10,13 @@ public class PlayerOther : MonoBehaviour
     [SerializeField]
     private Item itemInfo = default;
 
-    public GameObject menu = default;
-    public GameObject inven = default;
-    public GameObject map = default;
-    public GameObject GUI = default;
-    public GameObject invenCam = default;
+    private GameObject menu = default;
+    private GameObject inven = default;
+    private GameObject map = default;
+    private GameObject GUI = default;
+    private GameObject invenCam = default;
+    private GameObject settingMenu = default;
+
 
     public static bool isInvenOpen = false;
     public static bool isMapOpen = false;
@@ -26,6 +28,17 @@ public class PlayerOther : MonoBehaviour
 
     private void Start()
     {
+
+        GameObject UiObjs = GameObject.Find("UiObjs");
+        GameObject player = GameObject.Find("Player");
+
+        menu = GFunc.FindChildObj(UiObjs, "Menu");
+        inven = GFunc.FindChildObj(UiObjs, "Inventory");
+        map = GFunc.FindChildObj(UiObjs, "Map");
+        GUI = GFunc.FindChildObj(UiObjs, "GUI");
+        invenCam = GFunc.FindChildObj(player, "Camera");
+        settingMenu = GFunc.FindChildObj(UiObjs, "SettingMenu");
+
         CursorSet();
         inven.SetLocalScale(enableScale);
         invenSlot = inven.transform.GetChild(0)
@@ -124,22 +137,30 @@ public class PlayerOther : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) || UiManager.isResumeOn == true)
         {
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen == true)
+            if (UiManager.isSetMenuOpen == false)
             {
-                gameObject.GetComponent<PlayerAtk>().enabled = false;
-                Cursor.lockState = CursorLockMode.None;
-                menu.SetActive(true);
-                Time.timeScale = 0;
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen == true)
+                {
+                    gameObject.GetComponent<PlayerAtk>().enabled = false;
+                    Cursor.lockState = CursorLockMode.None;
+                    menu.SetActive(true);
+                    Time.timeScale = 0;
+                }
+                if (isMenuOpen == false)
+                {
+                    gameObject.GetComponent<PlayerAtk>().enabled = true;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    UiManager.isResumeOn = false;
+                    menu.SetActive(false);
+                    Time.timeScale = 1;
+                }
             }
-            if (isMenuOpen == false)
-            {
-                gameObject.GetComponent<PlayerAtk>().enabled = true;
-                Cursor.lockState = CursorLockMode.Locked;
-                UiManager.isResumeOn = false;
-                menu.SetActive(false);
-                Time.timeScale = 1;
-            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) && UiManager.isSetMenuOpen == true)
+        {
+            settingMenu.SetActive(false);
+            UiManager.isSetMenuOpen = false;
         }
     }
     #endregion

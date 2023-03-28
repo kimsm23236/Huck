@@ -6,10 +6,12 @@ public class PlayerMove : MonoBehaviour
 {
     private Rigidbody playerRigid = default;
     private Animator playerAnim = default;
+    private InHand playerInHand = default;
 
     public static bool isGrounded = default;
     public static bool isRunning = default;
     public static bool isDead = false;
+    public static bool isHit = false;
     public static bool isJump = false;
 
     private float jumpForce = 150;
@@ -21,12 +23,14 @@ public class PlayerMove : MonoBehaviour
     {
         playerRigid = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
+        playerInHand = GetComponent<InHand>();
     }
 
     private void Update()
     {
         Input_();
         PlayerRotate();
+        Eat();
     }
 
     private void FixedUpdate()
@@ -194,14 +198,23 @@ public class PlayerMove : MonoBehaviour
     #endregion
     // { Player Die
 
-    // { Player Hit
-    #region Hit
-    private void Hit()
+    // { Player Eat
+    #region Eat
+    private void Eat()
     {
-        Debug.Log("맞음");
+        if (Input.GetMouseButtonDown(1) && playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData != null)
+        {
+            playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemUseDel(playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot]);
+            Debug.Log("먹음");
+        }
+    }
+
+    private void EatInput()
+    {
+
     }
     #endregion
-    // } Player Hit
+    // } Player Eat
 
     // { Player Grounded Check
     #region Grounded

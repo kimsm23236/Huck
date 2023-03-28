@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    public GameObject head = default;
-    public Transform player = default;
+    private GameObject head = default;
+    private Transform player = default;
 
     public static float sensitivity = 100f;
     private float limitAngle = 80;
@@ -13,7 +13,9 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
-
+        GameObject player_ = GameObject.Find("Player");
+        player = player_.transform;
+        head = GFunc.FindChildObj(player_,"Head_M");
     }
 
     private void LateUpdate()
