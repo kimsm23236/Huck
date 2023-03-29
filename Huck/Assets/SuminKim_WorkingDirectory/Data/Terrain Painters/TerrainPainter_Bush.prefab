@@ -45,14 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Strength: 1
-  Textures:
-  - Diffuse: {fileID: 2800000, guid: bc746f27ccd025849bc2192b923e6e26, type: 3}
-    NormalMap: {fileID: 0}
-  - Diffuse: {fileID: 2800000, guid: f3bf1330db471cc4b953400d074a9668, type: 3}
-    NormalMap: {fileID: 0}
   baseTexture:
-    Diffuse: {fileID: 2800000, guid: de887a8a677123343b1ff6e6ad831d42, type: 3}
-    NormalMap: {fileID: 0}
+    Diffuse: {fileID: 2800000, guid: 8c75ba30e5f76df4fb30725e4c9bf38a, type: 3}
+    NormalMap: {fileID: 2800000, guid: e0b09c625cee17a48b22b2cf949cd320, type: 3}
   paintingConfigs:
   - textureToPaint:
       Diffuse: {fileID: 2800000, guid: f3bf1330db471cc4b953400d074a9668, type: 3}

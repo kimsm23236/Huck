@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb359d706455d14f8f1cc105a6aea0e, type: 3}
+  m_Name: Biome_HighMountain
+  m_EditorClassIdentifier: 
+  Name: 
+  MinIntensity: 0.6
+  MaxIntensity: 1
+  MaxDecayRate: 0.3
+  MinDecayRate: 0.4
+  HeightModifier: {fileID: 2241750196349273561, guid: b658d6ff681fa4d49b165039cb598186,
+    type: 3}
+  TerrainPainter: {fileID: 5882182845285664830, guid: db4e38b205981ba44912f6a030bd3d85,
+    type: 3}
+  ObjectPlacer: {fileID: 0}
+  DetailPainter: {fileID: 0}

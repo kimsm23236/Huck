@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7e458ce5fcbe44fadeb9dc94a8a566, type: 3}
+  m_Name: landmass_ProcGen Config
+  m_EditorClassIdentifier: 
+  Biomes:
+  - Biome: {fileID: 11400000, guid: 8bd8078d6848df941b3960503e64fbdf, type: 2}
+    Weighting: 0.4
+  - Biome: {fileID: 11400000, guid: 4e4f97e0a583487488ad6057acbb1102, type: 2}
+    Weighting: 1
+  - Biome: {fileID: 11400000, guid: 7733ead31faabf94fa360794e895b1ac, type: 2}
+    Weighting: 0.2
+  - Biome: {fileID: 11400000, guid: 2e69509d739cde5479f121b5ef6ccb24, type: 2}
+    Weighting: 0.3
+  - Biome: {fileID: 11400000, guid: 1e2dd08719348c34ca804f7812a3c0d9, type: 2}
+    Weighting: 0.1
+  - Biome: {fileID: 11400000, guid: e69914d054b3dd448a59226c645327f0, type: 2}
+    Weighting: 0.6
+  - Biome: {fileID: 11400000, guid: fbcb2ac32955e7e49a5d5e96ecf28a0a, type: 2}
+    Weighting: 0.3
+  - Biome: {fileID: 11400000, guid: 2636ad9785854a543bd930481cd2c60f, type: 2}
+    Weighting: 0.5
+  - Biome: {fileID: 11400000, guid: d6b92a33aa9018e418067b581095c51d, type: 2}
+    Weighting: 0.8
+  BiomeSeedPointDensity: 0.5
+  biomeMapResolution: 128
+  InitialHeightModifier: {fileID: 9427664555903813, guid: 91f045b2de989754e8444710dd538e38,
+    type: 3}
+  HeightPostProcessingModifier: {fileID: 9427664555903813, guid: 73234a8bcf5d1bb40ab935e346e4c6ac,
+    type: 3}
+  PaintingPostProcessingModifier: {fileID: 4798139675845461533, guid: 6e5299c140a58b6449f03956cfb452f1,
+    type: 3}
+  DetailPaintingPostProcessingModifier: {fileID: 0}
+  waterHeight: 15

@@ -44,8 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 275f94dd1938a3144b27c202bfc8cf1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Strength: 1
-  HeightDelta: 10
+  Strength: 0.5
   passes:
   - heightDelta: 10
     noiseScale: 0.01041667
@@ -53,9 +52,3 @@ MonoBehaviour:
     noiseScale: 0.02083334
   - heightDelta: 2.5
     noiseScale: 0.04166668
-  XScale: 0.010416667
-  YScale: 0.010416667
-  NumPasses: 3
-  XScaleVariationPerPass: 2
-  YScaleVariationPerPass: 2
-  HeightDeltaVariationPerPass: 0.5
