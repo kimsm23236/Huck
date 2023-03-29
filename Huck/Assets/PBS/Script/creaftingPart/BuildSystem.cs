@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BuildSystem : MonoBehaviour
 {
@@ -31,6 +33,7 @@ public class BuildSystem : MonoBehaviour
     private int layerMask;
     private int DefaultLayerMask;
     public bool IsBuildTime;
+    private bool IsResetCall;
 
     private float gridSize = 0.1f;
     private bool debugMode = false;
@@ -59,6 +62,7 @@ public class BuildSystem : MonoBehaviour
 
         //reset
         IsBuildTime = false;
+        IsResetCall = false;
         prevType = buildType.Foundation;
         prevMat = buildTypeMat.green;
 
@@ -73,7 +77,15 @@ public class BuildSystem : MonoBehaviour
     void Update()
     {
         ControlKey();
-        if (IsBuildTime) { RaycastUpdate(); }
+        if (IsBuildTime & Camera.main.transform.rotation.eulerAngles.x <= 45.0f) 
+        {
+            C_prevObj(prevType);
+            if(!IsResetCall) RaycastUpdate();
+        }
+        else if(IsBuildTime & Camera.main.transform.rotation.eulerAngles.x > 45.0f)
+        {
+            D_prevObj();
+        }
     }
 
     public void CallingPrev()
@@ -82,9 +94,10 @@ public class BuildSystem : MonoBehaviour
         CollidersOnOff();
     }
 
-
     public void CallingPrev(string btype)
     {
+        IsResetCall = true;
+
         switch (btype)
         {
             case "WoodBeam":
@@ -123,17 +136,9 @@ public class BuildSystem : MonoBehaviour
             case "Workbench":
                 prevType = buildType.Workbench;
                 break;
-
         }
 
-        if (IsBuildTime == false)
-        {
-            D_prevObj();
-        }
-        else if (IsBuildTime == true)
-        {
-            C_prevObj(prevType);
-        }
+        D_prevObj();
         CollidersOnOff();
     }
 
@@ -183,7 +188,6 @@ public class BuildSystem : MonoBehaviour
                 prevYAngle += 45.0f;
                 if (prevYAngle > 360.0f) prevYAngle = 0.0f;
             }
-
             if (Input.GetMouseButtonDown(1))
             {
                 BuildObj();
@@ -218,7 +222,8 @@ public class BuildSystem : MonoBehaviour
         {
             layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) |
                     1 << LayerMask.NameToLayer(BUILD_WALL_LAYER) |
-                    1 << LayerMask.NameToLayer(BUILD_FLOOR_LAYER));
+                    1 << LayerMask.NameToLayer(BUILD_FLOOR_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_OBJ_LAYER));
         }
 
         if (Physics.Raycast(ray, out hit, HIT_DISTANCE, layerMask))
@@ -252,18 +257,19 @@ public class BuildSystem : MonoBehaviour
                         {
                             prevMat = buildTypeMat.green;
                         }
-                        SetPrevMat(prevType, 1, prevMat);
+                        SetPrevMat(prevType, prevMat);
                     }
                 }
                 else if (!IsDefaultLayer)
                 {
-                    if (prevType == buildType.Foundation)
-                    {
-                        prevInfo.isBuildAble = false;
-                        prevMat = buildTypeMat.red;
-                    }
-                    else
-                    {
+                    //if (prevType == buildType.Foundation)
+                    //{
+                    //    prevInfo.isBuildAble = false;
+                    //    prevMat = buildTypeMat.red;
+                    //    SetPrevMat(prevType, prevMat);
+                    //}
+                    //else
+                    //{
                         if (prevInfo != null || prevInfo != default)
                         {
                             if (prevInfo.isBuildAble == false)
@@ -274,9 +280,9 @@ public class BuildSystem : MonoBehaviour
                             {
                                 prevMat = buildTypeMat.green;
                             }
-                            SetPrevMat(prevType, 1, prevMat);
+                            SetPrevMat(prevType, prevMat);
                         }
-                    }
+                    //}
                 }
             }
         }
@@ -285,7 +291,7 @@ public class BuildSystem : MonoBehaviour
             if (prevMat != buildTypeMat.red)
             {
                 prevMat = buildTypeMat.red;
-                SetPrevMat(prevType, 1, prevMat);
+                SetPrevMat(prevType, prevMat);
             }
             prevObj.transform.position = ray.direction * HIT_DISTANCE;
             if (debugMode) Debug.DrawLine(ray.origin, ray.direction * HIT_DISTANCE, Color.red);
@@ -340,50 +346,41 @@ public class BuildSystem : MonoBehaviour
 
     private void C_prevObj(buildType buildtype)
     {
-        prevObj = Instantiate(BuildLoadObjs[(int)buildtype]);
-        prevObj.transform.parent = this.transform;
-        prevObj.name = "prevObj";
-        SetLayer();
-        SetTrigger(buildtype, 0);
-        SetPrevMat(buildtype, 1, buildTypeMat.green);
-        prevInfo = prevObj.FindChildObj("BuildCollider").GetComponent<PrevObjInfo>();
-        prevDefaultInfo = prevObj.FindChildObj("BuildDefaultCollider").GetComponent<PrevObjInfo>();
-        prevYAngle = 0.0f;
+        if (prevObj == null || prevObj == default)
+        {
+            prevObj = Instantiate(BuildLoadObjs[(int)buildtype]);
+            prevObj.transform.parent = this.transform;
+            prevObj.name = "prevObj";
+            SetLayer();
+            SetTrigger(buildtype);
+            SetPrevMat(buildtype, buildTypeMat.green);
+            prevInfo = prevObj.FindChildObj("BuildCollider").GetComponent<PrevObjInfo>();
+            prevDefaultInfo = prevObj.FindChildObj("BuildDefaultCollider").GetComponent<PrevObjInfo>();
+            prevYAngle = 0.0f;
+            
+            IsResetCall = false;
+        }
     }
 
-    private void SetTrigger(buildType buildtemp, int type)
+    private void SetTrigger(buildType buildtemp)
     {
-        if (type == 0)
+        switch (buildtemp)
         {
-            switch (buildtemp)
-            {
-                case buildType.Foundation:
-                    for (int i = 0; i < 5; i++)
-                    {
-                        prevObj.transform.GetChild(i).GetComponent<MeshCollider>().convex = true;
-                        prevObj.transform.GetChild(i).GetComponent<MeshCollider>().isTrigger = true;
-                    }
-                    break;
-                default:
-                    prevObj.transform.GetChild(0).GetComponent<MeshCollider>().convex = true;
-                    prevObj.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = true;
-                    break;
-            }
-        }
-        else if (type == 1)
-        {
-            switch (buildtemp)
-            {
-                case buildType.Foundation:
-                    for (int i = 0; i < 5; i++)
-                    {
-                        prevObj.transform.GetChild(i).GetComponent<MeshCollider>().isTrigger = false;
-                    }
-                    break;
-                default:
-                    prevObj.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
-                    break;
-            }
+            case buildType.Foundation:
+                for (int i = 0; i < 5; i++)
+                {
+                    prevObj.transform.GetChild(i).GetComponent<MeshCollider>().convex = true;
+                    prevObj.transform.GetChild(i).GetComponent<MeshCollider>().isTrigger = true;
+                }
+                break;
+            case buildType.Anvil: case buildType.Stove: case buildType.Workbench:
+                prevObj.transform.GetComponent<MeshCollider>().convex = true;
+                prevObj.transform.GetComponent<MeshCollider>().isTrigger = true;
+                break;
+            default:
+                prevObj.transform.GetChild(0).GetComponent<MeshCollider>().convex = true;
+                prevObj.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = true;
+                break;
         }
     }
 
@@ -412,14 +409,29 @@ public class BuildSystem : MonoBehaviour
             {
                 buildObj = Instantiate(BuildLoadObjs[(int)prevType], prevPos, Quaternion.Euler(prevRot));
                 buildObj.transform.parent = this.transform;
-                buildObj.layer = 0;
 
-                //foreach (Transform child in prevObj.GetComponentsInChildren<Transform>())
-                //{
-                //    child.transform.gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
-                //}
+                switch (prevType)
+                {
+                    case buildType.Anvil:
+                    case buildType.Stove:
+                    case buildType.Workbench:
+                        buildObj.AddComponent<NavMeshObstacle>();
+                        break;
+                    default:
+                        buildObj.transform.GetChild(0).gameObject.AddComponent<NavMeshObstacle>();
+                        break;
+                }
 
-                buildObj.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                switch (prevType)
+                {
+                    case buildType.Anvil: case buildType.Stove: case buildType.Workbench:
+                        buildObj.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                        break;
+                    default:
+                        buildObj.layer = 0;
+                        buildObj.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                        break;
+                }
 
                 switch (prevType)
                 {
@@ -430,6 +442,9 @@ public class BuildSystem : MonoBehaviour
                         }
                         break;
                     case buildType.door: /* Do nothing */
+                        break;
+                    case buildType.Anvil: case buildType.Stove: case buildType.Workbench:
+                        buildObj.transform.GetComponent<MeshCollider>().isTrigger = false;
                         break;
                     default:
                         buildObj.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
@@ -443,14 +458,31 @@ public class BuildSystem : MonoBehaviour
             {
                 buildObj = Instantiate(BuildLoadObjs[(int)prevType], prevPos, Quaternion.Euler(prevRot));
                 buildObj.transform.parent = this.transform;
-                buildObj.layer = 0;
 
-                //foreach (Transform child in prevObj.GetComponentsInChildren<Transform>())
-                //{
-                //    child.transform.gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
-                //}
+                switch (prevType)
+                {
+                    case buildType.Anvil:
+                    case buildType.Stove:
+                    case buildType.Workbench:
+                        buildObj.AddComponent<NavMeshObstacle>();
+                        break;
+                    default:
+                        buildObj.transform.GetChild(0).gameObject.AddComponent<NavMeshObstacle>();
+                        break;
+                }
 
-                buildObj.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                switch (prevType)
+                {
+                    case buildType.Anvil:
+                    case buildType.Stove:
+                    case buildType.Workbench:
+                        buildObj.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                        break;
+                    default:
+                        buildObj.layer = 0;
+                        buildObj.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                        break;
+                }
 
                 switch (prevType)
                 {
@@ -461,6 +493,9 @@ public class BuildSystem : MonoBehaviour
                         }
                         break;
                     case buildType.door: /* Do nothing */
+                        break;
+                    case buildType.Anvil: case buildType.Stove: case buildType.Workbench:
+                        buildObj.transform.GetComponent<MeshCollider>().isTrigger = false;
                         break;
                     default:
                         buildObj.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
@@ -487,7 +522,7 @@ public class BuildSystem : MonoBehaviour
                 }
             }
         }
-        else if(!IsBuildTime)
+        else if (!IsBuildTime)
         {
             if (BuildingList.Count > 0)
             {
@@ -499,95 +534,81 @@ public class BuildSystem : MonoBehaviour
         }
     }
 
-    public void SetPrevMat(buildType buildtemp, int type, buildTypeMat mat)
+    public void SetPrevMat(buildType buildtemp, buildTypeMat mat)
     {
         if (prevObj != null || prevObj != default)
         {
-            if (type == 0)
+            switch (buildtemp)
             {
-                switch (buildtemp)
-                {
-                    case buildType.door:
-                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
-                        prevObj.FindChildObj("Door").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
-                        break;
-                    case buildType.windowswall:
-                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
-                        prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.GlassNone];
-                        break;
-                    case buildType.Foundation:
+                case buildType.door:
+                    if (mat == buildTypeMat.green)
+                    {
+                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
+                        prevObj.FindChildObj("Door").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
+                    }
+                    else if (mat == buildTypeMat.red)
+                    {
+                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
+                        prevObj.FindChildObj("Door").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
+                    }
+                    break;
+                case buildType.windowswall:
+                    if (mat == buildTypeMat.green)
+                    {
+                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
+                        prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.GlassGreen];
+                    }
+                    else if (mat == buildTypeMat.red)
+                    {
+                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
+                        prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
+                    }
+                    break;
+                case buildType.Foundation:
+                    if (mat == buildTypeMat.green)
+                    {
                         for (int i = 0; i < 5; i++)
                         {
-                            prevObj.transform.GetChild(i).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
+                            prevObj.transform.GetChild(i).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
                         }
-                        break;
-                    default:
-                        prevObj.transform.GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.none];
-                        break;
-                }
-            }
-            else if (type == 1)
-            {
-                switch (buildtemp)
-                {
-                    case buildType.door:
-                        if (mat == buildTypeMat.green)
+                    }
+                    else if (mat == buildTypeMat.red)
+                    {
+                        for (int i = 0; i < 5; i++)
                         {
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
-                            prevObj.FindChildObj("Door").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
+                            prevObj.transform.GetChild(i).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
                         }
-                        else if (mat == buildTypeMat.red)
-                        {
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
-                            prevObj.FindChildObj("Door").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
-                        }
-                        break;
-                    case buildType.windowswall:
-                        if (mat == buildTypeMat.green)
-                        {
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
-                            prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.GlassGreen];
-                        }
-                        else if (mat == buildTypeMat.red)
-                        {
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
-                            prevObj.FindChildObj("Glass").GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
-                        }
-                        break;
-                    case buildType.Foundation:
-                        if (mat == buildTypeMat.green)
-                        {
-                            for (int i = 0; i < 5; i++)
-                            {
-                                prevObj.transform.GetChild(i).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
-                            }
-                        }
-                        else if (mat == buildTypeMat.red)
-                        {
-                            for (int i = 0; i < 5; i++)
-                            {
-                                prevObj.transform.GetChild(i).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
-                            }
-                        }
-                        break;
-                    default:
-                        if (mat == buildTypeMat.green)
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
-                        else if (mat == buildTypeMat.red)
-                            prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
-                        break;
-                }
+                    }
+                    break;
+                case buildType.Anvil:
+                    if (mat == buildTypeMat.green)
+                        prevObj.GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.VikingGreen];
+                    else if (mat == buildTypeMat.red)
+                        prevObj.GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.VikingRed];
+                    break;
+                case buildType.Workbench: case buildType.Stove:
+                    if (mat == buildTypeMat.green)
+                        prevObj.GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
+                    else if (mat == buildTypeMat.red)
+                        prevObj.GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
+                    break;
+                default:
+                    if (mat == buildTypeMat.green)
+                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.green];
+                    else if (mat == buildTypeMat.red)
+                        prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.red];
+                    break;
             }
         }
     }
 }
 
-public enum buildType
+    public enum buildType
 {
     none = -1, beam, cut, door, floor, roof, stairs, wall, windowswall, Foundation, Anvil, Stove, Workbench
 }
 
 public enum buildTypeMat
 {
-    none, green, red, GlassNone, GlassGreen, GlassRed, Viking,VikingGreen,VikingRed
+    none, green, red, GlassNone, GlassGreen, GlassRed, VikingNone,VikingGreen,VikingRed
 }

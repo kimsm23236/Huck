@@ -4,17 +4,27 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum EInvenKind
+{
+    WORKBENCH = 0,
+    STOVE,
+    ANVIL
+}
+
 public class CraftInven : InventoryArray
 {
     private InventoryArray inven = default;
     private List<ItemSlot> nowInventory = new List<ItemSlot>();
-    [SerializeField]
-    private bool isOpen = false;
-    private bool Once = false;
+    public EInvenKind invenKind = default;
 
     protected override void Awake()
     {
         InitSlots();
+    }
+
+    private void OnEnable()
+    {
+        OpenUi();
     }
 
     protected override void Start()
@@ -31,13 +41,50 @@ public class CraftInven : InventoryArray
         }
         CanvasSetting();
         InvenSetting();
+        switch (invenKind)
+        {
+            case EInvenKind.WORKBENCH:
+                UIManager.Instance.workBench.SetActive(false);
+                break;
+            case EInvenKind.STOVE:
+                UIManager.Instance.stove.SetActive(false);
+                break;
+            case EInvenKind.ANVIL:
+                UIManager.Instance.anvil.SetActive(false);
+                break;
+        }
+
     }
 
     protected override void Update()
     {
-        base.Update();
+        switch (invenKind)
+        {
+            case EInvenKind.WORKBENCH:
+                if (PlayerOther.isWorkbenchOpen)
+                {
+                    ControlMouse();
+                }
+                break;
+            case EInvenKind.STOVE:
+                if (PlayerOther.isStoveOpen)
+                {
+                    ControlMouse();
+                }
+                break;
+            case EInvenKind.ANVIL:
+                if (PlayerOther.isAnvilOpen)
+                {
+                    ControlMouse();
+                }
+                break;
+        }
     }
 
+    private void OnDisable()
+    {
+        CloseUi();
+    }
     protected override void CanvasSetting()
     {
         myCanvas = UIManager.Instance.UiObjs.GetComponent<Canvas>();
@@ -65,10 +112,18 @@ public class CraftInven : InventoryArray
 
     public void OpenUi()
     {
-        for (int i = 0; i < itemSlots.Count; i++)
+        if (itemSlots.Count == 0)
         {
-            nowInventory[i].itemData = itemSlotScripts[i].itemData;
-            nowInventory[i].itemAmount = itemSlotScripts[i].itemAmount;
+            // Do nothing
+        }
+        else
+        {
+            for (int i = 0; i < itemSlots.Count; i++)
+            {
+                nowInventory[i].itemData = itemSlotScripts[i].itemData;
+                nowInventory[i].itemAmount = itemSlotScripts[i].itemAmount;
+            }
+
         }
     }
 

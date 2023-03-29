@@ -164,7 +164,9 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8737170986214462344, guid: 54dfb6361a01eb64faefb69af5a734f1, type: 3}
+    - {fileID: 8648221535623608120, guid: 54dfb6361a01eb64faefb69af5a734f1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 54dfb6361a01eb64faefb69af5a734f1, type: 3}
 --- !u!4 &5121880876995760965 stripped
 Transform:

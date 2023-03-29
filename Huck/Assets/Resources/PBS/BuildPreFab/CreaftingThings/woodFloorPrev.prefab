@@ -121,10 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuildAble: 0
-  Size:
-  - 0
-  - 0
-  - 0
 --- !u!1 &1181058829321230565
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,10 +490,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuildAble: 0
-  Size:
-  - 0
-  - 0
-  - 0
 --- !u!1 &2079371240514996533
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +627,6 @@ GameObject:
   - component: {fileID: 2423615976854746813}
   - component: {fileID: 2384507205541034869}
   - component: {fileID: 6402002398240897156}
-  - component: {fileID: 6233158147062867431}
   m_Layer: 0
   m_Name: woodFloorPrev
   m_TagString: Untagged
@@ -718,9 +709,9 @@ MeshCollider:
   m_GameObject: {fileID: 2446974132649698313}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43850282638961380, guid: 3ef8865f574b81d4c9636e5174868630, type: 2}
 --- !u!114 &6402002398240897156
@@ -735,19 +726,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7be4448b2950b4b9ae6c0853ec8987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &6233158147062867431
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2446974132649698313}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 0.2, z: 2.5}
-  m_Center: {x: -1.25, y: 0, z: 1.25}
 --- !u!1 &2754026444301911911
 GameObject:
   m_ObjectHideFlags: 0

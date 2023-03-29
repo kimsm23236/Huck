@@ -15,6 +15,8 @@ public class BaseCraft : MonoBehaviour
 
     private void Start()
     {
+        inventory = UIManager.Instance.inventory.GetComponent<InventoryArray>();
+
     }
 
     private void Update()

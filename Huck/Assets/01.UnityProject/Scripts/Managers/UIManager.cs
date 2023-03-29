@@ -6,11 +6,14 @@ public class UIManager : Singleton<UIManager>
 {
     [Header("드래그앤 드롭 X")]
     public GameObject inventory = default;
-    public GameObject UiObjs = default;
     public GameObject settingMenu = default;
     public GameObject clo_CheckBox = default;
     public GameObject sha_CheckBox = default;
+    public GameObject workBench = default;
+    public GameObject stove = default;
+    public GameObject anvil = default;
     [Header("드래그앤 드롭 O")]
+    public GameObject UiObjs = default;
     public GameObject Sen_goldot = default;
     public GameObject sunFind = default;
     public GameObject moonFind = default;
@@ -35,6 +38,13 @@ public class UIManager : Singleton<UIManager>
 
         theSun = sunFind.GetComponent<Light>();
         theMoon = moonFind.GetComponent<Light>();
+    }
+
+    protected override void Init()
+    {
+        workBench = UiObjs.transform.GetChild(2).GetChild(0).gameObject;
+        stove = UiObjs.transform.GetChild(2).GetChild(1).gameObject;
+        anvil = UiObjs.transform.GetChild(2).GetChild(2).gameObject;
     }
 
     // { Game Menu Btn

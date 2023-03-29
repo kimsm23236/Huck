@@ -48,6 +48,13 @@ public class ItemData : ScriptableObject
     }
 
     [SerializeField]
+    private ItemData resultData;
+    public ItemData ResultData
+    {
+        get { return resultData; }
+    }
+
+    [SerializeField]
     private bool itemUseAble;
     public bool ItemUseAble
     {
@@ -66,6 +73,14 @@ public class ItemData : ScriptableObject
     public bool IsBuild
     {
         get { return isBuild; }
+    }
+
+
+    [SerializeField]
+    private bool isFuel;
+    public bool IsFuel
+    {
+        get { return isFuel; }
     }
 
     public virtual void OnUseData(ItemSlot itemSlot_)

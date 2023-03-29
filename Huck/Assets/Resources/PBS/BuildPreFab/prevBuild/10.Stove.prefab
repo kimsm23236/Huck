@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 33341132349282940}
   - component: {fileID: 23685699481411444}
   - component: {fileID: 64880830847778732}
+  - component: {fileID: 6196876297094449869}
   m_Layer: 0
   m_Name: 10.Stove
-  m_TagString: Untagged
+  m_TagString: build
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1802613797325304}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -99,6 +100,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43337874677691124, guid: 614cafb3f5d6cb14498d4f180faf3f9a, type: 2}
+--- !u!114 &6196876297094449869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802613797325304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8fd96f594f08e744895c07a542cddbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originItemData: {fileID: 0}
+  fuelItemData: {fileID: 0}
+  resultItemData: {fileID: 0}
+  originItemCount: 0
+  fuelItemCount: 0
+  resultItemCount: 0
 --- !u!1 &2976764417376180024
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,10 +211,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuildAble: 0
-  Size:
-  - 0
-  - 0
-  - 0
 --- !u!1 &9160763259834129320
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +271,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuildAble: 0
-  Size:
-  - 0
-  - 0
-  - 0

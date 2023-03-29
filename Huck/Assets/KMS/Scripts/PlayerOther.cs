@@ -21,6 +21,9 @@ public class PlayerOther : MonoBehaviour
     public static bool isInvenOpen = false;
     public static bool isMapOpen = false;
     public static bool isMenuOpen = false;
+    public static bool isWorkbenchOpen = false;
+    public static bool isStoveOpen = false;
+    public static bool isAnvilOpen = false;
 
     private Vector3 enableScale = new Vector3(0.00001f, 0.00001f, 0.00001f);
     private Vector3 ableScale = new Vector3(1f, 1f, 1f);
@@ -51,6 +54,7 @@ public class PlayerOther : MonoBehaviour
         MapOpen();
         MenuOpen();
         Interaction();
+        Open();
     }
 
     // { Player Inventory
@@ -83,6 +87,68 @@ public class PlayerOther : MonoBehaviour
     }
     #endregion
     // } Player Inventory 
+
+    public void Open()
+    {
+
+        if (Input.GetKeyDown(KeyCode.T) && isMapOpen == false)
+        {
+            isWorkbenchOpen = !isWorkbenchOpen;
+            if (isWorkbenchOpen == true)
+            {
+                gameObject.GetComponent<PlayerAtk>().enabled = false;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                UIManager.Instance.workBench.SetActive(true);
+            }
+            if (isWorkbenchOpen == false)
+            {
+                gameObject.GetComponent<PlayerAtk>().enabled = true;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                UIManager.Instance.workBench.SetActive(false);
+            }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Y) && isMapOpen == false)
+        {
+            isStoveOpen = !isStoveOpen;
+            if (isStoveOpen == true)
+            {
+                gameObject.GetComponent<PlayerAtk>().enabled = false;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                UIManager.Instance.stove.SetActive(true);
+            }
+            if (isStoveOpen == false)
+            {
+                gameObject.GetComponent<PlayerAtk>().enabled = true;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                UIManager.Instance.stove.SetActive(false);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q) && isMapOpen == false)
+        {
+            isAnvilOpen = !isAnvilOpen;
+            if (isAnvilOpen == true)
+            {
+                gameObject.GetComponent<PlayerAtk>().enabled = false;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                UIManager.Instance.anvil.SetActive(true);
+            }
+            if (isAnvilOpen == false)
+            {
+                gameObject.GetComponent<PlayerAtk>().enabled = true;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                UIManager.Instance.anvil.SetActive(false);
+            }
+        }
+    }
 
     // { Player Interaction 
     #region Interact

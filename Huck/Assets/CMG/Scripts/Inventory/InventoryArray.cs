@@ -60,19 +60,23 @@ public class InventoryArray : MonoBehaviour
     {
         if (PlayerOther.isInvenOpen)
         {
-            pointEvent.position = Input.mousePosition;
-            OnPointerDown();
-            OnPointerDrag();
-            OnPointerUp();
-            DividItem();
-            DividDrag();
-            DividDragEnd();
+            ControlMouse();
         }
+    }
+
+    protected void ControlMouse()
+    {
+        pointEvent.position = Input.mousePosition;
+        OnPointerDown();
+        OnPointerDrag();
+        OnPointerUp();
+        DividItem();
+        DividDrag();
+        DividDragEnd();
     }
     protected virtual void CanvasSetting()
     {
         myCanvas = transform.parent.parent.parent.GetComponent<Canvas>();
-        UIManager.Instance.UiObjs = myCanvas.gameObject;
     }
     protected void InvenSetting()
     {
@@ -281,7 +285,6 @@ public class InventoryArray : MonoBehaviour
     }
     private void SwapItems(ItemSlot startItem, ItemSlot endItem)
     {
-        Debug.Log(gameObject);
         if (startItem != endItem && endItem.itemData != null && startItem.itemData.ItemName == endItem.itemData.ItemName && endItem.itemData.ItemType == EItemType.CombineAble)
         {
             endItem.itemAmount += startItem.itemAmount;
@@ -341,25 +344,6 @@ public class InventoryArray : MonoBehaviour
             if (!EventSystem.current.IsPointerOverGameObject())
             {
                 DropItem(dividedItemIcon.GetComponent<ItemSlot>());
-                // GameObject createItem = default;
-                // // RaycastHit[] hit = Physics.RaycastAll(createItem.transform.position, playerPos.forward, 3f);
-                // RaycastHit hit = default;
-                // if (Physics.Raycast(playerPos.position + Vector3.up, playerPos.forward, out hit, 3f, LayerMask.GetMask(GData.TERRAIN_MASK)) == true)
-                // {
-                //     createItem = Instantiate(dividedItemIcon.GetComponent<ItemSlot>().itemData.OriginPrefab);
-                //     createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
-                //     createItem.transform.position = hit.point + Vector3.up;
-                //     Destroy(dividedItemIcon.gameObject);
-                // }
-                // else
-                // {
-                //     createItem = Instantiate(dividedItemIcon.GetComponent<ItemSlot>().itemData.OriginPrefab);
-                //     createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
-                //     createItem.transform.position = SetItemPos(playerPos, 3f);
-                //     Destroy(dividedItemIcon.gameObject);
-                // }
-
-                // createItem.GetComponent<Item>().itemCount = dividedItemIcon.GetComponent<ItemSlot>().itemAmount;
             }
             else if (clickSlot != null)
             {

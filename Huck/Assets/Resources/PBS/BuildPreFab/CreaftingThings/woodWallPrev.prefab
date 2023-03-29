@@ -216,10 +216,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuildAble: 0
-  Size:
-  - 0
-  - 0
-  - 0
 --- !u!1 &2806097674707877167
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,10 +532,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuildAble: 0
-  Size:
-  - 0
-  - 0
-  - 0
 --- !u!1 &6479734349249920658
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,7 +544,7 @@ GameObject:
   - component: {fileID: 6479734349249920686}
   - component: {fileID: 6479734349249920657}
   - component: {fileID: 6479734349249920656}
-  - component: {fileID: 6479734349249920659}
+  - component: {fileID: 2206116829028017132}
   m_Layer: 0
   m_Name: woodWallPrev
   m_TagString: Untagged
@@ -640,22 +632,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43742038288601210, guid: c488a10b53183a741bc659c1d330f948, type: 2}
---- !u!54 &6479734349249920659
-Rigidbody:
+--- !u!114 &2206116829028017132
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6479734349249920658}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f320f105f4b994faf0f85520d94d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resConfig: {fileID: 11400000, guid: 3457df8a1c654144eb549175e8ec0e88, type: 2}
 --- !u!1 &8271303554256529103
 GameObject:
   m_ObjectHideFlags: 0
