@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static partial class GData
 {
+    // Scene Name
+    public const string SCENENAME_TITLE = "";
+    public const string SCENENAME_LOADING = "SuminLoadingScene";
+    public const string SCENENAME_PLAY = "SuminWorkingScene";
 
     // Layer Mask
     public const string PLAYER_MASK = "Player";

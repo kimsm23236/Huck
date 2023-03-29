@@ -50,12 +50,6 @@ public class BaseResourceObject : MonoBehaviour, IDamageable
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // 체력 0 일 때 파괴 함수
     protected virtual void Die()
     {

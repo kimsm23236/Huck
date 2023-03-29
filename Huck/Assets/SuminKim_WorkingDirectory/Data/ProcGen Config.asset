@@ -22,7 +22,7 @@ MonoBehaviour:
   - Biome: {fileID: 11400000, guid: 2e69509d739cde5479f121b5ef6ccb24, type: 2}
     Weighting: 0.3
   - Biome: {fileID: 11400000, guid: 1e2dd08719348c34ca804f7812a3c0d9, type: 2}
-    Weighting: 0.3
+    Weighting: 0.1
   - Biome: {fileID: 11400000, guid: e69914d054b3dd448a59226c645327f0, type: 2}
     Weighting: 0.6
   - Biome: {fileID: 11400000, guid: fbcb2ac32955e7e49a5d5e96ecf28a0a, type: 2}

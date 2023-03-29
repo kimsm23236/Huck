@@ -55,7 +55,7 @@ MonoBehaviour:
     Radius: 40
     numToSpawn: 1
     hasHeightLimits: 1
-    minHeightToSpawn: 0
+    minHeightToSpawn: 20
     maxHeightToSpawn: 60
     canGoInWater: 0
     canGoAboveWater: 1

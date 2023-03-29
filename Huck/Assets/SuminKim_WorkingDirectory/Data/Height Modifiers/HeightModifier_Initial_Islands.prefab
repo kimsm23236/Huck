@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4723789380994853617}
   - component: {fileID: -8652125930250045587}
   - component: {fileID: -3806739832059206212}
+  - component: {fileID: -4146230833278792533}
   m_Layer: 0
   m_Name: HeightModifier_Initial_Islands
   m_TagString: Untagged
@@ -63,8 +64,11 @@ MonoBehaviour:
   numIslands: 1
   minIslandSize: 950
   maxIslandSize: 1000
-  minIslandHeight: 5
-  maxIslandHeight: 60
+  minIslandHeight: 3
+  maxIslandHeight: 6
+  angleNoiseScale: 1
+  distanceNoiseScale: 1
+  noiseHeightDelta: 15
   islandShapeCurve:
     serializedVersion: 2
     m_Curve:
@@ -78,7 +82,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.4
+      time: 0.25562134
       value: 0.6
       inSlope: 0
       outSlope: 0
@@ -87,7 +91,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.93749976
     - serializedVersion: 3
-      time: 0.6
+      time: 0.4110657
       value: 0.6
       inSlope: 0
       outSlope: 0
@@ -107,3 +111,27 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4146230833278792533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9427664555903813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 275f94dd1938a3144b27c202bfc8cf1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Strength: 0.25
+  passes:
+  - heightDelta: 20
+    noiseScale: 0.015625
+  - heightDelta: 10
+    noiseScale: 0.03125
+  - heightDelta: 5
+    noiseScale: 0.0625
+  - heightDelta: 2.5
+    noiseScale: 0.125
+  - heightDelta: 1.25
+    noiseScale: 0.25

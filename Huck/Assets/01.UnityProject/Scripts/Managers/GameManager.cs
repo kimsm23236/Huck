@@ -6,10 +6,14 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public GameObject playerObj = default;
+
+    public GameObject procGenManager = default;
+
     //! { [김광성] 플레이어 오브젝트 시작시 캐싱
     private void Awake()
     {
         playerObj = GFunc.GetRootObj(GData.PLAYER_MASK);
+        procGenManager = GFunc.GetRootObj("ProcGenManager");
     }
     // } [김광성] 플레이어 오브젝트 시작시 캐싱
 }
