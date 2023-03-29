@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/SuminKim_WorkingDirectory/Scenes/SuminLoadingScene.unity
+    guid: bb3a6d91ce969e24689a02a67166edfb
+  - enabled: 1
+    path: Assets/SuminKim_WorkingDirectory/Scenes/SuminWorkingScene.unity
+    guid: 9a70885bf4ab0454bb6b8ed963c483db
   m_configObjects: {}

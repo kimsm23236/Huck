@@ -10,6 +10,10 @@ public class NavigationBaker : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
+    }
+    public void BakeNavMesh()
+    {
         for (int i = 0; i < surfaces.Length; i++)
         {
             surfaces[i].BuildNavMesh();

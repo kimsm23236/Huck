@@ -18,6 +18,7 @@ public enum EGenerationStage
     TerrainPainting,
     ObjectPlacement,
     DetailPainting,
+    NavMeshBaking,
 
     Complete,
     NumStage = Complete
@@ -27,7 +28,7 @@ public class LoadingManager : Singleton<LoadingManager>
 {
     public static string nextScene;
 
-    // ·Îµù Áß¿¡ Ç¥½ÃµÉ UI ¿ä¼Òµé
+    // ï¿½Îµï¿½ ï¿½ß¿ï¿½ Ç¥ï¿½Ãµï¿½ UI ï¿½ï¿½Òµï¿½
     public GameObject loadingCanvas = default;
     public GameObject loadingScreen = default;
     public TMP_Text loadingText = default;
@@ -44,20 +45,20 @@ public class LoadingManager : Singleton<LoadingManager>
     {
         nextScene = GData.SCENENAME_PLAY;
         loadingScreenAnim = loadingScreen.GetComponent<Animator>();
-        // ´ÙÀ½ ¾ÀÀ» ºñµ¿±âÀûÀ¸·Î ·Îµå
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ñµ¿±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
         StartCoroutine(LoadSceneAsync());
     }
 
     IEnumerator LoadSceneAsync()
     {
-        // ·Îµù Áß UI È°¼ºÈ­
+        // ï¿½Îµï¿½ ï¿½ï¿½ UI È°ï¿½ï¿½È­
         loadingScreen.SetActive(true);
 
-        // ´ÙÀ½ ¾À ºñµ¿±âÀûÀ¸·Î ·Îµå
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ñµ¿±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
         AsyncOperation operation = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
         operation.allowSceneActivation = false;
         OnStatusReported(EGenerationStage.EnterPlayScene, "Load PlayScene");
-        // ·Îµù ÁøÇà »óÈ² °¨½Ã
+        // ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È² ï¿½ï¿½ï¿½ï¿½
         while (!operation.isDone)
         {
             OnStatusReported(EGenerationStage.EnterPlayScene, "Load PlayScene");

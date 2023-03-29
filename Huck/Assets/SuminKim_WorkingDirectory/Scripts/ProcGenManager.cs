@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using System.Linq;
 using UnityEngine.XR;
 using Unity.VisualScripting.FullSerializer;
@@ -18,6 +19,7 @@ public class ProcGenManager : MonoBehaviour
     [SerializeField] Terrain targetTerrain;
     [Header("Debugging")]
     [SerializeField] bool DEBUG_TurnOffObjectPlacers = false;
+    [SerializeField] NavMeshSurface[] navMeshSurfaces = default;
     Dictionary<TextureConfig, int> BiomeTextureToTerrainLayerIndex = new Dictionary<TextureConfig, int>();
     Dictionary<TerrainDetailConfig, int> BiomeTerrainDetailToDetailLayerIndex = new Dictionary<TerrainDetailConfig, int>();
 
@@ -29,9 +31,14 @@ public class ProcGenManager : MonoBehaviour
 
     float[,] SlopeMap;
 
+    void Awake()
+    {
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
+        // navMeshSurface = GFunc.GetRootObj("NavMesh").GetComponentMust<NavMeshSurface>();
         StartCoroutine(AsyncRegenerateWorld(LoadingManager.Instance.OnStatusReported));
     }
 
@@ -112,6 +119,12 @@ public class ProcGenManager : MonoBehaviour
 
         // paint the details
         Perform_DetailPainting(mapResolution, alphaMapResolution, detailMapResolution, maxDetailsPerPatch);
+
+        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.NavMeshBaking, "NavMesh Baking");
+        yield return new WaitForSeconds(1f);
+
+        // paint the details
+        Perform_NavMeshBaking();
 
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Complete, "Terrain Generation complete");
 
@@ -693,6 +706,15 @@ public class ProcGenManager : MonoBehaviour
             {
                 modifier.Execute(config, transform, mapResolution, heightMap, targetTerrain.terrainData.heightmapScale, SlopeMap, alphaMaps, alphaMapResolution, BiomeMap, biomeIndex, biome);
             }
+        }
+    }
+
+    void Perform_NavMeshBaking()
+    {
+        Debug.Log("NavMesh Bake");
+        for(int i = 0; i < navMeshSurfaces.Length; i++)
+        {
+            navMeshSurfaces[i].BuildNavMesh();
         }
     }
 
