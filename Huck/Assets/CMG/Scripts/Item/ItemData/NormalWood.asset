@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: NormalWood
   m_EditorClassIdentifier: 
   itemType: 0
+  itemLevel: 0
+  itemTool: 0
   itemName: NormalWood
   itemIcon: {fileID: 21300000, guid: 787b8db678ed3934f9d902d8728052d8, type: 3}
   originPrefab: {fileID: 255731329423510458, guid: 3bc827205b22bc742b4bb467df42ca7e,
     type: 3}
+  resultData: {fileID: 0}
   itemUseAble: 0
-  itemDamage: 0
+  itemDamage: 10
+  isBuild: 0
+  isFuel: 1

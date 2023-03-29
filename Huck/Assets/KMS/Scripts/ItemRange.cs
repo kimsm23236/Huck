@@ -6,12 +6,17 @@ using UnityEngine.UI;
 public class ItemRange : MonoBehaviour
 {
     private GameObject ItemFound = default;
+    private GameObject UI = default;
     private GameObject resourceFound = default;
 
     private GameObject res_UI = default;
-    public Image res_Hp = default;
-    public Text panel_T = default;
-    public Text interRect_T = default;
+    private GameObject find_R_Hp = default;
+    private GameObject find_T_panel = default;
+    private GameObject find_T_interect = default;
+
+    private Image res_Hp = default;
+    private Text panel_T = default;
+    private Text interect_T = default;
 
     public GameObject getItem = default;
 
@@ -19,10 +24,17 @@ public class ItemRange : MonoBehaviour
 
     void Start()
     {
-        //Find Object & Cashing
-        GameObject UiObjs = GameObject.Find("UiObjs");
-        ItemFound = UiObjs.FindChildObj("ItemFound");
-        res_UI = UiObjs.FindChildObj("Res_UI");
+        UI = UIManager.Instance.UiObjs.transform.GetChild(1).gameObject;
+        res_UI = UI.transform.GetChild(1).gameObject;
+        ItemFound = UI.transform.GetChild(2).gameObject;
+
+        find_T_panel = res_UI.transform.GetChild(0).gameObject;
+        find_R_Hp = res_UI.transform.GetChild(2).gameObject;
+        find_T_interect = res_UI.transform.GetChild(3).gameObject;
+
+        res_Hp = find_R_Hp.GetComponent<Image>();
+        panel_T = find_T_panel.GetComponent<Text>();
+        interect_T = find_T_interect.GetComponent<Text>();
     }
 
     void Update()
@@ -61,7 +73,7 @@ public class ItemRange : MonoBehaviour
                 int resObjCurrentHP = interactResObj.HP;
 
                 panel_T.text = $"{resName}";
-                interRect_T.text = $"{resName}";
+                interect_T.text = $"{resName}";
                 res_Hp.fillAmount = ((float)resObjCurrentHP / (float)resObjMaxHp);
             }
         }

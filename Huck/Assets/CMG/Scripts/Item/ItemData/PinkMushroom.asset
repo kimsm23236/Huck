@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: PinkMushroom
   m_EditorClassIdentifier: 
   itemType: 0
+  itemLevel: 0
+  itemTool: 0
   itemName: PinkMushroom
   itemIcon: {fileID: 21300000, guid: 4e9bf9aecbe802044869eba6460c69e0, type: 3}
   originPrefab: {fileID: 2071363166586709132, guid: 1e0b8bd3c5e8b30458f54712e78ebadf,
     type: 3}
   itemUseAble: 1
-  itemDamage: 0
+  itemDamage: 5
+  isBuild: 0

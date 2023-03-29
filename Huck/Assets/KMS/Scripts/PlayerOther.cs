@@ -15,10 +15,15 @@ public class PlayerOther : MonoBehaviour
     private GameObject map = default;
     private GameObject GUI = default;
     private GameObject invenCam = default;
+    private GameObject settingMenu = default;
+
 
     public static bool isInvenOpen = false;
     public static bool isMapOpen = false;
     public static bool isMenuOpen = false;
+    public static bool isWorkbenchOpen = false;
+    public static bool isStoveOpen = false;
+    public static bool isAnvilOpen = false;
 
     private Vector3 enableScale = new Vector3(0.00001f, 0.00001f, 0.00001f);
     private Vector3 ableScale = new Vector3(1f, 1f, 1f);
@@ -26,14 +31,15 @@ public class PlayerOther : MonoBehaviour
 
     private void Start()
     {
-        GameObject UiObjs = GameObject.Find("UiObjs");
-        GameObject player = GameObject.Find("Player");
+        GameObject UiObjs = UIManager.Instance.UiObjs;
+        GameObject Ui = UiObjs.transform.GetChild(1).gameObject;
 
-        menu = GFunc.FindChildObj(UiObjs, "Menu");
-        inven = GFunc.FindChildObj(UiObjs, "Inventory");
-        map = GFunc.FindChildObj(UiObjs, "Map");
-        GUI = GFunc.FindChildObj(UiObjs, "GUI");
-        invenCam = GFunc.FindChildObj(player, "Camera");
+        menu = Ui.transform.GetChild(4).gameObject;
+        inven = UiObjs.transform.GetChild(0).gameObject;
+        map = Ui.transform.GetChild(3).gameObject;
+        GUI = Ui.transform.GetChild(0).gameObject;
+        invenCam = transform.GetChild(3).gameObject;
+        settingMenu = Ui.transform.GetChild(5).gameObject;
 
         CursorSet();
         inven.SetLocalScale(enableScale);
@@ -54,7 +60,7 @@ public class PlayerOther : MonoBehaviour
     public void InvenOpen()
     {
 
-        if (Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false)
+        if (Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false && isMenuOpen == false && PlayerMove.isDead == false)
         {
             isInvenOpen = !isInvenOpen;
             if (isInvenOpen == true)
@@ -97,7 +103,7 @@ public class PlayerOther : MonoBehaviour
     #region Map
     public void MapOpen()
     {
-        if (Input.GetKeyDown(KeyCode.M) && isInvenOpen == false)
+        if (Input.GetKeyDown(KeyCode.M) && isInvenOpen == false && isMenuOpen == false && PlayerMove.isDead == false)
         {
             isMapOpen = !isMapOpen;
             if (isMapOpen == true)
@@ -131,24 +137,34 @@ public class PlayerOther : MonoBehaviour
     #region Menu
     private void MenuOpen()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || UiManager.isResumeOn == true)
+        if (Input.GetKeyDown(KeyCode.Escape) || UIManager.Instance.isResumeOn == true)
         {
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen == true)
+            if (UIManager.Instance.isSetMenuOpen == false && PlayerMove.isDead == false)
             {
-                gameObject.GetComponent<PlayerAtk>().enabled = false;
-                Cursor.lockState = CursorLockMode.None;
-                menu.SetActive(true);
-                Time.timeScale = 0;
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen == true)
+                {
+                    gameObject.GetComponent<PlayerAtk>().enabled = false;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    menu.SetActive(true);
+                    Time.timeScale = 0;
+                }
+                if (isMenuOpen == false)
+                {
+                    gameObject.GetComponent<PlayerAtk>().enabled = true;
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    UIManager.Instance.isResumeOn = false;
+                    menu.SetActive(false);
+                    Time.timeScale = 1;
+                }
             }
-            if (isMenuOpen == false)
-            {
-                gameObject.GetComponent<PlayerAtk>().enabled = true;
-                Cursor.lockState = CursorLockMode.Locked;
-                UiManager.isResumeOn = false;
-                menu.SetActive(false);
-                Time.timeScale = 1;
-            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) && UIManager.Instance.isSetMenuOpen == true)
+        {
+            settingMenu.SetActive(false);
+            UIManager.Instance.isSetMenuOpen = false;
         }
     }
     #endregion

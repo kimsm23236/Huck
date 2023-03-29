@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1461813743085695577}
   - component: {fileID: 1454831733571021971}
   - component: {fileID: 1447386246868018215}
-  - component: {fileID: 1487093152314042863}
+  - component: {fileID: 4996363446711389828}
   m_Layer: 0
   m_Name: woodFloorPrev
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1487093152314042863
-MeshCollider:
+--- !u!65 &4996363446711389828
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,10 +94,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43850282638961380, guid: 3ef8865f574b81d4c9636e5174868630, type: 2}
+  serializedVersion: 2
+  m_Size: {x: 2.4999971, y: 0.1485136, z: 2.5}
+  m_Center: {x: -1.2499986, y: 0.000000230968, z: 1.25}
 --- !u!1 &3869805926374587177
 GameObject:
   m_ObjectHideFlags: 0

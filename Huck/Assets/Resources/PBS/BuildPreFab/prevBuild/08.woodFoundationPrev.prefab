@@ -158,6 +158,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: woodFloorForFoundationPrev
       objectReference: {fileID: 0}
+    - target: {fileID: 5087416580384601762, guid: d196797602ec5344b9a54382fa0b3b72,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5087416580384601762, guid: d196797602ec5344b9a54382fa0b3b72,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5417236045308826888, guid: d196797602ec5344b9a54382fa0b3b72,
         type: 3}
       propertyPath: m_LocalPosition.y

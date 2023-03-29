@@ -11,7 +11,6 @@ public class PlayerMove : MonoBehaviour
     public static bool isGrounded = default;
     public static bool isRunning = default;
     public static bool isDead = false;
-    public static bool isHit = false;
     public static bool isJump = false;
 
     private float jumpForce = 150;
@@ -21,6 +20,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
+        isDead = false;
         playerRigid = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerInHand = GetComponent<InHand>();
@@ -192,7 +192,9 @@ public class PlayerMove : MonoBehaviour
             isDead = true;
             playerAnim.SetTrigger("Dead");
             PlayerStat.curHp = -1;
-            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            UIManager.Instance.Dead.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
     #endregion
@@ -204,14 +206,25 @@ public class PlayerMove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData != null)
         {
-            playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemUseDel(playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot]);
-            Debug.Log("먹음");
+            if (PlayerOther.isInvenOpen == false && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false)
+            {
+                playerAnim.SetTrigger("Eat");
+            }
+        }
+        if (PlayerAtk.isAttacking == true || PlayerOther.isInvenOpen == true ||
+            PlayerOther.isMapOpen == true || PlayerOther.isMenuOpen == true)
+        {
+            playerAnim.SetTrigger("EatCancel");
         }
     }
-
-    private void EatInput()
+    private void EatFood()
     {
-
+        playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemUseDel(playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot]);
+        Debug.Log("먹음");
+    }
+    private void EatFin()
+    {
+        playerAnim.SetTrigger("EatCancel");
     }
     #endregion
     // } Player Eat
@@ -226,6 +239,11 @@ public class PlayerMove : MonoBehaviour
             isJump = false;
             curJumpCnt = 0;
             playerAnim.SetBool("isGround", true);
+        }
+
+        if (other.gameObject.tag == "Enemy")
+        {
+            PlayerStat.curHp = 0;
         }
     }
 

@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/KMS/Scene/TitleSample.unity
+    guid: 6a88545584c3d8e489ebd0a584dfb331
+  - enabled: 1
     path: Assets/01.UnityProject/Scenes/SampleTestScene.unity
     guid: 949d327ba7e3efd46b3b6698033fc6ca
+  - enabled: 1
+    path: Assets/KMS/Scene/[KMS]SampleTestScene.unity
+    guid: 18dd1449eebb67f40a465eb429a35e34
   m_configObjects: {}

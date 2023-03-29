@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: OakWood
   m_EditorClassIdentifier: 
   itemType: 0
+  itemLevel: 0
+  itemTool: 0
   itemName: OakWood
   itemIcon: {fileID: 21300000, guid: e8fd3440656054c4f94122a554445ae0, type: 3}
   originPrefab: {fileID: 1340502792516707696, guid: 8c90f404a75093c479760522fbd6b42d,
     type: 3}
+  resultData: {fileID: 0}
   itemUseAble: 0
-  itemDamage: 0
+  itemDamage: 10
+  isBuild: 0
+  isFuel: 1
