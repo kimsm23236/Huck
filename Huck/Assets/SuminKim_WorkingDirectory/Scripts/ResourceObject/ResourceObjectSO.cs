@@ -27,8 +27,8 @@ public class ResourceObjectSO : ScriptableObject
     }
 
     [SerializeField]
-    private float hp;
-    public float HP
+    private int hp;
+    public int HP
     {
         get { return hp; }
     }

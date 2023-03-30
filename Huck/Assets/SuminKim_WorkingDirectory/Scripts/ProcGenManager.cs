@@ -39,7 +39,7 @@ public class ProcGenManager : MonoBehaviour
     void Start()
     {
         // navMeshSurface = GFunc.GetRootObj("NavMesh").GetComponentMust<NavMeshSurface>();
-        StartCoroutine(AsyncRegenerateWorld(LoadingManager.Instance.OnStatusReported));
+        // StartCoroutine(AsyncRegenerateWorld(LoadingManager.Instance.OnStatusReported));
     }
 
     // Update is called once per frame

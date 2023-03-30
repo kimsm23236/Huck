@@ -10,24 +10,24 @@ public class DestructibleObject : MonoBehaviour, IDamageable
     //private List<GameObject> childPObj;
 
     private Collider[] colliders;
-    // private Rigidbody[] rigidbodies;
+    private Rigidbody[] rigidbodies;
     // Start is called before the first frame update
     void Start()
     {
         colliders = gameObject.GetComponentsInChildren<Collider>();
-        // rigidbodies = gameObject.GetComponentsInChildren<Rigidbody>();
+        rigidbodies = gameObject.GetComponentsInChildren<Rigidbody>();
         Debug.Log($"Collider Count : {colliders.Length}");
         // Debug.Log($"Rigid Count : {rigidbodies.Length}");
 
-        // SetGravityAllRigidbody(false);
-        SetConvexAllCollider(false);
+        SetGravityAllRigidbody(false);
+        SetTriggerAllCollider(true);
 
     }
 
     void Destruction()
     {
-        // SetGravityAllRigidbody(true);
-        SetConvexAllCollider(true);
+        SetGravityAllRigidbody(true);
+        SetTriggerAllCollider(false);
         Destroy(gameObject, 6f);
     }
 
@@ -43,19 +43,16 @@ public class DestructibleObject : MonoBehaviour, IDamageable
 
     private void SetGravityAllRigidbody(bool value)
     {
-        //foreach (var rigid in rigidbodies)
-        //{
-        //    rigid.useGravity = value;
-        //}
+        foreach (var rigid in rigidbodies)
+        {
+            rigid.useGravity = value;
+        }
     }
-    private void SetConvexAllCollider(bool value)
+    private void SetTriggerAllCollider(bool value)
     {
         foreach(var collider in colliders)
         {
-            MeshCollider coll = collider as MeshCollider;
-            if (!coll.IsValid())
-                continue;
-            coll.convex = value;
+            collider.isTrigger = value;
             
         }
     }

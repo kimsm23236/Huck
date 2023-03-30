@@ -42,5 +42,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         // 이러한 예외처리를 하는 이유는 최상위에 Managers같은 빈오브젝트를 만들고
         // 그 안에 Game, Sound, Ui등의 Manager를 넣어서 관리할려고 한 것임
     }
+
+    protected virtual void Init()
+    {
+        // Awake() 구현
+    }
 }
 // [출처] 싱글톤 | 작성자 부두좀비

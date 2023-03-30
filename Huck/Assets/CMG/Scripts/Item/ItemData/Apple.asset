@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Apple
   m_EditorClassIdentifier: 
   itemType: 0
+  itemLevel: 0
+  itemTool: 0
   itemName: Apple
   itemIcon: {fileID: 21300000, guid: 81f0744e4ecf4db479c1dea8597dcfc9, type: 3}
   originPrefab: {fileID: 8990549077825060496, guid: 6ab499bf26a82924489313900614cf4f,
     type: 3}
   itemUseAble: 1
-  itemDamage: 0
+  itemDamage: 5
+  isBuild: 0

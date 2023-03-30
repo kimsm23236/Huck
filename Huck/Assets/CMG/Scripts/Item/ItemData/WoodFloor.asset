@@ -19,6 +19,8 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 15d6b927e55258e45b279945c3ab8c85, type: 3}
   originPrefab: {fileID: 3869805926374587177, guid: ccd61b2f74de3214a9423ba27d37bc99,
     type: 3}
-  itemUseAble: 0
+  resultData: {fileID: 0}
+  itemUseAble: 1
   itemDamage: 0
   isBuild: 1
+  isFuel: 1

@@ -9,10 +9,10 @@ public class ItemSlot : MonoBehaviour
     public bool HasItem { get; private set; } = false;
     public ItemData itemData = default;
     public int itemAmount = 0;
+    private Image itemIconImg = default;
 
     private bool isEmpty = true;
     private GameObject itemAmountObj = default;
-    private Image itemIconImg = default;
     private TMP_Text itemAmountText = default;
     private Color defaultAlpha = new Color(1f, 1f, 1f, 0f);
     private Color itemAlpha = new Color(1f, 1f, 1f, 1f);
@@ -57,12 +57,7 @@ public class ItemSlot : MonoBehaviour
 
             if (itemAmount <= 0)
             {
-                itemIconImg.sprite = default;
-                itemIconImg.color = defaultAlpha;
-                HasItem = false;
-                itemData = default;
-                itemUseDel = default;
-                itemAmountObj.SetActive(false);
+                DisableImg();
             }
         } // 아이템 데이터가 있는지 없는지 판단
         else
@@ -78,6 +73,17 @@ public class ItemSlot : MonoBehaviour
             }
         }
     }
+
+    public void DisableImg()
+    {
+        itemIconImg.sprite = default;
+        itemIconImg.color = defaultAlpha;
+        HasItem = false;
+        itemData = default;
+        itemUseDel = default;
+        itemAmountObj.SetActive(false);
+    }
+
     private void ItemCountText()
     {
         if (itemData.ItemType == EItemType.CombineAble)

@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class IronAxe : Item
 {
-
+    protected override void ItemUse(ItemSlot itemslot_)
+    {
+        base.ItemUse(itemslot_);
+    }
 }

@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: YellowMushroom
   m_EditorClassIdentifier: 
   itemType: 0
+  itemLevel: 0
+  itemTool: 0
   itemName: YellowMushroom
   itemIcon: {fileID: 21300000, guid: 9d56c183edb955843b80afc915d38e29, type: 3}
   originPrefab: {fileID: 4705080661020250721, guid: 4f048b8ef6673df46923dde262de8feb,
     type: 3}
   itemUseAble: 1
-  itemDamage: 0
+  itemDamage: 5
+  isBuild: 0

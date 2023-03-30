@@ -8,14 +8,16 @@ public class InventoryArray : MonoBehaviour
 {
 
     public List<GameObject> itemSlots = new List<GameObject>();
+    public List<ItemSlot> itemSlotScripts = new List<ItemSlot>();
     public GameObject slotPrefab = null;
+    private ItemSlot nowSlot = default;
 
 
     #region 인벤토리 드래그 & 드랍을 위한 변수
     private List<RaycastResult> rayList = new List<RaycastResult>();
-    private GraphicRaycaster graphicRay = default;
-    private PointerEventData pointEvent = default;
-    private Canvas myCanvas = default;
+    protected GraphicRaycaster graphicRay = default;
+    protected PointerEventData pointEvent = default;
+    protected Canvas myCanvas = default;
     private ItemSlot beginDragSlot = default;
     private Transform beginItemTrans = default;
     private GameObject dividedItemIcon = default;
@@ -24,37 +26,45 @@ public class InventoryArray : MonoBehaviour
     private Vector3 beginDragCursorPoint; // 드래그 시작 시 커서의 위치
     private int beginDragSlotSiblingIndex;
     private GameObject inventoryUi = default;
-
     #endregion
 
-    private int horizonSlotCount = 8;
-    private int verticalSlotCount = 4;
-    private float paddingSlot = 10f;
-    private float slotWidth = 0f;
-    private float slotHeight = 0f;
+    protected int horizonSlotCount = 8;
+    protected int verticalSlotCount = 4;
+    protected float paddingSlot = 10f;
+    protected float slotWidth = 0f;
+    protected float slotHeight = 0f;
 
-    private Vector2 beginSlotPos = default;
-    private PlayerStat playerStat = default;
+    protected Vector2 beginSlotPos = default;
+    protected PlayerStat playerStat = default;
+    protected Transform playerPos = default;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         InitSlots();
         for (int i = 0; i < transform.childCount; i++)
         {
             itemSlots.Add(transform.GetChild(i).gameObject);
+            itemSlotScripts.Add(itemSlots[i].GetComponent<ItemSlot>());
         }
+        UIManager.Instance.inventory = this.gameObject;
+        CanvasSetting();
     }
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        myCanvas = transform.parent.parent.parent.GetComponent<Canvas>();
-        graphicRay = myCanvas.GetComponent<GraphicRaycaster>();
-        pointEvent = new PointerEventData(null);
-        playerStat = GameManager.Instance.playerObj.GetComponent<PlayerStat>();
+        InvenSetting();
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
+    {
+        if (PlayerOther.isInvenOpen)
+        {
+            ControlMouse();
+        }
+    }
+
+    protected void ControlMouse()
     {
         pointEvent.position = Input.mousePosition;
         OnPointerDown();
@@ -64,8 +74,19 @@ public class InventoryArray : MonoBehaviour
         DividDrag();
         DividDragEnd();
     }
+    protected virtual void CanvasSetting()
+    {
+        myCanvas = transform.parent.parent.parent.GetComponent<Canvas>();
+    }
+    protected void InvenSetting()
+    {
+        graphicRay = myCanvas.GetComponent<GraphicRaycaster>();
+        pointEvent = new PointerEventData(null);
+        playerStat = GameManager.Instance.playerObj.GetComponent<PlayerStat>();
+        playerPos = GameManager.Instance.playerObj.transform;
+    }
 
-    private void InitSlots()
+    protected virtual void InitSlots()
     {
         slotWidth = slotPrefab.GetComponent<RectTransform>().sizeDelta.x;
         slotHeight = slotPrefab.GetComponent<RectTransform>().sizeDelta.y;
@@ -136,18 +157,39 @@ public class InventoryArray : MonoBehaviour
         }
     }
 
+    private void DropItem(ItemSlot itemSlot_)
+    {
+        GameObject createItem = default;
+        // RaycastHit[] hit = Physics.RaycastAll(createItem.transform.position, playerPos.forward, 3f);
+        RaycastHit hit = default;
+        if (Physics.Raycast(playerPos.position + Vector3.up, playerPos.forward, out hit, 3f, LayerMask.GetMask(GData.TERRAIN_MASK)) == true)
+        {
+            createItem = Instantiate(itemSlot_.itemData.OriginPrefab);
+            createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
+            createItem.transform.position = hit.point + Vector3.up;
+        }
+        else
+        {
+            createItem = Instantiate(itemSlot_.itemData.OriginPrefab);
+            createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
+            createItem.transform.position = SetItemPos(playerPos, 3f);
+        }
+
+        createItem.GetComponent<Item>().itemCount = itemSlot_.itemAmount;
+        itemSlot_.itemData = default;
+        itemSlot_.itemAmount = 0;
+        itemSlot_.itemUseDel = default;
+        if (dividedItemIcon != null)
+        {
+            Destroy(dividedItemIcon.gameObject);
+        }
+    }
+
     private void OnPointerUp()
     {
-        if (Input.GetMouseButtonUp(0) && beginDragSlot != null && !EventSystem.current.IsPointerOverGameObject() && dividedItemIcon == null)
+        if (Input.GetMouseButtonUp(0) && beginDragSlot != null && beginDragSlot.itemData != null && !EventSystem.current.IsPointerOverGameObject() && dividedItemIcon == null)
         {
-            GameObject createItem = Instantiate(beginDragSlot.itemData.OriginPrefab);
-            createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
-            createItem.transform.position = GameManager.Instance.playerObj.transform.position;
-            createItem.GetComponent<Item>().itemCount = beginDragSlot.itemAmount;
-            beginDragSlot.itemData = default;
-            beginDragSlot.itemAmount = 0;
-            beginDragSlot.itemUseDel = default;
-
+            DropItem(beginDragSlot);
             // 위치 복원
             beginItemTrans.position = beginDragIconPoint;
 
@@ -187,7 +229,7 @@ public class InventoryArray : MonoBehaviour
             // 같은게 있는지 검사
             for (int i = 0; i < transform.childCount; i++)
             {
-                ItemSlot nowSlot = transform.GetChild(i).GetComponent<ItemSlot>();
+                nowSlot = itemSlotScripts[i];
                 if (nowSlot.itemData != null && nowSlot.itemData.ItemName == item_.itemData.ItemName)
                 {
                     nowSlot.itemAmount += item_.itemCount;
@@ -200,7 +242,7 @@ public class InventoryArray : MonoBehaviour
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    ItemSlot nowSlot = transform.GetChild(i).GetComponent<ItemSlot>();
+                    nowSlot = itemSlotScripts[i];
                     if (nowSlot.itemData == null)
                     {
                         nowSlot.itemData = item_.itemData;
@@ -215,7 +257,7 @@ public class InventoryArray : MonoBehaviour
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                ItemSlot nowSlot = transform.GetChild(i).GetComponent<ItemSlot>();
+                nowSlot = itemSlotScripts[i];
                 if (nowSlot.itemData == null)
                 {
                     nowSlot.itemData = item_.itemData;
@@ -230,9 +272,7 @@ public class InventoryArray : MonoBehaviour
 
     private void EndDrag()
     {
-
         ItemSlot endDragSlot = RaycastGetFirstComponent<ItemSlot>();
-
         if (endDragSlot != null)
         {
             SwapItems(beginDragSlot, endDragSlot);
@@ -243,7 +283,6 @@ public class InventoryArray : MonoBehaviour
             beginItemTrans.GetChild(0).position = beginItemTrans.position;
         }
     }
-
     private void SwapItems(ItemSlot startItem, ItemSlot endItem)
     {
         if (startItem != endItem && endItem.itemData != null && startItem.itemData.ItemName == endItem.itemData.ItemName && endItem.itemData.ItemType == EItemType.CombineAble)
@@ -255,16 +294,7 @@ public class InventoryArray : MonoBehaviour
         }
         else
         {
-            // ItemData tempItem = default;
-            // tempItem = startItem.itemData;
-            // startItem.itemData = endItem.itemData;
-            // endItem.itemData = tempItem;
-
             (startItem.itemData, endItem.itemData) = (endItem.itemData, startItem.itemData);
-            // int tmepItemCount = 0;
-            // tmepItemCount = startItem.itemAmount;
-            // startItem.itemAmount = endItem.itemAmount;
-            // endItem.itemAmount = tmepItemCount;
             (startItem.itemAmount, endItem.itemAmount) = (endItem.itemAmount, startItem.itemAmount);
             (startItem.itemUseDel, endItem.itemUseDel) = (endItem.itemUseDel, startItem.itemUseDel);
         }
@@ -313,11 +343,7 @@ public class InventoryArray : MonoBehaviour
             ItemSlot clickSlot = RaycastGetFirstComponent<ItemSlot>();
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                GameObject createItem = Instantiate(dividedItemIcon.GetComponent<ItemSlot>().itemData.OriginPrefab);
-                createItem.transform.SetParent(GameManager.Instance.playerObj.transform.parent);
-                createItem.transform.position = GameManager.Instance.playerObj.transform.position;
-                createItem.GetComponent<Item>().itemCount = dividedItemIcon.GetComponent<ItemSlot>().itemAmount;
-                Destroy(dividedItemIcon.gameObject);
+                DropItem(dividedItemIcon.GetComponent<ItemSlot>());
             }
             else if (clickSlot != null)
             {
@@ -347,4 +373,9 @@ public class InventoryArray : MonoBehaviour
         }
     }
 
+    private Vector3 SetItemPos(Transform playerPos_, float distance)
+    {
+        Vector3 itemPos = playerPos_.position + new Vector3(0f, 1f, 0f) + (playerPos_.forward * distance);
+        return itemPos;
+    }
 }

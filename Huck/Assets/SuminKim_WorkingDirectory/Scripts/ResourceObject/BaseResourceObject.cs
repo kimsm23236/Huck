@@ -9,8 +9,14 @@ public class BaseResourceObject : MonoBehaviour, IDamageable
     protected ResourceObjectSO resConfig;
 
     // Status
-    protected float maxHealthPoint;
-    protected float currentHealthPoint;
+    protected int maxHealthPoint;
+    protected int currentHealthPoint;
+
+    public int HP
+    {
+        get { return currentHealthPoint; }
+    }
+
     protected EResourceType resType;
     protected EResourceLevel resLevel;
     // UI

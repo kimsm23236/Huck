@@ -12,16 +12,18 @@ public class PlayerStat : MonoBehaviour
     public float maxHungry = 100;
     public float maxEnergy = 100;
 
-    public int damage = 10;
+    public int damage = 1;
     public int armor = 0;
     public float critical = 5;
 
     private bool isEgFull = default;
     private bool isHgEmpty = default;
+    private bool isHit = default;
 
     private void Start()
     {
         curHp = maxHp;
+        isHit = false;
         curHungry = maxHungry;
         curEnergy = maxEnergy;
     }
@@ -104,4 +106,31 @@ public class PlayerStat : MonoBehaviour
     }
     #endregion
     // } Hp, Hungry, Energy
+
+    // { TakeDamage
+    public void TakeDamage(GameObject _attacker, int _damage)
+    {
+        if (isHit == false)
+        {
+            curHp -= _damage;
+            StartCoroutine(WaitHitTime());
+        }
+        if (curHp <= 0f)
+        {
+            PlayerMove.isDead = true;
+        }
+    }
+
+    private IEnumerator WaitHitTime()
+    {
+        isHit = true;
+        float time = 0f;
+        while (time < 1f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        isHit = false;
+    } // WaitHitTime
+    // } TakeDamage
 }

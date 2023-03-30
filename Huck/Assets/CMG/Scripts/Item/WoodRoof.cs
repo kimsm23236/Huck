@@ -6,6 +6,6 @@ public class WoodRoof : Item
 {
     protected override void ItemUse(ItemSlot itemslot_)
     {
-        itemslot_.itemAmount--;
+        base.ItemUse(itemslot_);
     }
 }
