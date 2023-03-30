@@ -31,8 +31,8 @@ MonoBehaviour:
     Weighting: 0.3
   - Biome: {fileID: 11400000, guid: d6b92a33aa9018e418067b581095c51d, type: 2}
     Weighting: 0.5
-  BiomeSeedPointDensity: 1
-  biomeMapResolution: 128
+  BiomeGenerators: {fileID: 7008245778864145046, guid: 64d52ee102b914544879c265b85c4bd0,
+    type: 3}
   InitialHeightModifier: {fileID: 9427664555903813, guid: 91f045b2de989754e8444710dd538e38,
     type: 3}
   HeightPostProcessingModifier: {fileID: 9427664555903813, guid: eed22dbdc1c8d6b4cb8fdb833983b02f,
