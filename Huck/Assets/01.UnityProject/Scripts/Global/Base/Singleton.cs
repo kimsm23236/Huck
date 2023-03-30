@@ -46,7 +46,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Init()
     {
-        // Awake() 구현
+        // Awake() ����
     }
 }
 // [��ó] �̱��� | �ۼ��� �ε�����

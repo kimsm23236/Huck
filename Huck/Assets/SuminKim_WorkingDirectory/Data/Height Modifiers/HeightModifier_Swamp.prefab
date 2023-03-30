@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Strength: 1
-  OffsetAmount: -5
+  OffsetAmount: 15
 --- !u!114 &-2160741917897294704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +60,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Strength: 1
-  HeightDelta: 5
   passes:
   - heightDelta: 5
     noiseScale: 0.0078125
@@ -68,9 +67,3 @@ MonoBehaviour:
     noiseScale: 0.015625
   - heightDelta: 1.25
     noiseScale: 0.03125
-  XScale: 0.0078125
-  YScale: 0.0078125
-  NumPasses: 3
-  XScaleVariationPerPass: 2
-  YScaleVariationPerPass: 2
-  HeightDeltaVariationPerPass: 0.5

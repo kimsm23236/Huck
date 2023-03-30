@@ -129,7 +129,7 @@ public class HeightMapModifier_Buildings : BaseHeightMapModifier
         foreach (var building in Buildings)
         {
             var spawnLocations = GetSpawnLocationsForBuilding(globalConfig, mapResolution, heightMap, heightmapScale, building);
-
+            Debug.Log($"SpawnLoc Count : {spawnLocations.Count}");
             for (int buildingIndex = 0; buildingIndex < building.numToSpawn && spawnLocations.Count > 0; buildingIndex++)
             {
                 int spawnIndex = Random.Range(0, spawnLocations.Count);

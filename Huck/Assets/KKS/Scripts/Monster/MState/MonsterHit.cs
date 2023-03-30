@@ -24,6 +24,7 @@ public class MonsterHit : IMonsterState
     } // StateUpdate
     public void StateExit()
     {
+        mController.monsterAni.SetBool(aniClipName, false);
         mController.isHit = false;
         aniClipName = default;
     } // StateExit

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStat : MonoBehaviour
+public class PlayerStat : MonoBehaviour, IDamageable
 {
     public static int curHp = default;
     public static float curHungry = default;
@@ -18,12 +18,19 @@ public class PlayerStat : MonoBehaviour
 
     private bool isEgFull = default;
     private bool isHgEmpty = default;
+    private bool isHit = default;
+
+    public delegate void EventHandler();
+    public EventHandler onPlayerDead;
 
     private void Start()
     {
         curHp = maxHp;
+        isHit = false;
         curHungry = maxHungry;
         curEnergy = maxEnergy;
+
+        onPlayerDead = new EventHandler(() => Debug.Log("Player Dead"));
     }
 
     private void Update()
@@ -106,16 +113,40 @@ public class PlayerStat : MonoBehaviour
     // } Hp, Hungry, Energy
 
     // { TakeDamage
-    public void TakeDamage(GameObject _attacker, int _damage)
+    public void TakeDamage(DamageMessage message)
     {
-        if (_attacker.tag == "Enemy" && PlayerMove.isHit == true)
+        if (isHit == false)
         {
-            curHp -= _damage;
+            curHp -= message.damageAmount;
+            StartCoroutine(WaitHitTime());
         }
         if (curHp <= 0f)
         {
-            PlayerMove.isDead = true;
+            onPlayerDead();
+            Die();
         }
     }
+
+    private IEnumerator WaitHitTime()
+    {
+        isHit = true;
+        float time = 0f;
+        while (time < 1f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        isHit = false;
+    } // WaitHitTime
     // } TakeDamage
+    // { Player Die
+    #region Die
+    private void Die()
+    {
+        UIManager.Instance.Dead.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    #endregion
+    // { Player Die
 }

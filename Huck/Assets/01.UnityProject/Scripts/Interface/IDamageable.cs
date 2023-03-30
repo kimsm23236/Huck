@@ -5,9 +5,9 @@ using UnityEngine;
 public class DamageMessage
 {
     public GameObject causer;
-    public float damageAmount;
+    public int damageAmount;
     public ItemData item;
-    public DamageMessage(GameObject causer, float damageAmount, ItemData item = default)
+    public DamageMessage(GameObject causer, int damageAmount, ItemData item = default)
     {
         this.causer = causer;
         this.damageAmount = damageAmount;

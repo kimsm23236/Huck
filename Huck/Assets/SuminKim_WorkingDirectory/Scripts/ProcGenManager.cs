@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using System.Linq;
 using UnityEngine.XR;
 using Unity.VisualScripting.FullSerializer;
@@ -12,31 +13,16 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 #endif  // UNITY_EDITOR
 
-public enum EGenerationStage
-{
-    Beginning = 1,
-
-    BuildTextureMap,
-    BuildDetailMap,
-    BuildLowResolutionBiomeMap,
-    BuildHighResolutionBiomeMap,
-    HeightMapGeneration,
-    TerrainPainting,
-    ObjectPlacement,
-    DetailPainting,
-
-    Complete,
-    NumStage = Complete
-}
-
 public class ProcGenManager : MonoBehaviour
 {
     [SerializeField] ProcGenConfigSO config;
     [SerializeField] Terrain targetTerrain;
     [Header("Debugging")]
     [SerializeField] bool DEBUG_TurnOffObjectPlacers = false;
+    [SerializeField] NavMeshSurface[] navMeshSurfaces = default;
     Dictionary<TextureConfig, int> BiomeTextureToTerrainLayerIndex = new Dictionary<TextureConfig, int>();
     Dictionary<TerrainDetailConfig, int> BiomeTerrainDetailToDetailLayerIndex = new Dictionary<TerrainDetailConfig, int>();
+
     byte[,] BiomeMap_LowResolution;
     float[,] BiomeStrengths_LowResolution;
 
@@ -45,10 +31,15 @@ public class ProcGenManager : MonoBehaviour
 
     float[,] SlopeMap;
 
+    void Awake()
+    {
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
-
+        // navMeshSurface = GFunc.GetRootObj("NavMesh").GetComponentMust<NavMeshSurface>();
+        // StartCoroutine(AsyncRegenerateWorld(LoadingManager.Instance.OnStatusReported));
     }
 
     // Update is called once per frame
@@ -65,9 +56,8 @@ public class ProcGenManager : MonoBehaviour
         int detailMapResolution = targetTerrain.terrainData.detailResolution;
         int maxDetailsPerPatch = targetTerrain.terrainData.detailResolutionPerPatch;
 
-        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Beginning, "Beginning Generation");
+        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Beginning, "Beginning Terrain Generation");
         yield return new WaitForSeconds(1f);
-
 
         // clear out any previously spawn objects
         for (int childIndex = transform.childCount - 1; childIndex >= 0; --childIndex)
@@ -130,7 +120,19 @@ public class ProcGenManager : MonoBehaviour
         // paint the details
         Perform_DetailPainting(mapResolution, alphaMapResolution, detailMapResolution, maxDetailsPerPatch);
 
-        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Complete, "Generation complete");
+        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.NavMeshBaking, "NavMesh Baking");
+        yield return new WaitForSeconds(1f);
+
+        // paint the details
+        Perform_NavMeshBaking();
+
+        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Complete, "Terrain Generation complete");
+
+        yield return new WaitForSeconds(1f);
+
+        //
+        // targetTerrain.terrainData.deta
+        //
     }
 
     void Perform_GenerateTextureMapping()
@@ -580,7 +582,7 @@ public class ProcGenManager : MonoBehaviour
         }
 
         // run heightmap generation for each biome
-        for(int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
+        for (int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
         {
             var biome = config.Biomes[biomeIndex].Biome;
 
@@ -603,7 +605,7 @@ public class ProcGenManager : MonoBehaviour
 
             foreach (var modifier in modifiers)
             {
-                modifier.Execute(config, mapResolution, heightMap, targetTerrain.terrainData.heightmapScale);
+                modifier.Execute(config, mapResolution, heightMap, targetTerrain.terrainData.heightmapScale, BiomeMap);
             }
         }
 
@@ -704,6 +706,15 @@ public class ProcGenManager : MonoBehaviour
             {
                 modifier.Execute(config, transform, mapResolution, heightMap, targetTerrain.terrainData.heightmapScale, SlopeMap, alphaMaps, alphaMapResolution, BiomeMap, biomeIndex, biome);
             }
+        }
+    }
+
+    void Perform_NavMeshBaking()
+    {
+        Debug.Log("NavMesh Bake");
+        for(int i = 0; i < navMeshSurfaces.Length; i++)
+        {
+            navMeshSurfaces[i].BuildNavMesh();
         }
     }
 

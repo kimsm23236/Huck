@@ -66,7 +66,7 @@ public class MonsterDelay : IMonsterState
                 while (isIdle == false)
                 {
                     checkTime2 += Time.deltaTime;
-                    if (checkTime2 >= 2f)
+                    if (checkTime2 >= 1.5f)
                     {
                         isIdle = true;
                     }

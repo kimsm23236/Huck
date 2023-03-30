@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class StoveUse : MonoBehaviour
 {
-    public StoveItem nowStove = default;
+    private StoveItem nowStove = default;
 
-    public GameObject originItem = default;
-    public GameObject fuelItem = default;
-    public GameObject resultItem = default;
+    private GameObject originItem = default;
+    private GameObject fuelItem = default;
+    private GameObject resultItem = default;
 
-    public ItemSlot originItemSlot = default;
-    public ItemSlot fuelItemSlot = default;
-    public ItemSlot resultItemSlot = default;
+    private ItemSlot originItemSlot = default;
+    private ItemSlot fuelItemSlot = default;
+    private ItemSlot resultItemSlot = default;
 
-    public ItemData originItemData = default;
-    public ItemData fuelItemData = default;
-    public ItemData resultItemData = default;
+    private ItemData originItemData = default;
+    private ItemData fuelItemData = default;
+    private ItemData resultItemData = default;
+
+    public float percentage = 0f;
+    public bool isUsing = false;
+    public float fuelEnergy = 0f;
+
+    private bool useCor = false;
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -35,16 +42,11 @@ public class StoveUse : MonoBehaviour
     {
         if (GameManager.Instance.playerObj != null)
         {
-            nowStove = GameManager.Instance.playerObj.GetComponent<InHand>().stoveItem;
+            nowStove = Camera.main.GetComponent<ItemRange>().stoveItem;
         }
         if (nowStove != null)
         {
-            originItemSlot.itemData = nowStove.originItemData;
-            originItemSlot.itemAmount = nowStove.originItemCount;
-            fuelItemSlot.itemData = nowStove.fuelItemData;
-            fuelItemSlot.itemAmount = nowStove.fuelItemCount;
-            resultItemSlot.itemData = nowStove.resultItemData;
-            resultItemSlot.itemAmount = nowStove.resultItemCount;
+            CopyFromStove();
         }
         // if () 플레이어가 화로를 열었을 때 그 화로의 StoveItem컴포넌트를 가져와야함
         // StoveItem에서 originItem , fuelItem, resultItem 들과 개수 가져오기
@@ -54,37 +56,67 @@ public class StoveUse : MonoBehaviour
     void Update()
     {
         slotCheck();
-        // UseStove();
+        if (nowStove.isChange)
+        {
+            CopyFromStove();
+            nowStove.isChange = false;
+        }
+        CopyToStove();
     }
 
     private void OnDisable()
     {
         if (nowStove != null)
         {
-            nowStove.originItemData = originItemData;
-            nowStove.originItemCount = originItemSlot.itemAmount;
-            nowStove.fuelItemData = fuelItemData;
-            nowStove.fuelItemCount = fuelItemSlot.itemAmount;
-            nowStove.resultItemData = resultItemData;
-            nowStove.resultItemCount = resultItemSlot.itemAmount;
-            originItemData = default;
-            fuelItemData = default;
-            resultItemData = default;
-
-            originItemSlot.itemData = null;
-            originItemSlot.itemAmount = 0;
-            originItemSlot.DisableImg();
-
-            fuelItemSlot.itemData = null;
-            fuelItemSlot.itemAmount = 0;
-            fuelItemSlot.DisableImg();
-
-            resultItemSlot.itemData = null;
-            resultItemSlot.itemAmount = 0;
-            resultItemSlot.DisableImg();
+            // CopyToStove();
+            ResetUi();
         }
 
         // StoveItem에 originItem , fuelItem, resultItem 다시 집어 넣기 => 얼마나 구어졌는지 진행도도 넘겨줘야 함
+    }
+
+    private void CopyToStove()
+    {
+        nowStove.originItemData = originItemData;
+
+        nowStove.originItemCount = originItemSlot.itemAmount;
+        nowStove.fuelItemData = fuelItemData;
+        nowStove.fuelItemCount = fuelItemSlot.itemAmount;
+        nowStove.resultItemData = resultItemData;
+        nowStove.resultItemCount = resultItemSlot.itemAmount;
+    }
+
+    private void CopyFromStove()
+    {
+        originItemSlot.itemData = nowStove.originItemData;
+        originItemSlot.itemAmount = nowStove.originItemCount;
+        fuelItemSlot.itemData = nowStove.fuelItemData;
+        fuelItemSlot.itemAmount = nowStove.fuelItemCount;
+        resultItemSlot.itemData = nowStove.resultItemData;
+        resultItemSlot.itemAmount = nowStove.resultItemCount;
+    }
+
+    private void ResetUi()
+    {
+        originItemData = default;
+        fuelItemData = default;
+        resultItemData = default;
+
+        originItemSlot.itemData = null;
+        originItemSlot.itemAmount = 0;
+        originItemSlot.DisableImg();
+
+        fuelItemSlot.itemData = null;
+        fuelItemSlot.itemAmount = 0;
+        fuelItemSlot.DisableImg();
+
+        resultItemSlot.itemData = null;
+        resultItemSlot.itemAmount = 0;
+        resultItemSlot.DisableImg();
+
+        percentage = 0f;
+        isUsing = false;
+        fuelEnergy = 0f;
     }
 
     private void slotCheck()
@@ -112,33 +144,6 @@ public class StoveUse : MonoBehaviour
         else
         {
             resultItemData = default;
-        }
-    }
-
-
-
-    private void UseStove()
-    {
-        if (originItemData != null && fuelItemData != null)
-        {
-            if (originItemData.ResultData != null && fuelItemData.IsFuel)
-            {
-                if (resultItemData == null)
-                {
-                    Debug.Log("화로 사용중");
-                }
-                else
-                {
-                    if (resultItemData.ItemName == originItemData.ItemName)
-                    {
-                        Debug.Log("화로 사용중");
-                    }
-                    else
-                    {
-                        //Do nothing
-                    }
-                }
-            }
         }
     }
 }

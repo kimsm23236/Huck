@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static partial class GData
 {
+    // Scene Name
+    public const string SCENENAME_TITLE = "SampleTitleSample";
+    public const string SCENENAME_LOADING = "SampleLoadingScene";
+    public const string SCENENAME_PLAY = "SampleTestScene";
 
     // Layer Mask
     public const string PLAYER_MASK = "Player";
@@ -15,4 +19,17 @@ public static partial class GData
     // Asset Path
     public const string PREFAB_PATH = "Prefabs/";
     public const string UI_PATH = "UI/";
+}
+
+public enum EBiome
+{
+    BUSH,
+    GRASSYPLAINS,
+    RAINFOREST,
+    SCRUB,
+    SWAMP,
+    DECAY,
+    HIGHMOUNTAIN,
+    MIDDLEMOUNTAIN,
+    LOWMOUNTAIN
 }

@@ -23,3 +23,4 @@ MonoBehaviour:
     type: 3}
   ObjectPlacer: {fileID: 5956544659759281517, guid: 9a6ab1df1436f4d4382b456a3863de18,
     type: 3}
+  DetailPainter: {fileID: 0}

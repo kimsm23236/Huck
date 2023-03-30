@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ItemRange : MonoBehaviour
 {
     private GameObject ItemFound = default;
+    private GameObject UI = default;
     private GameObject resourceFound = default;
 
     private GameObject res_UI = default;
@@ -18,19 +19,20 @@ public class ItemRange : MonoBehaviour
     private Text interect_T = default;
 
     public GameObject getItem = default;
+    public StoveItem stoveItem = default;
 
     private float Range = 5;
 
     void Start()
     {
-        //Find Object & Cashing
-        GameObject UiObjs = GameObject.Find("UiObjs");
-        ItemFound = UiObjs.FindChildObj("ItemFound");
-        res_UI = UiObjs.FindChildObj("Res_UI");
+        UI = UIManager.Instance.UiObjs.transform.GetChild(1).gameObject;
+        res_UI = UI.transform.GetChild(1).gameObject;
+        ItemFound = UI.transform.GetChild(2).gameObject;
 
-        find_R_Hp = res_UI.FindChildObj("Hp_Bar");
-        find_T_panel = res_UI.FindChildObj("PanelText");
-        find_T_interect = res_UI.FindChildObj("InteractText");
+        find_T_panel = res_UI.transform.GetChild(0).gameObject;
+        find_R_Hp = res_UI.transform.GetChild(2).gameObject;
+        find_T_interect = res_UI.transform.GetChild(3).gameObject;
+
         res_Hp = find_R_Hp.GetComponent<Image>();
         panel_T = find_T_panel.GetComponent<Text>();
         interect_T = find_T_interect.GetComponent<Text>();
@@ -44,10 +46,10 @@ public class ItemRange : MonoBehaviour
     // { Found Item & Get Item
     void ItemGet()
     {
+        RaycastHit hitinfo = default;
+
         ItemFound.SetActive(false);
         res_UI.SetActive(false);
-
-        RaycastHit hitinfo = default;
 
         if (Physics.Raycast(transform.position,
         transform.TransformDirection(Vector3.forward),
@@ -68,12 +70,42 @@ public class ItemRange : MonoBehaviour
                 res_UI.SetActive(true);
                 var interactResObj = hitinfo.transform.gameObject.GetComponentMust<BaseResourceObject>();
                 string resName = interactResObj.ResourceConfig.ResourceName;
-                int resObjMaxHp = (int)interactResObj.ResourceConfig.HP;
-                int resObjCurrentHP = (int)interactResObj.ResourceConfig.HP;
+                int resObjMaxHp = interactResObj.ResourceConfig.HP;
+                int resObjCurrentHP = interactResObj.HP;
 
                 panel_T.text = $"{resName}";
                 interect_T.text = $"{resName}";
                 res_Hp.fillAmount = ((float)resObjCurrentHP / (float)resObjMaxHp);
+            }
+
+            if (hitinfo.transform.name == "10.Stove(Clone)" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
+                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isWorkbenchOpen == false)
+            {
+                stoveItem = hitinfo.transform.GetComponent<StoveItem>();
+                res_UI.SetActive(true);
+                panel_T.text = "Stove";
+                interect_T.text = "Stove";
+                ItemFound.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    PlayerOther.isStoveOpen = !PlayerOther.isStoveOpen;
+                    if (PlayerOther.isStoveOpen == true)
+                    {
+                        UIManager.Instance.stove.SetActive(true);
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                    }
+                    else
+                    {
+                        UIManager.Instance.stove.SetActive(false);
+                        Cursor.visible = false;
+                        Cursor.lockState = CursorLockMode.Locked;
+                    }
+                }
+                else
+                {
+                    stoveItem = default;
+                }
             }
         }
     }

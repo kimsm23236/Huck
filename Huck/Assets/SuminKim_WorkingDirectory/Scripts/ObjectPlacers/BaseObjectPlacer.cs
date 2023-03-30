@@ -83,7 +83,7 @@ public class BaseObjectPlacer : MonoBehaviour
 
             int skipCount = 0;
             int numPlaced = 0;
-            for(int index = 0; index < maxSpawnCount; index++)
+            for(int index = 0; index < numToSpawn; index++)
             {
                 // pick a random location to spawn at
                 int randomLocationIndex = Random.Range(0, candidateLocations.Count);

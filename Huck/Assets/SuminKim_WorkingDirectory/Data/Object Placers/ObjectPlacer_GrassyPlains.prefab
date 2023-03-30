@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1432066525936201213}
   - component: {fileID: -4647320068589533504}
-  - component: {fileID: 302295004169923773}
+  - component: {fileID: -9140704032504034544}
   m_Layer: 0
   m_Name: ObjectPlacer_GrassyPlains
   m_TagString: Untagged
@@ -52,7 +52,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 1
-    weighting: 0
+    weighting: 0.6
     prefabs:
     - {fileID: 525703396560854713, guid: 9eda4a225becfde489916bee761c89f3, type: 3}
   - hasHeightLimits: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 1
-    weighting: 0
+    weighting: 0.6
     prefabs:
     - {fileID: 525703396560854713, guid: 94969a476487fb843a6e46b43ec07810, type: 3}
   - hasHeightLimits: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 1
-    weighting: 0
+    weighting: 0.6
     prefabs:
     - {fileID: 525703396560854713, guid: bd3499aaefc957a40962dd917035421f, type: 3}
   - hasHeightLimits: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 1
-    weighting: 0
+    weighting: 0.6
     prefabs:
     - {fileID: 525703396560854713, guid: 12e80878caf19d44f80be060a5275ec8, type: 3}
   - hasHeightLimits: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 1
-    weighting: 0
+    weighting: 0.6
     prefabs:
     - {fileID: 525703396560854713, guid: 4d27dc691e07ee045937f44d040cca97, type: 3}
   - hasHeightLimits: 0
@@ -97,14 +97,68 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 1
-    weighting: 0
+    weighting: 0.6
     prefabs:
     - {fileID: 525703396560854713, guid: 8eff1ae5aae661046a3860c1049a5989, type: 3}
+  - hasHeightLimits: 0
+    minHeightToSpawn: 0
+    maxHeightToSpawn: 0
+    canGoInWater: 0
+    canGoAboveWater: 1
+    isEmbedded: 1
+    weighting: 0.3
+    prefabs:
+    - {fileID: 525703396560854713, guid: c7c463e45c64fdb48bbb457996d9a9c7, type: 3}
+  - hasHeightLimits: 0
+    minHeightToSpawn: 0
+    maxHeightToSpawn: 0
+    canGoInWater: 0
+    canGoAboveWater: 1
+    isEmbedded: 1
+    weighting: 0.3
+    prefabs:
+    - {fileID: 525703396560854713, guid: 80c3332288fcfe5478a37aa80d7ed6e9, type: 3}
+  - hasHeightLimits: 0
+    minHeightToSpawn: 0
+    maxHeightToSpawn: 0
+    canGoInWater: 0
+    canGoAboveWater: 1
+    isEmbedded: 1
+    weighting: 0.3
+    prefabs:
+    - {fileID: 525703396560854713, guid: 482555069e4636643a7492aec7b10126, type: 3}
+  - hasHeightLimits: 0
+    minHeightToSpawn: 0
+    maxHeightToSpawn: 0
+    canGoInWater: 0
+    canGoAboveWater: 1
+    isEmbedded: 1
+    weighting: 0.3
+    prefabs:
+    - {fileID: 525703396560854713, guid: 90bbd4e95f456c445993b70017b9db28, type: 3}
+  - hasHeightLimits: 0
+    minHeightToSpawn: 0
+    maxHeightToSpawn: 0
+    canGoInWater: 0
+    canGoAboveWater: 1
+    isEmbedded: 1
+    weighting: 0.3
+    prefabs:
+    - {fileID: 525703396560854713, guid: 77df6a4bc3c4a3d47a80ac93e604e150, type: 3}
+  - hasHeightLimits: 0
+    minHeightToSpawn: 0
+    maxHeightToSpawn: 0
+    canGoInWater: 0
+    canGoAboveWater: 1
+    isEmbedded: 1
+    weighting: 0.3
+    prefabs:
+    - {fileID: 525703396560854713, guid: 445a20be774b227428d1fe8e851cd3be, type: 3}
   targetDensity: 30
-  maxSpawnCount: 150
+  maxSpawnCount: 300
   maxInvalidLocationSkips: 10
   maxPositionJitter: 0.1
---- !u!114 &302295004169923773
+--- !u!114 &-9140704032504034544
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,56 +176,11 @@ MonoBehaviour:
     maxHeightToSpawn: 0
     canGoInWater: 0
     canGoAboveWater: 1
-    isEmbedded: 1
-    weighting: 0
+    isEmbedded: 0
+    weighting: 1
     prefabs:
-    - {fileID: 525703396560854713, guid: c7c463e45c64fdb48bbb457996d9a9c7, type: 3}
-  - hasHeightLimits: 0
-    minHeightToSpawn: 0
-    maxHeightToSpawn: 0
-    canGoInWater: 0
-    canGoAboveWater: 1
-    isEmbedded: 1
-    weighting: 0
-    prefabs:
-    - {fileID: 525703396560854713, guid: 80c3332288fcfe5478a37aa80d7ed6e9, type: 3}
-  - hasHeightLimits: 0
-    minHeightToSpawn: 0
-    maxHeightToSpawn: 0
-    canGoInWater: 0
-    canGoAboveWater: 1
-    isEmbedded: 1
-    weighting: 0
-    prefabs:
-    - {fileID: 525703396560854713, guid: 482555069e4636643a7492aec7b10126, type: 3}
-  - hasHeightLimits: 0
-    minHeightToSpawn: 0
-    maxHeightToSpawn: 0
-    canGoInWater: 0
-    canGoAboveWater: 1
-    isEmbedded: 1
-    weighting: 0
-    prefabs:
-    - {fileID: 525703396560854713, guid: 90bbd4e95f456c445993b70017b9db28, type: 3}
-  - hasHeightLimits: 0
-    minHeightToSpawn: 0
-    maxHeightToSpawn: 0
-    canGoInWater: 0
-    canGoAboveWater: 1
-    isEmbedded: 1
-    weighting: 0
-    prefabs:
-    - {fileID: 525703396560854713, guid: 77df6a4bc3c4a3d47a80ac93e604e150, type: 3}
-  - hasHeightLimits: 0
-    minHeightToSpawn: 0
-    maxHeightToSpawn: 0
-    canGoInWater: 0
-    canGoAboveWater: 1
-    isEmbedded: 1
-    weighting: 0
-    prefabs:
-    - {fileID: 525703396560854713, guid: 445a20be774b227428d1fe8e851cd3be, type: 3}
-  targetDensity: 100
-  maxSpawnCount: 100
+    - {fileID: 8121577545144698755, guid: 7dc33a225bec6f34d8e4e70e6aa5a759, type: 3}
+  targetDensity: 0.1
+  maxSpawnCount: 1
   maxInvalidLocationSkips: 10
   maxPositionJitter: 0.1

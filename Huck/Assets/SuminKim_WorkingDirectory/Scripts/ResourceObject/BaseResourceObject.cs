@@ -9,8 +9,14 @@ public class BaseResourceObject : MonoBehaviour, IDamageable
     protected ResourceObjectSO resConfig;
 
     // Status
-    protected float maxHealthPoint;
-    protected float currentHealthPoint;
+    protected int maxHealthPoint;
+    protected int currentHealthPoint;
+
+    public int HP
+    {
+        get { return currentHealthPoint; }
+    }
+
     protected EResourceType resType;
     protected EResourceLevel resLevel;
     // UI
@@ -48,12 +54,6 @@ public class BaseResourceObject : MonoBehaviour, IDamageable
         if(hpBarUI != null && hpBarUI != default)
             hpBarUI.BindResObj(gameObject);
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // 체력 0 일 때 파괴 함수

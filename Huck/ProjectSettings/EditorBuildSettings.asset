@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/SuminKim_WorkingDirectory/Scenes/SuminLoadingScene.unity
+    guid: bb3a6d91ce969e24689a02a67166edfb
+  - enabled: 1
+    path: Assets/SuminKim_WorkingDirectory/Scenes/SuminWorkingScene.unity
+    guid: 9a70885bf4ab0454bb6b8ed963c483db
+  - enabled: 1
+    path: Assets/01.UnityProject/Scenes/SampleLoadingScene.unity
+    guid: 2326ef026ec46e14b8c75a6a43f90d32
+  - enabled: 1
     path: Assets/01.UnityProject/Scenes/SampleTestScene.unity
     guid: 949d327ba7e3efd46b3b6698033fc6ca
+  - enabled: 1
+    path: Assets/01.UnityProject/Scenes/SampleTitleSample.unity
+    guid: b1930b457929e104a8724459e906b0be
   m_configObjects: {}

@@ -21,6 +21,7 @@ public class ProcGenConfigSO : ScriptableObject
         Size_128x128    = 128,
         Size_256x256    = 256,
         Size_512x512    = 512,
+        Size_1024x1024 = 1024,
     }
 
     [Range(0f, 1.0f)]

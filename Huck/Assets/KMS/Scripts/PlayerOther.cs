@@ -31,16 +31,15 @@ public class PlayerOther : MonoBehaviour
 
     private void Start()
     {
+        GameObject UiObjs = UIManager.Instance.UiObjs;
+        GameObject Ui = UiObjs.transform.GetChild(1).gameObject;
 
-        GameObject UiObjs = GameObject.Find("UiObjs");
-        GameObject player = GameObject.Find("Player");
-
-        menu = GFunc.FindChildObj(UiObjs, "Menu");
-        inven = GFunc.FindChildObj(UiObjs, "Inventory");
-        map = GFunc.FindChildObj(UiObjs, "Map");
-        GUI = GFunc.FindChildObj(UiObjs, "GUI");
-        invenCam = GFunc.FindChildObj(player, "Camera");
-        settingMenu = GFunc.FindChildObj(UiObjs, "SettingMenu");
+        menu = Ui.transform.GetChild(4).gameObject;
+        inven = UiObjs.transform.GetChild(0).gameObject;
+        map = Ui.transform.GetChild(3).gameObject;
+        GUI = Ui.transform.GetChild(0).gameObject;
+        invenCam = transform.GetChild(3).gameObject;
+        settingMenu = Ui.transform.GetChild(5).gameObject;
 
         CursorSet();
         inven.SetLocalScale(enableScale);
@@ -53,8 +52,7 @@ public class PlayerOther : MonoBehaviour
         InvenOpen();
         MapOpen();
         MenuOpen();
-        Interaction();
-        Open();
+        RootItem();
     }
 
     // { Player Inventory
@@ -62,7 +60,8 @@ public class PlayerOther : MonoBehaviour
     public void InvenOpen()
     {
 
-        if (Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false)
+        if (Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false && isMenuOpen == false && PlayerMove.isDead == false
+            && PlayerOther.isStoveOpen == false)
         {
             isInvenOpen = !isInvenOpen;
             if (isInvenOpen == true)
@@ -88,86 +87,12 @@ public class PlayerOther : MonoBehaviour
     #endregion
     // } Player Inventory 
 
-    public void Open()
-    {
-
-        if (Input.GetKeyDown(KeyCode.T) && isMapOpen == false)
-        {
-            isWorkbenchOpen = !isWorkbenchOpen;
-            if (isWorkbenchOpen == true)
-            {
-                gameObject.GetComponent<PlayerAtk>().enabled = false;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                UIManager.Instance.workBench.SetActive(true);
-            }
-            if (isWorkbenchOpen == false)
-            {
-                gameObject.GetComponent<PlayerAtk>().enabled = true;
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                UIManager.Instance.workBench.SetActive(false);
-            }
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Y) && isMapOpen == false)
-        {
-            isStoveOpen = !isStoveOpen;
-            if (isStoveOpen == true)
-            {
-                gameObject.GetComponent<PlayerAtk>().enabled = false;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                UIManager.Instance.stove.SetActive(true);
-            }
-            if (isStoveOpen == false)
-            {
-                gameObject.GetComponent<PlayerAtk>().enabled = true;
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                UIManager.Instance.stove.SetActive(false);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q) && isMapOpen == false)
-        {
-            isAnvilOpen = !isAnvilOpen;
-            if (isAnvilOpen == true)
-            {
-                gameObject.GetComponent<PlayerAtk>().enabled = false;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                UIManager.Instance.anvil.SetActive(true);
-            }
-            if (isAnvilOpen == false)
-            {
-                gameObject.GetComponent<PlayerAtk>().enabled = true;
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                UIManager.Instance.anvil.SetActive(false);
-            }
-        }
-    }
-
-    // { Player Interaction 
-    #region Interact
-    public void Interaction()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-
-        }
-        RootItem();
-    }
-    #endregion
-    // } Player Interaction
-
     // { Player Map
     #region Map
     public void MapOpen()
     {
-        if (Input.GetKeyDown(KeyCode.M) && isInvenOpen == false)
+        if (Input.GetKeyDown(KeyCode.M) && isInvenOpen == false && isMenuOpen == false && PlayerMove.isDead == false
+            && PlayerOther.isStoveOpen == false)
         {
             isMapOpen = !isMapOpen;
             if (isMapOpen == true)
@@ -203,12 +128,13 @@ public class PlayerOther : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) || UIManager.Instance.isResumeOn == true)
         {
-            if (UIManager.Instance.isSetMenuOpen == false)
+            if (UIManager.Instance.isSetMenuOpen == false && PlayerMove.isDead == false)
             {
                 isMenuOpen = !isMenuOpen;
                 if (isMenuOpen == true)
                 {
                     gameObject.GetComponent<PlayerAtk>().enabled = false;
+                    Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                     menu.SetActive(true);
                     Time.timeScale = 0;
@@ -216,6 +142,7 @@ public class PlayerOther : MonoBehaviour
                 if (isMenuOpen == false)
                 {
                     gameObject.GetComponent<PlayerAtk>().enabled = true;
+                    Cursor.visible = false;
                     Cursor.lockState = CursorLockMode.Locked;
                     UIManager.Instance.isResumeOn = false;
                     menu.SetActive(false);

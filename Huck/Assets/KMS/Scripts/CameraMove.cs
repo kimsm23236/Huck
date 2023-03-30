@@ -15,7 +15,7 @@ public class CameraMove : MonoBehaviour
     {
         GameObject player_ = GameObject.Find("Player");
         player = player_.transform;
-        head = GFunc.FindChildObj(player_,"Head_M");
+        head = GFunc.FindChildObj(player_, "Head_M");
     }
 
     private void LateUpdate()
@@ -26,7 +26,7 @@ public class CameraMove : MonoBehaviour
     private void CameraMoving()
     {
         // if Player Alive
-        if (PlayerMove.isDead == false)
+        if (PlayerMove.isDead == false && PlayerOther.isStoveOpen == false)
         {
             CameraPos();
             CameraRotate();
@@ -36,7 +36,7 @@ public class CameraMove : MonoBehaviour
         if (PlayerStat.curHp == 0)
         {
             this.transform.position =
-                transform.position + new Vector3(0, 2, -2);
+                transform.position + new Vector3(0, 2, -2) * Time.deltaTime;
 
             this.transform.LookAt(player);
         }

@@ -13,7 +13,7 @@ public class PlayerAtk : MonoBehaviour
     private void Start()
     {
         atkAnim = GetComponent<Animator>();
-        attackRange = GFunc.FindChildObj(gameObject, "AttackRange");
+        attackRange = gameObject.transform.GetChild(0).gameObject;
     }
 
     private void Update()
@@ -38,34 +38,22 @@ public class PlayerAtk : MonoBehaviour
     private void Attack()
     {
         if (isAttack == true && PlayerOther.isInvenOpen == false
-            && PlayerOther.isMapOpen == false)
+            && PlayerOther.isMapOpen == false && PlayerMove.isDead == false
+                && PlayerOther.isStoveOpen == false)
         {
             if (isAttacking == false)
             {
                 atkAnim.SetTrigger("Attack");
                 isAttacking = true;
-                //StartCoroutine(AtkDelay());
             }
         }
     }
 
-    // private IEnumerator AtkDelay()
-    // {
-    //     yield return new WaitForSeconds(0.4f);
-    //     attackRange.SetActive(true);
-    //     yield return new WaitForSeconds(0.1f);
-    //     attackRange.SetActive(false);
-    //     yield return new WaitForSeconds(0.5f);
-    //     atkAnim.SetTrigger("AtkCancel");
-    //     isAttacking = false;
-    //     isAttack = false;
-    // }
-
-    private void TestAtk()
+    private void AttakCol_T()
     {
         attackRange.SetActive(true);
     }
-    private void TestEndAtk()
+    private void AttackCol_F()
     {
         attackRange.SetActive(false);
         atkAnim.SetTrigger("AtkCancel");

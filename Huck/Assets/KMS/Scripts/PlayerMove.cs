@@ -7,11 +7,11 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody playerRigid = default;
     private Animator playerAnim = default;
     private InHand playerInHand = default;
+    private PlayerStat playerStat = default;
 
     public static bool isGrounded = default;
     public static bool isRunning = default;
     public static bool isDead = false;
-    public static bool isHit = false;
     public static bool isJump = false;
 
     private float jumpForce = 150;
@@ -21,9 +21,15 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
+        isDead = false;
         playerRigid = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerInHand = GetComponent<InHand>();
+        playerStat = GetComponent<PlayerStat>();
+
+        playerStat.onPlayerDead += playerDie;
+
+
     }
 
     private void Update()
@@ -40,7 +46,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Input_()
     {
-        if (PlayerOther.isMenuOpen == false)
+        if (PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
         {
             MoveInput();
             JumpInput();
@@ -54,7 +60,6 @@ public class PlayerMove : MonoBehaviour
             Move();
             Jump();
         }
-        Die();
     }
 
     // { Player Move
@@ -135,7 +140,7 @@ public class PlayerMove : MonoBehaviour
     #region Rotate        
     private void PlayerRotate()
     {
-        if (isDead == false)
+        if (isDead == false && PlayerOther.isStoveOpen == false)
         {
             float c_RotateY = Input.GetAxisRaw("Mouse X")
                 * Time.deltaTime * CameraMove.sensitivity;
@@ -183,20 +188,11 @@ public class PlayerMove : MonoBehaviour
     #endregion
     // } Player Jump
 
-    // { Player Die
-    #region Die
-    private void Die()
+    void playerDie()
     {
-        if (PlayerStat.curHp == 0)
-        {
-            isDead = true;
-            playerAnim.SetTrigger("Dead");
-            PlayerStat.curHp = -1;
-            gameObject.GetComponent<CapsuleCollider>().enabled = false;
-        }
+        isDead = true;
+        playerAnim.SetTrigger("Dead");
     }
-    #endregion
-    // { Player Die
 
     // { Player Eat
     #region Eat
@@ -204,14 +200,25 @@ public class PlayerMove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData != null)
         {
-            playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemUseDel(playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot]);
-            Debug.Log("먹음");
+            if (PlayerOther.isInvenOpen == false && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false)
+            {
+                playerAnim.SetTrigger("Eat");
+            }
+        }
+        if (PlayerAtk.isAttacking == true || PlayerOther.isInvenOpen == true ||
+            PlayerOther.isMapOpen == true || PlayerOther.isMenuOpen == true)
+        {
+            playerAnim.SetTrigger("EatCancel");
         }
     }
-
-    private void EatInput()
+    private void EatFood()
     {
-
+        playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemUseDel(playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot]);
+        Debug.Log("먹음");
+    }
+    private void EatFin()
+    {
+        playerAnim.SetTrigger("EatCancel");
     }
     #endregion
     // } Player Eat

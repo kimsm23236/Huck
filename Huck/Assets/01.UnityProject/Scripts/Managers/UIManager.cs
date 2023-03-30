@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    [Header("ë“œë˜ê·¸ì•¤ ë“œë¡­ X")]
+    [Header("µå·¡±×¾Ø µå·Ó X")]
     public GameObject inventory = default;
     public GameObject settingMenu = default;
     public GameObject clo_CheckBox = default;
@@ -12,16 +13,30 @@ public class UIManager : Singleton<UIManager>
     public GameObject workBench = default;
     public GameObject stove = default;
     public GameObject anvil = default;
-    [Header("ë“œë˜ê·¸ì•¤ ë“œë¡­ O")]
+
+    // [KMS] Dead UI
+    public GameObject Dead = default;
+    public Image dead_1 = default;
+    public Text dead_2 = default;
+    public Image dead_3 = default;
+    public Text dead_4 = default;
+    // [KMS] Dead UI
+
+    [Header("µå·¡±×¾Ø µå·Ó O")]
     public GameObject UiObjs = default;
     public GameObject Sen_goldot = default;
     public GameObject sunFind = default;
     public GameObject moonFind = default;
     public GameObject cloud = default;
-    [Header("ë‹¤ë¥¸ ê³³ì—ì„œ ì“¸ Bool ë³€ìˆ˜")]
+    [Header("´Ù¸¥ °÷¿¡¼­ ¾µ Bool º¯¼ö")]
     public bool isResumeOn = false;
     public bool isSetMenuOpen = false;
 
+
+    private GameObject dead1 = default;
+    private GameObject dead2 = default;
+    private GameObject dead3 = default;
+    private GameObject dead4 = default;
 
     private RectTransform goldotPos = default;
     private bool is_C_CheckBox = true;
@@ -31,9 +46,22 @@ public class UIManager : Singleton<UIManager>
 
     private void Start()
     {
+        // [KMS] Dead UI
+        Dead = UiObjs.transform.GetChild(3).gameObject;
+        dead1 = Dead.transform.GetChild(0).gameObject;
+        dead2 = Dead.transform.GetChild(1).gameObject;
+        dead3 = Dead.transform.GetChild(2).gameObject;
+        dead4 = Dead.transform.GetChild(3).gameObject;
+
+        dead_1 = dead1.GetComponent<Image>();
+        dead_2 = dead2.GetComponent<Text>();
+        dead_3 = dead3.GetComponent<Image>();
+        dead_4 = dead4.GetComponent<Text>();
+        // [KMS] Dead UI
+
         settingMenu = UiObjs.transform.GetChild(1).GetChild(5).gameObject;
-        clo_CheckBox = settingMenu.transform.GetChild(5).gameObject;
-        sha_CheckBox = settingMenu.transform.GetChild(6).gameObject;
+        clo_CheckBox = settingMenu.transform.GetChild(5).GetChild(0).GetChild(0).gameObject;
+        sha_CheckBox = settingMenu.transform.GetChild(6).GetChild(0).GetChild(0).gameObject;
         goldotPos = Sen_goldot.GetComponent<RectTransform>();
 
         theSun = sunFind.GetComponent<Light>();
@@ -70,6 +98,12 @@ public class UIManager : Singleton<UIManager>
     {
         settingMenu.SetActive(false);
         isSetMenuOpen = false;
+    }
+
+    public void GoToTitle()
+    {
+        Debug.Log("GoToTitleClick");
+        GFunc.LoadScene(GData.SCENENAME_TITLE);
     }
 
     public void OnSensitivity50()

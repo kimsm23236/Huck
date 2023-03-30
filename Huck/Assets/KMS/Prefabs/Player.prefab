@@ -1324,7 +1324,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handTrans: {fileID: 5215066782662483296}
-  inventory: {fileID: 0}
   inventorySlotItem:
   - {fileID: 0}
   - {fileID: 0}

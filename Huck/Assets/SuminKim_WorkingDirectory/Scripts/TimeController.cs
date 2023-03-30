@@ -9,7 +9,10 @@ public class TimeController : MonoBehaviour
     [SerializeField]
     private float timeMultiplier;
     [SerializeField]
-    private float startHour;
+    [Range(0, 23)]
+    private int iStartHour;
+
+    private float fStartHour;
     [SerializeField]
     private TMP_Text timeText;
     
@@ -40,26 +43,46 @@ public class TimeController : MonoBehaviour
 
     private Material skybox;
 
-    private bool isPlayingTransition = false;
+    //  private bool isPlayingTransition = false;
 
 
     private DateTime currentTime;
     private TimeSpan sunriseTime;
     private TimeSpan sunsetTime;
 
+    private bool isNowDayTime;
+    private bool isNowNight;
+
+    public delegate void EventHandler();
+    public EventHandler onStartDaytime;
+    public EventHandler onStartNight;
+
     // Start is called before the first frame update
     void Start()
     {
-        currentTime = DateTime.Now.Date + TimeSpan.FromHours(startHour);
+        onStartDaytime = new EventHandler(() => Debug.Log("낮 진입"));
+        onStartNight = new EventHandler(() => Debug.Log("밤 진입"));
+        //onStartDaytime += () => Debug.Log("낮 진입");
+        //onStartNight += () => Debug.Log("밤 진입");
+
+        fStartHour = Mathf.Round(iStartHour);
+        currentTime = DateTime.Now.Date + TimeSpan.FromHours(fStartHour);
 
         sunriseTime = TimeSpan.FromHours(sunriseHour);
         sunsetTime = TimeSpan.FromHours(sunsetHour);
 
         skybox = RenderSettings.skybox;
-        if(currentTime.Hour < sunsetHour)
-            skybox.SetFloat("_Blend", 0f);
+        if (currentTime.Hour >= sunriseHour && currentTime.Hour < sunsetHour)
+        {
+            // skybox.SetFloat("_Blend", 0f);
+            isNowDayTime = true;
+        }
         else
-            skybox.SetFloat("_Blend", 1f);
+        {
+            // skybox.SetFloat("_Blend", 1f);
+            isNowDayTime = false; 
+        }
+        isNowNight = !isNowDayTime;
 
     }
 
@@ -79,6 +102,41 @@ public class TimeController : MonoBehaviour
         if(timeText != null)
         {
             timeText.text = currentTime.ToString("HH:mm");
+        }
+        EnterDaytimeCheck(currentTime.Hour);
+        EnterNightCheck(currentTime.Hour);
+    }
+
+    private void EnterDaytimeCheck(int curHour)
+    {
+        // 낮이면 종료
+        if (isNowDayTime)
+            return;
+
+        // 현재 시간이 일출 시간이 되었을 때 실행
+        if (curHour >= sunriseHour && curHour < sunsetHour)
+        {
+            // 낮 시간 진입 프로세스 실행
+            onStartDaytime();
+
+            isNowDayTime = true;
+            isNowNight = false;
+        }  
+    }
+    private void EnterNightCheck(int curHour)
+    {
+        // 밤이면 종료
+        if (isNowNight)
+            return;
+
+        // 현재 시간이 일몰 시간이 되었을 때 실행
+        if (curHour >= sunsetHour)
+        {
+            // 밤 시간 진입 프로세스 실행
+            onStartNight();
+
+            isNowDayTime = false;
+            isNowNight = true;
         }
     }
 
@@ -134,6 +192,7 @@ public class TimeController : MonoBehaviour
         return diffTime;
     }
 
+    /*
     void TransitionCheck()
     {
         if (isPlayingTransition)
@@ -180,4 +239,5 @@ public class TimeController : MonoBehaviour
             }
         }
     }
+    */
 }
