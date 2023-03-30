@@ -27,13 +27,14 @@ public class RangeMove : MonoBehaviour, IDamageable
     private void OnTriggerEnter(Collider other)
     {
 
-        if (other.tag == "Enemy")
+        if (other.tag == GData.ENEMY_MASK)
         {
             ItemData item_ = playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData;
-            DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage + item_.ItemDamage);
+   
+            DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage);
             other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
         }
-        else if (other.tag == "Gather")
+        if (other.tag == GData.GATHER_MASK)
         {
             BRO = other.GetComponent<BaseResourceObject>().ResourceConfig;
             ItemData item_ = playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData;
@@ -92,15 +93,6 @@ public class RangeMove : MonoBehaviour, IDamageable
                         other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
                     }
                 }
-            }
-        }
-        else
-        {
-            DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage * 0);
-            IDamageable iDamage = other.gameObject.GetComponent<IDamageable>();
-            if(iDamage != null)
-            {
-                iDamage.TakeDamage(dm);
             }
         }
     }

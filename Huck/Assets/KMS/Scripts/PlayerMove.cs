@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody playerRigid = default;
     private Animator playerAnim = default;
     private InHand playerInHand = default;
+    private PlayerStat playerStat = default;
 
     public static bool isGrounded = default;
     public static bool isRunning = default;
@@ -24,6 +25,11 @@ public class PlayerMove : MonoBehaviour
         playerRigid = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerInHand = GetComponent<InHand>();
+        playerStat = GetComponent<PlayerStat>();
+
+        playerStat.onPlayerDead += playerDie;
+
+
     }
 
     private void Update()
@@ -40,7 +46,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Input_()
     {
-        if (PlayerOther.isMenuOpen == false)
+        if (PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
         {
             MoveInput();
             JumpInput();
@@ -54,7 +60,6 @@ public class PlayerMove : MonoBehaviour
             Move();
             Jump();
         }
-        Die();
     }
 
     // { Player Move
@@ -135,7 +140,7 @@ public class PlayerMove : MonoBehaviour
     #region Rotate        
     private void PlayerRotate()
     {
-        if (isDead == false)
+        if (isDead == false && PlayerOther.isStoveOpen == false)
         {
             float c_RotateY = Input.GetAxisRaw("Mouse X")
                 * Time.deltaTime * CameraMove.sensitivity;
@@ -183,22 +188,11 @@ public class PlayerMove : MonoBehaviour
     #endregion
     // } Player Jump
 
-    // { Player Die
-    #region Die
-    private void Die()
+    void playerDie()
     {
-        if (PlayerStat.curHp == 0)
-        {
-            isDead = true;
-            playerAnim.SetTrigger("Dead");
-            PlayerStat.curHp = -1;
-            UIManager.Instance.Dead.SetActive(true);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
+        isDead = true;
+        playerAnim.SetTrigger("Dead");
     }
-    #endregion
-    // { Player Die
 
     // { Player Eat
     #region Eat
@@ -239,11 +233,6 @@ public class PlayerMove : MonoBehaviour
             isJump = false;
             curJumpCnt = 0;
             playerAnim.SetBool("isGround", true);
-        }
-
-        if (other.gameObject.tag == "Enemy")
-        {
-            PlayerStat.curHp = 0;
         }
     }
 

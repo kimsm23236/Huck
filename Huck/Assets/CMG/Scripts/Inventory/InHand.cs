@@ -14,7 +14,7 @@ public class InHand : MonoBehaviour
     private ItemData inHandItem = default;
 
     private PlayerStat playerStat = default;
-    private BuildSystem buildSystem = default;
+    public BuildSystem buildSystem = default;
     public int selectedQuitSlot = 0;
     public StoveItem stoveItem = default;
     // Start is called before the first frame update
@@ -26,7 +26,6 @@ public class InHand : MonoBehaviour
         {
             inventorySlotItem[i] = inventory.GetComponent<InventoryArray>().itemSlots[24 + i].GetComponent<ItemSlot>();
         }
-        buildSystem = GFunc.GetRootObj("BuildSystem").GetComponent<BuildSystem>();
     }
 
     // Update is called once per frame

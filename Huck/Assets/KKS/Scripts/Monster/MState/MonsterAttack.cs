@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class MonsterAttack : IMonsterState
@@ -12,17 +13,17 @@ public class MonsterAttack : IMonsterState
         Debug.Log($"공격상태 시작 : {mController.monster.monsterName}");
 
         mController.monster.Attack();
-    }
+    } // StateEnter
     public void StateFixedUpdate()
     {
         /*Do Nothing*/
-    }
+    } // StateFixedUpdate
     public void StateUpdate()
     {
         /*Do Nothing*/
-    }
+    } // StateUpdate
     public void StateExit()
     {
-        /*Do Nothing*/
-    }
-}
+        mController.monster.ExitAttack();
+    } // StateExit
+} // MonsterAttack

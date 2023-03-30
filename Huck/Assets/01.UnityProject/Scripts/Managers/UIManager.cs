@@ -102,7 +102,8 @@ public class UIManager : Singleton<UIManager>
 
     public void GoToTitle()
     {
-        GFunc.LoadScene("TitleSample");
+        Debug.Log("GoToTitleClick");
+        GFunc.LoadScene(GData.SCENENAME_TITLE);
     }
 
     public void OnSensitivity50()

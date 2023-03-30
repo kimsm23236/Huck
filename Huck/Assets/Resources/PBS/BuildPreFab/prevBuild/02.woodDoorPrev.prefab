@@ -28,37 +28,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5121880876995760965}
+  - {fileID: 9023000944610458389}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &8088271446226642762
+--- !u!1001 &5337856334365839130
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 8088271446739430183}
     m_Modifications:
-    - target: {fileID: 52285829312181559, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 52285829312181559, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 52285829312181559, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3620621178384253460, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3975486065916310543, guid: 54dfb6361a01eb64faefb69af5a734f1,
         type: 3}
       propertyPath: m_RootOrder
@@ -114,61 +94,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4134833744951669860, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4186342678372792682, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4975750166631313500, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5412049156018983038, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5560150818082171380, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5711714149547267508, guid: 54dfb6361a01eb64faefb69af5a734f1,
         type: 3}
       propertyPath: m_Name
       value: woodDoorPrev
       objectReference: {fileID: 0}
-    - target: {fileID: 5711714149547267508, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6429714438247824846, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258227961253663913, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8648221535623608120, guid: 54dfb6361a01eb64faefb69af5a734f1,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54dfb6361a01eb64faefb69af5a734f1, type: 3}
---- !u!4 &5121880876995760965 stripped
+--- !u!4 &9023000944610458389 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3975486065916310543, guid: 54dfb6361a01eb64faefb69af5a734f1,
     type: 3}
-  m_PrefabInstance: {fileID: 8088271446226642762}
+  m_PrefabInstance: {fileID: 5337856334365839130}
   m_PrefabAsset: {fileID: 0}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BuildObjDir : MonoBehaviour
 {
-    private buildType PrevType = buildType.none;
+    private buildType PrevType = buildType.None;
 
     private float[] Size = new float[3];
     private Vector3[] dotPoint = new Vector3[5];
@@ -40,36 +40,36 @@ public class BuildObjDir : MonoBehaviour
         Size[2] = sizeZ;
     }
 
-    //Á¤»ç°¢Çü »çÀÌÁî ÁÖ±â
+    //ï¿½ï¿½ï¿½ç°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
     private void SizeToType()
     {
         switch (PrevType)
         {
-            case buildType.none:
+            case buildType.None:
                 SetSize(MAX_SIZE, MAX_SIZE, MAX_SIZE);
                 break;
-            case buildType.wall:
+            case buildType.Wall:
                 SetSize(2.5f, 2.5f, 0.1f);
                 break;
-            case buildType.cut:
+            case buildType.Cut:
                 SetSize(1f, 1f, 1f);
                 break;
-            case buildType.door:
+            case buildType.Door:
                 SetSize(2.5f, 2.5f, 0.1f);
                 break;
-            case buildType.windowswall:
+            case buildType.Windowswall:
                 SetSize(2.5f, 2.5f, 0.1f);
                 break;
-            case buildType.stairs:
+            case buildType.Stairs:
                 SetSize(2.5f, 2.5f, 2.5f);
                 break;
-            case buildType.beam:
+            case buildType.Beam:
                 SetSize(0.3f, 2.5f, 0.3f);
                 break;
-            case buildType.floor:
+            case buildType.Floor:
                 SetSize(2.5f, 2.5f, 0.1f);
                 break;
-            case buildType.roof:
+            case buildType.Roof:
                 SetSize(1f, 1f, 1f);
                 break;
         }
@@ -77,15 +77,15 @@ public class BuildObjDir : MonoBehaviour
 
     private void setPoint()
     {
-        dotPoint[0] = new Vector3(middlePos.x, middlePos.y, middlePos.z); //Áß°£
+        dotPoint[0] = new Vector3(middlePos.x, middlePos.y, middlePos.z); //ï¿½ß°ï¿½
         dotPoint[1] = new Vector3(middlePos.x - Size[0] / 2 + BorderSize,
-            middlePos.y + Size[1] / 2 - BorderSize, middlePos.z); //ÁÂÃø»ó´Ü
+            middlePos.y + Size[1] / 2 - BorderSize, middlePos.z); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         dotPoint[2] = new Vector3(middlePos.x + Size[0] / 2 - BorderSize,
-            middlePos.y + Size[1] / 2 - BorderSize, middlePos.z); //¿ìÃø»ó´Ü
+            middlePos.y + Size[1] / 2 - BorderSize, middlePos.z); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         dotPoint[3] = new Vector3(middlePos.x - Size[0] / 2 + BorderSize,
-            middlePos.y - Size[1] / 2 + BorderSize, middlePos.z); //ÁÂÃøÇÏ´Ü
+            middlePos.y - Size[1] / 2 + BorderSize, middlePos.z); //ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½
         dotPoint[4] = new Vector3(middlePos.x + Size[0] / 2 - BorderSize,
-            middlePos.y - Size[1] / 2 + BorderSize, middlePos.z); //¿ìÃøÇÏ´Ü
+            middlePos.y - Size[1] / 2 + BorderSize, middlePos.z); //ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½
     }
 
     private bool IsOnSlope(Vector3 Pos)

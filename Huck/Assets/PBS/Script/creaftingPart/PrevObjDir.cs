@@ -5,7 +5,7 @@ using UnityEngine;
 public class PrevObjDir : MonoBehaviour
 {
     public buildDirType PrevDir = buildDirType.None;
-    private buildType PrevType = buildType.none;
+    private buildType PrevType = buildType.None;
 
     //size info
     /**
@@ -20,10 +20,10 @@ public class PrevObjDir : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
-    public void SetType(buildType set,Vector3 mid)
+    public void SetType(buildType set, Vector3 mid)
     {
         PrevType = set;
         middlePos = mid;
@@ -36,37 +36,37 @@ public class PrevObjDir : MonoBehaviour
         Size[1] = sizeY;
         Size[2] = sizeZ;
     }
-    
-    //Á¤»ç°¢Çü »çÀÌÁî ÁÖ±â
+
+    //ï¿½ï¿½ï¿½ç°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
     private void SizeToType()
     {
         switch (PrevType)
         {
-            case buildType.none:
+            case buildType.None:
                 SetSize(MAX_SIZE, MAX_SIZE, MAX_SIZE);
                 break;
-            case buildType.wall:
+            case buildType.Wall:
                 SetSize(2.5f, 2.5f, 0.1f);
                 break;
-            case buildType.cut:
+            case buildType.Cut:
                 SetSize(1f, 1f, 1f);
                 break;
-            case buildType.door:
+            case buildType.Door:
                 SetSize(2.5f, 2.5f, 0.1f);
                 break;
-            case buildType.windowswall:
+            case buildType.Windowswall:
                 SetSize(2.5f, 2.5f, 0.1f);
                 break;
-            case buildType.stairs:
+            case buildType.Stairs:
                 SetSize(2.5f, 2.5f, 2.5f);
                 break;
-            case buildType.beam:
+            case buildType.Beam:
                 SetSize(0.3f, 2.5f, 0.3f);
                 break;
-            case buildType.floor:
+            case buildType.Floor:
                 SetSize(2.5f, 2.5f, 0.1f);
                 break;
-            case buildType.roof:
+            case buildType.Roof:
                 SetSize(1f, 1f, 1f);
                 break;
         }
@@ -122,7 +122,7 @@ public class PrevObjDir : MonoBehaviour
                 numberY = 0;
             }
 
-            //Á¶°Ç È®ÀÎ
+            //ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             //LeftUp
             if (numberX == 1 && numberY == 1)
             {
@@ -175,7 +175,7 @@ public class PrevObjDir : MonoBehaviour
 
 public enum buildDirType
 {
-    None = -1,LeftUp_P,UpBorder,RightUp_P,
-    LeftBorder,RightBorder,
-    LeftDown_P,DownBorder,RightDown_P
+    None = -1, LeftUp_P, UpBorder, RightUp_P,
+    LeftBorder, RightBorder,
+    LeftDown_P, DownBorder, RightDown_P
 }

@@ -45,10 +45,10 @@ public class ItemRange : MonoBehaviour
     // { Found Item & Get Item
     void ItemGet()
     {
+        RaycastHit hitinfo = default;
+
         ItemFound.SetActive(false);
         res_UI.SetActive(false);
-
-        RaycastHit hitinfo = default;
 
         if (Physics.Raycast(transform.position,
         transform.TransformDirection(Vector3.forward),
@@ -75,6 +75,31 @@ public class ItemRange : MonoBehaviour
                 panel_T.text = $"{resName}";
                 interect_T.text = $"{resName}";
                 res_Hp.fillAmount = ((float)resObjCurrentHP / (float)resObjMaxHp);
+            }
+
+            if (hitinfo.transform.name == "10.Stove(Clone)" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
+                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isWorkbenchOpen == false)
+            {
+                res_UI.SetActive(true);
+                panel_T.text = "Stove";
+                interect_T.text = "Stove";
+                ItemFound.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    PlayerOther.isStoveOpen = !PlayerOther.isStoveOpen;
+                    if (PlayerOther.isStoveOpen == true)
+                    {
+                        UIManager.Instance.stove.SetActive(true);
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                    }
+                    else
+                    {
+                        UIManager.Instance.stove.SetActive(false);
+                        Cursor.visible = false;
+                        Cursor.lockState = CursorLockMode.Locked;
+                    }
+                }
             }
         }
     }

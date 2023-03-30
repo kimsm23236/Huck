@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager>
     //! { [�豤��] �÷��̾� ������Ʈ ���۽� ĳ��
     private void Awake()
     {
-        playerObj = GFunc.GetRootObj(GData.PLAYER_MASK);
+        //playerObj = GFunc.GetRootObj(GData.PLAYER_MASK);
         procGenManager = GFunc.GetRootObj("ProcGenManager");
     }
     // } [�豤��] �÷��̾� ������Ʈ ���۽� ĳ��

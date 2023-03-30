@@ -52,7 +52,7 @@ public class PlayerOther : MonoBehaviour
         InvenOpen();
         MapOpen();
         MenuOpen();
-        Interaction();
+        RootItem();
     }
 
     // { Player Inventory
@@ -60,7 +60,8 @@ public class PlayerOther : MonoBehaviour
     public void InvenOpen()
     {
 
-        if (Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false && isMenuOpen == false && PlayerMove.isDead == false)
+        if (Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false && isMenuOpen == false && PlayerMove.isDead == false
+            && PlayerOther.isStoveOpen == false)
         {
             isInvenOpen = !isInvenOpen;
             if (isInvenOpen == true)
@@ -86,24 +87,12 @@ public class PlayerOther : MonoBehaviour
     #endregion
     // } Player Inventory 
 
-    // { Player Interaction 
-    #region Interact
-    public void Interaction()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-
-        }
-        RootItem();
-    }
-    #endregion
-    // } Player Interaction
-
     // { Player Map
     #region Map
     public void MapOpen()
     {
-        if (Input.GetKeyDown(KeyCode.M) && isInvenOpen == false && isMenuOpen == false && PlayerMove.isDead == false)
+        if (Input.GetKeyDown(KeyCode.M) && isInvenOpen == false && isMenuOpen == false && PlayerMove.isDead == false
+            && PlayerOther.isStoveOpen == false)
         {
             isMapOpen = !isMapOpen;
             if (isMapOpen == true)

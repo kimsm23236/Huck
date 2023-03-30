@@ -38,7 +38,8 @@ public class PlayerAtk : MonoBehaviour
     private void Attack()
     {
         if (isAttack == true && PlayerOther.isInvenOpen == false
-            && PlayerOther.isMapOpen == false && PlayerMove.isDead == false)
+            && PlayerOther.isMapOpen == false && PlayerMove.isDead == false
+                && PlayerOther.isStoveOpen == false)
         {
             if (isAttacking == false)
             {

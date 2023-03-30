@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+// using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public enum EGenerationStage
 {
@@ -43,6 +44,7 @@ public class LoadingManager : Singleton<LoadingManager>
     }
     void Start()
     {
+        SceneManager.UnloadSceneAsync(GData.SCENENAME_TITLE);
         nextScene = GData.SCENENAME_PLAY;
         loadingScreenAnim = loadingScreen.GetComponent<Animator>();
         // ���� ���� �񵿱������� �ε�
@@ -56,6 +58,7 @@ public class LoadingManager : Singleton<LoadingManager>
 
         // ���� �� �񵿱������� �ε�
         AsyncOperation operation = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
+
         operation.allowSceneActivation = false;
         OnStatusReported(EGenerationStage.EnterPlayScene, "Load PlayScene");
         // �ε� ���� ��Ȳ ����
@@ -64,10 +67,11 @@ public class LoadingManager : Singleton<LoadingManager>
             OnStatusReported(EGenerationStage.EnterPlayScene, "Load PlayScene");
             if (operation.progress >= 0.9f)
             {
+                Debug.Log("Loading PlayScene");
                 operation.allowSceneActivation = true;
             }
 
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return null;
         }
     }
 
@@ -81,7 +85,12 @@ public class LoadingManager : Singleton<LoadingManager>
         {
             loadingScreenAnim.SetBool("isFadeOut", true);
             SceneManager.UnloadSceneAsync(GData.SCENENAME_LOADING);
-            Debug.Log($"after Play animation");
+            StartCoroutine(SetActiveFalse5Sec());
         }
+    }
+    IEnumerator SetActiveFalse5Sec()
+    {
+        yield return new WaitForSeconds(5f);
+        loadingCanvas.SetActive(false);
     }
 }

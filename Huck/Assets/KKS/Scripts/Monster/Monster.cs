@@ -7,8 +7,9 @@ public class Monster : MonoBehaviour
     //! 몬스터 타입
     public enum MonsterType
     {
-        MELEE = 0,
-        RANGE
+        NOMAL = 0,
+        NAMEED,
+        BOSS
     } // MonsterType
 
     [HideInInspector] public MonsterType monsterType;
@@ -53,5 +54,15 @@ public class Monster : MonoBehaviour
         /* Do Nothing */
     } // Skill
 
-    
+    //! 공격종료 함수
+    public virtual void ExitAttack()
+    {
+        /* Do Nothing */
+    } // ExitAttack
+
+    //! 보스몬스터 죽음처리 함수
+    public virtual void BossDead()
+    {
+        /* Do Nothing */
+    } // BossDead
 } // Monster
