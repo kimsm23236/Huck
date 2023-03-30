@@ -22,12 +22,23 @@ public class StoveItem : MonoBehaviour
 
     private void Update()
     {
+        if (prevItemData != originItemData)
+        {
+            prevItemData = originItemData;
+            percentage = 0f;
+            StopCoroutine(DelayStove());
+        }
         DescFuelEnergy();
         UseStove();
         // originItemCount 혹은 fuelItemCount 혹은 resultItemCount가 값이 변할때 체크
         if (isUsing)
         {
-            if (!useCor && originItemCount != 0)
+            if (originItemData == null || originItemData.ResultData == null)
+            {
+                percentage = 0f;
+                StopCoroutine(DelayStove());
+            }
+            else if (!useCor && originItemCount != 0)
             {
                 StartCoroutine(DelayStove());
             }
@@ -38,6 +49,7 @@ public class StoveItem : MonoBehaviour
 
     public void UseStove()
     {
+
         if (originItemData != null && fuelItemData != null)
         {
             if (originItemData.ResultData != null && fuelItemData.IsFuel)
@@ -70,7 +82,6 @@ public class StoveItem : MonoBehaviour
                 }
             }
         }
-
         // if ((originItemData == null || originItemData.ResultData != null) && isUsing)
         // {
         //     percentage = 0f;
@@ -102,13 +113,11 @@ public class StoveItem : MonoBehaviour
             {
                 resultItemData = originItemData.ResultData;
                 resultItemCount++;
-                Debug.Log(resultItemCount);
                 isChange = true;
             }
             else if (resultItemData.ItemName == originItemData.ResultData.ItemName)
             {
                 resultItemCount++;
-                Debug.Log(resultItemCount);
                 isChange = true;
             }
             yield break;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoveUse : MonoBehaviour
 {
@@ -18,12 +19,8 @@ public class StoveUse : MonoBehaviour
     private ItemData fuelItemData = default;
     private ItemData resultItemData = default;
 
-    public float percentage = 0f;
-    public bool isUsing = false;
-    public float fuelEnergy = 0f;
-
-    private bool useCor = false;
-
+    private Image percentImg = default;
+    private Image energyImg = default;
 
     // Start is called before the first frame update
     private void Awake()
@@ -36,6 +33,9 @@ public class StoveUse : MonoBehaviour
 
         resultItem = transform.GetChild(0).GetChild(1).GetChild(2).gameObject;
         resultItemSlot = resultItem.GetComponent<ItemSlot>();
+
+        percentImg = transform.GetChild(0).GetChild(1).GetChild(4).GetComponent<Image>();
+        energyImg = transform.GetChild(0).GetChild(1).GetChild(6).GetComponent<Image>();
     }
 
     private void OnEnable()
@@ -62,6 +62,8 @@ public class StoveUse : MonoBehaviour
             nowStove.isChange = false;
         }
         CopyToStove();
+        percentImg.fillAmount = nowStove.percentage / 100f;
+        energyImg.fillAmount = nowStove.fuelEnergy / 100f;
     }
 
     private void OnDisable()
@@ -71,8 +73,6 @@ public class StoveUse : MonoBehaviour
             // CopyToStove();
             ResetUi();
         }
-
-        // StoveItem에 originItem , fuelItem, resultItem 다시 집어 넣기 => 얼마나 구어졌는지 진행도도 넘겨줘야 함
     }
 
     private void CopyToStove()
@@ -113,10 +113,6 @@ public class StoveUse : MonoBehaviour
         resultItemSlot.itemData = null;
         resultItemSlot.itemAmount = 0;
         resultItemSlot.DisableImg();
-
-        percentage = 0f;
-        isUsing = false;
-        fuelEnergy = 0f;
     }
 
     private void slotCheck()

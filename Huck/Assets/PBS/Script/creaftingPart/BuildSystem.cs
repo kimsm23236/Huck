@@ -76,6 +76,10 @@ public class BuildSystem : MonoBehaviour
         layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER));
         DefaultLayerMask = (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) | 1 << LayerMask.NameToLayer("Default"));
     }
+    private void Start()
+    {
+        GameManager.Instance.playerObj.GetComponent<InHand>().buildSystem = this;
+    }
 
     void Update()
     {
@@ -236,10 +240,10 @@ public class BuildSystem : MonoBehaviour
                 {
                     if (prevType == buildType.Foundation && hit.transform.gameObject.layer != LayerMask.NameToLayer("Terrain"))
                     {
-                            IsBuildAct = false;
-                            prevMat = buildTypeMat.Red;
-                            SetPrevMat(prevType, prevMat);
-                            prevObj.transform.position = hit.point;
+                        IsBuildAct = false;
+                        prevMat = buildTypeMat.Red;
+                        SetPrevMat(prevType, prevMat);
+                        prevObj.transform.position = hit.point;
                     }
                     else
                     {
@@ -274,20 +278,20 @@ public class BuildSystem : MonoBehaviour
                     //}
                     //else
                     //{
-                        if (prevInfo != null || prevInfo != default)
+                    if (prevInfo != null || prevInfo != default)
+                    {
+                        if (prevInfo.isBuildAble == false)
                         {
-                            if (prevInfo.isBuildAble == false)
-                            {
-                                prevMat = buildTypeMat.Red;
-                                IsBuildAct = false;
-                            }
-                            else
-                            {
-                                prevMat = buildTypeMat.Green;
-                                IsBuildAct = true;
-                            }
-                            SetPrevMat(prevType, prevMat);
+                            prevMat = buildTypeMat.Red;
+                            IsBuildAct = false;
                         }
+                        else
+                        {
+                            prevMat = buildTypeMat.Green;
+                            IsBuildAct = true;
+                        }
+                        SetPrevMat(prevType, prevMat);
+                    }
                     //}
                 }
             }
@@ -304,17 +308,17 @@ public class BuildSystem : MonoBehaviour
         }
     }
 
-    private bool FindRootParentName(RaycastHit hit2,string name)
+    private bool FindRootParentName(RaycastHit hit2, string name)
     {
         GameObject temp = hit2.transform.gameObject;
 
-        while(true)
+        while (true)
         {
-            if(temp.name.Contains(name))
+            if (temp.name.Contains(name))
             {
                 return true;
             }
-            else if(temp.transform.parent != null)
+            else if (temp.transform.parent != null)
             {
                 temp = temp.transform.parent.gameObject;
             }
@@ -425,7 +429,7 @@ public class BuildSystem : MonoBehaviour
             case buildType.Door:
                 prevObj.transform.GetChild(0).GetComponent<BoxCollider>().isTrigger = true;
                 prevObj.transform.GetChild(0).GetChild(0).GetComponent<MeshCollider>().isTrigger = true;
-            break;
+                break;
             default:
                 prevObj.transform.GetChild(0).GetComponent<MeshCollider>().convex = true;
                 prevObj.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = true;
