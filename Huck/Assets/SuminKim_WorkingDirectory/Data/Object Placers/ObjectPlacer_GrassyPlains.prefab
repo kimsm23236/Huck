@@ -155,7 +155,7 @@ MonoBehaviour:
     prefabs:
     - {fileID: 525703396560854713, guid: 445a20be774b227428d1fe8e851cd3be, type: 3}
   targetDensity: 30
-  maxSpawnCount: 300
+  maxSpawnCount: 500
   maxInvalidLocationSkips: 10
   maxPositionJitter: 0.1
 --- !u!114 &-9140704032504034544

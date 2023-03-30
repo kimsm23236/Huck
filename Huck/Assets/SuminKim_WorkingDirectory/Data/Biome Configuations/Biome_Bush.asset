@@ -21,6 +21,7 @@ MonoBehaviour:
     type: 3}
   TerrainPainter: {fileID: 5882182845285664830, guid: b6f6f0e637eb9bc40b5c48af0d753883,
     type: 3}
-  ObjectPlacer: {fileID: 0}
+  ObjectPlacer: {fileID: 6337709003599619391, guid: 5bbba0a9833057447b5ed24979f2db7f,
+    type: 3}
   DetailPainter: {fileID: 3064925499222612711, guid: 2881b2811dead17408293018a4c18101,
     type: 3}

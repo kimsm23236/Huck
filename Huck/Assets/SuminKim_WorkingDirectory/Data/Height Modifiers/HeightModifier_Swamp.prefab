@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Strength: 1
-  OffsetAmount: 15
+  OffsetAmount: -15
 --- !u!114 &-2160741917897294704
 MonoBehaviour:
   m_ObjectHideFlags: 0
