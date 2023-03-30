@@ -198,11 +198,22 @@ public class PlayerMove : MonoBehaviour
     #region Eat
     private void Eat()
     {
-        if (Input.GetMouseButtonDown(1) && playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData != null)
+        if (Input.GetMouseButtonDown(1) && playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData != null
+            && playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData.ItemUseAble == true)
         {
-            if (PlayerOther.isInvenOpen == false && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false)
+            if (playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData.IsBuild == false)
             {
-                playerAnim.SetTrigger("Eat");
+                if (PlayerOther.isInvenOpen == false && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false)
+                {
+                    playerAnim.SetTrigger("Eat");
+                }
+            }
+            else
+            {
+                if (GameManager.Instance.playerObj.GetComponent<InHand>().buildSystem.IsBuildAct)
+                {
+                    EatFood();
+                }
             }
         }
         if (PlayerAtk.isAttacking == true || PlayerOther.isInvenOpen == true ||
@@ -214,7 +225,6 @@ public class PlayerMove : MonoBehaviour
     private void EatFood()
     {
         playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemUseDel(playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot]);
-        Debug.Log("먹음");
     }
     private void EatFin()
     {

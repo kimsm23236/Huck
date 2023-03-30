@@ -11,6 +11,9 @@ TagManager:
   - AttackRange
   - Item
   - Floor
+  - Stove
+  - Workbench
+  - Anvil
   layers:
   - Default
   - TransparentFX

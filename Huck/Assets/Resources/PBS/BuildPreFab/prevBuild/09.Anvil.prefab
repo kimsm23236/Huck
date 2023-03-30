@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5289160631423477687}
   m_Layer: 0
   m_Name: 09.Anvil
-  m_TagString: Gather
+  m_TagString: Anvil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

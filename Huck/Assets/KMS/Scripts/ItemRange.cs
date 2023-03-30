@@ -77,7 +77,7 @@ public class ItemRange : MonoBehaviour
                 res_Hp.fillAmount = ((float)resObjCurrentHP / (float)resObjMaxHp);
             }
 
-            if (hitinfo.transform.name == "10.Stove(Clone)" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
+            if (hitinfo.transform.tag == "Stove" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
                 && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isWorkbenchOpen == false)
             {
                 res_UI.SetActive(true);
