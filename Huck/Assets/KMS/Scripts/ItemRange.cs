@@ -101,6 +101,56 @@ public class ItemRange : MonoBehaviour
                     }
                 }
             }
+
+            if (hitinfo.transform.tag == "Workbench" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
+                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
+            {
+                res_UI.SetActive(true);
+                panel_T.text = "Workbench";
+                interect_T.text = "Workbench";
+                ItemFound.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    PlayerOther.isWorkbenchOpen = !PlayerOther.isWorkbenchOpen;
+                    if (PlayerOther.isWorkbenchOpen == true)
+                    {
+                        UIManager.Instance.workBench.SetActive(true);
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                    }
+                    else
+                    {
+                        UIManager.Instance.workBench.SetActive(false);
+                        Cursor.visible = false;
+                        Cursor.lockState = CursorLockMode.Locked;
+                    }
+                }
+            }
+
+            if (hitinfo.transform.tag == "Anvil" && PlayerOther.isWorkbenchOpen == false && PlayerOther.isInvenOpen == false
+                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
+            {
+                res_UI.SetActive(true);
+                panel_T.text = "Anvil";
+                interect_T.text = "Anvil";
+                ItemFound.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    PlayerOther.isAnvilOpen = !PlayerOther.isAnvilOpen;
+                    if (PlayerOther.isAnvilOpen == true)
+                    {
+                        UIManager.Instance.anvil.SetActive(true);
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                    }
+                    else
+                    {
+                        UIManager.Instance.anvil.SetActive(false);
+                        Cursor.visible = false;
+                        Cursor.lockState = CursorLockMode.Locked;
+                    }
+                }
+            }
         }
     }
     // } Found Item & Get Item
