@@ -149,6 +149,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: woodWallPrev
       objectReference: {fileID: 0}
+    - target: {fileID: 7201346681825777614, guid: ced08d0c067e87741814c5114e5850a3,
+        type: 3}
+      propertyPath: m_TagString
+      value: Gather
+      objectReference: {fileID: 0}
     - target: {fileID: 9208008336542544535, guid: ced08d0c067e87741814c5114e5850a3,
         type: 3}
       propertyPath: m_Center.z

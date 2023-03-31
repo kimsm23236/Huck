@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3313512}
   - component: {fileID: 2330948}
   - component: {fileID: 64449124292417138}
-  - component: {fileID: 5289160631423477687}
+  - component: {fileID: 7222735365500947375}
   m_Layer: 0
   m_Name: 09.Anvil
   m_TagString: Gather
@@ -101,7 +101,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43082618116334566, guid: eabab24476d92f34284ca5837818fab6, type: 2}
---- !u!114 &5289160631423477687
+--- !u!114 &7222735365500947375
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 187394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10f320f105f4b994faf0f85520d94d37, type: 3}
+  m_Script: {fileID: 11500000, guid: 17a8a2bba75b453458fe656c5565b62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 744465e5f12b5a145a1adebada53e7d5, type: 2}

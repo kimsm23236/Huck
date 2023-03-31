@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33943716304256538}
   - component: {fileID: 23474456079389830}
   - component: {fileID: 64899571845277310}
-  - component: {fileID: 4541976870594589757}
+  - component: {fileID: 6951647989166441155}
   m_Layer: 0
   m_Name: 11.Workbench
   m_TagString: Gather
@@ -101,7 +101,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43352362141619686, guid: 63978be6d1b70f647af2809c8f5d054b, type: 2}
---- !u!114 &4541976870594589757
+--- !u!114 &6951647989166441155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1205035534957558}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10f320f105f4b994faf0f85520d94d37, type: 3}
+  m_Script: {fileID: 11500000, guid: 17a8a2bba75b453458fe656c5565b62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 903f6d54f3b7d2c41b2f6a0dfcfdd97c, type: 2}

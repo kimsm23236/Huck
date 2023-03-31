@@ -358,8 +358,8 @@ GameObject:
   - component: {fileID: 7640330956013551355}
   - component: {fileID: 7650417264017669999}
   - component: {fileID: 7681498159977224249}
-  - component: {fileID: 9027938373143554343}
   - component: {fileID: 5285522612937913365}
+  - component: {fileID: 5679480292589579322}
   m_Layer: 0
   m_Name: woodCutPrev
   m_TagString: Gather
@@ -448,19 +448,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43947658742497174, guid: cbf2a7c8f15546f41bb0e834c7d3e1e8, type: 2}
---- !u!114 &9027938373143554343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7672660555244574093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10f320f105f4b994faf0f85520d94d37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resConfig: {fileID: 11400000, guid: 8b824a2b84652914bb70250171f32d7f, type: 2}
 --- !u!54 &5285522612937913365
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -477,6 +464,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!114 &5679480292589579322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7672660555244574093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a8a2bba75b453458fe656c5565b62c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resConfig: {fileID: 11400000, guid: 8b824a2b84652914bb70250171f32d7f, type: 2}
 --- !u!1 &8352519115674168566
 GameObject:
   m_ObjectHideFlags: 0

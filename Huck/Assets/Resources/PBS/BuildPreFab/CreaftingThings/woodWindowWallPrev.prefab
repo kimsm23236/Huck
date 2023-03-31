@@ -400,8 +400,8 @@ GameObject:
   - component: {fileID: 2455021785391427780}
   - component: {fileID: 2464296178327111078}
   - component: {fileID: 2487628830041463296}
-  - component: {fileID: 1561451586585962113}
   - component: {fileID: 5098535755408968285}
+  - component: {fileID: 5199147886507277154}
   m_Layer: 0
   m_Name: woodWindowWallPrev
   m_TagString: Gather
@@ -491,19 +491,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43794975192121970, guid: 6c141224b741f18459315ddd34633372, type: 2}
---- !u!114 &1561451586585962113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2478096587007638496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10f320f105f4b994faf0f85520d94d37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resConfig: {fileID: 11400000, guid: 1a106b0ef0bcffb4faaa62cd8f29c170, type: 2}
 --- !u!54 &5098535755408968285
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -520,6 +507,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &5199147886507277154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2478096587007638496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a8a2bba75b453458fe656c5565b62c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resConfig: {fileID: 11400000, guid: 1a106b0ef0bcffb4faaa62cd8f29c170, type: 2}
 --- !u!1 &2675665969225517644
 GameObject:
   m_ObjectHideFlags: 0
