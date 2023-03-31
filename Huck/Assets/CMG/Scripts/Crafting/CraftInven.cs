@@ -16,6 +16,7 @@ public class CraftInven : InventoryArray
     private InventoryArray inven = default;
     private List<ItemSlot> nowInventory = new List<ItemSlot>();
     public EInvenKind invenKind = default;
+    private ItemSlot[] upSlots = new ItemSlot[3];
 
     protected override void Awake()
     {
@@ -34,6 +35,14 @@ public class CraftInven : InventoryArray
         {
             nowInventory.Add(transform.GetChild(i).GetComponent<ItemSlot>());
         }
+        if (invenKind == EInvenKind.STOVE)
+        {
+            for (int i = 0; i < upSlots.Length; i++)
+            {
+                upSlots[i] = transform.parent.GetChild(1).GetChild(i).GetComponent<ItemSlot>();
+            }
+        }
+
         for (int i = 0; i < inven.transform.childCount; i++)
         {
             itemSlots.Add(inven.transform.GetChild(i).gameObject);
@@ -67,9 +76,18 @@ public class CraftInven : InventoryArray
                 }
                 break;
             case EInvenKind.STOVE:
+                ControlMouse();
                 if (PlayerOther.isStoveOpen)
                 {
-                    ControlMouse();
+                    if (beginDragSlot == upSlots[0] || beginDragSlot == upSlots[1] || beginDragSlot == upSlots[1])
+                    {
+                        Debug.Log(beginDragSlot);
+                        upSlots[0].transform.parent.SetAsLastSibling();
+                    }
+                    else
+                    {
+                        upSlots[0].transform.parent.SetSiblingIndex(1);
+                    }
                 }
                 break;
             case EInvenKind.ANVIL:

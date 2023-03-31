@@ -55,7 +55,7 @@ public class PlayerMove : MonoBehaviour
 
     private void PlayerAction()
     {
-        if (isDead == false)
+        if (isDead == false && PlayerOther.isStoveOpen == false)
         {
             Move();
             Jump();

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ItemRange : MonoBehaviour
 {
     private GameObject ItemFound = default;
@@ -19,11 +18,20 @@ public class ItemRange : MonoBehaviour
     private Text interect_T = default;
 
     public GameObject getItem = default;
+    public StoveItem stoveItem = default;
+
 
     private float Range = 5;
 
     void Start()
     {
+        UI = UIManager.Instance.UiObjs.transform.GetChild(1).gameObject;
+        res_UI = UI.transform.GetChild(1).gameObject;
+        ItemFound = UI.transform.GetChild(2).gameObject;
+
+        find_T_panel = res_UI.transform.GetChild(0).gameObject;
+        find_R_Hp = res_UI.transform.GetChild(2).gameObject;
+        find_T_interect = res_UI.transform.GetChild(3).gameObject;
         UI = UIManager.Instance.UiObjs.transform.GetChild(1).gameObject;
         res_UI = UI.transform.GetChild(1).gameObject;
         ItemFound = UI.transform.GetChild(2).gameObject;
@@ -46,6 +54,9 @@ public class ItemRange : MonoBehaviour
     void ItemGet()
     {
         RaycastHit hitinfo = default;
+
+        ItemFound.SetActive(false);
+        res_UI.SetActive(false);
 
         ItemFound.SetActive(false);
         res_UI.SetActive(false);
@@ -80,6 +91,7 @@ public class ItemRange : MonoBehaviour
             if (hitinfo.transform.tag == "Stove" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
                 && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isWorkbenchOpen == false)
             {
+                stoveItem = hitinfo.transform.GetComponent<StoveItem>();
                 res_UI.SetActive(true);
                 panel_T.text = "Stove";
                 interect_T.text = "Stove";
@@ -99,6 +111,10 @@ public class ItemRange : MonoBehaviour
                         Cursor.visible = false;
                         Cursor.lockState = CursorLockMode.Locked;
                     }
+                }
+                else
+                {
+                    stoveItem = default;
                 }
             }
 

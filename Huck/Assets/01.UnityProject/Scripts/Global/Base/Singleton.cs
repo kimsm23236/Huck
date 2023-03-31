@@ -39,6 +39,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             // �������������� �ڱ��ڽ��� ������Ŵ
             DontDestroyOnLoad(this.gameObject);
         }
+        Init();
         // �̷��� ����ó���� �ϴ� ������ �ֻ����� Managers���� �������Ʈ�� �����
         // �� �ȿ� Game, Sound, Ui���� Manager�� �־ �����ҷ��� �� ����
         Init();

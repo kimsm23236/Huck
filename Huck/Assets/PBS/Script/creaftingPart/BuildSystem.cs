@@ -76,7 +76,6 @@ public class BuildSystem : MonoBehaviour
         layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER));
         DefaultLayerMask = (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) | 1 << LayerMask.NameToLayer("Default"));
     }
-
     private void Start()
     {
         GameManager.Instance.playerObj.GetComponent<InHand>().buildSystem = this;
@@ -101,7 +100,6 @@ public class BuildSystem : MonoBehaviour
     public void CallingPrev()
     {
         D_prevObj();
-        CollidersOnOff();
     }
 
     public void CallingPrev(string btype)
@@ -149,7 +147,7 @@ public class BuildSystem : MonoBehaviour
         }
 
         D_prevObj();
-        CollidersOnOff();
+        // CollidersOnOff();
     }
 
     private void ControlKey()
@@ -348,6 +346,18 @@ public class BuildSystem : MonoBehaviour
                             prevObj.transform.position = prevPos;
                             prevRot = new Vector3(0, hit2.transform.rotation.eulerAngles.y + prevYAngle, 0);
                             prevObj.transform.rotation = Quaternion.Euler(prevRot);
+                        }
+                        else if (prevType == buildType.Wall || prevType == buildType.Windowswall || prevType == buildType.Door)
+                        {
+                            string temp = hit2.transform.name;
+                            if (temp.Equals("LeftBot") || temp.Equals("LeftTop") || temp.Equals("RightTop") || temp.Equals("RightBot")) { /* Do nothing */ }
+                            else
+                            {
+                                prevPos = hit2.transform.position;
+                                prevObj.transform.position = prevPos;
+                                prevRot = new Vector3(0, hit2.transform.rotation.eulerAngles.y + prevYAngle, 0);
+                                prevObj.transform.rotation = Quaternion.Euler(prevRot);
+                            }
                         }
                         else
                         {

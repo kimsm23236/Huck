@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23685699481411444}
   - component: {fileID: 64880830847778732}
   - component: {fileID: 3611210241725245032}
+  - component: {fileID: 7060930221917617735}
   m_Layer: 0
   m_Name: 10.Stove
   m_TagString: Stove
@@ -114,6 +115,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 5ce4df9072855684ea8e8a72d6183f19, type: 2}
+--- !u!114 &7060930221917617735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802613797325304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8fd96f594f08e744895c07a542cddbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originItemData: {fileID: 0}
+  fuelItemData: {fileID: 0}
+  resultItemData: {fileID: 0}
+  originItemCount: 0
+  fuelItemCount: 0
+  resultItemCount: 0
+  prevItemData: {fileID: 0}
+  percentage: 0
+  isUsing: 0
+  fuelEnergy: 0
+  isChange: 0
 --- !u!1 &2976764417376180024
 GameObject:
   m_ObjectHideFlags: 0
