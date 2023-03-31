@@ -1334,7 +1334,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   inHandItem: {fileID: 0}
+  buildSystem: {fileID: 0}
   selectedQuitSlot: 0
+  stoveItem: {fileID: 0}
 --- !u!54 &825168674315377679
 Rigidbody:
   m_ObjectHideFlags: 0

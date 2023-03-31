@@ -201,7 +201,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2417424703282144767, guid: 7a4758b7a2bcb404082ac323aad68baf,
+          type: 3}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: GoToTitle
         m_Mode: 1
@@ -533,6 +534,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6696055267931720510}
     m_Modifications:
+    - target: {fileID: 744491731077996072, guid: 98bb349ecf769c9478ae90cc80d56dd6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202533029647463993, guid: 98bb349ecf769c9478ae90cc80d56dd6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1640249960152663444, guid: 98bb349ecf769c9478ae90cc80d56dd6,
         type: 3}
       propertyPath: m_Name
@@ -642,6 +653,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517708002205977943, guid: 98bb349ecf769c9478ae90cc80d56dd6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98bb349ecf769c9478ae90cc80d56dd6, type: 3}
@@ -792,6 +808,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Inventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417809313377204705, guid: 3fda11a6203b934449b3b3ef624609fe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3417809313377204734, guid: 3fda11a6203b934449b3b3ef624609fe,
         type: 3}

@@ -216,11 +216,6 @@ public class PlayerMove : MonoBehaviour
                 }
             }
         }
-        if (PlayerAtk.isAttacking == true || PlayerOther.isInvenOpen == true ||
-            PlayerOther.isMapOpen == true || PlayerOther.isMenuOpen == true)
-        {
-            playerAnim.SetTrigger("EatCancel");
-        }
     }
     private void EatFood()
     {
@@ -248,7 +243,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.tag == "Floor")
+        if (other.gameObject.tag == "Terrain")
         {
             isGrounded = false;
             playerAnim.SetBool("isGround", false);
@@ -257,10 +252,12 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        isGrounded = true;
-        isJump = false;
-        curJumpCnt = 0;
-        playerAnim.SetBool("isGround", true);
+        if (other.gameObject.tag == "Terrain")
+        {
+            isGrounded = true;
+            curJumpCnt = 0;
+            playerAnim.SetBool("isGround", true);
+        }
     }
     #endregion
     // } Player Grounded Check

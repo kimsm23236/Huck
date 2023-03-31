@@ -30,7 +30,7 @@ public class RangeMove : MonoBehaviour, IDamageable
         if (other.tag == GData.ENEMY_MASK)
         {
             ItemData item_ = playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData;
-   
+
             DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage);
             other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
         }

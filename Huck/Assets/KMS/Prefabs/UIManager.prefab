@@ -45,10 +45,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  UiObjs: {fileID: 0}
   settingMenu: {fileID: 0}
   clo_CheckBox: {fileID: 0}
   sha_CheckBox: {fileID: 0}
+  workBench: {fileID: 0}
+  stove: {fileID: 0}
+  anvil: {fileID: 0}
+  Dead: {fileID: 0}
+  dead_1: {fileID: 0}
+  dead_2: {fileID: 0}
+  dead_3: {fileID: 0}
+  dead_4: {fileID: 0}
+  UiObjs: {fileID: 0}
   Sen_goldot: {fileID: 0}
   sunFind: {fileID: 0}
   moonFind: {fileID: 0}

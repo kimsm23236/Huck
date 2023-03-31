@@ -2078,7 +2078,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2417424703282144767, guid: 7a4758b7a2bcb404082ac323aad68baf,
+          type: 3}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnSensitivity100
         m_Mode: 1
@@ -2211,7 +2212,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2417424703282144767, guid: 7a4758b7a2bcb404082ac323aad68baf,
+          type: 3}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnSensitivity150
         m_Mode: 1
@@ -2420,7 +2422,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2417424703282144767, guid: 7a4758b7a2bcb404082ac323aad68baf,
+          type: 3}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnSensitivity200
         m_Mode: 1
@@ -3457,7 +3460,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2417424703282144767, guid: 7a4758b7a2bcb404082ac323aad68baf,
+          type: 3}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnCloudCheck
         m_Mode: 1
@@ -3783,7 +3787,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2417424703282144767, guid: 7a4758b7a2bcb404082ac323aad68baf,
+          type: 3}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnShadowCheck
         m_Mode: 1
@@ -3955,7 +3960,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2417424703282144767, guid: 7a4758b7a2bcb404082ac323aad68baf,
+          type: 3}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnSensitivity70
         m_Mode: 1
@@ -4329,7 +4335,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2417424703282144767, guid: 7a4758b7a2bcb404082ac323aad68baf,
+          type: 3}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnSensitivity50
         m_Mode: 1
