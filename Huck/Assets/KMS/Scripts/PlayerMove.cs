@@ -8,6 +8,7 @@ public class PlayerMove : MonoBehaviour
     private Animator playerAnim = default;
     private InHand playerInHand = default;
     private PlayerStat playerStat = default;
+    //private AudioSource PlayerSound = default;
 
     public static bool isGrounded = default;
     public static bool isRunning = default;
@@ -26,10 +27,9 @@ public class PlayerMove : MonoBehaviour
         playerAnim = GetComponent<Animator>();
         playerInHand = GetComponent<InHand>();
         playerStat = GetComponent<PlayerStat>();
+        //PlayerSound = GetComponent<AudioSource>();
 
         playerStat.onPlayerDead += playerDie;
-
-
     }
 
     private void Update()
@@ -46,7 +46,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Input_()
     {
-        if (PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
+        if (PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false && PlayerOther.isAnvilOpen == false
+            && PlayerOther.isWorkbenchOpen == false)
         {
             MoveInput();
             JumpInput();
@@ -55,7 +56,8 @@ public class PlayerMove : MonoBehaviour
 
     private void PlayerAction()
     {
-        if (isDead == false && PlayerOther.isStoveOpen == false)
+        if (isDead == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
+            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false)
         {
             Move();
             Jump();

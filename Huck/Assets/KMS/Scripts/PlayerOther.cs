@@ -60,7 +60,8 @@ public class PlayerOther : MonoBehaviour
     {
 
         if (Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false && isMenuOpen == false && PlayerMove.isDead == false
-            && PlayerOther.isStoveOpen == false)
+            && PlayerOther.isStoveOpen == false && PlayerOther.isAnvilOpen == false
+            && PlayerOther.isWorkbenchOpen == false)
         {
             isInvenOpen = !isInvenOpen;
             if (isInvenOpen == true)
@@ -91,7 +92,8 @@ public class PlayerOther : MonoBehaviour
     public void MapOpen()
     {
         if (Input.GetKeyDown(KeyCode.M) && isInvenOpen == false && isMenuOpen == false && PlayerMove.isDead == false
-            && PlayerOther.isStoveOpen == false)
+            && PlayerOther.isStoveOpen == false && PlayerOther.isAnvilOpen == false
+            && PlayerOther.isWorkbenchOpen == false)
         {
             isMapOpen = !isMapOpen;
             if (isMapOpen == true)

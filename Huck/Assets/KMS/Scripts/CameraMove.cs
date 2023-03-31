@@ -26,7 +26,8 @@ public class CameraMove : MonoBehaviour
     private void CameraMoving()
     {
         // if Player Alive
-        if (PlayerMove.isDead == false && PlayerOther.isStoveOpen == false)
+        if (PlayerMove.isDead == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
+            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false)
         {
             CameraPos();
             CameraRotate();
