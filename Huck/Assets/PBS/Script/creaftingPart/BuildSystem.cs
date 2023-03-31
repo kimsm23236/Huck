@@ -10,6 +10,7 @@ public class BuildSystem : MonoBehaviour
     private const string BUILD_FLOOR_LAYER = "BuilFloor";
     private const string BUILD_WALL_LAYER = "BuildWall";
     private const string BUILD_OBJ_LAYER = "BuildObj";
+    private const string BUILD_ITEM_LAYER = "BuildItem";
     private const string BUILD_LAYER = GData.BUILD_MASK;
 
     private List<GameObject> BuildLoadObjs;
@@ -206,6 +207,14 @@ public class BuildSystem : MonoBehaviour
                                 1 << LayerMask.NameToLayer(BUILD_WALL_LAYER) |
                                 1 << LayerMask.NameToLayer(BUILD_FLOOR_LAYER));
         }
+        else if (prevType == buildType.Anvil || prevType == buildType.Stove || prevType == buildType.Workbench)
+        {
+            layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_WALL_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_FLOOR_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_OBJ_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_ITEM_LAYER));
+        }
         else
         {
             layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) |
@@ -370,6 +379,20 @@ public class BuildSystem : MonoBehaviour
             prevObj = Instantiate(BuildLoadObjs[(int)buildtype]);
             prevObj.transform.parent = this.transform;
             prevObj.name = "prevObj";
+
+            if (prevType == buildType.Anvil || prevType == buildType.Stove || prevType == buildType.Workbench)
+            {
+                prevObj.tag = tag = "Untagged";
+                ResourceBuildObject tempComponent = prevObj.GetComponent<ResourceBuildObject>();
+                Destroy(tempComponent);
+            }
+            else
+            {
+                prevObj.transform.GetChild(0).tag = tag = "Untagged";
+                ResourceBuildObject tempComponent = prevObj.transform.GetChild(0).GetComponent<ResourceBuildObject>();
+                Destroy(tempComponent);
+            }
+
             SetLayer();
             SetTrigger(buildtype);
             SetPrevMat(buildtype, buildTypeMat.Green);
@@ -455,16 +478,18 @@ public class BuildSystem : MonoBehaviour
                     case buildType.Anvil:
                     case buildType.Stove:
                     case buildType.Workbench:
-                        buildObj.layer = LayerMask.NameToLayer(BUILD_LAYER);
+                        buildObj.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
+
                         if (buildObj.transform.childCount > 0)
                         {
                             Transform[] allChildren = buildObj.GetComponentsInChildren<Transform>();
 
                             foreach (Transform child in allChildren)
                             {
-                                child.gameObject.layer = LayerMask.NameToLayer(BUILD_LAYER);
+                                child.gameObject.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
                             }
                         }
+
                         break;
                     default:
                         buildObj.layer = 0;
@@ -517,16 +542,18 @@ public class BuildSystem : MonoBehaviour
                     case buildType.Anvil:
                     case buildType.Stove:
                     case buildType.Workbench:
-                        buildObj.layer = LayerMask.NameToLayer(BUILD_LAYER);
+                        buildObj.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
+
                         if (buildObj.transform.childCount > 0)
                         {
                             Transform[] allChildren = buildObj.GetComponentsInChildren<Transform>();
 
                             foreach (Transform child in allChildren)
                             {
-                                child.gameObject.layer = LayerMask.NameToLayer(BUILD_LAYER);
+                                child.gameObject.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
                             }
                         }
+
                         break;
                     default:
                         buildObj.layer = 0;

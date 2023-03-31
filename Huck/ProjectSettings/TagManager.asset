@@ -43,7 +43,7 @@ TagManager:
   - BuildWall
   - BuildObj
   - Build
-  - 
+  - BuildItem
   m_SortingLayers:
   - name: Default
     uniqueID: 0

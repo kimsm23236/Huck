@@ -259,6 +259,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: woodRailingBeamPrev0
       objectReference: {fileID: 0}
+    - target: {fileID: 1522178800282458, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
+      propertyPath: m_Layer
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4329523563007556, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -321,6 +325,10 @@ PrefabInstance:
     - target: {fileID: 1522178800282458, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
       propertyPath: m_Name
       value: woodRailingBeamPrev3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522178800282458, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
+      propertyPath: m_Layer
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4329523563007556, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
       propertyPath: m_RootOrder
@@ -385,6 +393,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: woodRailingBeamPrev1
       objectReference: {fileID: 0}
+    - target: {fileID: 1522178800282458, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
+      propertyPath: m_Layer
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4329523563007556, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -447,6 +459,10 @@ PrefabInstance:
     - target: {fileID: 1522178800282458, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
       propertyPath: m_Name
       value: woodRailingBeamPrev2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522178800282458, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
+      propertyPath: m_Layer
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4329523563007556, guid: d26afbeb83bf4c546b37df80aa02596e, type: 3}
       propertyPath: m_RootOrder
