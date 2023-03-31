@@ -46,7 +46,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Input_()
     {
-        if (PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
+        if (PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false && PlayerOther.isAnvilOpen == false
+            && PlayerOther.isWorkbenchOpen == false)
         {
             MoveInput();
             JumpInput();
@@ -55,7 +56,8 @@ public class PlayerMove : MonoBehaviour
 
     private void PlayerAction()
     {
-        if (isDead == false && PlayerOther.isStoveOpen == false)
+        if (isDead == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
+            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false)
         {
             Move();
             Jump();

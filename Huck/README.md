@@ -10,3 +10,4 @@
 
 2023-03-30 / v0.3.0KMS / [KMS] Merge & Setting
 2023-03-31 / v0.3.1KMS / [KMS] Add UI & Interact
+2023-03-31 / v0.3.2KMS / [KMS] Debug ( + Setting)
