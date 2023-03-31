@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ItemRange : MonoBehaviour
 {
     private GameObject ItemFound = default;
@@ -32,6 +31,13 @@ public class ItemRange : MonoBehaviour
         find_T_panel = res_UI.transform.GetChild(0).gameObject;
         find_R_Hp = res_UI.transform.GetChild(2).gameObject;
         find_T_interect = res_UI.transform.GetChild(3).gameObject;
+        UI = UIManager.Instance.UiObjs.transform.GetChild(1).gameObject;
+        res_UI = UI.transform.GetChild(1).gameObject;
+        ItemFound = UI.transform.GetChild(2).gameObject;
+
+        find_T_panel = res_UI.transform.GetChild(0).gameObject;
+        find_R_Hp = res_UI.transform.GetChild(2).gameObject;
+        find_T_interect = res_UI.transform.GetChild(3).gameObject;
 
         res_Hp = find_R_Hp.GetComponent<Image>();
         panel_T = find_T_panel.GetComponent<Text>();
@@ -47,6 +53,9 @@ public class ItemRange : MonoBehaviour
     void ItemGet()
     {
         RaycastHit hitinfo = default;
+
+        ItemFound.SetActive(false);
+        res_UI.SetActive(false);
 
         ItemFound.SetActive(false);
         res_UI.SetActive(false);

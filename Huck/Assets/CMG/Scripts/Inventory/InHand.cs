@@ -9,16 +9,20 @@ public class InHand : MonoBehaviour
     private GameObject inventory = default;
     [HideInInspector]
     public ItemSlot[] inventorySlotItem = new ItemSlot[8];
+    [HideInInspector]
     private GameObject inHandObj = default;
     [SerializeField]
     private ItemData inHandItem = default;
 
     private PlayerStat playerStat = default;
     public BuildSystem buildSystem = default;
+
     public int selectedQuitSlot = 0;
     // Start is called before the first frame update
     void Start()
     {
+        inventory = UIManager.Instance.inventory;
+        playerStat = GetComponent<PlayerStat>();
         inventory = UIManager.Instance.inventory;
         playerStat = GetComponent<PlayerStat>();
         for (int i = 0; i < 8; i++)
@@ -49,10 +53,13 @@ public class InHand : MonoBehaviour
         {
             playerStat.damage = 0;
             playerStat.damage += inventorySlotItem[selectedQuitSlot].itemData.ItemDamage;
+            playerStat.damage = 0;
+            playerStat.damage += inventorySlotItem[selectedQuitSlot].itemData.ItemDamage;
             if (inHandObj == default)
             {
                 inHandItem = inventorySlotItem[selectedQuitSlot].itemData;
                 inHandObj = Instantiate(inventorySlotItem[selectedQuitSlot].itemData.OriginPrefab.transform.GetChild(0).gameObject);
+                inHandObj.GetComponent<Collider>().enabled = false;
                 inHandObj.GetComponent<Collider>().enabled = false;
                 inHandObj.transform.SetParent(handTrans, false);
                 if (inHandItem.IsBuild)
@@ -76,6 +83,7 @@ public class InHand : MonoBehaviour
                 inHandObj = Instantiate(inventorySlotItem[selectedQuitSlot].itemData.OriginPrefab.transform.GetChild(0).gameObject);
                 inHandObj.transform.SetParent(handTrans, false);
                 inHandObj.GetComponent<Collider>().enabled = false;
+                inHandObj.GetComponent<Collider>().enabled = false;
                 if (inHandItem.IsBuild)
                 {
                     inHandObj.GetComponent<Renderer>().enabled = false;
@@ -87,6 +95,7 @@ public class InHand : MonoBehaviour
         }
         else if (inventorySlotItem[selectedQuitSlot].itemData == null && inHandItem != default)
         {
+            playerStat.damage = 0;
             playerStat.damage = 0;
             Destroy(inHandObj);
             inHandItem = default;
@@ -130,4 +139,5 @@ public class InHand : MonoBehaviour
             selectedQuitSlot = 7;
         }
     }
+
 }
