@@ -54,6 +54,12 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 1547788498440699773, guid: ced08d0c067e87741814c5114e5850a3,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4f1475ac48b297042b2478a8e0cf3cbd,
+        type: 2}
     - target: {fileID: 2611860305106604738, guid: ced08d0c067e87741814c5114e5850a3,
         type: 3}
       propertyPath: m_Enabled
