@@ -14,10 +14,6 @@ public class ResourceBuildObject : BaseResourceObject
 
     public override void TakeDamage(DamageMessage message)
     {
-
-        // Ÿ�Կ� ���� �߰� ó��
-        // ������ ���� Ÿ���� ����� ��� ������ ���� ó��
-        // ������ ó��
         base.TakeDamage(message);
     }
 
