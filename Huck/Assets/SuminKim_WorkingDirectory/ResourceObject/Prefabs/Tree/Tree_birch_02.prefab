@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 245530612129084143}
   - component: {fileID: 9075475581031705664}
   - component: {fileID: 5513245183199196350}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tree_birch_02
-  m_TagString: Untagged
+  m_TagString: Gather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: a2c271dc19ddcf2488039fa1d6ef333d, type: 2}
+  dropItems: []
 --- !u!64 &5513245183199196350
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -86,7 +87,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 3208184017238386268, guid: 8e3e43039fd5f09429d68ff5dc3c0219, type: 3}
 --- !u!1 &7745171161274563146
@@ -100,9 +101,9 @@ GameObject:
   - component: {fileID: 8446994919832462355}
   - component: {fileID: 6384328520506523577}
   - component: {fileID: 5518833683375525025}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tree_birch_02_LOD0
-  m_TagString: Untagged
+  m_TagString: Gather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

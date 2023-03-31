@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6537731631776451988}
   - component: {fileID: 8857437437524320982}
   - component: {fileID: 5335266682648705009}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Ore_Iron_05
-  m_TagString: Untagged
+  m_TagString: Gather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 32440fb3764b45d42ab1b4f42d160ac3, type: 2}
+  dropItems: []
 --- !u!64 &5335266682648705009
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -100,9 +101,9 @@ GameObject:
   - component: {fileID: 6991992706643835397}
   - component: {fileID: 3249850502278320777}
   - component: {fileID: 8593487856464375659}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Ore_Iron_05_LOD0
-  m_TagString: Untagged
+  m_TagString: Gather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

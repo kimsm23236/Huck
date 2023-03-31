@@ -15,8 +15,8 @@ MonoBehaviour:
   Name: Rainforest
   MinIntensity: 0.5
   MaxIntensity: 1
-  MaxDecayRate: 0.375
-  MinDecayRate: 0.56
+  MaxDecayRate: 0.1
+  MinDecayRate: 0.2
   HeightModifier: {fileID: 2241750196349273561, guid: 2dd08a55c8fe51e42b42b7c95dbd0085,
     type: 3}
   TerrainPainter: {fileID: 5882182845285664830, guid: 7d084f879820f5442a394f2c0b04fb61,

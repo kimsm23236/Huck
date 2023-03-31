@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f4445401b5a5f4ea3c35ac8f490520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BiomeSeedPointDensity: 0.3
+  biomeMapResolution: 128

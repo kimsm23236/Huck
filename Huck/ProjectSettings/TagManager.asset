@@ -11,6 +11,7 @@ TagManager:
   - AttackRange
   - Item
   - Floor
+  - PostProcessObject
   layers:
   - Default
   - TransparentFX
@@ -29,9 +30,9 @@ TagManager:
   - 
   - 
   - Gather
+  - PostProcessObject
   - Terrain
   - Floor
-  - 
   - 
   - 
   - 

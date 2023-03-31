@@ -39,7 +39,17 @@ public class ProcGenManager : MonoBehaviour
     void Start()
     {
         // navMeshSurface = GFunc.GetRootObj("NavMesh").GetComponentMust<NavMeshSurface>();
+#if UNITY_EDITOR
+        if(Application.isPlaying)
+            StartCoroutine(AsyncRegenerateWorld(LoadingManager.Instance.OnStatusReported));
+        else
+        {
+            /* To do */
+        }
+            
+#else
         StartCoroutine(AsyncRegenerateWorld(LoadingManager.Instance.OnStatusReported));
+#endif
     }
 
     // Update is called once per frame
@@ -120,8 +130,13 @@ public class ProcGenManager : MonoBehaviour
         // paint the details
         Perform_NavMeshBaking();
 
-        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Complete, "Terrain Generation complete");
+        if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.PostProcessOnLoading, "PostProcessOnLoading");
+        yield return new WaitForSeconds(1f);
 
+        // post process on loading
+        Perform_PostProcessOnLoading(reportStatusFn);
+
+        if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Complete, "Terrain Generation complete");
         yield return new WaitForSeconds(1f);
 
         //
@@ -567,6 +582,30 @@ public class ProcGenManager : MonoBehaviour
         {
             targetTerrain.terrainData.SetDetailLayer(0, 0, layerIndex, detailLayerMaps[layerIndex]);
         }
+    }
+
+    void Perform_PostProcessOnLoading(System.Action<EGenerationStage, string> reportStatusFn = null)
+    {
+        GameObject[] PostPrcObjects = GameObject.FindGameObjectsWithTag(GData.POSTPROCESS_ON_LOADING);
+        Debug.Log($"PostPrcObjects Count : {PostPrcObjects.Length}");
+        List<PostProcessOnLoading> postProcessOnLoadings = new List<PostProcessOnLoading>();
+        foreach (var postPrcObj in PostPrcObjects)
+        {
+            PostProcessOnLoading ppol = postPrcObj.GetComponent<PostProcessOnLoading>();
+            if (ppol == null)
+                continue;
+
+            postProcessOnLoadings.Add(ppol);
+        }
+
+        foreach(var postProcessor in postProcessOnLoadings)
+        {
+            if(postProcessor != null)
+            {
+                postProcessor.Execute(reportStatusFn);
+            }
+        }
+        
     }
 
 }

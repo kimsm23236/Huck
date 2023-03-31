@@ -16,6 +16,15 @@ public enum EResourceLevel
     HIGH
 }
 
+[System.Serializable]
+public class DropItemConfig
+{
+    public GameObject prefab = default;
+    public int minDropCount = default;
+    public int maxDropCount = default;
+    public int dropPercentage = 100;
+}
+
 [CreateAssetMenu(fileName = "Resource Object Data", menuName = "Huck SO/Resource Object Data", order = -1)]
 public class ResourceObjectSO : ScriptableObject
 {
@@ -43,5 +52,12 @@ public class ResourceObjectSO : ScriptableObject
     public EResourceLevel ResourceLevel
     {
         get { return resourceLevel; }
+    }
+
+    [SerializeField]
+    private List<DropItemConfig> dropConfigs;
+    public List<DropItemConfig> DropConfigs
+    {
+        get { return dropConfigs; }
     }
 }

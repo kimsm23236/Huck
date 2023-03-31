@@ -19,6 +19,7 @@ public enum EGenerationStage
     ObjectPlacement,
     DetailPainting,
     NavMeshBaking,
+    PostProcessOnLoading,
 
     Complete,
     NumStage = Complete

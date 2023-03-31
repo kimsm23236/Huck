@@ -16,3 +16,9 @@ MonoBehaviour:
   hp: 100
   resourceType: 1
   resourceLevel: 1
+  dropConfigs:
+  - prefab: {fileID: 2384919178894448675, guid: d3734b6b06dad8f4e85f1a9d2ff233ff,
+      type: 3}
+    minDropCount: 5
+    maxDropCount: 8
+    dropPercentage: 100

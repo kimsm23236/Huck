@@ -51,7 +51,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0
-    weighting: 0.6
+    weighting: 0
     prefabs:
     - {fileID: 5664719250160204779, guid: c72096101e86ea545b3f6a94d7bfdde9, type: 3}
     - {fileID: 5664719250160204779, guid: 96e5408290aeeb441840111b0a028629, type: 3}
@@ -62,11 +62,20 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0
-    weighting: 0.3
+    weighting: 0
     prefabs:
     - {fileID: 5664719250160204779, guid: 30aa94c431cedd844b9dd1bc06a144d8, type: 3}
     - {fileID: 5664719250160204779, guid: bbd5cd50737349847bf7e1328110d865, type: 3}
     - {fileID: 5664719250160204779, guid: 244a9e824eee91a46ac5d7cbeffa1859, type: 3}
+  - hasHeightLimits: 0
+    minHeightToSpawn: 0
+    maxHeightToSpawn: 0
+    canGoInWater: 0
+    canGoAboveWater: 1
+    isEmbedded: 0
+    weighting: 0.1
+    prefabs:
+    - {fileID: 7002624996615400611, guid: 188f38621d422ad47b618b406111ca8e, type: 3}
   targetDensity: 30
   maxSpawnCount: 300
   maxInvalidLocationSkips: 10

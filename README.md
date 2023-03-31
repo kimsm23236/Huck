@@ -16,3 +16,4 @@ Boss Castle Optimization, Destructible Object
 2023-03-30 / v0.2.4[ksm] / Improve Loading Scene, navmesh bake at runtime         
 2023-03-30 / v0.3.1[ksm] / Improve Resource Object        
 2023-03-31 / v0.3.2[ksm] / Biome Generator, Ooze Based, Voronoi Based       
+2023-03-31 / v0.3.3[ksm] / Improve Resource Object, PostProcessOnLoading        

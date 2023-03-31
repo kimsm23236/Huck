@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6537731631776451988}
   - component: {fileID: 6925745949588080739}
   - component: {fileID: 7722227257676829084}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Ore_Stone_01
-  m_TagString: Untagged
+  m_TagString: Gather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 61614773e5e3d62418aa757b96317aef, type: 2}
+  dropItems: []
 --- !u!64 &7722227257676829084
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -86,7 +87,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1571784481692906640, guid: 1f31cd82af7554b4eb09056eef193a81, type: 3}
 --- !u!1 &1974520593587031792
@@ -100,9 +101,9 @@ GameObject:
   - component: {fileID: 6991992706643835397}
   - component: {fileID: 3249850502278320777}
   - component: {fileID: 8593487856464375659}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Ore_Stone_01_LOD0
-  m_TagString: Untagged
+  m_TagString: Gather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
