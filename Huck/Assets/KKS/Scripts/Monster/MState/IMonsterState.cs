@@ -8,4 +8,4 @@ public interface IMonsterState
     void StateFixedUpdate();
     void StateUpdate();
     void StateExit();
-}
+} // IMonsterState

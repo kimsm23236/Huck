@@ -67,7 +67,6 @@ public class LoadingManager : Singleton<LoadingManager>
             OnStatusReported(EGenerationStage.EnterPlayScene, "Load PlayScene");
             if (operation.progress >= 0.9f)
             {
-                Debug.Log("Loading PlayScene");
                 operation.allowSceneActivation = true;
             }
 
@@ -80,11 +79,10 @@ public class LoadingManager : Singleton<LoadingManager>
         string newText = $"Step {(int)currentStage} of {(int)EGenerationStage.NumStage} : {status} ";
         loadingText.text = newText;
 
-        Debug.Log($"{currentStage}");
         if(currentStage == EGenerationStage.Complete)
         {
             loadingScreenAnim.SetBool("isFadeOut", true);
-            SceneManager.UnloadSceneAsync(GData.SCENENAME_LOADING);
+            // SceneManager.UnloadSceneAsync(GData.SCENENAME_LOADING);
             StartCoroutine(SetActiveFalse5Sec());
         }
     }

@@ -1195,6 +1195,7 @@ MonoBehaviour:
   enumState: 0
   isBattle: 0
   hpBar: {fileID: 8986978786755037580}
+  attackIndicator: {fileID: 0}
   monster: {fileID: 0}
   monsterRb: {fileID: 0}
   monsterAni: {fileID: 0}
@@ -1236,8 +1237,8 @@ MonoBehaviour:
   shoulder: {fileID: 1861230506494893200}
   useSkillA: 1
   useSkillB: 1
-  skillA_MaxCool: 30
-  skillB_MaxCool: 45
+  skillA_MaxCool: 20
+  skillB_MaxCool: 40
 --- !u!1 &4152931532648331204
 GameObject:
   m_ObjectHideFlags: 0

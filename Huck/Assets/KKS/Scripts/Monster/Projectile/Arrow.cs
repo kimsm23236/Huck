@@ -13,7 +13,7 @@ public class Arrow : MonoBehaviour
 
     private void OnEnable()
     {
-        // 활설화시 초기화
+        // 활성화시 초기화
         arrowRb = GetComponent<Rigidbody>();
         transform.parent = default;
         arrowRb.isKinematic = false;

@@ -46,6 +46,7 @@ public class SkeletonGrunt : Monster
             StartCoroutine(CheckRushDistance());
             IMonsterState nextState = new MonsterIdle();
             mController.MStateMachine.onChangeState?.Invoke(nextState);
+            mController.isDelay = false;
             return;
         }
 
@@ -55,17 +56,16 @@ public class SkeletonGrunt : Monster
             if (number > 7)
             {
                 mController.monsterAni.SetBool("isAttackC", true);
-                return;
             }
             else if (number > 4)
             {
                 mController.monsterAni.SetBool("isAttackB", true);
-                return;
             }
             else
             {
                 mController.monsterAni.SetBool("isAttackA", true);
             }
+            return;
         }
     } // Attack
 
@@ -88,6 +88,7 @@ public class SkeletonGrunt : Monster
             StartCoroutine(CheckSkillADistance());
             IMonsterState nextState = new MonsterIdle();
             mController.MStateMachine.onChangeState?.Invoke(nextState);
+            mController.isDelay = false;
             return;
         }
 
@@ -103,6 +104,16 @@ public class SkeletonGrunt : Monster
     //! 사용가능한 스킬이 있는지 체크하는 함수 (몬스터컨트롤러에서 상태진입 체크하기 위함)
     private void CheckUseSkill()
     {
+        // 원거리스킬 사용 유무 체크
+        if (useSkillA == false)
+        {
+            isNoRangeSkill = true;
+        }
+        else
+        {
+            isNoRangeSkill = false;
+        }
+        // 스킬 사용가능 유무 체크
         if (useSkillA == false && useSkillB == false)
         {
             useSkill = false;
@@ -230,23 +241,25 @@ public class SkeletonGrunt : Monster
         // 몬스터가 타겟을 바라보는 방향의 반대방향을 구함
         Vector3 dir = -(mController.targetSearch.hit.transform.position - transform.position).normalized;
         // 목표위치를 dir방향으로 meleeAttackRange만큼 이동된 좌표로 설정
-        Vector3 targetPos = mController.targetSearch.hit.transform.position + dir * meleeAttackRange;
+        Vector3 targetPos = mController.targetSearch.hit.transform.position + dir * (meleeAttackRange + 1);
         StartCoroutine(parabola.ParabolaMoveToTarget(transform.position, targetPos, 1f, gameObject));
         mController.monsterAni.SetBool("isSkillA", true);
+        // 공격범위 표시
+        dir.y = 0f;
+        Vector3 pos = mController.targetSearch.hit.transform.position + new Vector3(0f, 0.1f, 0f);
+        mController.attackIndicator.GetCircleIndicator(pos, 6f, 1f);
         StartCoroutine(SkillACooldown());
     } // SkillA
 
     //! 스킬A 사용 거리체크하는 코루틴함수
     private IEnumerator CheckSkillADistance()
     {
-        isNoRangeSkill = true;
-        while (isNoRangeSkill == true)
+        while (useSkillA == false)
         {
             // 타겟이 스킬A 최소사거리 밖에 있으면 스킬A 사용가능
             if (mController.distance >= 13f)
             {
                 useSkillA = true;
-                isNoRangeSkill = false;
                 CheckUseSkill();
                 yield break;
             }
@@ -297,7 +310,6 @@ public class SkeletonGrunt : Monster
     {
         skillACool = 0f;
         // 몬스터컨트롤러에서 상태진입 시 체크할 조건 : 원거리 스킬 쿨 적용
-        isNoRangeSkill = true;
         while (skillACool < skillA_MaxCool)
         {
             skillACool += Time.deltaTime;
@@ -305,7 +317,6 @@ public class SkeletonGrunt : Monster
         }
         skillACool = 0f;
         useSkillA = true;
-        isNoRangeSkill = false;
         CheckUseSkill();
     } // SkillACooldown
     #endregion // 스킬A (도약 공격)
@@ -322,11 +333,16 @@ public class SkeletonGrunt : Monster
     private IEnumerator UseSkillB()
     {
         mController.monsterAni.SetBool("isSkillB_Start", true);
+        // 공격범위 표시
+        GameObject indicator = mController.attackIndicator.GetRectangIndicator(transform.position, 3f, 22f, 3.5f);
+        Quaternion startRotation = indicator.transform.rotation;
         bool isStart = true;
         float time = 0f;
         while (time <= 2.5f)
         {
             time += Time.deltaTime;
+            // 공격범위 지시자 오브젝트의 회전축을 x는 본인걸로 유지하면서 y축만 같이 변경 (LookAt함수로 인해 공격방향이 바뀌기 때문) 
+            indicator.transform.rotation = Quaternion.Euler(startRotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0f);
             mController.transform.LookAt(mController.targetSearch.hit.transform.position);
             if (time >= 0.24f && isStart == true)
             {

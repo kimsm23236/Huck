@@ -110,8 +110,8 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
             Undo.RegisterCreatedObjectUndo(spawnedGO, "Add building");
         }
 #else
-        Instantiate(building.prefab, buildingLocation, Quaternion.identity, buildingRoot);
-#endif // UNITY_EDITOR   
+        Instantiate(landmark.prefab, buildingLocation, Quaternion.identity, buildingRoot);
+#endif // UNITY_EDITOR
     }
 
     protected List<Vector2Int> GetSpawnLocationsForBuilding(ProcGenConfigSO globalConfig, int mapResolution, float[,] heightMap, Vector3 heightmapScale, LandmarkConfig landmarkConfig, byte[,] biomeMap = null, int biomeIndex = -1, BiomeConfigSO biome = null)
@@ -122,13 +122,11 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
         {
             for (int x = landmarkConfig.Radius; (x < mapResolution - landmarkConfig.Radius); x += landmarkConfig.Radius * 2)
             {
-                Debug.Log($"{x}, {y} is {(EBiome)biomeMap[x,y]} Biome");
                 float height = heightMap[x, y] * heightmapScale.y;
 
                 // ¹ÙÀÌ¿È Ã¼Å©
                 if ((EBiome)biomeMap[x, y] != landmarkConfig.placedBiome)
                 {
-                    Debug.Log($"{x}, {y} is not Decay Biome");
                     continue;
                 }
 
@@ -159,7 +157,6 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
             var spawnLocations = GetSpawnLocationsForBuilding(globalConfig, mapResolution, heightMap, heightmapScale, landmark, biomeMap, biomeIndex, biome);
             
             foreach(var spawnLocation in spawnLocations)
-                Debug.Log($"SpawnLoc : {spawnLocation}");
 
             for (int buildingIndex = 0; buildingIndex < landmark.numToSpawn && spawnLocations.Count > 0; buildingIndex++)
             {
@@ -185,15 +182,12 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
         {
             int distX = Mathf.Abs(centerX - locations[i].x);
             int distY = Mathf.Abs(centerY - locations[i].y);
-            Debug.Log($"Loc {locations[i].x}, {locations[i].y}, Distance to Center : {distX + distY}");
             if(min > (distX + distY))
             {
-                Debug.Log($"Updated closest Idx, distance : {distY + distX}");
                 min = distX + distY;
                 closestIndex = i;
             }
         }
-        Debug.Log($"Found {locations[closestIndex].x}, {locations[closestIndex].y}");
         return locations[closestIndex];
     }
 }

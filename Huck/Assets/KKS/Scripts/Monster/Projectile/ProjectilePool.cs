@@ -22,7 +22,7 @@ public class ProjectilePool : MonoBehaviour
 
     private void OnDisable()
     {
-        // 비활성화할 때 arrowPool에 저장된 투사체 제거
+        // 비활성화할 때 projecttilePool안에 저장된 투사체 제거
         foreach (var _projecttile in projecttilePool)
         {
             Destroy(_projecttile);

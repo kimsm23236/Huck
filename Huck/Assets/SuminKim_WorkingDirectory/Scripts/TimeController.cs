@@ -62,8 +62,7 @@ public class TimeController : MonoBehaviour
     {
         onStartDaytime = new EventHandler(() => Debug.Log("≥∑ ¡¯¿‘"));
         onStartNight = new EventHandler(() => Debug.Log("π„ ¡¯¿‘"));
-        //onStartDaytime += () => Debug.Log("≥∑ ¡¯¿‘");
-        //onStartNight += () => Debug.Log("π„ ¡¯¿‘");
+        onStartNight += GameManager.Instance.SpawnMonster;
 
         fStartHour = Mathf.Round(iStartHour);
         currentTime = DateTime.Now.Date + TimeSpan.FromHours(fStartHour);
@@ -98,7 +97,6 @@ public class TimeController : MonoBehaviour
     private void UpdateTimeOfDay()
     {
         currentTime = currentTime.AddSeconds(Time.deltaTime * timeMultiplier);
-        Debug.Log($"currentTime : {currentTime.Hour}");
         if(timeText != null)
         {
             timeText.text = currentTime.ToString("HH:mm");

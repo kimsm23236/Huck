@@ -41,7 +41,6 @@ public class BiomeGenerator_OozeBased : BaseBiomeMapGenerator
         for(int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
         {
             int numEntries = Mathf.RoundToInt(numSeedPoints * config.Biomes[biomeIndex].Weighting / totalBiomeWeighting);
-            Debug.Log("Will Spawn " + numEntries + " SeedPoints for " + config.Biomes[biomeIndex].Biome.Name);
 
             for(int entryIndex = 0; entryIndex < numEntries; ++entryIndex)
             {

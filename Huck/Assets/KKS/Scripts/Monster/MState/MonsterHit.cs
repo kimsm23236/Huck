@@ -10,7 +10,7 @@ public class MonsterHit : IMonsterState
     {
         this.mController = _mController;
         mController.enumState = MonsterController.MonsterState.HIT;
-        Debug.Log($"Hit상태 시작 : {mController.monster.monsterName}");
+        //Debug.Log($"Hit상태 시작 : {mController.monster.monsterName}");
         aniClipName = GetHitPoint();
         mController.CoroutineDeligate(HitProcess(aniClipName));
     } // StateEnter

@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class MonsterSearch : IMonsterState
 {
@@ -12,7 +10,7 @@ public class MonsterSearch : IMonsterState
     {
         this.mController = _mController;
         mController.enumState = MonsterController.MonsterState.SEARCH;
-        Debug.Log($"추적상태 시작 : {mController.monster.monsterName}");
+        //Debug.Log($"추적상태 시작 : {mController.monster.monsterName}");
         mController.CoroutineDeligate(TargetChase());
     } // StateEnter
     public void StateFixedUpdate()
@@ -27,8 +25,8 @@ public class MonsterSearch : IMonsterState
     {
         exitState = true;
         mController.mAgent.ResetPath();
-        mController.mAgent.speed = mController.monster.moveSpeed;
         mController.monsterAni.SetBool("isWalk", false);
+        mController.mAgent.speed = mController.monster.moveSpeed;
     } // StateExit
 
     //! 타겟을 추적하는 코루틴함수

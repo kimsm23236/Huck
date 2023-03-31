@@ -10,7 +10,7 @@ public class MonsterDead : IMonsterState
     {
         this.mController = _mController;
         mController.enumState = MonsterController.MonsterState.DEAD;
-        Debug.Log($"죽음상태 시작 : {mController.monster.monsterName}");
+        //Debug.Log($"죽음상태 시작 : {mController.monster.monsterName}");
         monsterCollider = mController.gameObject.GetComponent<CapsuleCollider>();
         mController.isDelay = false;
         // 몬스터시체 충돌을 막기위한 트리거 true

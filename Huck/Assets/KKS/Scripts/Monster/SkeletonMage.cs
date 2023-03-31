@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Monster;
 
 public class SkeletonMage : Monster
 {
@@ -17,7 +15,6 @@ public class SkeletonMage : Monster
     private GameObject attackA_Prefab = default;
     private GameObject attackB_Prefab = default;
     private GameObject skillA_Prefab = default;
-    private int summonCount = default;
     private int defaultDamage = default;
     private float skillACool = 0f;
     private float skillBCool = 0f;
@@ -119,7 +116,7 @@ public class SkeletonMage : Monster
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + Vector3.up, 2f);
+        Gizmos.DrawWireSphere(transform.position + Vector3.up, 2.5f);
     } // OnDrawGizmos
 
     //! AttackB 파이어볼 쏘는 함수
@@ -180,7 +177,7 @@ public class SkeletonMage : Monster
     private void SkillA_Damage(Vector3 _effectPos)
     {
         damageMessage.damageAmount = defaultDamage * 2;
-        RaycastHit[] hits = Physics.SphereCastAll(_effectPos, 2.5f, Vector3.up, 0f, LayerMask.GetMask(GData.PLAYER_MASK, GData.BUILD_MASK));
+        RaycastHit[] hits = Physics.SphereCastAll(_effectPos, 2f, Vector3.up, 0f, LayerMask.GetMask(GData.PLAYER_MASK, GData.BUILD_MASK));
         if (hits.Length > 0)
         {
             foreach (var _hit in hits)
@@ -200,8 +197,10 @@ public class SkeletonMage : Monster
     {
         GameObject effectObj = Instantiate(skillA_Prefab);
         ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
-        effectObj.transform.position = mController.targetSearch.hit.transform.position;
-        effectObj.transform.forward = transform.forward;
+        Vector3 targetPos = mController.targetSearch.hit.transform.position + new Vector3(0f, 0.1f, 0f);
+        effectObj.transform.position = targetPos;
+        // 공격범위 표시
+        mController.attackIndicator.GetCircleIndicator(targetPos, 4f, 1.5f);
         yield return new WaitForSeconds(1.5f);
         effect.Play();
         SkillA_Damage(effectObj.transform.position);

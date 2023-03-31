@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkeletonArcher : Monster
@@ -142,6 +141,8 @@ public class SkeletonArcher : Monster
         ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
         effectObj.transform.position = mController.targetSearch.hit.transform.position + new Vector3(0f, 0.1f, 0f);
         effectObj.transform.forward = transform.forward;
+        // 공격범위 표시
+        mController.attackIndicator.GetCircleIndicator(effectObj.transform.position, 5f, 1.5f);
         yield return new WaitForSeconds(1.5f);
         effect.Play();
         SkillA_Damage(effectObj.transform.position);

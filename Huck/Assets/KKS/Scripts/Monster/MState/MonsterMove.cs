@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MonsterMove : IMonsterState
 {
@@ -13,8 +11,7 @@ public class MonsterMove : IMonsterState
     {
         this.mController = _mController;
         mController.enumState = MonsterController.MonsterState.MOVE;
-        Debug.Log($"무브상태 시작 : {mController.monster.monsterName}");
-        exitState = false;
+        //Debug.Log($"무브상태 시작 : {mController.monster.monsterName}");
         mController.CoroutineDeligate(Move());
     } // StateEnter
     public void StateFixedUpdate()
@@ -28,15 +25,17 @@ public class MonsterMove : IMonsterState
     } // StateUpdate
     public void StateExit()
     {
-        mController.monsterAni.SetBool("isRun", false);
-        mController.mAgent.ResetPath();
         exitState = true;
+        mController.mAgent.ResetPath();
+        mController.monsterAni.SetBool("isRun", false);
     } // StateExit
 
     //! 몬스터 이동 코루틴함수
     private IEnumerator Move()
     {
+        mController.mAgent.speed = mController.monster.moveSpeed;
         mController.monsterAni.SetBool("isRun", true);
+        exitState = false;
         while (exitState == false)
         {
             if (exitState == true)

@@ -16,7 +16,7 @@ public class ResObjectDestroying : PostProcessOnLoading
     {
         if (other.tag == GData.GATHER_MASK)
         {
-            Debug.Log($"{other.name} Destroy");
+            Debug.Log($"destroy : {other.gameObject.name}");
             Destroy(other.gameObject);
         }
     }

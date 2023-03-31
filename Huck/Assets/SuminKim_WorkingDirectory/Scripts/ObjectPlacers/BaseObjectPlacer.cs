@@ -76,7 +76,6 @@ public class BaseObjectPlacer : MonoBehaviour
         {
             // pick a random prefab
             var prefab = spawnConfig.prefabs[Random.Range(0, spawnConfig.prefabs.Count)];
-            Debug.Log($"{prefab.name} prefab, Tag : {prefab.tag}");
 
             // determine the spawn count
             float baseSpawnCount =  Mathf.Min(maxSpawnCount, candidateLocations.Count * targetDensity);
@@ -123,7 +122,6 @@ public class BaseObjectPlacer : MonoBehaviour
 
                 SpawnObject(prefab, spawnLocation, objectRoot);
             }
-            Debug.Log($"Placed : {numPlaced} objects out of {numToSpawn}");
         }
     }
 
@@ -151,7 +149,6 @@ public class BaseObjectPlacer : MonoBehaviour
 #endif // UNITY_EDITOR
         // 스폰 이후 처리 사항
         spawnedGO.tag = prefab.tag;
-        Debug.Log($"spawnedGO tag : {spawnedGO.tag}");
         if(spawnedGO.GetComponent<Item>() != null)
         {
             Rigidbody spawnedRigid = spawnedGO.GetComponent<Rigidbody>();

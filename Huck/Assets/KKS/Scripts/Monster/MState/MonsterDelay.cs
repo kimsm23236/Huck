@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MonsterDelay : IMonsterState
@@ -36,7 +35,6 @@ public class MonsterDelay : IMonsterState
     private IEnumerator AttackDelay()
     {
         int number = Random.Range(0, 4);
-        //int number = 1;
         switch (number)
         {
             case 0:

@@ -9,7 +9,7 @@ public class MonsterSkill : IMonsterState
     {
         this.mController = _mController;
         mController.enumState = MonsterController.MonsterState.SKILL;
-        Debug.Log($"스킬상태 시작 : {mController.monster.monsterName}");
+        //Debug.Log($"스킬상태 시작 : {mController.monster.monsterName}");
         mController.monster.Skill();
     }
     public void StateFixedUpdate()
@@ -22,6 +22,6 @@ public class MonsterSkill : IMonsterState
     }
     public void StateExit()
     {
-        /*Do Nothing*/
+        mController.monster.ExitAttack();
     }
-}
+} // MonsterSkill

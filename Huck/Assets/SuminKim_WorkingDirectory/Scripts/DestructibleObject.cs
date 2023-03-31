@@ -16,7 +16,6 @@ public class DestructibleObject : MonoBehaviour, IDamageable
     {
         colliders = gameObject.GetComponentsInChildren<Collider>();
         rigidbodies = gameObject.GetComponentsInChildren<Rigidbody>();
-        Debug.Log($"Collider Count : {colliders.Length}");
         // Debug.Log($"Rigid Count : {rigidbodies.Length}");
 
         SetGravityAllRigidbody(false);
@@ -34,7 +33,6 @@ public class DestructibleObject : MonoBehaviour, IDamageable
     public virtual void TakeDamage(DamageMessage damageMessage)
     {
         HP--;
-        Debug.Log("Pillar Take Damage");
         if(HP <= 0)
         {
             Destruction();

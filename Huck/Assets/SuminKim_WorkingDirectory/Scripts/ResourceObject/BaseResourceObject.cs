@@ -52,7 +52,6 @@ public class BaseResourceObject : MonoBehaviour, IDamageable, IDropable
     {
         // 아이템 오브젝트 스폰 처리
         DropItem(dropItems, transform);
-        Debug.Log($"{resConfig.ResourceName} Die");
         Destroy(gameObject, 0.1f);
         
     }
