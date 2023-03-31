@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 33341132349282940}
   - component: {fileID: 23685699481411444}
   - component: {fileID: 64880830847778732}
-  - component: {fileID: 3611210241725245032}
   - component: {fileID: 7060930221917617735}
+  - component: {fileID: 5209641314501800617}
   m_Layer: 0
   m_Name: 10.Stove
   m_TagString: Stove
@@ -102,19 +102,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43337874677691124, guid: 614cafb3f5d6cb14498d4f180faf3f9a, type: 2}
---- !u!114 &3611210241725245032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802613797325304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10f320f105f4b994faf0f85520d94d37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resConfig: {fileID: 11400000, guid: 5ce4df9072855684ea8e8a72d6183f19, type: 2}
 --- !u!114 &7060930221917617735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +125,19 @@ MonoBehaviour:
   isUsing: 0
   fuelEnergy: 0
   isChange: 0
+--- !u!114 &5209641314501800617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802613797325304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a8a2bba75b453458fe656c5565b62c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resConfig: {fileID: 11400000, guid: 5ce4df9072855684ea8e8a72d6183f19, type: 2}
 --- !u!1 &2976764417376180024
 GameObject:
   m_ObjectHideFlags: 0

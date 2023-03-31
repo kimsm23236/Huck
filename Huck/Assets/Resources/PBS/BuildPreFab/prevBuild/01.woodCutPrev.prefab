@@ -99,7 +99,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: woodCutPrev
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9027938373143554343, guid: 78e31019166b3da46b83ce128d798d6f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 78e31019166b3da46b83ce128d798d6f, type: 3}
 --- !u!4 &6406286093646446000 stripped
 Transform:
