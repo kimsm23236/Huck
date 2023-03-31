@@ -28,12 +28,16 @@ public class StoveItem : MonoBehaviour
             percentage = 0f;
             StopCoroutine(DelayStove());
         }
+        if (fuelEnergy <= 0)
+        {
+            isUsing = false;
+        }
         DescFuelEnergy();
         UseStove();
         // originItemCount 혹은 fuelItemCount 혹은 resultItemCount가 값이 변할때 체크
         if (isUsing)
         {
-            if (originItemData == null || originItemData.ResultData == null)
+            if (originItemData == null || originItemData.ResultData == null || (resultItemData != null && resultItemData.ItemName != originItemData.ResultData.ItemName))
             {
                 percentage = 0f;
                 StopCoroutine(DelayStove());

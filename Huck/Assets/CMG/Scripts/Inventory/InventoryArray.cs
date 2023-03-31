@@ -18,7 +18,7 @@ public class InventoryArray : MonoBehaviour
     protected GraphicRaycaster graphicRay = default;
     protected PointerEventData pointEvent = default;
     protected Canvas myCanvas = default;
-    private ItemSlot beginDragSlot = default;
+    protected ItemSlot beginDragSlot = default;
     private Transform beginItemTrans = default;
     private GameObject dividedItemIcon = default;
 
