@@ -154,8 +154,17 @@ MonoBehaviour:
     weighting: 0.3
     prefabs:
     - {fileID: 525703396560854713, guid: 445a20be774b227428d1fe8e851cd3be, type: 3}
+  - hasHeightLimits: 0
+    minHeightToSpawn: 0
+    maxHeightToSpawn: 0
+    canGoInWater: 0
+    canGoAboveWater: 1
+    isEmbedded: 0
+    weighting: 0.2
+    prefabs:
+    - {fileID: 7002624996615400611, guid: 188f38621d422ad47b618b406111ca8e, type: 3}
   targetDensity: 30
-  maxSpawnCount: 300
+  maxSpawnCount: 500
   maxInvalidLocationSkips: 10
   maxPositionJitter: 0.1
 --- !u!114 &-9140704032504034544
@@ -171,9 +180,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objects:
-  - hasHeightLimits: 0
+  - hasHeightLimits: 1
     minHeightToSpawn: 0
-    maxHeightToSpawn: 0
+    maxHeightToSpawn: 70
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0

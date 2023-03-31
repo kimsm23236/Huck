@@ -13,13 +13,13 @@ public enum EGenerationStage
     Beginning,
     BuildTextureMap,
     BuildDetailMap,
-    BuildLowResolutionBiomeMap,
-    BuildHighResolutionBiomeMap,
+    BuildBiomeMap,
     HeightMapGeneration,
     TerrainPainting,
     ObjectPlacement,
     DetailPainting,
     NavMeshBaking,
+    PostProcessOnLoading,
 
     Complete,
     NumStage = Complete

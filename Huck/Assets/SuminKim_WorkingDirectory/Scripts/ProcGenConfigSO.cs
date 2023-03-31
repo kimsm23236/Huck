@@ -15,20 +15,7 @@ public class ProcGenConfigSO : ScriptableObject
 {
     public List<BiomeConfig> Biomes;
 
-    public enum EBiomeMapBaseResolution
-    {
-        Size_64x64      = 64,
-        Size_128x128    = 128,
-        Size_256x256    = 256,
-        Size_512x512    = 512,
-        Size_1024x1024 = 1024,
-    }
-
-    [Range(0f, 1.0f)]
-    public float BiomeSeedPointDensity = 0.1f;
-
-    public EBiomeMapBaseResolution biomeMapResolution = EBiomeMapBaseResolution.Size_64x64;
-
+    public GameObject BiomeGenerators;
     public GameObject InitialHeightModifier;
     public GameObject HeightPostProcessingModifier;
 

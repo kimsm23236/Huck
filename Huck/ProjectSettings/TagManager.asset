@@ -11,10 +11,7 @@ TagManager:
   - AttackRange
   - Item
   - Floor
-  - Stove
-  - Workbench
-  - Anvil
-  - Wall
+  - PostProcessObject
   layers:
   - Default
   - TransparentFX
@@ -33,9 +30,9 @@ TagManager:
   - 
   - 
   - Gather
+  - PostProcessObject
   - Terrain
   - Floor
-  - 
   - 
   - 
   - 

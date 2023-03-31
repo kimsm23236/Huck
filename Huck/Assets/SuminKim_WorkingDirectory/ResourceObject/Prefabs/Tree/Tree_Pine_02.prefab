@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 245530612129084143}
   - component: {fileID: -5380117140085893197}
   - component: {fileID: 4005416438624308525}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tree_Pine_02
-  m_TagString: Untagged
+  m_TagString: Gather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: c142eb83955484848b401120905fed47, type: 2}
+  dropItems: []
 --- !u!136 &4005416438624308525
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -100,9 +101,9 @@ GameObject:
   - component: {fileID: 8446994919832462355}
   - component: {fileID: 6384328520506523577}
   - component: {fileID: 5518833683375525025}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tree_Pine_02_LOD0
-  m_TagString: Untagged
+  m_TagString: Gather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
