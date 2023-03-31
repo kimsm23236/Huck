@@ -8,6 +8,7 @@ public class PlayerMove : MonoBehaviour
     private Animator playerAnim = default;
     private InHand playerInHand = default;
     private PlayerStat playerStat = default;
+    //private AudioSource PlayerSound = default;
 
     public static bool isGrounded = default;
     public static bool isRunning = default;
@@ -26,10 +27,9 @@ public class PlayerMove : MonoBehaviour
         playerAnim = GetComponent<Animator>();
         playerInHand = GetComponent<InHand>();
         playerStat = GetComponent<PlayerStat>();
+        //PlayerSound = GetComponent<AudioSource>();
 
         playerStat.onPlayerDead += playerDie;
-
-
     }
 
     private void Update()
