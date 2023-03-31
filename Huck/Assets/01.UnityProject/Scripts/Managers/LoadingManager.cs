@@ -82,7 +82,7 @@ public class LoadingManager : Singleton<LoadingManager>
         if(currentStage == EGenerationStage.Complete)
         {
             loadingScreenAnim.SetBool("isFadeOut", true);
-            // SceneManager.UnloadSceneAsync(GData.SCENENAME_LOADING);
+            SceneManager.UnloadSceneAsync(GData.SCENENAME_LOADING);
             StartCoroutine(SetActiveFalse5Sec());
         }
     }

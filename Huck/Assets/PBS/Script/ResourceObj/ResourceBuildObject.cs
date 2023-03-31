@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ResourceBuildObject : BaseResourceObject
 {
+    [SerializeField]
     private BuildSystem Bsystem;
 
     private void Awake()
     {
-        Bsystem = GFunc.GetRootObj("BuildSystem").GetComponent<BuildSystem>();
+        Bsystem = GameManager.Instance.buildSystem;
     }
 
     public override void TakeDamage(DamageMessage message)

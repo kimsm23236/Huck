@@ -60,7 +60,7 @@ public class BaseResourceObject : MonoBehaviour, IDamageable, IDropable
     public virtual void TakeDamage(DamageMessage message)
     {
         currentHealthPoint = Mathf.Clamp(currentHealthPoint - message.damageAmount, 0, maxHealthPoint);
-
+        Debug.Log($"{currentHealthPoint}, {gameObject.name}");
         if (currentHealthPoint <= 0)
             Die();
 

@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class PrevObjInfo : MonoBehaviour
 {
-    private const string BUILD_LAYER = GData.BUILD_MASK;
+    private buildType CheckBuild;
     public bool isBuildAble = false;
     private List<GameObject> cols = new List<GameObject>();
 
     void Update()
     {
         changeCursor();
+    }
+
+    public void SetLayerType(buildType input)
+    {
+        CheckBuild = input;
     }
 
     private void changeCursor()
@@ -27,18 +32,53 @@ public class PrevObjInfo : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer(BUILD_LAYER))
+        if (other.gameObject.layer == LayerMask.NameToLayer(GData.BUILD_MASK) ||
+            other.gameObject.layer == LayerMask.NameToLayer("BuildItem"))
         {
             cols.Add(other.gameObject);
         }
+
+        // if (CheckBuild == buildType.Anvil || CheckBuild == buildType.Stove || CheckBuild == buildType.Workbench)
+        // {
+        //     if (other.gameObject.layer == LayerMask.NameToLayer(GData.BUILD_MASK) ||
+        //     other.gameObject.layer == LayerMask.NameToLayer("BuildItem"))
+        //     {
+        //         cols.Add(other.gameObject);
+        //     }
+        // }
+        // else
+        // {
+        //     if (other.gameObject.layer == LayerMask.NameToLayer(GData.BUILD_MASK))
+        //     {
+        //         cols.Add(other.gameObject);
+        //     }
+        // }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer(BUILD_LAYER))
+
+        if (other.gameObject.layer == LayerMask.NameToLayer(GData.BUILD_MASK) ||
+            other.gameObject.layer == LayerMask.NameToLayer("BuildItem"))
         {
             cols.Remove(other.gameObject);
         }
+
+        // if (CheckBuild == buildType.Anvil || CheckBuild == buildType.Stove || CheckBuild == buildType.Workbench)
+        // {
+        //     if (other.gameObject.layer == LayerMask.NameToLayer(GData.BUILD_MASK) ||
+        //     other.gameObject.layer == LayerMask.NameToLayer("BuildItem"))
+        //     {
+        //         cols.Remove(other.gameObject);
+        //     }
+        // }
+        // else
+        // {
+        //     if (other.gameObject.layer == LayerMask.NameToLayer(GData.BUILD_MASK))
+        //     {
+        //         cols.Remove(other.gameObject);
+        //     }
+        // }
     }
 
     public void deleteObjTime()

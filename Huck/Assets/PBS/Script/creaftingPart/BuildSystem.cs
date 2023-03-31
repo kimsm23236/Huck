@@ -10,6 +10,7 @@ public class BuildSystem : MonoBehaviour
     private const string BUILD_FLOOR_LAYER = "BuilFloor";
     private const string BUILD_WALL_LAYER = "BuildWall";
     private const string BUILD_OBJ_LAYER = "BuildObj";
+    private const string BUILD_ITEM_LAYER = "BuildItem";
     private const string BUILD_LAYER = GData.BUILD_MASK;
 
     private List<GameObject> BuildLoadObjs;
@@ -32,13 +33,11 @@ public class BuildSystem : MonoBehaviour
     private string prevName;
     private int buildObjNums;
     private int layerMask;
-    private int DefaultLayerMask;
     public bool IsBuildTime;
     private bool IsResetCall;
 
     private float gridSize = 0.1f;
-    private bool debugMode = false;
-    private bool IsDefaultLayer = false;
+    public bool IsDefaultLayer = false;
 
     private List<GameObject> BuildingList;
 
@@ -74,7 +73,7 @@ public class BuildSystem : MonoBehaviour
 
         //raycast rayerSet
         layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER));
-        DefaultLayerMask = (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) | 1 << LayerMask.NameToLayer("Default"));
+        // DefaultLayerMask = (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) | 1 << LayerMask.NameToLayer("Default"));
     }
     private void Start()
     {
@@ -147,7 +146,6 @@ public class BuildSystem : MonoBehaviour
         }
 
         D_prevObj();
-        // CollidersOnOff();
     }
 
     private void ControlKey()
@@ -208,6 +206,14 @@ public class BuildSystem : MonoBehaviour
                                 1 << LayerMask.NameToLayer(BUILD_WALL_LAYER) |
                                 1 << LayerMask.NameToLayer(BUILD_FLOOR_LAYER));
         }
+        else if (prevType == buildType.Anvil || prevType == buildType.Stove || prevType == buildType.Workbench)
+        {
+            layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_WALL_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_FLOOR_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_OBJ_LAYER) |
+                    1 << LayerMask.NameToLayer(BUILD_ITEM_LAYER));
+        }
         else
         {
             layerMask = (-1) - (1 << LayerMask.NameToLayer(BUILD_TEMP_LAYER) |
@@ -264,18 +270,6 @@ public class BuildSystem : MonoBehaviour
                 }
                 else if (!IsDefaultLayer)   //벽에 붙는 부분
                 {
-                    //if (prevType == buildType.Foundation)
-                    //{
-                    //    if (!FindRootParentName(hit, "WoodFoundation"))
-                    //    {
-                    //        IsBuildAct = false;
-                    //        prevMat = buildTypeMat.Red;
-                    //        SetPrevMat(prevType, prevMat);
-                    //        prevObj.transform.position = hit.point;
-                    //    }
-                    //}
-                    //else
-                    //{
                     if (prevInfo != null || prevInfo != default)
                     {
                         if (prevInfo.isBuildAble == false)
@@ -290,7 +284,6 @@ public class BuildSystem : MonoBehaviour
                         }
                         SetPrevMat(prevType, prevMat);
                     }
-                    //}
                 }
             }
         }
@@ -304,28 +297,6 @@ public class BuildSystem : MonoBehaviour
             }
             prevObj.transform.position = ray.direction * HIT_DISTANCE;
         }
-    }
-
-    private bool FindRootParentName(RaycastHit hit2, string name)
-    {
-        GameObject temp = hit2.transform.gameObject;
-
-        while (true)
-        {
-            if (temp.name.Contains(name))
-            {
-                return true;
-            }
-            else if (temp.transform.parent != null)
-            {
-                temp = temp.transform.parent.gameObject;
-            }
-            else
-            {
-                break;
-            }
-        }
-        return false;
     }
 
     private void prevUpdate(RaycastHit hit2)
@@ -370,9 +341,9 @@ public class BuildSystem : MonoBehaviour
                     else
                     {
                         prevPos = hit2.point;
-                        //prevPos /= gridSize;
-                        //prevPos = new Vector3(Mathf.Round(prevPos.x), Mathf.Round(prevPos.y), Mathf.Round(prevPos.z));
-                        //prevPos *= gridSize;
+                        prevPos /= gridSize;
+                        prevPos = new Vector3(Mathf.Round(prevPos.x), Mathf.Round(prevPos.y), Mathf.Round(prevPos.z));
+                        prevPos *= gridSize;
                         prevObj.transform.position = prevPos;
 
                         prevRot = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y + prevYAngle, 0);
@@ -407,11 +378,27 @@ public class BuildSystem : MonoBehaviour
             prevObj = Instantiate(BuildLoadObjs[(int)buildtype]);
             prevObj.transform.parent = this.transform;
             prevObj.name = "prevObj";
+
+            if (prevType == buildType.Anvil || prevType == buildType.Stove || prevType == buildType.Workbench)
+            {
+                prevObj.tag = tag = "Untagged";
+                ResourceBuildObject tempComponent = prevObj.GetComponent<ResourceBuildObject>();
+                Destroy(tempComponent);
+            }
+            else
+            {
+                prevObj.transform.GetChild(0).tag = tag = "Untagged";
+                ResourceBuildObject tempComponent = prevObj.transform.GetChild(0).GetComponent<ResourceBuildObject>();
+                Destroy(tempComponent);
+            }
+
             SetLayer();
             SetTrigger(buildtype);
             SetPrevMat(buildtype, buildTypeMat.Green);
             prevInfo = prevObj.FindChildObj("BuildCollider").GetComponent<PrevObjInfo>();
             prevDefaultInfo = prevObj.FindChildObj("BuildDefaultCollider").GetComponent<PrevObjInfo>();
+            prevInfo.SetLayerType(buildtype);
+            prevDefaultInfo.SetLayerType(buildtype);
             prevYAngle = 0.0f;
 
             IsResetCall = false;
@@ -490,7 +477,18 @@ public class BuildSystem : MonoBehaviour
                     case buildType.Anvil:
                     case buildType.Stove:
                     case buildType.Workbench:
-                        buildObj.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                        buildObj.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
+
+                        if (buildObj.transform.childCount > 0)
+                        {
+                            Transform[] allChildren = buildObj.GetComponentsInChildren<Transform>();
+
+                            foreach (Transform child in allChildren)
+                            {
+                                child.gameObject.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
+                            }
+                        }
+
                         break;
                     default:
                         buildObj.layer = 0;
@@ -543,7 +541,18 @@ public class BuildSystem : MonoBehaviour
                     case buildType.Anvil:
                     case buildType.Stove:
                     case buildType.Workbench:
-                        buildObj.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
+                        buildObj.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
+
+                        if (buildObj.transform.childCount > 0)
+                        {
+                            Transform[] allChildren = buildObj.GetComponentsInChildren<Transform>();
+
+                            foreach (Transform child in allChildren)
+                            {
+                                child.gameObject.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
+                            }
+                        }
+
                         break;
                     default:
                         buildObj.layer = 0;
@@ -578,30 +587,6 @@ public class BuildSystem : MonoBehaviour
             buildObj.name = prevName + buildObjNums;
             buildObjNums++;
             BuildingList.Add(buildObj);
-        }
-    }
-
-    private void CollidersOnOff()
-    {
-        if (IsBuildTime)
-        {
-            if (BuildingList.Count > 0)
-            {
-                for (int i = 0; i < BuildingList.Count; i++)
-                {
-                    BuildingList[i].FindChildObj("BuildPart").SetActive(true);
-                }
-            }
-        }
-        else if (!IsBuildTime)
-        {
-            if (BuildingList.Count > 0)
-            {
-                for (int i = 0; i < BuildingList.Count; i++)
-                {
-                    BuildingList[i].FindChildObj("BuildPart").SetActive(false);
-                }
-            }
         }
     }
 

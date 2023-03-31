@@ -138,7 +138,7 @@ public class PlayerOther : MonoBehaviour
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                     menu.SetActive(true);
-                    Time.timeScale = 0;
+                    Time.timeScale = 0f;
                 }
                 if (isMenuOpen == false)
                 {
@@ -147,7 +147,7 @@ public class PlayerOther : MonoBehaviour
                     Cursor.lockState = CursorLockMode.Locked;
                     UIManager.Instance.isResumeOn = false;
                     menu.SetActive(false);
-                    Time.timeScale = 1;
+                    Time.timeScale = 1f;
                 }
             }
         }

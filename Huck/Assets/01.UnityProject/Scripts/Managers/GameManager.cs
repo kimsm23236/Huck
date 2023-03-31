@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject playerObj = default;
 
     public GameObject procGenManager = default;
+    public BuildSystem buildSystem = default;
 
     public TimeController timeController = default;
 
