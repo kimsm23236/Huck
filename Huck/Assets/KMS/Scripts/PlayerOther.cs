@@ -43,8 +43,7 @@ public class PlayerOther : MonoBehaviour
 
         CursorSet();
         inven.SetLocalScale(enableScale);
-        invenSlot = inven.transform.GetChild(0)
-            .GetChild(1).GetComponent<InventoryArray>();
+        invenSlot = UIManager.Instance.inventory.GetComponent<InventoryArray>();
     }
 
     private void Update()
