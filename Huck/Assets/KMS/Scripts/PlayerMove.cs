@@ -14,6 +14,7 @@ public class PlayerMove : MonoBehaviour
     public static bool isRunning = default;
     public static bool isDead = false;
     public static bool isJump = false;
+    public static bool isWalk = false;
 
     private float jumpForce = 150;
     private float moveSpeed = 5;
@@ -82,6 +83,16 @@ public class PlayerMove : MonoBehaviour
         {
             playerAnim.SetInteger("WalkFB", (int)vertical);
             playerAnim.SetInteger("WalkRL", (int)horizontal);
+        }
+
+        if (horizontal != 0 || vertical != 0)
+        {
+            isWalk = true;
+        }
+        
+        if(horizontal == 0 && vertical == 0)
+        {
+            isWalk = false;
         }
     }
 
@@ -238,7 +249,8 @@ public class PlayerMove : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == GData.TERRAIN_MASK
-            || other.gameObject.tag == GData.FLOOR_MASK)
+            || other.gameObject.tag == GData.FLOOR_MASK
+            || other.gameObject.tag == GData.GATHER_MASK)
         {
             isGrounded = true;
             isJump = false;
@@ -250,7 +262,8 @@ public class PlayerMove : MonoBehaviour
     private void OnCollisionExit(Collision other)
     {
         if (other.gameObject.tag == GData.TERRAIN_MASK
-            || other.gameObject.tag == GData.FLOOR_MASK)
+            || other.gameObject.tag == GData.FLOOR_MASK
+            || other.gameObject.tag == GData.GATHER_MASK)
         {
             isGrounded = false;
             playerAnim.SetBool("isGround", false);
@@ -260,7 +273,8 @@ public class PlayerMove : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == GData.TERRAIN_MASK
-            || other.gameObject.tag == GData.FLOOR_MASK)
+            || other.gameObject.tag == GData.FLOOR_MASK
+            || other.gameObject.tag == GData.GATHER_MASK)
         {
             isGrounded = true;
             curJumpCnt = 0;
