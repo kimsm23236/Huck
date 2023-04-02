@@ -15,6 +15,7 @@ public class PlayerMove : MonoBehaviour
     public static bool isDead = false;
     public static bool isJump = false;
     public static bool isWalk = false;
+    public static bool isEating = false;
 
     private float jumpForce = 150;
     private float moveSpeed = 5;
@@ -222,6 +223,7 @@ public class PlayerMove : MonoBehaviour
                 if (PlayerOther.isInvenOpen == false && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false)
                 {
                     playerAnim.SetTrigger("Eat");
+                    isEating = true;
                 }
             }
             else
@@ -240,6 +242,7 @@ public class PlayerMove : MonoBehaviour
     private void EatFin()
     {
         playerAnim.SetTrigger("EatCancel");
+        isEating = false;
     }
     #endregion
     // } Player Eat

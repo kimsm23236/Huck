@@ -77,7 +77,8 @@ public class ItemRange : MonoBehaviour
             }
             if (hitItem.transform.tag == "Stove" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
                 && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isWorkbenchOpen == false
-                && PlayerMove.isWalk == false && PlayerMove.isRunning == false && PlayerMove.isJump == false)
+                && PlayerMove.isWalk == false && PlayerMove.isRunning == false && PlayerMove.isJump == false
+                && PlayerAtk.isAttacking == false && PlayerMove.isEating == false)
             {
                 stoveItem = hitItem.transform.GetComponent<StoveItem>();
                 var interactResObj = hitItem.transform.gameObject.GetComponentMust<BaseResourceObject>();
@@ -116,7 +117,8 @@ public class ItemRange : MonoBehaviour
 
             if (hitItem.transform.tag == "Workbench" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
                 && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
-                && PlayerMove.isWalk == false && PlayerMove.isRunning == false && PlayerMove.isJump == false)
+                && PlayerMove.isWalk == false && PlayerMove.isRunning == false && PlayerMove.isJump == false
+                && PlayerAtk.isAttacking == false && PlayerMove.isEating == false)
             {
                 var interactResObj = hitItem.transform.gameObject.GetComponentMust<BaseResourceObject>();
                 int resObjMaxHp = interactResObj.ResourceConfig.HP;
@@ -148,7 +150,8 @@ public class ItemRange : MonoBehaviour
 
             if (hitItem.transform.tag == "Anvil" && PlayerOther.isWorkbenchOpen == false && PlayerOther.isInvenOpen == false
                 && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
-                && PlayerMove.isWalk == false && PlayerMove.isRunning == false && PlayerMove.isJump == false)
+                && PlayerMove.isWalk == false && PlayerMove.isRunning == false && PlayerMove.isJump == false
+                && PlayerAtk.isAttacking == false && PlayerMove.isEating == false)
             {
                 var interactResObj = hitItem.transform.gameObject.GetComponentMust<BaseResourceObject>();
                 int resObjMaxHp = interactResObj.ResourceConfig.HP;
@@ -180,7 +183,8 @@ public class ItemRange : MonoBehaviour
         }
 
         hitinfo = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), Range);
-        if (hitinfo != null && PlayerOther.isInvenOpen == false && PlayerOther.isMapOpen == false)
+        if (hitinfo != null && PlayerOther.isWorkbenchOpen == false && PlayerOther.isInvenOpen == false
+                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
         {
             for (int i = 0; i < hitinfo.Length; i++)
             {
