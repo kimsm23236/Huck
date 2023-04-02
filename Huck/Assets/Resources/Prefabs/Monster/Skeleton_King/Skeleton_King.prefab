@@ -4794,11 +4794,11 @@ MonoBehaviour:
   useSkillC: 1
   useSkillD: 1
   skillA_MaxCool: 120
-  skillB_MaxCool: 30
+  skillB_MaxCool: 25
   skillC_MaxCool: 20
-  skillD_MaxCool: 40
-  slideAttack_MaxCool: 25
-  crushAttack_MaxCool: 15
+  skillD_MaxCool: 35
+  slideAttack_MaxCool: 30
+  crushAttack_MaxCool: 20
   is2Phase: 0
 --- !u!114 &5864281001940753170
 MonoBehaviour:

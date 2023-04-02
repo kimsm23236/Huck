@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 356265857965365484}
   m_Layer: 0
   m_Name: Splash_Thorn
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -6,6 +6,7 @@ public class FireBall : MonoBehaviour
 {
     [SerializeField] ParticleSystem fireBallStart = default; // 파이어볼 이펙트
     [SerializeField] ParticleSystem fireBallEnd = default; // 파이어볼폭발 이펙트
+    private ProjectilePool fireBallPool = default;
     private Rigidbody fireBallRb = default;
     private DamageMessage damageMessage = default; // 데미지처리
     private GameObject target = default; // 타겟
@@ -20,8 +21,8 @@ public class FireBall : MonoBehaviour
     private void OnEnable()
     {
         // 활성화 시 초기화
+        transform.parent = null;
         fireBallRb = GetComponent<Rigidbody>();
-        transform.parent = default;
         isHit = false;
         isEndFollow = false;
         fireBallStart.gameObject.SetActive(true);
@@ -47,7 +48,7 @@ public class FireBall : MonoBehaviour
     } // Update
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != GData.ENEMY_MASK)
+        if (other.tag != GData.ENEMY_MASK && other.tag != "AttackRange")
         {
             // 충돌지점에 붙어있게 만들려고 부모를 설정시 중복 데미지를 주는걸 막기위한 예외처리
             if (isHit == true)
@@ -55,9 +56,10 @@ public class FireBall : MonoBehaviour
                 return;
             }
             isHit = true;
-            if (other.tag == GData.PLAYER_MASK || other.tag == GData.BUILD_MASK)
+            IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
+            if (damageable != null)
             {
-                other.gameObject.GetComponent<IDamageable>().TakeDamage(damageMessage);
+                damageable.TakeDamage(damageMessage);
             }
             // 충돌지점에 붙어있게 만드는 처리
             fireBallRb.isKinematic = true;
@@ -104,9 +106,10 @@ public class FireBall : MonoBehaviour
     } // MoveFireBall
 
     //! 데미지메시지의 주체를 받아올 함수
-    public void InitDamageMessage(GameObject attacker, int damage, GameObject _target)
+    public void InitDamageMessage(ProjectilePool _fireBallPool, GameObject attacker, int damage, GameObject _target)
     {
         damageMessage = new DamageMessage(attacker, damage);
+        fireBallPool = _fireBallPool;
         target = _target;
     } // InitDamageMessage
 
@@ -116,7 +119,12 @@ public class FireBall : MonoBehaviour
         yield return new WaitForSeconds(6f);
         if (gameObject.activeInHierarchy == true)
         {
-            ProjectilePool.Instance.EnqueueProjecttile(gameObject);
+            // pool이 없으면 파괴
+            if (damageMessage.causer == null || damageMessage.causer == default)
+            {
+                Destroy(gameObject);
+            }
+            fireBallPool.EnqueueProjecttile(gameObject);
         }
     } // EnqueueFireBall
 
@@ -127,8 +135,13 @@ public class FireBall : MonoBehaviour
         fireBallEnd.gameObject.SetActive(true);
         fireBallEnd.Play();
         yield return new WaitForSeconds(fireBallEnd.main.duration + fireBallEnd.main.startLifetime.constant);
+        // pool이 없으면 파괴
+        if (damageMessage.causer == null || damageMessage.causer == default)
+        {
+            Destroy(gameObject);
+        }
         // 폭발이펙트 재생끝나면 Pool에 저장하고 비활성화
-        ProjectilePool.Instance.EnqueueProjecttile(gameObject);
+        fireBallPool.EnqueueProjecttile(gameObject);
         gameObject.SetActive(false);
     } // FireBallExplosion
 } // FireBall

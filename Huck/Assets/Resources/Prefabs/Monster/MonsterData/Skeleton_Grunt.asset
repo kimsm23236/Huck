@@ -15,12 +15,11 @@ MonoBehaviour:
   monsterName: "\uD574\uACE8\uADF8\uB7F0\uD2B8"
   monsterHp: 150
   monsterMaxHp: 150
-  moveSpeed: 5
-  damage: 12
+  moveSpeed: 7
+  damage: 13
   isNoRangeAttack: 0
   isNoRangeSkill: 0
   useSkill: 1
   searchRange: 25
   attackRange: 20
   meleeAttackRange: 3
-  delayType: 4

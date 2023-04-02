@@ -11,9 +11,9 @@ public class SkeletonMage : Monster
     [SerializeField] private bool useSkillB = default;
     [SerializeField] private float skillA_MaxCool = default;
     [SerializeField] private float skillB_MaxCool = default;
+    private ProjectilePool fireballPool = default;
     private DamageMessage damageMessage = default;
     private GameObject attackA_Prefab = default;
-    private GameObject attackB_Prefab = default;
     private GameObject skillA_Prefab = default;
     private int defaultDamage = default;
     private float skillACool = 0f;
@@ -24,9 +24,9 @@ public class SkeletonMage : Monster
         InitMonsterData(MonsterType.NOMAL, monsterData);
         mController.monster = this;
         defaultDamage = damage;
+        fireballPool = gameObject.GetComponent<ProjectilePool>();
         damageMessage = new DamageMessage(gameObject, damage);
         attackA_Prefab = Resources.Load("Prefabs/Monster/MonsterEffect/Skeleton_Mage_Effect/MageMelee") as GameObject;
-        attackB_Prefab = Resources.Load("Prefabs/Monster/MonsterEffect/Skeleton_Mage_Effect/FireBall") as GameObject;
         skillA_Prefab = Resources.Load("Prefabs/Monster/MonsterEffect/Skeleton_Mage_Effect/Summon_Thorn") as GameObject;
         CheckUseSkill();
     } // Awake
@@ -91,10 +91,10 @@ public class SkeletonMage : Monster
         {
             foreach (var _hit in hits)
             {
-                // if : 플레이어 또는 건축물일 때
-                if (_hit.collider.tag == GData.PLAYER_MASK || _hit.collider.tag == GData.BUILD_MASK)
+                IDamageable damageable = _hit.collider.gameObject.GetComponent<IDamageable>();
+                if (damageable != null)
                 {
-                    _hit.collider.gameObject.GetComponent<IDamageable>().TakeDamage(damageMessage);
+                    damageable.TakeDamage(damageMessage);
                 }
             }
         }
@@ -122,8 +122,12 @@ public class SkeletonMage : Monster
     //! AttackB 파이어볼 쏘는 함수
     private void ShootFireBall()
     {
-        GameObject fireBall = ProjectilePool.Instance.GetProjecttile();
-        fireBall.GetComponent<FireBall>().InitDamageMessage(gameObject, defaultDamage, mController.targetSearch.hit.gameObject);
+        GameObject fireBall = fireballPool.GetProjecttile();
+        if (fireBall == null || fireBall == default)
+        {
+            fireBall = fireballPool.GetProjecttile();
+        }
+        fireBall.GetComponent<FireBall>().InitDamageMessage(fireballPool, gameObject, defaultDamage, mController.targetSearch.hit.gameObject);
         fireBall.transform.position = transform.position + Vector3.up * 2f;
         fireBall.SetActive(true);
     } // ShootFireBall
@@ -182,10 +186,10 @@ public class SkeletonMage : Monster
         {
             foreach (var _hit in hits)
             {
-                // if : 플레이어 또는 건축물일 때
-                if (_hit.collider.tag == GData.PLAYER_MASK || _hit.collider.tag == GData.BUILD_MASK)
+                IDamageable damageable = _hit.collider.gameObject.GetComponent<IDamageable>();
+                if (damageable != null)
                 {
-                    _hit.collider.gameObject.GetComponent<IDamageable>().TakeDamage(damageMessage);
+                    damageable.TakeDamage(damageMessage);
                 }
             }
         }

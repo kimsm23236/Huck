@@ -88,7 +88,7 @@ public class AttackIndicator : MonoBehaviour
     } // SetupRectangIndicatorPool
 
     //! rectanglePool에서 RectangIndicator 하나 가져오는 함수
-    public GameObject GetRectangIndicator(Vector3 pos, float horizontalityRange, float attackLength, float time)
+    public GameObject GetRectangIndicator(bool isAttackerDead, Vector3 pos, float horizontalityRange, float attackLength, float time)
     {
         GameObject rectangleIndicator = default;
         if (rectanglePool.Count > 0)
@@ -104,7 +104,7 @@ public class AttackIndicator : MonoBehaviour
         }
         rectangleIndicator.transform.position = pos + (Vector3.up * 0.2f);
         rectangleIndicator.SetActive(true);
-        rectangleIndicator.GetComponent<RectangIndicator>().InitRectangIndicator(horizontalityRange, attackLength, time);
+        rectangleIndicator.GetComponent<RectangIndicator>().InitRectangIndicator(isAttackerDead, horizontalityRange, attackLength, time);
         return rectangleIndicator;
     } // GetCircleIndicator
 

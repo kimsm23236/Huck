@@ -105,9 +105,12 @@ public class MonsterController : MonoBehaviour, IDamageable
         isSpawn = true;
         // 기본상태가 Idle이기 때문에 현재Clip이 Spawn으로 갱신되도록 0.1초 기다림
         yield return null;
+        float waitTime = monsterAni.GetCurrentAnimatorStateInfo(0).length;
         if (monster.monsterType == Monster.MonsterType.BOSS)
         {
             // 보스몬스터일 경우 타겟이 일정범위 안까지 올때까지 대기
+            monsterAni.speed = 0.5f;
+            waitTime = waitTime * 2f;
             monsterAni.StartPlayback();
             bool isStart = false;
             while (isStart == false)
@@ -124,7 +127,8 @@ public class MonsterController : MonoBehaviour, IDamageable
         }
         //Debug.Log($"{monsterAni.GetCurrentAnimatorClipInfo(0)[0].clip.name}");
         //Debug.Log($"{monster.monsterName}, {monsterAni.GetCurrentAnimatorStateInfo(0).length}");
-        yield return new WaitForSeconds(monsterAni.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(waitTime);
+        monsterAni.speed = 1f;
         monsterAni.SetTrigger("isRoar");
         yield return new WaitForSeconds(0.1f);
         yield return new WaitForSeconds(monsterAni.GetCurrentAnimatorStateInfo(0).length);
@@ -139,11 +143,11 @@ public class MonsterController : MonoBehaviour, IDamageable
     public void TakeDamage(DamageMessage message)
     {
         // 스폰, 죽음 상태일 때 무적처리
-        if (isSpawn == true || isDead == true)
+        if (isSpawn == true || isDead == true || message.causer.tag == GData.ENEMY_MASK)
         {
             return;
         }
-        monster.monsterHp -= Mathf.FloorToInt(message.damageAmount);
+        monster.monsterHp -= message.damageAmount;
         // HP가 0 이하면 사망
         if (monster.monsterHp <= 0f)
         {
@@ -158,8 +162,8 @@ public class MonsterController : MonoBehaviour, IDamageable
         {
             isHit = true;
         }
-        attacker = message.causer;
-        Debug.Log($"{attacker.name}한테 {message.damageAmount} 피해입음! 현재체력:{monster.monsterHp}, {isHit}");
+        //attacker = message.causer;
+        //Debug.Log($"{attacker.name}한테 {message.damageAmount} 피해입음! 현재체력:{monster.monsterHp}, {isHit}");
     } // TakeDamage
     #endregion // 몬스터의 스폰과 데미지처리 함수
 

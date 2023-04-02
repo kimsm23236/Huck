@@ -8,6 +8,5 @@ public class BossSpawnPos : MonoBehaviour
     void Start()
     {
         GameManager.Instance.bossPos = transform;
-        GameManager.Instance.BossSpwan();
-    }
+    } // Start
 } // BossSpawnPos

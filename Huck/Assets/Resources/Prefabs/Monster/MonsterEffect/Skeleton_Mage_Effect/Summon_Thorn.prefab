@@ -69415,7 +69415,7 @@ GameObject:
   - component: {fileID: 6215552349035241519}
   m_Layer: 0
   m_Name: Summon_Thorn
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

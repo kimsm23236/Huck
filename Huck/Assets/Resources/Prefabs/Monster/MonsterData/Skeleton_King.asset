@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Skeleton_King
   m_EditorClassIdentifier: 
   monsterName: "\uD574\uACE8\uC655"
-  monsterHp: 30
+  monsterHp: 200
   monsterMaxHp: 200
   moveSpeed: 8
-  damage: 15
+  damage: 16
   isNoRangeAttack: 0
   isNoRangeSkill: 0
   useSkill: 1

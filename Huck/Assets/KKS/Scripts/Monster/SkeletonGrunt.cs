@@ -277,10 +277,10 @@ public class SkeletonGrunt : Monster
         {
             foreach (var _hit in hits)
             {
-                // if : 플레이어 또는 건축물일 때
-                if (_hit.collider.tag == GData.PLAYER_MASK || _hit.collider.tag == GData.BUILD_MASK)
+                IDamageable damageable = _hit.collider.gameObject.GetComponent<IDamageable>();
+                if (damageable != null)
                 {
-                    _hit.collider.gameObject.GetComponent<IDamageable>().TakeDamage(damageMessage);
+                    damageable.TakeDamage(damageMessage);
                 }
             }
         }
@@ -334,7 +334,7 @@ public class SkeletonGrunt : Monster
     {
         mController.monsterAni.SetBool("isSkillB_Start", true);
         // 공격범위 표시
-        GameObject indicator = mController.attackIndicator.GetRectangIndicator(transform.position, 3f, 22f, 3.5f);
+        GameObject indicator = mController.attackIndicator.GetRectangIndicator(mController.isDead, transform.position, 3f, 22f, 3.5f);
         Quaternion startRotation = indicator.transform.rotation;
         bool isStart = true;
         float time = 0f;

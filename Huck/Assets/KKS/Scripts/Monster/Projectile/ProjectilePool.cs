@@ -7,16 +7,10 @@ public class ProjectilePool : MonoBehaviour
     [SerializeField] private GameObject projecttilePrefab = default;
     [SerializeField] private int maxPoolNumber = default;
     private Queue<GameObject> projecttilePool = new Queue<GameObject>();
-    private static ProjectilePool instance = default;
-    public static ProjectilePool Instance
-    {
-        get { return instance; }
-        set { instance = value; }
-    }
+ 
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
         SetupProjecttilePool(maxPoolNumber);
     } // Start
 
@@ -60,7 +54,7 @@ public class ProjectilePool : MonoBehaviour
     //! 발사한 투사체 회수하는 함수
     public void EnqueueProjecttile(GameObject _projecttile)
     {
-        projecttilePool.Enqueue(_projecttile);
         _projecttile.SetActive(false);
+        projecttilePool.Enqueue(_projecttile);
     } // ReturnArrow
 } // ProjectilePool

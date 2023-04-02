@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class RectangIndicator : MonoBehaviour
 {
     private AttackIndicator attackIndicator = default; // 공격범위 지시자 pool에 접근할 변수
     [SerializeField] private GameObject attackRangeObj = default; // 공격범위가 커지는 자식오브젝트
+    private bool isAttackerDead = false;
     private float durationTime = default; //최대지속시간
 
     // Start is called before the first frame update
@@ -15,8 +17,9 @@ public class RectangIndicator : MonoBehaviour
     } // Start
 
     //! 직사각형 범위 공격 지시자 범위설정 Init함수
-    public void InitRectangIndicator(float horizontalityRange, float attackLength, float time)
+    public void InitRectangIndicator(bool _isAttackerDead, float horizontalityRange, float attackLength, float time)
     {
+        isAttackerDead = _isAttackerDead;
         // 매개변수로 입력받은 공격범위의 좌우폭 설정
         transform.localScale = new Vector3(horizontalityRange, 1f, 1f);
         durationTime = time;
@@ -31,6 +34,12 @@ public class RectangIndicator : MonoBehaviour
         while (elapsed < durationTime)
         {
             elapsed += Time.deltaTime;
+            if (isAttackerDead == true)
+            {
+                // 시전자가 죽으면 비활성화
+                gameObject.SetActive(false);
+                yield break;
+            }
             float time = elapsed / durationTime;
             // 직사각형 공격지시자의 최대범위 길이를 시간에 따라 늘릴려면 Scale을 한쪽방향으로 늘려야하기 때문에
             // 앞방향의 Scale만 커지게 하기위해 Y축의 Scale을 사용 (X축의 회전값이 90이기 때문)

@@ -15,10 +15,10 @@ public class ParticleTrigger : MonoBehaviour
     //! 파티클 충돌 처리
     private void OnParticleCollision(GameObject other)
     {
-        if (other.tag == GData.PLAYER_MASK || other.tag == GData.BUILD_MASK)
+        IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
+        if (damageable != null)
         {
-            other.gameObject.GetComponent<IDamageable>().TakeDamage(damageMessage);
-            Debug.Log($"파티클 충돌! {damageMessage.causer.name}이 {other.tag}에게 {damageMessage.damageAmount}피해 줌!");
+            damageable.TakeDamage(damageMessage);
         }
     } // OnParticleCollision
 } // ParticleTrigger

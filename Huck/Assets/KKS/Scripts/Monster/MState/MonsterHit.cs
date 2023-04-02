@@ -71,7 +71,7 @@ public class MonsterHit : IMonsterState
     {
         mController.monsterAni.SetBool(_clipName, true);
         yield return null;
-        Debug.Log(_clipName);
+        //Debug.Log(_clipName);
         yield return new WaitForSeconds(mController.monsterAni.GetCurrentAnimatorStateInfo(0).length);
         // Hit 모션이 끝나면 Idle상태로 초기화
         mController.monsterAni.SetBool(_clipName, false);

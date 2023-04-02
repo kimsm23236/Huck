@@ -11,3 +11,4 @@
 2023-03-31 / v1.0.0 / All Merge       
 2023-04-02 / v1.0.1 /       
 각종 이슈 해결      
+2023-04-02 / v1.0.2 / Animal, build issue solve                

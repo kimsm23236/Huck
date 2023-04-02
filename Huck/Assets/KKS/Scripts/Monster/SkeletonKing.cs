@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SkeletonKing : Monster
 {
@@ -19,6 +20,7 @@ public class SkeletonKing : Monster
     [SerializeField] private float slideAttack_MaxCool = default; // 슬라이드어택 최대 쿨다운
     [SerializeField] private float crushAttack_MaxCool = default; // 크러쉬어택 최대 쿨다운
     [HideInInspector] public bool is2Phase = false; // 1 ~ 2페이즈 체크
+    private ProjectilePool skillD_Pool = default;
     private DamageMessage damageMessage = default; // 데미지 처리
     private GameObject skillB_Prefab = default; // 스킬B 이펙트 Prefab
     private GameObject skillC_Prefab = default; // 스킬C 이펙트 Prefab
@@ -35,6 +37,7 @@ public class SkeletonKing : Monster
         InitMonsterData(MonsterType.BOSS, monsterData);
         mController.monster = this;
         defaultDamage = damage;
+        skillD_Pool = gameObject.GetComponent<ProjectilePool>();
         damageMessage = new DamageMessage(gameObject, damage);
         skillB_Prefab = Resources.Load("Prefabs/Monster/MonsterEffect/Skeleton_King_Effect/LeapEffect") as GameObject;
         skillC_Prefab = Resources.Load("Prefabs/Monster/MonsterEffect/Skeleton_King_Effect/Thunder") as GameObject;
@@ -242,10 +245,10 @@ public class SkeletonKing : Monster
         {
             foreach (var _hit in hits)
             {
-                // if : 플레이어 또는 건축물일 때
-                if (_hit.collider.tag == GData.PLAYER_MASK || _hit.collider.tag == GData.BUILD_MASK)
+                IDamageable damageable = _hit.collider.gameObject.GetComponent<IDamageable>();
+                if (damageable != null)
                 {
-                    _hit.collider.gameObject.GetComponent<IDamageable>().TakeDamage(damageMessage);
+                    damageable.TakeDamage(damageMessage);
                 }
             }
         }
@@ -318,6 +321,7 @@ public class SkeletonKing : Monster
                 mController.transform.position += Vector3.down * deadSpeed;
                 yield return null;
             }
+            GameManager.Instance.isExistenceBoss = false;
             Destroy(mController.gameObject);
         }
     } // Dead
@@ -647,7 +651,6 @@ public class SkeletonKing : Monster
             // 1페이즈
             GameObject effectObj = Instantiate(skillC_Prefab);
             ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
-
             if (Physics.Raycast(pos, Vector3.down, out hit, 10f) == true)
             {
                 // 번개 떨어질 위치 정해줌
@@ -736,20 +739,19 @@ public class SkeletonKing : Monster
     {
         if (is2Phase == false)
         {
-            // 1페이즈 낙뢰 이펙트
-            GameObject swordObj = ProjectilePool.Instance.GetProjecttile();
+            // 1페이즈
+            GameObject swordObj = skillD_Pool.GetProjecttile();
             ParticleSystem effect = swordObj.GetComponent<ParticleSystem>();
             swordObj.transform.position = mController.targetSearch.hit.transform.position + new Vector3(0f, 0.1f, 0f);
             // 공격범위 표시
             mController.attackIndicator.GetCircleIndicator(swordObj.transform.position, 4f, 1.5f);
             yield return new WaitForSeconds(1.5f);
-
             swordObj.gameObject.SetActive(true);
             effect.Play();
             Skill_Damage(swordObj.transform.position, 2f, 1.5f);
             yield return new WaitForSeconds(effect.main.duration + effect.main.startLifetime.constant);
             effect.Stop();
-            ProjectilePool.Instance.EnqueueProjecttile(swordObj);
+            skillD_Pool.EnqueueProjecttile(swordObj);
         }
         else
         {
@@ -771,7 +773,7 @@ public class SkeletonKing : Monster
                 mController.attackIndicator.GetCircleIndicator(randomPosList[i], 4f, 1.5f);
                 if (i % 2 == 0)
                 {
-                    // 짝수번째마다 0.3초 늦게 떨어지게 처리
+                    // 짝수번째마다 0.3초 늦게 표시되게 처리
                     yield return new WaitForSeconds(0.3f);
                 }
             }
@@ -779,7 +781,7 @@ public class SkeletonKing : Monster
             List<GameObject> thunderList = new List<GameObject>();
             for (int i = 0; i < 10; i++)
             {
-                GameObject swordObj = ProjectilePool.Instance.GetProjecttile();
+                GameObject swordObj = skillD_Pool.GetProjecttile();
                 ParticleSystem effect = swordObj.GetComponent<ParticleSystem>();
                 swordObj.transform.position = randomPosList[i];
                 swordObj.gameObject.SetActive(true);
@@ -799,7 +801,7 @@ public class SkeletonKing : Monster
             yield return new WaitForSeconds(lastEffect.main.duration + lastEffect.main.startLifetime.constant);
             for (int i = 0; i < 10; i++)
             {
-                ProjectilePool.Instance.EnqueueProjecttile(thunderList[i]);
+                skillD_Pool.EnqueueProjecttile(thunderList[i]);
             }
         }
     } // OnEffectSkillD

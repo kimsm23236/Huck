@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log("Έχ ΌÒΘ―!!");
             GameManager.Instance.SpawnMonster();
+        }
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            GameManager.Instance.BossSpwan();
         }
     }
 }

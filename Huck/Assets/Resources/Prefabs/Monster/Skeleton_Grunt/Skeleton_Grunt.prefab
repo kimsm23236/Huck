@@ -1237,8 +1237,8 @@ MonoBehaviour:
   shoulder: {fileID: 1861230506494893200}
   useSkillA: 1
   useSkillB: 1
-  skillA_MaxCool: 20
-  skillB_MaxCool: 40
+  skillA_MaxCool: 25
+  skillB_MaxCool: 35
 --- !u!1 &4152931532648331204
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,9 +8,9 @@ public class SkeletonArcher : Monster
     [SerializeField] private GameObject weapon = default;
     [SerializeField] private Transform arrowPos = default;
     [SerializeField] private MonsterData monsterData;
-
     [SerializeField] private bool useSkillA = default;
     [SerializeField] private float skillA_MaxCool = default;
+    private ProjectilePool arrowPool = default;
     private GameObject skillA_Prefab = default;
     private DamageMessage damageMessage = default;
     private int defaultDamage = default;
@@ -22,6 +22,7 @@ public class SkeletonArcher : Monster
         InitMonsterData(MonsterType.NOMAL, monsterData);
         mController.monster = this;
         defaultDamage = damage;
+        arrowPool = gameObject.GetComponent<ProjectilePool>();
         damageMessage = new DamageMessage(gameObject, damage);
         skillA_Prefab = Resources.Load("Prefabs/Monster/MonsterEffect/Skeleton_Archer_Effect/ArrowRain") as GameObject;
         CheckUseSkill();
@@ -79,12 +80,17 @@ public class SkeletonArcher : Monster
     //! 화살 쏘는 함수
     private void ShootArrow()
     {
-        GameObject arrow = ProjectilePool.Instance.GetProjecttile();
-        arrow.GetComponent<Arrow>().InitDamageMessage(gameObject, defaultDamage);
+        GameObject arrow = arrowPool.GetProjecttile();
+        arrow.GetComponent<Arrow>().InitDamageMessage(arrowPool, gameObject, defaultDamage);
+        if (arrow == null || arrow == default)
+        {
+            arrow = arrowPool.GetProjecttile();
+        }
         arrow.transform.position = arrowPos.position;
         Vector3 dir = ((mController.targetSearch.hit.transform.position + Vector3.up) - arrow.transform.position).normalized;
         arrow.transform.forward = dir;
         arrow.SetActive(true);
+
     } // ShootArrow
 
     //! 공격종료 이벤트함수
@@ -124,10 +130,10 @@ public class SkeletonArcher : Monster
         {
             foreach (var _hit in hits)
             {
-                // if : 플레이어 또는 건축물일 때
-                if (_hit.collider.tag == GData.PLAYER_MASK || _hit.collider.tag == GData.BUILD_MASK)
+                IDamageable damageable = _hit.collider.gameObject.GetComponent<IDamageable>();
+                if (damageable != null)
                 {
-                    _hit.collider.gameObject.GetComponent<IDamageable>().TakeDamage(damageMessage);
+                    damageable.TakeDamage(damageMessage);
                 }
             }
         }

@@ -34286,7 +34286,7 @@ GameObject:
   - component: {fileID: 6794951665062548678}
   m_Layer: 0
   m_Name: LeapEffect
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

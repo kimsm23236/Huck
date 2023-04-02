@@ -520,6 +520,22 @@ public class BuildSystem : MonoBehaviour
                 switch (prevType)
                 {
                     case buildType.Anvil:
+                        buildObj.tag = "Anvil";
+                        break;
+                    case buildType.Stove:
+                        buildObj.tag = "Stove";
+                        break;
+                    case buildType.Workbench:
+                        buildObj.tag = "Workbench";
+                    break;
+                    default:
+                        buildObj.transform.GetChild(0).tag = "Gather";
+                        break;
+                }
+
+                switch (prevType)
+                {
+                    case buildType.Anvil:
                     case buildType.Stove:
                     case buildType.Workbench:
                         buildObj.AddComponent<NavMeshObstacle>();
