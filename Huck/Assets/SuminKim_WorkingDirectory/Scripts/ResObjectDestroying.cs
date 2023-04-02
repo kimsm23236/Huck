@@ -30,7 +30,7 @@ public class ResObjectDestroying : PostProcessOnLoading
     {
         if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.PostProcessOnLoading, "Overlapped ResourceObject Destroying");
         
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
         Destroy(gameObject, 1f);
     }
 }

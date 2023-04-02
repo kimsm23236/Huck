@@ -94,17 +94,33 @@ public class ProcGenManager : MonoBehaviour
         // Generate the terrain detail mapping
         Perform_GenerateTerrainDetailMapping();
 
-        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.BuildBiomeMap, "Build biome map");
-        yield return new WaitForSeconds(1f);
+        while(true)
+        {
+            if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.BuildBiomeMap, "Build biome map");
+            yield return new WaitForSeconds(1f);
 
-        // Generate the biome Map
-        Perform_BiomeGeneration(mapResolution);
+            // Generate the biome Map
+            Perform_BiomeGeneration(mapResolution);
 
-        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.HeightMapGeneration, "Modifying heights");
-        yield return new WaitForSeconds(1f);
+            if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.HeightMapGeneration, "Modifying heights");
+            yield return new WaitForSeconds(1f);
 
-        // update the terrain heights
-        Perform_HeightMapModification(mapResolution, alphaMapResolution);
+            // update the terrain heights
+            Perform_HeightMapModification(mapResolution, alphaMapResolution);
+
+            // Height Modifier로 높이맵과 보스 성을 만드는데 여기서 보스성을 찾을 수 있다면 루프 탈출
+            if(IsValidHeightModifying())
+                break;
+            else
+            {
+                if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.HeightMapGeneration, "Validation Failed Return Build biome map");
+                yield return new WaitForSeconds(1f);
+            }
+        }
+
+        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.SetupWorldMap, "Setup world map"); 
+                yield return new WaitForSeconds(1f);
+        Perform_SetupWorldMap(config, mapResolution);
 
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.TerrainPainting, "Painting the terrain");
         yield return new WaitForSeconds(1f);
@@ -606,6 +622,68 @@ public class ProcGenManager : MonoBehaviour
             }
         }
         
+    }
+
+    void Perform_SetupWorldMap(ProcGenConfigSO config, int mapResolution)
+    {
+        float[,] heightMap = targetTerrain.terrainData.GetHeights(0, 0, mapResolution, mapResolution);
+        Vector3 heightMapScale = targetTerrain.terrainData.heightmapScale;
+        Color heightColor_HighMountain = Color.white;
+        Color heightColor_Water = Color.cyan;
+
+        // save out the biome map
+        Texture2D biomeMapTexture = new Texture2D(mapResolution, mapResolution, TextureFormat.RGB24, false);
+        for (int y = 0; y < mapResolution; y++)
+        {
+            for (int x = 0; x < mapResolution; x++)
+            {
+                Color workingColor = config.Biomes[(int)BiomeMap[x, y]].Biome.mapColor;
+                if(heightMap[x,y] * heightMapScale.y >= 80f)
+                    workingColor = heightColor_HighMountain;
+                else if(heightMap[x,y] * heightMapScale.y <= 15f)
+                    workingColor = heightColor_Water;
+
+                biomeMapTexture.SetPixel(x, y, workingColor);
+            }
+        }
+        biomeMapTexture.Apply();
+
+        UIManager.Instance.worldMapTexture = biomeMapTexture;
+#if UNITY_EDITOR
+        System.IO.File.WriteAllBytes("BiomeMap_WorldMap.png", biomeMapTexture.EncodeToPNG());
+#endif  // UNITY_EDITOR
+    }
+
+    bool IsValidHeightModifying()
+    {
+        bool bIsSuccessed = true;
+#if UNITY_EDITOR
+        if(Application.isPlaying)
+        {
+            GameObject bossCastle = gameObject.FindChildObj("BossCastle(Clone)");
+            if(bossCastle == default)
+            {
+                Debug.Log("Can't found Boss Castle");
+                bIsSuccessed = false;
+            }
+            else
+                Debug.Log("find Boss Castle");
+        }
+        else
+        {
+            /* To do? */
+        } 
+#else
+        GameObject bossCastle = gameObject.FindChildObj("BossCastle(Clone)");
+        if(bossCastle == default)
+        {
+            Debug.Log("Can't found Boss Castle");
+            bIsSuccessed = false;
+        }
+        else
+            Debug.Log("find Boss Castle");
+#endif 
+        return bIsSuccessed;
     }
 
 }

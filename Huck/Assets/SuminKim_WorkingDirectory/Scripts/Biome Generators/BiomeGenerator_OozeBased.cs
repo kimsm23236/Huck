@@ -28,15 +28,15 @@ public class BiomeGenerator_OozeBased : BaseBiomeMapGenerator
     }
     void Perform_BiomeGeneration_LowResolution(ProcGenConfigSO config, int mapResolution)
     {
-        // allocate the Biome map and strength map
+        // 바이옴 맵, 강도 맵 메모리 할당
         BiomeMap_LowResolution = new byte[mapResolution, mapResolution];
         BiomeStrengths_LowResolution = new float[mapResolution, mapResolution];
 
-        // setup space for the seed points
+        // 시드 포인트 갯수 설정
         int numSeedPoints = Mathf.FloorToInt(mapResolution * mapResolution * BiomeSeedPointDensity);
         List<byte> biomeToSpawn = new List<byte>(numSeedPoints);
 
-        // populate the biomes to spawn based on weightings
+        // 가중치를 바탕으로 바이옴 채우기
         float totalBiomeWeighting = config.TotalWeighting;
         for(int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
         {
@@ -146,6 +146,7 @@ public class BiomeGenerator_OozeBased : BaseBiomeMapGenerator
             for (int x = 0; x < highResMapSize; x++)
             {
                 float hue = ((float)biomeMap[x, y] / (float)config.NumBiomes);
+                //Color color = config.Biomes[(int)biomeMap[x, y]].Biome.mapColor;
                 biomeMapTexture.SetPixel(x, y, Color.HSVToRGB(hue, 0.75f, 0.75f));
             }
         }
@@ -165,6 +166,7 @@ public class BiomeGenerator_OozeBased : BaseBiomeMapGenerator
         new Vector2Int(1, -1),
         new Vector2Int(-1, 1),
     };
+    
 
     void Perform_SpawnIndividualBiome(ProcGenConfigSO config, byte biomeIndex, int mapResolution)
     {

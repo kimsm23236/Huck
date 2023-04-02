@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 245530612129084143}
   - component: {fileID: 8892216948935992075}
   - component: {fileID: 2615103983030265582}
+  - component: {fileID: 4967869123866433033}
   m_Layer: 16
   m_Name: Tree_birch_03
   m_TagString: Gather
@@ -90,6 +91,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8378415830892198738, guid: d4e66bed02ca81d4cab905054b54d30d, type: 3}
+--- !u!208 &4967869123866433033
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5664719250160204779}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 2.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7745171161274563146
 GameObject:
   m_ObjectHideFlags: 0

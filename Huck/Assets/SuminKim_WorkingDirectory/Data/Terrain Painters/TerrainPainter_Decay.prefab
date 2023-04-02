@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Strength: 1
   baseTexture:
-    Diffuse: {fileID: 2800000, guid: a36684cfc68dfce44af56f21e48ee77f, type: 3}
-    NormalMap: {fileID: 2800000, guid: 59261f851c1b9c1459da59d57f71caa3, type: 3}
+    Diffuse: {fileID: 2800000, guid: 7b65f48823b56444790848974b11c0af, type: 3}
+    NormalMap: {fileID: 0}
   paintingConfigs:
   - textureToPaint:
       Diffuse: {fileID: 2800000, guid: 7b65f48823b56444790848974b11c0af, type: 3}

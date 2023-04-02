@@ -26,9 +26,9 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
 
 
     protected void SpawnBuilding(ProcGenConfigSO globalConfig, LandmarkConfig landmark,
-                                 int spawnX, int spawnY,
-                                 int mapResolution, float[,] heightMap, Vector3 heightmapScale,
-                                 Transform buildingRoot)
+                                    int spawnX, int spawnY,
+                                    int mapResolution, float[,] heightMap, Vector3 heightmapScale,
+                                    Transform buildingRoot)
     {
         float averageHeight = 0f;
         int numHeightSamples = 0;
@@ -38,7 +38,7 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
         {
             for (int x = -landmark.Radius; x <= landmark.Radius; ++x)
             {
-                // ¿ø ¹üÀ§ Ã¼Å©
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
                 double distance = Mathf.Sqrt(Mathf.Pow(y - spawnY, 2) + Mathf.Pow(x - spawnX, 2));
                 if (distance > landmark.Radius)
                     continue;
@@ -69,7 +69,7 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
                 int workingX = x + spawnX;
                 float textureX = Mathf.Clamp01((float)(x + landmark.Radius) / (landmark.Radius * 2f));
 
-                // ¿ø ¹üÀ§ Ã¼Å©
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
                 double distance = Mathf.Sqrt(Mathf.Pow(workingY - spawnY, 2) + Mathf.Pow(workingX - spawnX, 2));
                 if (distance > landmark.Radius)
                     continue;
@@ -102,7 +102,9 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
         // instantiate the prefab
 #if UNITY_EDITOR
         if (Application.isPlaying)
+        {
             Instantiate(landmark.prefab, buildingLocation, Quaternion.identity, buildingRoot);
+        }
         else
         {
             var spawnedGO = PrefabUtility.InstantiatePrefab(landmark.prefab, buildingRoot) as GameObject;
@@ -124,7 +126,7 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
             {
                 float height = heightMap[x, y] * heightmapScale.y;
 
-                // ¹ÙÀÌ¿È Ã¼Å©
+                // ï¿½ï¿½ï¿½Ì¿ï¿½ Ã¼Å©
                 if ((EBiome)biomeMap[x, y] != landmarkConfig.placedBiome)
                 {
                     continue;
@@ -151,12 +153,13 @@ public class HeightMapModifier_Landmark : BaseHeightMapModifier
     public override void Execute(ProcGenConfigSO globalConfig, int mapResolution, float[,] heightMap, Vector3 heightmapScale, byte[,] biomeMap = null, int biomeIndex = -1, BiomeConfigSO biome = null)
     {
         var buildingRoot = FindObjectOfType<ProcGenManager>().transform;
+
         // traverse the features
         foreach (var landmark in landmarks)
         {
             var spawnLocations = GetSpawnLocationsForBuilding(globalConfig, mapResolution, heightMap, heightmapScale, landmark, biomeMap, biomeIndex, biome);
             
-            foreach(var spawnLocation in spawnLocations)
+            // foreach(var spawnLocation in spawnLocations)
 
             for (int buildingIndex = 0; buildingIndex < landmark.numToSpawn && spawnLocations.Count > 0; buildingIndex++)
             {

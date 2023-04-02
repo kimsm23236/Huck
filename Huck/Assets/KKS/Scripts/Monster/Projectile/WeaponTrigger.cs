@@ -14,15 +14,15 @@ public class WeaponTrigger : MonoBehaviour
 
     private void OnEnable()
     {
-        // Start º¸´Ù ¸ÕÀú ½ÇÇàÇÏ±â ¶§¹®¿¡ Ã³À½ È°¼ºÈ­ ½Ã null¶ß´Â ¿À·ù ¿¹¿ÜÃ³¸®
+        // Start ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½ï¿½ nullï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
         if (damageMessage != null || damageMessage != default)
         {
-            // È°¼ºÈ­ µÉ ¶§ º¯°æµÈ ¸ó½ºÅÍ µ¥¹ÌÁö¸¦ Ä³½Ì (¸ó½ºÅÍÀÇ °ø°ÝÅ¸ÀÔ¿¡ µû¸¥ µ¥¹ÌÁö º¯°æ Àû¿ë)
+            // È°ï¿½ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
             damageMessage.damageAmount = mController.monster.damage;
         }
     } // OnEnable
 
-    //! ÄÝ¶óÀÌ´õ Æ®¸®°Å
+    //! ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == GData.PLAYER_MASK || other.tag == GData.BUILD_MASK)

@@ -20,13 +20,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.UnityProject/Scenes/SampleTestScene.unity
     guid: 949d327ba7e3efd46b3b6698033fc6ca
-  - enabled: 0
+  - enabled: 1
     path: Assets/SuminKim_WorkingDirectory/Scenes/Backup/b_SampleLoadingScene.unity
-    guid: e0df33e697cb59241b1778aa6b4098a4
-  - enabled: 0
+    guid: 358974b411657634fbcf8644825e9580
+  - enabled: 1
     path: Assets/SuminKim_WorkingDirectory/Scenes/Backup/b_SampleTestScene.unity
-    guid: 639e7e61ddcd066499cdf88ab9e80f82
-  - enabled: 0
+    guid: 67d5237d403bef54293f883bb25e892a
+  - enabled: 1
     path: Assets/SuminKim_WorkingDirectory/Scenes/Backup/b_SampleTitleSample.unity
-    guid: 849a1a5fcf451ff478e837acff1bce07
+    guid: a40f8b18deade074e8d0002f83a1ea7c
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

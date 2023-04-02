@@ -15,6 +15,7 @@ public enum EGenerationStage
     BuildDetailMap,
     BuildBiomeMap,
     HeightMapGeneration,
+    SetupWorldMap,
     TerrainPainting,
     ObjectPlacement,
     DetailPainting,

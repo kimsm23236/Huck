@@ -17,6 +17,8 @@ public class BiomeConfigSO : ScriptableObject
     [Range(0f, 1.0f)]
     public float MinDecayRate = 0.02f;
 
+    public Color mapColor = default;
+
     public GameObject HeightModifier;
     public GameObject TerrainPainter;
     public GameObject ObjectPlacer;

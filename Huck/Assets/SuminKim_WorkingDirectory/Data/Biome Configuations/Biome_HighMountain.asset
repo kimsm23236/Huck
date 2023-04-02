@@ -17,6 +17,7 @@ MonoBehaviour:
   MaxIntensity: 1
   MaxDecayRate: 0.3
   MinDecayRate: 0.4
+  mapColor: {r: 0.13725491, g: 0.3137255, b: 0.0627451, a: 0}
   HeightModifier: {fileID: 2241750196349273561, guid: b658d6ff681fa4d49b165039cb598186,
     type: 3}
   TerrainPainter: {fileID: 5882182845285664830, guid: db4e38b205981ba44912f6a030bd3d85,

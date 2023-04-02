@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    [Header("µå·¡±×¾Ø µå·Ó X")]
+    [Header("ï¿½å·¡ï¿½×¾ï¿½ ï¿½ï¿½ï¿½ X")]
     public GameObject inventory = default;
     public GameObject settingMenu = default;
     public GameObject clo_CheckBox = default;
@@ -22,13 +22,13 @@ public class UIManager : Singleton<UIManager>
     public Text dead_4 = default;
     // [KMS] Dead UI
 
-    [Header("µå·¡±×¾Ø µå·Ó O")]
+    [Header("ï¿½å·¡ï¿½×¾ï¿½ ï¿½ï¿½ï¿½ O")]
     public GameObject UiObjs = default;
     public GameObject Sen_goldot = default;
     public GameObject sunFind = default;
     public GameObject moonFind = default;
     public GameObject cloud = default;
-    [Header("´Ù¸¥ °÷¿¡¼­ ¾µ Bool º¯¼ö")]
+    [Header("ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Bool ï¿½ï¿½ï¿½ï¿½")]
     public bool isResumeOn = false;
     public bool isSetMenuOpen = false;
 
@@ -43,6 +43,10 @@ public class UIManager : Singleton<UIManager>
     private bool is_S_CheckBox = true;
     private Light theSun = default;
     private Light theMoon = default;
+
+    // { 2023.04.02 KSM World Map
+    public Texture2D worldMapTexture = default;
+    // } 2023.04.02 KSM World Map
 
     private void Start()
     {

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6537731631776451988}
   - component: {fileID: 3756031999639582457}
   - component: {fileID: 1561798559810441856}
+  - component: {fileID: -4153711202745653014}
   m_Layer: 16
   m_Name: Ore_Stone_03
   m_TagString: Gather
@@ -90,6 +91,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7003246998669667298, guid: f5877dadfda53414ca34a79dc135f39b, type: 3}
+--- !u!208 &-4153711202745653014
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525703396560854713}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.8, y: 1.5, z: 1.8}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.3}
+  m_TimeToStationary: 0.5
 --- !u!1 &1974520593587031792
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,13 +51,13 @@ Material:
     - _AlphaClip: 0.3
     - _CloudsAlpha: 0.85
     - _CloudsPower: 0.7
-    - _CloudsScale: 5000
+    - _CloudsScale: 200
     - _DistortScale: 14.52
     - _QueueControl: 0
     - _QueueOffset: 0
     - _VertexOffset: 0.05
     m_Colors:
     - _CloudsColor: {r: 1, g: 1, b: 1, a: 0.3921569}
-    - _CloudsSpeed: {r: 0.0001, g: 0.0001, b: 0, a: 0}
+    - _CloudsSpeed: {r: 0.005, g: 0.001, b: 0, a: 0}
     - _DistortSpeed: {r: 0.001, g: 0.002, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DestructibleObject : MonoBehaviour, IDamageable
 {
-    // юс╫ц
+    // О©╫с╫О©╫
     public int HP = 3;
     //[SerializeField]
     //private List<GameObject> childPObj;
@@ -50,8 +50,9 @@ public class DestructibleObject : MonoBehaviour, IDamageable
     {
         foreach(var collider in colliders)
         {
+            if(collider.gameObject == gameObject)
+                continue;
             collider.isTrigger = value;
-            
         }
     }
 }

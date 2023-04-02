@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6537731631776451988}
   - component: {fileID: 4108644895381641793}
   - component: {fileID: 6798679124041400439}
+  - component: {fileID: 3177867559916886159}
   m_Layer: 16
   m_Name: Ore_Iron_04
   m_TagString: Gather
@@ -90,6 +91,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3419291043712529671, guid: 00456485ab9b04249b6c025aa9166c4b, type: 3}
+--- !u!208 &3177867559916886159
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525703396560854713}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.3, y: 1.5, z: 1.3}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.04, y: 0, z: -0.45}
+  m_TimeToStationary: 0.5
 --- !u!1 &1974520593587031792
 GameObject:
   m_ObjectHideFlags: 0
