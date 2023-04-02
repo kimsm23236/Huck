@@ -176,7 +176,8 @@ public class PlayerOther : MonoBehaviour
         if (itemInfo != null && Input.GetKeyDown(KeyCode.E))
         {
             invenSlot.AddItem(itemInfo);
-            Destroy(itemInfo.gameObject);
+            if(!invenSlot.isFillAll)
+                Destroy(itemInfo.gameObject);
         }
     }
     #endregion
