@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 5199147886507277154}
   m_Layer: 0
   m_Name: woodWindowWallPrev
-  m_TagString: Gather
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -520,6 +520,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 1a106b0ef0bcffb4faaa62cd8f29c170, type: 2}
+  dropItems: []
+  Bsystem: {fileID: 0}
 --- !u!1 &2675665969225517644
 GameObject:
   m_ObjectHideFlags: 0

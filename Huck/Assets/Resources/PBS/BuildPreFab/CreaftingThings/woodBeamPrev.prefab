@@ -131,10 +131,10 @@ GameObject:
   - component: {fileID: 2325446790137181636}
   - component: {fileID: 7713338243857306638}
   - component: {fileID: 2519977703560389136}
-  - component: {fileID: 8743607723776417637}
+  - component: {fileID: 8592852503654849421}
   m_Layer: 0
   m_Name: woodBeamPrev
-  m_TagString: Gather
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,7 +236,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &8743607723776417637
+--- !u!114 &8592852503654849421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,6 +249,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 68c1ab5afd6421641bbcc6db575b201d, type: 2}
+  dropItems: []
+  Bsystem: {fileID: 0}
 --- !u!1 &5545407045126500199
 GameObject:
   m_ObjectHideFlags: 0

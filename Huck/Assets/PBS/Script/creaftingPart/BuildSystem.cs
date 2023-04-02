@@ -379,19 +379,6 @@ public class BuildSystem : MonoBehaviour
             prevObj.transform.parent = this.transform;
             prevObj.name = "prevObj";
 
-            if (prevType == buildType.Anvil || prevType == buildType.Stove || prevType == buildType.Workbench)
-            {
-                prevObj.tag = tag = "Untagged";
-                ResourceBuildObject tempComponent = prevObj.GetComponent<ResourceBuildObject>();
-                Destroy(tempComponent);
-            }
-            else
-            {
-                prevObj.transform.GetChild(0).tag = tag = "Untagged";
-                ResourceBuildObject tempComponent = prevObj.transform.GetChild(0).GetComponent<ResourceBuildObject>();
-                Destroy(tempComponent);
-            }
-
             SetLayer();
             SetTrigger(buildtype);
             SetPrevMat(buildtype, buildTypeMat.Green);
@@ -463,12 +450,16 @@ public class BuildSystem : MonoBehaviour
                 switch (prevType)
                 {
                     case buildType.Anvil:
-                    case buildType.Stove:
-                    case buildType.Workbench:
-                        buildObj.AddComponent<NavMeshObstacle>();
+                        buildObj.tag = "Anvil";
                         break;
+                    case buildType.Stove:
+                        buildObj.tag = "Stove";
+                        break;
+                    case buildType.Workbench:
+                        buildObj.tag = "Workbench";
+                    break;
                     default:
-                        buildObj.transform.GetChild(0).gameObject.AddComponent<NavMeshObstacle>();
+                        buildObj.transform.GetChild(0).tag = "Gather";
                         break;
                 }
 
@@ -477,12 +468,12 @@ public class BuildSystem : MonoBehaviour
                     case buildType.Anvil:
                     case buildType.Stove:
                     case buildType.Workbench:
-                        buildObj.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
+                        buildObj.AddComponent<NavMeshObstacle>();
 
+                        buildObj.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
                         if (buildObj.transform.childCount > 0)
                         {
                             Transform[] allChildren = buildObj.GetComponentsInChildren<Transform>();
-
                             foreach (Transform child in allChildren)
                             {
                                 child.gameObject.layer = LayerMask.NameToLayer(BUILD_ITEM_LAYER);
@@ -491,6 +482,8 @@ public class BuildSystem : MonoBehaviour
 
                         break;
                     default:
+                        buildObj.transform.GetChild(0).gameObject.AddComponent<NavMeshObstacle>();
+
                         buildObj.layer = 0;
                         buildObj.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer(GData.BUILD_MASK);
                         break;
@@ -656,6 +649,18 @@ public class BuildSystem : MonoBehaviour
                         prevObj.transform.GetChild(0).GetComponent<Renderer>().material = BuildLoadMats[(int)buildTypeMat.Red];
                     break;
             }
+        }
+    }
+
+    public void FindBuildObj(GameObject Obj)
+    {
+        if(Obj.tag == "Anvil" || Obj.tag == "Stove" || Obj.tag == "Workbench")
+        {
+            FindAndDestory(Obj.name);
+        }
+        else
+        {
+            FindAndDestory(Obj.transform.parent.name);
         }
     }
 
