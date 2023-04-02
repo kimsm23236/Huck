@@ -61,7 +61,7 @@ public class PlayerOther : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab) && isMapOpen == false && isMenuOpen == false && PlayerMove.isDead == false
             && PlayerOther.isStoveOpen == false && PlayerOther.isAnvilOpen == false
-            && PlayerOther.isWorkbenchOpen == false)
+            && PlayerOther.isWorkbenchOpen == false && LoadingManager.Instance.isLoadingEnd == true)
         {
             isInvenOpen = !isInvenOpen;
             if (isInvenOpen == true)
@@ -93,7 +93,7 @@ public class PlayerOther : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M) && isInvenOpen == false && isMenuOpen == false && PlayerMove.isDead == false
             && PlayerOther.isStoveOpen == false && PlayerOther.isAnvilOpen == false
-            && PlayerOther.isWorkbenchOpen == false)
+            && PlayerOther.isWorkbenchOpen == false && LoadingManager.Instance.isLoadingEnd == true)
         {
             isMapOpen = !isMapOpen;
             if (isMapOpen == true)
@@ -129,7 +129,8 @@ public class PlayerOther : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) || UIManager.Instance.isResumeOn == true)
         {
-            if (UIManager.Instance.isSetMenuOpen == false && PlayerMove.isDead == false)
+            if (UIManager.Instance.isSetMenuOpen == false && PlayerMove.isDead == false
+                && LoadingManager.Instance.isLoadingEnd == true)
             {
                 isMenuOpen = !isMenuOpen;
                 if (isMenuOpen == true)

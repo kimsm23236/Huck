@@ -23,7 +23,6 @@ public class RangeMove : MonoBehaviour, IDamageable
         gameObject.transform.rotation = camera_1p.transform.rotation;
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         ItemData item_ = playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData;
@@ -34,76 +33,5 @@ public class RangeMove : MonoBehaviour, IDamageable
         {
             damageable.TakeDamage(dm);
         }
-
-        /*
-        if (other.tag == GData.ENEMY_MASK)
-        {
-            ItemData item_ = playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData;
-
-            DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage);
-            other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
-        }
-        if (other.tag == GData.GATHER_MASK)
-        {
-            BRO = other.GetComponent<BaseResourceObject>().ResourceConfig;
-            ItemData item_ = playerInHand.inventorySlotItem[playerInHand.selectedQuitSlot].itemData;
-
-            // DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage, item_);
-            // other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
-            if (item_ != null)
-            {
-                if (item_.ItemTool == EItemTool.AXE)
-                {
-                    if (BRO.ResourceType == EResourceType.WOOD)
-                    {
-                        if ((int)item_.ItemLevel < (int)BRO.ResourceLevel)
-                        {
-                            DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage * 0, item_);
-                            other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
-                        }
-                        else
-                        {
-                            DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage, item_);
-                            other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
-                        }
-                    }
-                    else
-                    {
-                        DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage * 0, item_);
-                        other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
-                    }
-                }
-                else if (item_.ItemTool == EItemTool.PICKAXE)
-                {
-                    if (BRO.ResourceType == EResourceType.ORE)
-                    {
-                        if ((int)item_.ItemLevel < (int)BRO.ResourceLevel)
-                        {
-                            DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage * 0, item_);
-                            other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
-                        }
-                        else
-                        {
-                            DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage, item_);
-                            other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
-                        }
-                    }
-                    else
-                    {
-                        DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage * 0, item_);
-                        other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
-                    }
-                }
-                else
-                {
-                    if (BRO.ResourceType == EResourceType.ORE || BRO.ResourceType == EResourceType.WOOD)
-                    {
-                        DamageMessage dm = new DamageMessage(transform.parent.gameObject, playerStat.damage * 0, item_);
-                        other.gameObject.GetComponent<IDamageable>().TakeDamage(dm);
-                    }
-                }
-            }
-        }
-        */
     }
 }
