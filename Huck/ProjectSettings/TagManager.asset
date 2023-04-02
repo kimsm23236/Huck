@@ -12,6 +12,8 @@ TagManager:
   - Item
   - Floor
   - PostProcessObject
+  - Stove
+  - Workbench
   layers:
   - Default
   - TransparentFX

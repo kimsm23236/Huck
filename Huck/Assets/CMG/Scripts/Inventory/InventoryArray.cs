@@ -11,6 +11,7 @@ public class InventoryArray : MonoBehaviour
     public List<ItemSlot> itemSlotScripts = new List<ItemSlot>();
     public GameObject slotPrefab = null;
     public ItemSlot nowSlot = default;
+    public bool isFillAll = false;
 
 
     #region 인벤토리 드래그 & 드랍을 위한 변수
@@ -223,18 +224,19 @@ public class InventoryArray : MonoBehaviour
 
     public void AddItem(Item item_)
     {
+        isFillAll = false;
         if (item_.itemData.ItemType == EItemType.CombineAble)
         {
             bool isCombine = false;
             // 같은게 있는지 검사
             for (int i = 0; i < transform.childCount; i++)
             {
+                isFillAll = false;
                 nowSlot = itemSlotScripts[i];
                 if (nowSlot.itemData != null && nowSlot.itemData.ItemName == item_.itemData.ItemName)
                 {
                     nowSlot.itemAmount += item_.itemCount;
                     isCombine = true;
-
                     break;
                 } // 획득한 아이템과 같은 이름의 아이템이 있는지 확인
             }
@@ -242,6 +244,7 @@ public class InventoryArray : MonoBehaviour
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
+                    isFillAll = false;
                     nowSlot = itemSlotScripts[i];
                     if (nowSlot.itemData == null)
                     {
@@ -250,6 +253,10 @@ public class InventoryArray : MonoBehaviour
                         nowSlot.itemUseDel = item_.OnUse;
                         break;
                     }
+                    else
+                    {
+                        isFillAll = true;
+                    }
                 }
             } // 합쳐질 아이템이 없을 경우
         }
@@ -257,6 +264,7 @@ public class InventoryArray : MonoBehaviour
         {
             for (int i = 0; i < transform.childCount; i++)
             {
+                isFillAll = false;
                 nowSlot = itemSlotScripts[i];
                 if (nowSlot.itemData == null)
                 {
@@ -264,6 +272,10 @@ public class InventoryArray : MonoBehaviour
                     nowSlot.itemAmount += item_.itemCount;
                     nowSlot.itemUseDel = item_.OnUse;
                     break;
+                }
+                else
+                {
+                    isFillAll = true;
                 }
             }
         } // 합쳐질 수 없는 아이템의 경우
