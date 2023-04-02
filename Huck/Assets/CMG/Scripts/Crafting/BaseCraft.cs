@@ -39,27 +39,34 @@ public class BaseCraft : MonoBehaviour, IPointerClickHandler
 
     private void CreateItem()
     {
-        for (int i = 0; i < inventory.itemSlotScripts.Count; i++)
+        inventory.AddItem(craftThing);
+        if (!inventory.isFillAll)
         {
-            if (inventory.itemSlotScripts[i].itemData != null)
+            for (int i = 0; i < inventory.itemSlotScripts.Count; i++)
             {
-                if (craftResource.firstResourceName == inventory.itemSlotScripts[i].itemData.ItemName)
+                if (inventory.itemSlotScripts[i].itemData != null)
                 {
-                    inventory.itemSlotScripts[i].itemAmount -= craftResource.firstResourceCount;
-                }
+                    if (craftResource.firstResourceName == inventory.itemSlotScripts[i].itemData.ItemName)
+                    {
+                        inventory.itemSlotScripts[i].itemAmount -= craftResource.firstResourceCount;
+                    }
 
-                if (craftResource.secondResourceName == inventory.itemSlotScripts[i].itemData.ItemName)
-                {
-                    inventory.itemSlotScripts[i].itemAmount -= craftResource.secondResourceCount;
-                }
+                    if (craftResource.secondResourceName == inventory.itemSlotScripts[i].itemData.ItemName)
+                    {
+                        inventory.itemSlotScripts[i].itemAmount -= craftResource.secondResourceCount;
+                    }
 
-                if (craftResource.thirdResourceName == inventory.itemSlotScripts[i].itemData.ItemName)
-                {
-                    inventory.itemSlotScripts[i].itemAmount -= craftResource.thirdResourceCount;
+                    if (craftResource.thirdResourceName == inventory.itemSlotScripts[i].itemData.ItemName)
+                    {
+                        inventory.itemSlotScripts[i].itemAmount -= craftResource.thirdResourceCount;
+                    }
                 }
             }
         }
-        inventory.AddItem(craftThing);
+        else
+        {
+            // Do nothing
+        }
     }
 
 
@@ -115,10 +122,15 @@ public class BaseCraft : MonoBehaviour, IPointerClickHandler
     {
         if (isCraft)
         {
-            CreateItem();
             if (nowInven != null)
             {
+                nowInven.CloseUi();
+                CreateItem();
                 nowInven.OpenUi();
+            }
+            else
+            {
+                CreateItem();
             }
         }
     }

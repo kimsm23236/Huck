@@ -140,6 +140,7 @@ public class CraftInven : InventoryArray
             {
                 nowInventory[i].itemData = itemSlotScripts[i].itemData;
                 nowInventory[i].itemAmount = itemSlotScripts[i].itemAmount;
+                nowInventory[i].itemUseDel = itemSlotScripts[i].itemUseDel;
             }
 
         }
@@ -151,6 +152,7 @@ public class CraftInven : InventoryArray
         {
             itemSlotScripts[i].itemData = nowInventory[i].itemData;
             itemSlotScripts[i].itemAmount = nowInventory[i].itemAmount;
+            itemSlotScripts[i].itemUseDel = nowInventory[i].itemUseDel;
         }
     }
 }

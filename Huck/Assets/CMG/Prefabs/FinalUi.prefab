@@ -537,6 +537,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 955499064, guid: 98bb349ecf769c9478ae90cc80d56dd6, type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1279586387, guid: 98bb349ecf769c9478ae90cc80d56dd6, type: 3}
       propertyPath: m_SizeDelta.x
       value: 80
@@ -663,6 +667,11 @@ PrefabInstance:
     - target: {fileID: 2517708002205977943, guid: 98bb349ecf769c9478ae90cc80d56dd6,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7162608097028283508, guid: 98bb349ecf769c9478ae90cc80d56dd6,
+        type: 3}
+      propertyPath: m_FillAmount
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
