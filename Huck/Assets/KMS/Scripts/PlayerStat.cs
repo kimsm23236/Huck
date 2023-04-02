@@ -90,7 +90,8 @@ public class PlayerStat : MonoBehaviour, IDamageable
             isEgFull = false;
             if (isEgFull == false
             && Input.GetKey(KeyCode.LeftShift) == false
-            && PlayerMove.isGrounded == true)
+            && PlayerMove.isGrounded == true
+            && curHungry != 0)
             {
                 curEnergy += 10f * Time.deltaTime;
             }

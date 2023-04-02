@@ -10,7 +10,6 @@ public class Item : MonoBehaviour
     public void OnUse(ItemSlot itemSlot_)
     {
         ItemUse(itemSlot_);
-        Debug.Log("대리자 실행됨?");
     }
 
     protected virtual void ItemUse(ItemSlot itemSlot_)
