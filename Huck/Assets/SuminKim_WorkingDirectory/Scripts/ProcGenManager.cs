@@ -150,7 +150,7 @@ public class ProcGenManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // post process on loading
-        Perform_PostProcessOnLoading(reportStatusFn);
+        Perform_PostProcessOnLoading();
 
         if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Complete, "Terrain Generation complete");
         yield return new WaitForSeconds(1f);
@@ -600,7 +600,7 @@ public class ProcGenManager : MonoBehaviour
         }
     }
 
-    void Perform_PostProcessOnLoading(System.Action<EGenerationStage, string> reportStatusFn = null)
+    void Perform_PostProcessOnLoading()
     {
         GameObject[] PostPrcObjects = GameObject.FindGameObjectsWithTag(GData.POSTPROCESS_ON_LOADING);
         Debug.Log($"PostPrcObjects Count : {PostPrcObjects.Length}");
@@ -618,7 +618,7 @@ public class ProcGenManager : MonoBehaviour
         {
             if(postProcessor != null)
             {
-                postProcessor.Execute(reportStatusFn);
+                postProcessor.Execute();
             }
         }
         

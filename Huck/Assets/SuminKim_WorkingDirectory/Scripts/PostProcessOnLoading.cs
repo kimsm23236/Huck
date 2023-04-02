@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PostProcessOnLoading : MonoBehaviour
 {
-    public virtual void Execute(System.Action<EGenerationStage, string> reportStatusFn = null)
+    public virtual void Execute()
     {
         /* virtual method */
     }
 
-    public virtual IEnumerator AsyncLoadingPostProcess(System.Action<EGenerationStage, string> reportStatusFn = null)
+    public virtual IEnumerator AsyncLoadingPostProcess()
     {
         yield return null;
     }

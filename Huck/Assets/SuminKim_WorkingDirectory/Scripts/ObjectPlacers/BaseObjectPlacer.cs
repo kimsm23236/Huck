@@ -116,7 +116,7 @@ public class BaseObjectPlacer : MonoBehaviour
                 // remove the location if chosen
                 candidateLocations.RemoveAt(randomLocationIndex);
 
-                // ¶¥¿¡ ¹ÚÈ÷´Â ¿ÀºêÁ§Æ®´Â ·£´ýÀ¸·Î YÁÂÇ¥ Á¶Àý
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
                 if (spawnConfig.isEmbedded)
                     spawnLocation -= new Vector3(0, Mathf.Clamp(Random.Range(-1f, 1f), 0f, 1f), 0);
 
@@ -135,7 +135,9 @@ public class BaseObjectPlacer : MonoBehaviour
         GameObject spawnedGO = default;
 #if UNITY_EDITOR
         if (Application.isPlaying)
+        {
             spawnedGO = Instantiate(prefab, spawnLocation + positionOffset, spawnRotation, objectRoot);
+        }
         else
         {
             spawnedGO = PrefabUtility.InstantiatePrefab(prefab, objectRoot) as GameObject;
@@ -147,13 +149,17 @@ public class BaseObjectPlacer : MonoBehaviour
         spawnedGO = Instantiate(prefab, spawnLocation + positionOffset, spawnRotation, objectRoot);
         
 #endif // UNITY_EDITOR
-        // ½ºÆù ÀÌÈÄ Ã³¸® »çÇ×
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         spawnedGO.tag = prefab.tag;
         if(spawnedGO.GetComponent<Item>() != null)
         {
             Rigidbody spawnedRigid = spawnedGO.GetComponent<Rigidbody>();
             spawnedRigid.useGravity = false;
             spawnedRigid.constraints = RigidbodyConstraints.FreezeAll;
+        }
+        if(spawnedGO.tag == GData.ANIMAL_MASK)
+        {
+            spawnedGO.transform.SetParent(null);
         }
     }
 }
