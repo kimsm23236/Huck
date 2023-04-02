@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    private GameObject head = default;
+    public GameObject head = default;
     private Transform player = default;
 
     public static float sensitivity = 100f;
@@ -13,9 +13,8 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
-        GameObject player_ = GameObject.Find("Player");
+        GameObject player_ = GameManager.Instance.playerObj;
         player = player_.transform;
-        head = GFunc.FindChildObj(player_, "Head_M");
     }
 
     private void LateUpdate()
@@ -27,7 +26,8 @@ public class CameraMove : MonoBehaviour
     {
         // if Player Alive
         if (PlayerMove.isDead == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
-            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false)
+            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false
+            && LoadingManager.Instance.isLoadingEnd == true)
         {
             CameraPos();
             CameraRotate();

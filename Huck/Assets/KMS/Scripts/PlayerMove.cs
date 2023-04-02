@@ -47,7 +47,7 @@ public class PlayerMove : MonoBehaviour
     private void Input_()
     {
         if (PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false && PlayerOther.isAnvilOpen == false
-            && PlayerOther.isWorkbenchOpen == false)
+            && PlayerOther.isWorkbenchOpen == false && LoadingManager.Instance.isLoadingEnd == true)
         {
             MoveInput();
             JumpInput();
@@ -57,7 +57,8 @@ public class PlayerMove : MonoBehaviour
     private void PlayerAction()
     {
         if (isDead == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
-            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false)
+            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false
+            && LoadingManager.Instance.isLoadingEnd == true)
         {
             Move();
             Jump();
@@ -142,7 +143,9 @@ public class PlayerMove : MonoBehaviour
     #region Rotate        
     private void PlayerRotate()
     {
-        if (isDead == false && PlayerOther.isStoveOpen == false)
+        if (isDead == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
+            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false
+            && LoadingManager.Instance.isLoadingEnd == true)
         {
             float c_RotateY = Input.GetAxisRaw("Mouse X")
                 * Time.deltaTime * CameraMove.sensitivity;
@@ -234,7 +237,8 @@ public class PlayerMove : MonoBehaviour
     #region Grounded
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Terrain")
+        if (other.gameObject.tag == GData.TERRAIN_MASK
+            || other.gameObject.tag == GData.FLOOR_MASK)
         {
             isGrounded = true;
             isJump = false;
@@ -245,7 +249,8 @@ public class PlayerMove : MonoBehaviour
 
     private void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.tag == "Terrain")
+        if (other.gameObject.tag == GData.TERRAIN_MASK
+            || other.gameObject.tag == GData.FLOOR_MASK)
         {
             isGrounded = false;
             playerAnim.SetBool("isGround", false);
@@ -254,7 +259,8 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Terrain")
+        if (other.gameObject.tag == GData.TERRAIN_MASK
+            || other.gameObject.tag == GData.FLOOR_MASK)
         {
             isGrounded = true;
             curJumpCnt = 0;

@@ -28,6 +28,10 @@ public enum EGenerationStage
 public class LoadingManager : Singleton<LoadingManager>
 {
     public static string nextScene;
+    
+    // [KMS] Add bool for PlayerControl
+    public bool isLoadingEnd = false;
+    // [KMS] Add bool for PlayerControl
 
     // �ε� �߿� ǥ�õ� UI ��ҵ�
     public GameObject loadingCanvas = default;
@@ -90,5 +94,9 @@ public class LoadingManager : Singleton<LoadingManager>
     {
         yield return new WaitForSeconds(5f);
         loadingCanvas.SetActive(false);
+
+        // [KMS] Add bool for PlayerControl
+        isLoadingEnd = true;
+        // [KMS] Add bool for PlayerControl
     }
 }
