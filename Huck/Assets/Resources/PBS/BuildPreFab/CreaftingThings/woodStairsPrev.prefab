@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4997392698343974486}
   m_Layer: 0
   m_Name: woodStairsPrev
-  m_TagString: Gather
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: d2608187d1bfa1f448b6ad33a3480d16, type: 2}
+  dropItems: []
+  Bsystem: {fileID: 0}
 --- !u!1 &7280152855809952382
 GameObject:
   m_ObjectHideFlags: 0

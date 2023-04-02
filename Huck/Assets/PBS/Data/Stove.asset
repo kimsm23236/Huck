@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Stove
   m_EditorClassIdentifier: 
   resourceName: Stove
-  hp: 200
-  resourceType: 1
+  hp: 100
+  resourceType: 0
   resourceLevel: 0
+  dropConfigs:
+  - prefab: {fileID: 7002624996615400611, guid: 188f38621d422ad47b618b406111ca8e,
+      type: 3}
+    minDropCount: 1
+    maxDropCount: 1
+    dropPercentage: 100

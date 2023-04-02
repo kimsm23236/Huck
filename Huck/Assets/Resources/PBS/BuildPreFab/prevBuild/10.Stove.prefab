@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2989356172544712245}
   m_Layer: 0
   m_Name: 10.Stove
-  m_TagString: Stove
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,6 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 5ce4df9072855684ea8e8a72d6183f19, type: 2}
+  dropItems: []
+  Bsystem: {fileID: 0}
 --- !u!54 &2989356172544712245
 Rigidbody:
   m_ObjectHideFlags: 0

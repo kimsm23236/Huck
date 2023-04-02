@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1341645403840367395}
   m_Layer: 0
   m_Name: 09.Anvil
-  m_TagString: Anvil
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,6 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 744465e5f12b5a145a1adebada53e7d5, type: 2}
+  dropItems: []
+  Bsystem: {fileID: 0}
 --- !u!54 &1341645403840367395
 Rigidbody:
   m_ObjectHideFlags: 0

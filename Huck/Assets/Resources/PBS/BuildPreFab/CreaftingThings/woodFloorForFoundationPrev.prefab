@@ -1449,7 +1449,7 @@ GameObject:
   - component: {fileID: 5126349555294546680}
   m_Layer: 0
   m_Name: woodFloorForFoundationPrev
-  m_TagString: Gather
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1564,6 +1564,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 63af3464766c8d246bd855ee5fef1544, type: 2}
+  dropItems: []
+  Bsystem: {fileID: 0}
 --- !u!1 &5256494371173634209
 GameObject:
   m_ObjectHideFlags: 0

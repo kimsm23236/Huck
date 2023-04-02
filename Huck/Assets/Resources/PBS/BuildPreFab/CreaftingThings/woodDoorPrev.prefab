@@ -791,7 +791,7 @@ GameObject:
   - component: {fileID: 6648109657407658521}
   m_Layer: 0
   m_Name: woodDoorPrev
-  m_TagString: Gather
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -932,6 +932,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 00dae2a07421df84ebd9963a44d9edf1, type: 2}
+  dropItems: []
+  Bsystem: {fileID: 0}
 --- !u!1 &7479349035162229868
 GameObject:
   m_ObjectHideFlags: 0

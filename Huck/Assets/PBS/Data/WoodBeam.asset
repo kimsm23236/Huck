@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: WoodBeam
   m_EditorClassIdentifier: 
   resourceName: WoodBeam
-  hp: 100
+  hp: 150
   resourceType: 0
   resourceLevel: 0
+  dropConfigs:
+  - prefab: {fileID: 255731329423510458, guid: 3bc827205b22bc742b4bb467df42ca7e, type: 3}
+    minDropCount: 1
+    maxDropCount: 2
+    dropPercentage: 100

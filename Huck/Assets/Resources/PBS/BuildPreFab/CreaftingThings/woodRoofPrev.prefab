@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 7174172738623722360}
   m_Layer: 8
   m_Name: woodRoofPrev
-  m_TagString: Gather
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -648,6 +648,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resConfig: {fileID: 11400000, guid: 69a214d75fe8d144bbe6cea73cc51598, type: 2}
+  dropItems: []
+  Bsystem: {fileID: 0}
 --- !u!1 &8179153364264586733
 GameObject:
   m_ObjectHideFlags: 0
