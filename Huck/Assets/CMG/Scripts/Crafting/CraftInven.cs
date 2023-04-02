@@ -81,7 +81,6 @@ public class CraftInven : InventoryArray
                 {
                     if (beginDragSlot == upSlots[0] || beginDragSlot == upSlots[1] || beginDragSlot == upSlots[1])
                     {
-                        Debug.Log(beginDragSlot);
                         upSlots[0].transform.parent.SetAsLastSibling();
                     }
                     else

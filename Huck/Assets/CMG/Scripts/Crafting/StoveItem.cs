@@ -53,7 +53,6 @@ public class StoveItem : MonoBehaviour
 
     public void UseStove()
     {
-
         if (originItemData != null && fuelItemData != null)
         {
             if (originItemData.ResultData != null && fuelItemData.IsFuel)
@@ -69,7 +68,7 @@ public class StoveItem : MonoBehaviour
                 }
                 else
                 {
-                    if (resultItemData.ItemName == originItemData.ItemName)
+                    if (resultItemData.ItemName == originItemData.ResultData.ItemName)
                     {
                         if (fuelEnergy <= 0)
                         {
