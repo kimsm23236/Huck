@@ -70,7 +70,14 @@ public class AnimalController : MonoBehaviour, IDamageable
             {
                 isMove = false;
             }
-            agent.SetDestination(targetPos);
+            if (agent.SetDestination(targetPos))
+            {
+                /* Do Nothing */
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
             yield return null;
         }
         agent.ResetPath();

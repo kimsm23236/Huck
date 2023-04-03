@@ -8,6 +8,7 @@ public class SkeletonArcher : Monster
     [SerializeField] private GameObject weapon = default;
     [SerializeField] private Transform arrowPos = default;
     [SerializeField] private MonsterData monsterData;
+    [SerializeField] private AudioClip attackAClip = default;
     [SerializeField] private bool useSkillA = default;
     [SerializeField] private float skillA_MaxCool = default;
     private ProjectilePool arrowPool = default;
@@ -143,13 +144,13 @@ public class SkeletonArcher : Monster
     //! 스킬A 이펙트 코루틴함수
     private IEnumerator OnEffectSkillA()
     {
+        Vector3 pos = mController.targetSearch.hit.transform.position + new Vector3(0f, 0.1f, 0f);
+        // 공격범위 표시
+        mController.attackIndicator.GetCircleIndicator(pos, 5f, 1.5f);
+        yield return new WaitForSeconds(1.5f);
         GameObject effectObj = Instantiate(skillA_Prefab);
         ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
-        effectObj.transform.position = mController.targetSearch.hit.transform.position + new Vector3(0f, 0.1f, 0f);
-        effectObj.transform.forward = transform.forward;
-        // 공격범위 표시
-        mController.attackIndicator.GetCircleIndicator(effectObj.transform.position, 5f, 1.5f);
-        yield return new WaitForSeconds(1.5f);
+        effectObj.transform.position = pos;
         effect.Play();
         SkillA_Damage(effectObj.transform.position);
         yield return new WaitForSeconds(effect.main.duration + effect.main.startLifetime.constant);
@@ -189,5 +190,39 @@ public class SkeletonArcher : Monster
         isAttackDelay = true;
     } // OffLookAtTarget
     #endregion // 타겟 조준
+
+    #region 사운드 모음
+    private void RoarSound()
+    {
+        mController.monsterAudio.clip = roarClip;
+        mController.monsterAudio.Play();
+    } // RoarSound
+    private void DeadSound()
+    {
+        mController.monsterAudio.clip = deadClip;
+        mController.monsterAudio.Play();
+    } // DeadSound
+    private void MoveSound()
+    {
+        mController.monsterAudio.clip = moveClip;
+        mController.monsterAudio.Play();
+    } // MoveSound
+    private void HitSound()
+    {
+        mController.monsterAudio.clip = hitClip;
+        mController.monsterAudio.Play();
+    } // HitSound
+    private void WeaponSound()
+    {
+        mController.monsterAudio.clip = weaponClip;
+        mController.monsterAudio.Play();
+    } // WeaponSound
+
+    private void AttackASound()
+    {
+        mController.monsterAudio.clip = attackAClip;
+        mController.monsterAudio.Play();
+    } // AttackASound
+    #endregion // 사운드 모음
     //! } 해골궁수 항목별 region 모음
 } // SkeletonArcher

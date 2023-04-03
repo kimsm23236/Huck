@@ -23,3 +23,8 @@ MonoBehaviour:
   searchRange: 30
   attackRange: 20
   meleeAttackRange: 2
+  roarAudio: {fileID: 8300000, guid: 87cbd48a95a84bd4c8b2849a440d6c1d, type: 3}
+  deadAudio: {fileID: 8300000, guid: 9fc5c0e3e21a50d408e79af6bc6c1a23, type: 3}
+  moveAudio: {fileID: 8300000, guid: dbe83cb8fac525345b476575a4848789, type: 3}
+  hitAudio: {fileID: 8300000, guid: 7e0f1c0d99ad8da4daad3eb2a0b19fd9, type: 3}
+  weaponAudio: {fileID: 8300000, guid: 9a144dd97e9534eafa6b146d1ea8e9bc, type: 3}

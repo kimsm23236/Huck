@@ -199,13 +199,13 @@ public class SkeletonMage : Monster
     //! 스킬A 이펙트 코루틴함수
     private IEnumerator OnEffectSkillA()
     {
-        GameObject effectObj = Instantiate(skillA_Prefab);
-        ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
         Vector3 targetPos = mController.targetSearch.hit.transform.position + new Vector3(0f, 0.1f, 0f);
-        effectObj.transform.position = targetPos;
         // 공격범위 표시
         mController.attackIndicator.GetCircleIndicator(targetPos, 4f, 1.5f);
         yield return new WaitForSeconds(1.5f);
+        GameObject effectObj = Instantiate(skillA_Prefab);
+        ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
+        effectObj.transform.position = targetPos;
         effect.Play();
         SkillA_Damage(effectObj.transform.position);
         yield return new WaitForSeconds(effect.main.duration + effect.main.startLifetime.constant);
@@ -260,5 +260,28 @@ public class SkeletonMage : Monster
         CheckUseSkill();
     } // SkillBCooldown
     #endregion // 스킬B
+
+    #region 사운드 모음
+    private void RoarSound()
+    {
+        mController.monsterAudio.clip = roarClip;
+        mController.monsterAudio.Play();
+    } // RoarSound
+    private void DeadSound()
+    {
+        mController.monsterAudio.clip = deadClip;
+        mController.monsterAudio.Play();
+    } // DeadSound
+    private void HitSound()
+    {
+        mController.monsterAudio.clip = hitClip;
+        mController.monsterAudio.Play();
+    } // HitSound
+    private void WeaponSound()
+    {
+        mController.monsterAudio.clip = weaponClip;
+        mController.monsterAudio.Play();
+    } // WeaponSound
+    #endregion // 사운드 모음
     //! } 해골마법사 항목별 region 모음
 } // SkeletonMage

@@ -162,7 +162,7 @@ public class MonsterController : MonoBehaviour, IDamageable
         {
             isHit = true;
         }
-        //attacker = message.causer;
+        attacker = message.causer;
         //Debug.Log($"{attacker.name}한테 {message.damageAmount} 피해입음! 현재체력:{monster.monsterHp}, {isHit}");
     } // TakeDamage
     #endregion // 몬스터의 스폰과 데미지처리 함수

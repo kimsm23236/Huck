@@ -6,6 +6,9 @@ public class FireBall : MonoBehaviour
 {
     [SerializeField] ParticleSystem fireBallStart = default; // 파이어볼 이펙트
     [SerializeField] ParticleSystem fireBallEnd = default; // 파이어볼폭발 이펙트
+    [SerializeField] AudioClip fireBallSound = default;
+    [SerializeField] AudioClip explosionSound = default;
+    private AudioSource fireAudio = default;
     private ProjectilePool fireBallPool = default;
     private Rigidbody fireBallRb = default;
     private DamageMessage damageMessage = default; // 데미지처리
@@ -23,6 +26,10 @@ public class FireBall : MonoBehaviour
         // 활성화 시 초기화
         transform.parent = null;
         fireBallRb = GetComponent<Rigidbody>();
+        fireAudio = GetComponent<AudioSource>();
+        fireAudio.clip = fireBallSound;
+        fireAudio.loop = true;
+        fireAudio.Play();
         isHit = false;
         isEndFollow = false;
         fireBallStart.gameObject.SetActive(true);
@@ -131,6 +138,9 @@ public class FireBall : MonoBehaviour
     //! 파이어볼 폭발 코루틴함수
     private IEnumerator FireBallExplosion()
     {
+        fireAudio.clip = explosionSound;
+        fireAudio.loop = false;
+        fireAudio.Play();
         fireBallStart.gameObject.SetActive(false);
         fireBallEnd.gameObject.SetActive(true);
         fireBallEnd.Play();

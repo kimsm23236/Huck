@@ -24,6 +24,11 @@ public class Monster : MonoBehaviour
     [HideInInspector] public float searchRange;
     [HideInInspector] public float attackRange;
     [HideInInspector] public float meleeAttackRange;
+    [HideInInspector] public AudioClip roarClip;
+    [HideInInspector] public AudioClip deadClip;
+    [HideInInspector] public AudioClip moveClip;
+    [HideInInspector] public AudioClip hitClip;
+    [HideInInspector] public AudioClip weaponClip;
 
     //! 몬스터 데이터 초기화하는 함수
     public void InitMonsterData(MonsterType _monsterType, MonsterData monsterData)
@@ -40,6 +45,11 @@ public class Monster : MonoBehaviour
         this.searchRange = monsterData.SearchRange;
         this.attackRange = monsterData.AttackRange;
         this.meleeAttackRange = monsterData.MeleeAttackRange;
+        this.roarClip = monsterData.RoarAudio;
+        this.deadClip = monsterData.DeadAudio;
+        this.moveClip = monsterData.MoveAudio;
+        this.hitClip = monsterData.HitAudio;
+        this.weaponClip = monsterData.WeaponAudio;
     } // InitMonsterData
 
     //! 공격 함수

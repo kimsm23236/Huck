@@ -48,4 +48,24 @@ public class MonsterData : ScriptableObject
     [SerializeField]
     private float meleeAttackRange; // 몬스터 근접공격 사거리
     public float MeleeAttackRange { get { return meleeAttackRange; } }
+
+    [SerializeField]
+    private AudioClip roarAudio; // Roar 사운드
+    public AudioClip RoarAudio { get { return roarAudio; } }
+
+    [SerializeField]
+    private AudioClip deadAudio; // Dead 사운드
+    public AudioClip DeadAudio { get { return deadAudio; } }
+
+    [SerializeField]
+    private AudioClip moveAudio; // Move 사운드
+    public AudioClip MoveAudio { get { return moveAudio; } }
+
+    [SerializeField]
+    private AudioClip hitAudio; // Hit 사운드
+    public AudioClip HitAudio { get { return hitAudio; } }
+
+    [SerializeField]
+    private AudioClip weaponAudio; // Hit 사운드
+    public AudioClip WeaponAudio { get { return weaponAudio; } }
 } // MonsterData

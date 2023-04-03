@@ -19,6 +19,7 @@ public class SkeletonKing : Monster
     [SerializeField] private float skillD_MaxCool = default; // 스킬D 최대 쿨다운
     [SerializeField] private float slideAttack_MaxCool = default; // 슬라이드어택 최대 쿨다운
     [SerializeField] private float crushAttack_MaxCool = default; // 크러쉬어택 최대 쿨다운
+    [SerializeField] private AudioClip spawnClip = default;
     [HideInInspector] public bool is2Phase = false; // 1 ~ 2페이즈 체크
     private ProjectilePool skillD_Pool = default;
     private DamageMessage damageMessage = default; // 데미지 처리
@@ -268,6 +269,8 @@ public class SkeletonKing : Monster
     {
         mController.monsterAni.speed = 1f;
         mController.monsterAni.SetBool("isDead", true);
+        mController.monsterAudio.clip = deadClip;
+        mController.monsterAudio.Play();
         // 죽는 애니메이션 되감기를 위한 float트리거
         mController.monsterAni.SetFloat("RewindDead", 1f);
         yield return null;
@@ -649,17 +652,17 @@ public class SkeletonKing : Monster
         if (is2Phase == false)
         {
             // 1페이즈
-            GameObject effectObj = Instantiate(skillC_Prefab);
-            ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
             if (Physics.Raycast(pos, Vector3.down, out hit, 10f) == true)
             {
                 // 번개 떨어질 위치 정해줌
                 pos = hit.point + (Vector3.up * 0.1f);
             }
-            effectObj.transform.position = pos;
             // 공격범위 표시
-            mController.attackIndicator.GetCircleIndicator(effectObj.transform.position, 3f, 0.5f);
+            mController.attackIndicator.GetCircleIndicator(pos, 3f, 0.5f);
             yield return new WaitForSeconds(0.5f);
+            GameObject effectObj = Instantiate(skillC_Prefab);
+            ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
+            effectObj.transform.position = pos;
             effect.Play();
             Skill_Damage(effectObj.transform.position, 1.5f, 1.5f);
             yield return new WaitForSeconds(effect.main.duration + effect.main.startLifetime.constant);
@@ -673,17 +676,18 @@ public class SkeletonKing : Monster
             ParticleSystem lasteffect = default;
             for (int i = 0; i < 3; i++)
             {
-                GameObject effectObj = Instantiate(skillC_Prefab);
-                ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
                 if (Physics.Raycast(pos, Vector3.down, out hit, 10f) == true)
                 {
                     // 번개 떨어질 위치 정해줌
                     pos = hit.point + (Vector3.up * 0.1f);
                 }
-                effectObj.transform.position = pos + (dir * i * 2f);
+                Vector3 _Pos = pos + (dir * i * 2f);
                 // 공격범위 표시
-                mController.attackIndicator.GetCircleIndicator(effectObj.transform.position, 3f, 0.5f);
+                mController.attackIndicator.GetCircleIndicator(_Pos, 3f, 0.5f);
                 yield return new WaitForSeconds(0.5f);
+                GameObject effectObj = Instantiate(skillC_Prefab);
+                ParticleSystem effect = effectObj.GetComponent<ParticleSystem>();
+                effectObj.transform.position = _Pos;
                 effect.Play();
                 if (i == 2)
                 {
@@ -740,11 +744,12 @@ public class SkeletonKing : Monster
         if (is2Phase == false)
         {
             // 1페이즈
+            Vector3 pos = mController.targetSearch.hit.transform.position + new Vector3(0f, 0.1f, 0f);
             GameObject swordObj = skillD_Pool.GetProjecttile();
             ParticleSystem effect = swordObj.GetComponent<ParticleSystem>();
-            swordObj.transform.position = mController.targetSearch.hit.transform.position + new Vector3(0f, 0.1f, 0f);
+            swordObj.transform.position = pos;
             // 공격범위 표시
-            mController.attackIndicator.GetCircleIndicator(swordObj.transform.position, 4f, 1.5f);
+            mController.attackIndicator.GetCircleIndicator(pos, 4f, 1.5f);
             yield return new WaitForSeconds(1.5f);
             swordObj.gameObject.SetActive(true);
             effect.Play();
@@ -820,5 +825,33 @@ public class SkeletonKing : Monster
         CheckUseSkill();
     } // SkillDCooldown
     #endregion // 스킬D
+
+    #region 사운드 모음
+    private void RoarSound()
+    {
+        mController.monsterAudio.clip = roarClip;
+        mController.monsterAudio.Play();
+    } // RoarSound
+    private void spawnSound()
+    {
+        mController.monsterAudio.clip = spawnClip;
+        mController.monsterAudio.Play();
+    } // spawnSound
+    private void MoveSound()
+    {
+        mController.monsterAudio.clip = moveClip;
+        mController.monsterAudio.Play();
+    } // MoveSound
+    private void HitSound()
+    {
+        mController.monsterAudio.clip = hitClip;
+        mController.monsterAudio.Play();
+    } // HitSound
+    private void WeaponSound()
+    {
+        mController.monsterAudio.clip = weaponClip;
+        mController.monsterAudio.Play();
+    } // WeaponSound
+    #endregion // 사운드 모음
     //! } 해골왕 항목별 region 모음
 } // SkeletonKing

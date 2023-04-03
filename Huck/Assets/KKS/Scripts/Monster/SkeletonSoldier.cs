@@ -221,5 +221,33 @@ public class SkeletonSoldier : Monster
         CheckUseSkill();
     } // SkillBCooldown
     #endregion // 스킬B (연속 베기)
+
+    #region 사운드 모음
+    private void RoarSound()
+    {
+        mController.monsterAudio.clip = roarClip;
+        mController.monsterAudio.Play();
+    } // RoarSound
+    private void DeadSound()
+    {
+        mController.monsterAudio.clip = deadClip;
+        mController.monsterAudio.Play();
+    } // DeadSound
+    private void MoveSound()
+    {
+        mController.monsterAudio.clip = moveClip;
+        mController.monsterAudio.Play();
+    } // MoveSound
+    private void HitSound()
+    {
+        mController.monsterAudio.clip = hitClip;
+        mController.monsterAudio.Play();
+    } // HitSound
+    private void WeaponSound()
+    {
+        mController.monsterAudio.clip = weaponClip;
+        mController.monsterAudio.Play();
+    } // WeaponSound
+    #endregion // 사운드 모음
     //! } 해골병사 항목별 region 모음
 } // SkeletonSoldier

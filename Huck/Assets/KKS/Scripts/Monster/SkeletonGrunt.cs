@@ -12,6 +12,7 @@ public class SkeletonGrunt : Monster
     [SerializeField] private bool useSkillB = default;
     [SerializeField] private float skillA_MaxCool = default;
     [SerializeField] private float skillB_MaxCool = default;
+    [SerializeField] private AudioClip attackBClip = default;
     private DamageMessage damageMessage = default;
     private GameObject skillA_Prefab = default;
     private GameObject skillB_Prefab = default;
@@ -382,5 +383,38 @@ public class SkeletonGrunt : Monster
         CheckUseSkill();
     } // SkillBCooldown
     #endregion // 스킬B (대지 가르기)
+
+    #region 사운드 모음
+    private void RoarSound()
+    {
+        mController.monsterAudio.clip = roarClip;
+        mController.monsterAudio.Play();
+    } // RoarSound
+    private void DeadSound()
+    {
+        mController.monsterAudio.clip = deadClip;
+        mController.monsterAudio.Play();
+    } // DeadSound
+    private void MoveSound()
+    {
+        mController.monsterAudio.clip = moveClip;
+        mController.monsterAudio.Play();
+    } // MoveSound
+    private void HitSound()
+    {
+        mController.monsterAudio.clip = hitClip;
+        mController.monsterAudio.Play();
+    } // HitSound
+    private void WeaponSound()
+    {
+        mController.monsterAudio.clip = weaponClip;
+        mController.monsterAudio.Play();
+    } // WeaponSound
+    private void AttackBSound()
+    {
+        mController.monsterAudio.clip = attackBClip;
+        mController.monsterAudio.Play();
+    } // AttackBSound
+    #endregion // 사운드 모음
     //! } 해골그런트 항목별 region 모음
 } // SkeletonGrunt
