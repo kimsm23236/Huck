@@ -24,8 +24,6 @@ public class ProcGenManager : MonoBehaviour
     Dictionary<TextureConfig, int> BiomeTextureToTerrainLayerIndex = new Dictionary<TextureConfig, int>();
     Dictionary<TerrainDetailConfig, int> BiomeTerrainDetailToDetailLayerIndex = new Dictionary<TerrainDetailConfig, int>();
 
-    
-
     byte[,] BiomeMap;
     float[,] BiomeStrengths;
 
@@ -99,13 +97,13 @@ public class ProcGenManager : MonoBehaviour
             if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.BuildBiomeMap, "Build biome map");
             yield return new WaitForSeconds(1f);
 
-            // Generate the biome Map
+            // 바이옴 맵 생성
             Perform_BiomeGeneration(mapResolution);
 
             if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.HeightMapGeneration, "Modifying heights");
             yield return new WaitForSeconds(1f);
 
-            // update the terrain heights
+            // 지형 높이맵 설정
             Perform_HeightMapModification(mapResolution, alphaMapResolution);
 
             // Height Modifier로 높이맵과 보스 성을 만드는데 여기서 보스성을 찾을 수 있다면 루프 탈출
@@ -125,31 +123,31 @@ public class ProcGenManager : MonoBehaviour
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.TerrainPainting, "Painting the terrain");
         yield return new WaitForSeconds(1f);
 
-        // paint the terrain
+        // 지형 칠하기 단계
         Perform_TerrainPainting(mapResolution, alphaMapResolution);
 
-        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.ObjectPlacement, "Placing objects");
+        if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.NavMeshBaking, "NavMesh Baking");
         yield return new WaitForSeconds(1f);
 
-        // place the object
+        // 네비메쉬 굽기 단계
+        Perform_NavMeshBaking();
+
+        if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.ObjectPlacement, "Placing objects");
+        yield return new WaitForSeconds(1f);
+
+        // 오브젝트 배치 단계
         Perform_ObjectPlacement(mapResolution, alphaMapResolution);
 
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.DetailPainting, "Detail Painting");
         yield return new WaitForSeconds(1f);
 
-        // paint the details
+        // 디테일(잔디, 풀 등) 칠하기
         Perform_DetailPainting(mapResolution, alphaMapResolution, detailMapResolution, maxDetailsPerPatch);
-
-        if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.NavMeshBaking, "NavMesh Baking");
-        yield return new WaitForSeconds(1f);
-
-        // paint the details
-        Perform_NavMeshBaking();
 
         if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.PostProcessOnLoading, "PostProcessOnLoading");
         yield return new WaitForSeconds(1f);
 
-        // post process on loading
+        // 로딩 후처리 작업 단계
         Perform_PostProcessOnLoading();
 
         if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Complete, "Terrain Generation complete");
@@ -548,6 +546,7 @@ public class ProcGenManager : MonoBehaviour
             return;
             
         Debug.Log("NavMesh Bake");
+        
         for(int i = 0; i < navMeshSurfaces.Length; i++)
         {
             navMeshSurfaces[i].BuildNavMesh();

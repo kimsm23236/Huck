@@ -124,6 +124,7 @@ public class MonsterController : MonoBehaviour, IDamageable
                 yield return null;
             }
             monsterAni.StopPlayback();
+            GameManager.Instance.StartBossBGM();
         }
         //Debug.Log($"{monsterAni.GetCurrentAnimatorClipInfo(0)[0].clip.name}");
         //Debug.Log($"{monster.monsterName}, {monsterAni.GetCurrentAnimatorStateInfo(0).length}");

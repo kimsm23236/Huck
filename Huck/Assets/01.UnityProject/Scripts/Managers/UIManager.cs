@@ -107,6 +107,13 @@ public class UIManager : Singleton<UIManager>
     public void GoToTitle()
     {
         Debug.Log("GoToTitleClick");
+        GameObject[] childManagers = GameObject.FindGameObjectsWithTag("Manager");
+        foreach(GameObject child in childManagers)
+        {
+            Debug.Log($"child : {child.name}");
+            Object.DontDestroyOnLoad(child);
+            Destroy(child);
+        }
         GFunc.LoadScene(GData.SCENENAME_TITLE);
     }
 

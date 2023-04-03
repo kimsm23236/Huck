@@ -20,6 +20,7 @@ public class CameraMove : MonoBehaviour
     private void LateUpdate()
     {
         CameraMoving();
+        Cheat_FindBossCastle();
     }
 
     private void CameraMoving()
@@ -68,4 +69,12 @@ public class CameraMove : MonoBehaviour
     }
     #endregion
     // } Camera Rotation
+
+    void Cheat_FindBossCastle()
+    {
+        if(Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            transform.LookAt(GameManager.Instance.bossPos);
+        }
+    }
 }

@@ -25,8 +25,11 @@ public class Door : MonoBehaviour, IInteractable
     {
         if(doorState == EDoorState.OPEN)
             return;
+        if (!GameManager.Instance.IsMidBossClear)
+            return;
         doorState = EDoorState.OPEN;
         doorAnimator.SetTrigger("DoorOpen");
+        GameManager.Instance.BossSpwan();
     }
     public void CloseDoor()
     {

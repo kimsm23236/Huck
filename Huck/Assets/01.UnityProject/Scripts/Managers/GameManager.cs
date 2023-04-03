@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
@@ -12,6 +13,19 @@ public class GameManager : Singleton<GameManager>
 
     public TimeController timeController = default;
 
+    //
+    private bool isMidBossClear = false;
+    public bool IsMidBossClear
+    {
+        get { return isMidBossClear; }
+        set { isMidBossClear = value; }
+    }
+    //
+    public AudioSource bgmAudio = default;
+    public AudioClip bgmSound = default;
+    public AudioClip bossBgmSound = default;
+    //
+
     //! { [KKS] 몬스터 스폰관련 변수
     [Header("스폰할 몬스터 Prefab")]
     public List<GameObject> nomalMonsterPrefab = default;
@@ -19,13 +33,15 @@ public class GameManager : Singleton<GameManager>
     public GameObject bossMonsterPrefab = default;
     public Transform bossPos = default; // 보스 소환 위치
     public bool isExistenceBoss = false; // 보스 존재 유무
-    private int count = 0; // Day체크
+    public int count = 0; // Day체크
     //! } [KKS] 몬스터 스폰관련 변수
 
     //! 게임매니져 초기화 함수
     protected override void Init()
     {
         procGenManager = GFunc.GetRootObj("ProcGenManager");
+        IsMidBossClear = false;
+        bgmAudio = GetComponent<AudioSource>();
     }
     //! { [KKS] 몬스터 소환 함수
     public void SpawnMonster()
@@ -108,7 +124,19 @@ public class GameManager : Singleton<GameManager>
         {
             GameObject boss = Instantiate(bossMonsterPrefab, bossPos.position, bossPos.rotation);
             isExistenceBoss = true;
+            Debug.Log("보스소환!!");
         }
     } // BossSpwan
     //! } [KKS] 몬스터 소환 함수
+
+    public void StartBGM()
+    {
+        bgmAudio.clip = bgmSound;
+        bgmAudio.Play();
+    } // StartBGM
+    public void StartBossBGM()
+    {
+        bgmAudio.clip = bossBgmSound;
+        bgmAudio.Play();
+    } // StartBGM
 }

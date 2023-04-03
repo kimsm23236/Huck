@@ -267,6 +267,7 @@ public class SkeletonKing : Monster
     //! 보스몬스터 페이즈별 죽음 처리 함수
     private IEnumerator Dead()
     {
+        GameManager.Instance.bgmAudio.Stop();
         mController.monsterAni.speed = 1f;
         mController.monsterAni.SetBool("isDead", true);
         mController.monsterAudio.clip = deadClip;
@@ -292,6 +293,7 @@ public class SkeletonKing : Monster
             mController.hpBar.SetActive(true);
             float time = 0f;
             float endTime = mController.monsterAni.GetCurrentAnimatorStateInfo(0).length - 2f;
+            GameManager.Instance.bgmAudio.Play();
             while (time < endTime)
             {
                 time += Time.deltaTime;
@@ -312,6 +314,7 @@ public class SkeletonKing : Monster
         }
         else
         {
+            GameManager.Instance.StartBGM();
             // 2페이즈에서 완전히 죽음
             // 밑으로 시체가 내려가게 하기위해 네비매쉬 비활성화
             mController.mAgent.enabled = false;
@@ -496,7 +499,8 @@ public class SkeletonKing : Monster
     {
         GetRandomPosition getRandomPos = new GetRandomPosition();
         // 원범위의 장애물이 없는 좌표를 가져옴
-        Vector3 pos = getRandomPos.GetRandomCirclePos(transform.position, 10, 4);
+        //Vector3 pos = getRandomPos.GetRandomCirclePos(transform.position, 10, 4);
+        Vector3 pos = transform.position + (transform.forward * 2f);
         Vector3 dirToTarget = (mController.targetSearch.hit.transform.position - pos).normalized;
         // 해골그런트가 소환될 때 타겟을 바라보면서 소환되게 회전축 설정
         Instantiate(summonObjPrefab, pos, Quaternion.LookRotation(dirToTarget));

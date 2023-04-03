@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AnimalController : MonoBehaviour, IDamageable
+public class AnimalController : MonoBehaviour, IDamageable, IDropable
 {
     [SerializeField] private float speed = 3f;
     [SerializeField] private int hp = default;
@@ -17,6 +17,8 @@ public class AnimalController : MonoBehaviour, IDamageable
     private bool isDead = false;
     private float time = 0f;
     private float escapeTime = 0f;
+
+    [SerializeField] private List<DropItemConfig> dropItems;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,6 @@ public class AnimalController : MonoBehaviour, IDamageable
         agent.speed = speed;
         agent.acceleration = 100f;
         agent.angularSpeed = 180f;
-        agent.enabled = true;
         hp = maxHp;
     } // Start
 
@@ -38,6 +39,10 @@ public class AnimalController : MonoBehaviour, IDamageable
     //! 동물 상태 정하는 함수
     private void SelectState()
     {
+        if (!agent.enabled)
+        {
+            return;
+        }
         if (isDead == false)
         {
             if (isHit == true && escapeTime <= 0f)
@@ -50,7 +55,12 @@ public class AnimalController : MonoBehaviour, IDamageable
                 if (time >= 3f)
                 {
                     GetRandomPosition getTargetPos = new GetRandomPosition();
-                    targetPos = getTargetPos.GetRandomCirclePos(transform.position, 30, 20);
+                    targetPos = getTargetPos.GetRandomCirclePos(transform.position, 30, 10);
+                    if (targetPos == transform.position)
+                    {
+                        Debug.Log("멍청이 물소 파괴");
+                        Destroy(gameObject);
+                    }
                     isMove = true;
                     StartCoroutine(Move());
                     time = 0f;
@@ -63,20 +73,21 @@ public class AnimalController : MonoBehaviour, IDamageable
     private IEnumerator Move()
     {
         animator.SetBool("isWalk", true);
+        float timeCheck = 0f;
         while (isMove == true)
         {
+            timeCheck += Time.deltaTime;
+            if (timeCheck >= 2f && agent.velocity == Vector3.zero)
+            {
+                Debug.Log("왕따 물소 파괴");
+                Destroy(gameObject);
+                yield break;
+            }
             float distance = Vector3.Distance(transform.position, targetPos);
-            if (distance <= 0f || isHit == true)
+            agent.SetDestination(targetPos);
+            if (distance <= 1f || isHit == true)
             {
                 isMove = false;
-            }
-            if (agent.SetDestination(targetPos))
-            {
-                /* Do Nothing */
-            }
-            else
-            {
-                Destroy(gameObject);
             }
             yield return null;
         }
@@ -92,6 +103,10 @@ public class AnimalController : MonoBehaviour, IDamageable
         escapeTime = 0f;
         while (escapeTime < 2f)
         {
+            if (isDead == true)
+            {
+                yield break;
+            }
             escapeTime += Time.deltaTime;
             agent.Move(dir * speed * 2f * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 3f * Time.deltaTime);
@@ -109,6 +124,7 @@ public class AnimalController : MonoBehaviour, IDamageable
         gameObject.GetComponent<BoxCollider>().isTrigger = true;
         animator.SetBool("isDead", true);
         yield return null;
+        DropItem(dropItems, transform);
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         yield return new WaitForSeconds(1.5f);
         // 밑으로 시체가 내려가게 하기위해 네비매쉬 비활성화
@@ -137,4 +153,37 @@ public class AnimalController : MonoBehaviour, IDamageable
             StartCoroutine(Dead());
         }
     } // TakeDamage
+    public void DropItem(List<DropItemConfig> dropItems, Transform targetTransform)
+    {
+        float yOffset = 1f;
+        float maxPositionJitter = 0.5f;
+
+        Vector3 spawnLocation = targetTransform.position;
+        foreach (var item in dropItems)
+        {
+            if (item == null || item == default)
+                continue;
+
+            // 드랍 확률 검사
+            int dropPercentage = Random.Range(0, 100);
+            if (dropPercentage > item.dropPercentage)
+                continue;
+
+
+            // 스폰 위치, 각도 값 셋팅
+            Quaternion spawnRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+            Vector3 positionOffset = new Vector3(Random.Range(-maxPositionJitter, maxPositionJitter),
+                                                            yOffset,
+                                                            Random.Range(-maxPositionJitter, maxPositionJitter));
+
+            // 스폰 및 이후 처리
+            var spawnedGO = Instantiate(item.prefab, spawnLocation + positionOffset, spawnRotation);
+            Item dropedItem = spawnedGO.GetComponent<Item>();
+            if (dropedItem != null)
+            {
+                // 아이템 갯수 처리
+                dropedItem.itemCount = Random.Range(item.minDropCount, item.maxDropCount);
+            }
+        }
+    }
 } // AnimalController

@@ -19,6 +19,7 @@ public class PlayerStat : MonoBehaviour, IDamageable
     private bool isEgFull = default;
     private bool isHgEmpty = default;
     private bool isHit = default;
+    private bool isInvincible = false;
 
     public delegate void EventHandler();
     public EventHandler onPlayerDead;
@@ -35,6 +36,7 @@ public class PlayerStat : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        switchInvincible();
         Hungry();
         Energe();
         Hp();
@@ -116,6 +118,10 @@ public class PlayerStat : MonoBehaviour, IDamageable
     // { TakeDamage
     public void TakeDamage(DamageMessage message)
     {
+        if (isInvincible == true)
+        {
+            return;
+        }
         if (isHit == false)
         {
             curHp -= message.damageAmount;
@@ -125,6 +131,14 @@ public class PlayerStat : MonoBehaviour, IDamageable
         {
             onPlayerDead();
             Die();
+        }
+    }
+
+    private void switchInvincible()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad0))
+        {
+            isInvincible = !isInvincible;
         }
     }
 
@@ -139,8 +153,8 @@ public class PlayerStat : MonoBehaviour, IDamageable
         }
         isHit = false;
     } // WaitHitTime
-    // { Player Die
-    
+      // { Player Die
+
     #region Die
     private void Die()
     {

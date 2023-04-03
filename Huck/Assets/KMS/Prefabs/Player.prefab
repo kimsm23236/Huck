@@ -679,7 +679,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7898485750133302086}
-  - component: {fileID: 3315873727386055874}
   m_Layer: 6
   m_Name: Geometry
   m_TagString: Untagged
@@ -703,19 +702,6 @@ Transform:
   m_Father: {fileID: 4147671086155886826}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3315873727386055874
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1583393640942010536}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.2, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1665353662511101968
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,7 +1322,6 @@ MonoBehaviour:
   inHandItem: {fileID: 0}
   buildSystem: {fileID: 0}
   selectedQuitSlot: 0
-  stoveItem: {fileID: 0}
 --- !u!54 &825168674315377679
 Rigidbody:
   m_ObjectHideFlags: 0

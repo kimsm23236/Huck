@@ -21,6 +21,11 @@ public class PlayerMove : MonoBehaviour
     private float moveSpeed = 5;
     private int curJumpCnt = 0;
 
+    //
+    private float prevMoveSpeedMultiPlier = 5f;
+    private float moveSpeedMultiPlier = 1f;
+    //
+
 
     private void Start()
     {
@@ -54,6 +59,8 @@ public class PlayerMove : MonoBehaviour
             MoveInput();
             JumpInput();
         }
+        Cheat_FindBossCastle();
+        Cheat_SpeedUp();
     }
 
     private void PlayerAction()
@@ -76,7 +83,7 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 move_H = transform.right * horizontal;
         Vector3 move_V = transform.forward * vertical;
-        Vector3 velocity_P = (move_H + move_V).normalized * moveSpeed;
+        Vector3 velocity_P = (move_H + move_V).normalized * moveSpeed * moveSpeedMultiPlier;
         playerRigid.MovePosition(transform.position + velocity_P
             * Time.deltaTime);
 
@@ -286,4 +293,23 @@ public class PlayerMove : MonoBehaviour
     }
     #endregion
     // } Player Grounded Check
+
+    //
+    void Cheat_SpeedUp()
+    {
+        if(Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            float tempMul = moveSpeedMultiPlier;
+            moveSpeedMultiPlier = prevMoveSpeedMultiPlier;
+            prevMoveSpeedMultiPlier = tempMul;
+        }
+    }
+    void Cheat_FindBossCastle()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            transform.LookAt(GameManager.Instance.bossPos);
+        }
+    }
+    //
 }

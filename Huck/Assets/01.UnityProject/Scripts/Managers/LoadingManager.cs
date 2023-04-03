@@ -17,9 +17,9 @@ public enum EGenerationStage
     HeightMapGeneration,
     SetupWorldMap,
     TerrainPainting,
+    NavMeshBaking,
     ObjectPlacement,
     DetailPainting,
-    NavMeshBaking,
     PostProcessOnLoading,
 
     Complete,
@@ -86,9 +86,10 @@ public class LoadingManager : Singleton<LoadingManager>
 
         if(currentStage == EGenerationStage.Complete)
         {
-            loadingScreenAnim.SetBool("isFadeOut", true);
+            LoadingScreenFadeOutPlay();
             SceneManager.UnloadSceneAsync(GData.SCENENAME_LOADING);
             StartCoroutine(SetActiveFalse5Sec());
+            GameManager.Instance.StartBGM();
         }
     }
     IEnumerator SetActiveFalse5Sec()
@@ -96,8 +97,12 @@ public class LoadingManager : Singleton<LoadingManager>
         yield return new WaitForSeconds(5f);
         loadingCanvas.SetActive(false);
 
-        // [KMS] Add bool for PlayerControl
+        
+    }
+
+    public void LoadingScreenFadeOutPlay()
+    {
+        loadingScreenAnim.SetBool("isFadeOut", true);
         isLoadingEnd = true;
-        // [KMS] Add bool for PlayerControl
     }
 }

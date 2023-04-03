@@ -50,6 +50,10 @@ public class MonsterDead : IMonsterState
         yield return null;
         yield return new WaitForSeconds(mController.monsterAni.GetCurrentAnimatorStateInfo(0).length);
         yield return new WaitForSeconds(1.5f);
+        if (mController.monster.monsterType == Monster.MonsterType.NAMEED)
+        {
+            GameManager.Instance.IsMidBossClear = true;
+        }
         // 밑으로 시체가 내려가게 하기위해 네비매쉬 비활성화
         mController.mAgent.enabled = false;
         // 4초에 걸쳐 총 2f만큼 밑으로 내려간 뒤에 디스트로이

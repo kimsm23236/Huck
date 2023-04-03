@@ -1007,6 +1007,12 @@ MonoBehaviour:
   speed: 3
   hp: 50
   maxHp: 50
+  dropItems:
+  - prefab: {fileID: 2799591175037521271, guid: 95c7f8750c4802c4586015dbf9661fa2,
+      type: 3}
+    minDropCount: 1
+    maxDropCount: 3
+    dropPercentage: 100
 --- !u!195 &-7556274207012173260
 NavMeshAgent:
   m_ObjectHideFlags: 0

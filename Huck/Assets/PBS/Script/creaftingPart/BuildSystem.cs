@@ -153,7 +153,7 @@ public class BuildSystem : MonoBehaviour
         if (!IsBuildTime)
         {
             //문열기
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 Ray DoorRAY = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
                 RaycastHit hitD;

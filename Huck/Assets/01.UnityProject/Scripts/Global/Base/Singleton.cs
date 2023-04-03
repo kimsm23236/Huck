@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     private void Awake()
     {
+        if(SceneManager.GetActiveScene().name == GData.SCENENAME_TITLE)
+        {
+            return;
+        }
         // ����: �ش� ������Ʈ�� �θ� ������Ʈ�� �ֻ����� ���𰡰� �����Ѵٸ�
         if (transform.parent != null && transform.root != null)
         {

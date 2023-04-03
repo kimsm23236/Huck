@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 64713695}
   m_Layer: 5
   m_Name: LoadingCanvas
-  m_TagString: Untagged
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -555,7 +555,7 @@ GameObject:
   - component: {fileID: 1489570886}
   m_Layer: 0
   m_Name: LoadingManager
-  m_TagString: Untagged
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -572,6 +572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fddf006d4b211e1418b42b8516486fc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLoadingEnd: 0
   loadingCanvas: {fileID: 64713694}
   loadingScreen: {fileID: 520945701}
   loadingText: {fileID: 263622324}
@@ -601,7 +602,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1989197695}
   - component: {fileID: 1989197694}
-  - component: {fileID: 1989197693}
   - component: {fileID: 1989197696}
   m_Layer: 0
   m_Name: Main Camera
@@ -610,14 +610,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1989197693
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1989197692}
-  m_Enabled: 1
 --- !u!20 &1989197694
 Camera:
   m_ObjectHideFlags: 0
