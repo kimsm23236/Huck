@@ -180,6 +180,7 @@ MonoBehaviour:
   bossMonsterPrefab: {fileID: 6496948429584875936, guid: 54c33f8255fbdf04981e85474bc82f62,
     type: 3}
   bossPos: {fileID: 0}
+  isExistenceBoss: 0
 --- !u!1 &166398949
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +277,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251986898
 GameObject:
@@ -428,6 +429,29 @@ PrefabInstance:
 --- !u!1 &296962876 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3439561805880025763, guid: 1acdd3c2744642245901704d9d85fad3,
+    type: 3}
+  m_PrefabInstance: {fileID: 296962875}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &296962877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296962876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e66e75a8c7c4dc43a940b6df2ff2a04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exceptionLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  raycastDistance: 3
+  rayYOffset: 1
+--- !u!1 &296962878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5636839974501974631, guid: 1acdd3c2744642245901704d9d85fad3,
     type: 3}
   m_PrefabInstance: {fileID: 296962875}
   m_PrefabAsset: {fileID: 0}
@@ -597,7 +621,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &423995410
 GameObject:
@@ -647,7 +671,7 @@ PrefabInstance:
     - target: {fileID: 1806028170522939474, guid: b18d8b49e11c00d488b7e226e7a4aec6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 1806028170522939474, guid: b18d8b49e11c00d488b7e226e7a4aec6,
         type: 3}
@@ -759,6 +783,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &855445872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 855445874}
+  - component: {fileID: 855445873}
+  m_Layer: 17
+  m_Name: PostProcessOnLoading
+  m_TagString: PostProcessObject
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &855445873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855445872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 223b8cc9942acef4089db725d78094fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &855445874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855445872}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1001.62213, y: 25.27972, z: 958.6198}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &964210175
 GameObject:
@@ -1163,6 +1231,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 965887943926078264, guid: 3b940b089f0d3c047848de71d9e9d871,
+        type: 3}
+      propertyPath: head
+      value: 
+      objectReference: {fileID: 296962878}
     - target: {fileID: 965887943926078271, guid: 3b940b089f0d3c047848de71d9e9d871,
         type: 3}
       propertyPath: m_RootOrder
@@ -1249,7 +1322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 947d4231ed142374481cf7fa8b3ed822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeMultiplier: 5000
+  timeMultiplier: 0
   iStartHour: 10
   timeText: {fileID: 980692453}
   sunriseHour: 7
@@ -1307,7 +1380,7 @@ MonoBehaviour:
   sunLight: {fileID: 410087040}
   maxSunLightIntensity: 1
   moonLight: {fileID: 964210176}
-  maxMoonLightIntensity: 0
+  maxMoonLightIntensity: 0.1
 --- !u!4 &1251852255
 Transform:
   m_ObjectHideFlags: 0
@@ -1344,7 +1417,7 @@ PrefabInstance:
     - target: {fileID: 4346776966391961157, guid: 6dd0c8d3c88d42c4f9b96bd72a66ea60,
         type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4346776966391961157, guid: 6dd0c8d3c88d42c4f9b96bd72a66ea60,
         type: 3}
@@ -2517,8 +2590,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: bc9603f43065c4c46aa5fcf16c931a13, type: 2}
   targetTerrain: {fileID: 1743141046}
-  DEBUG_TurnOffObjectPlacers: 1
-  DEBUG_TurnOffBakeNavMeshes: 1
+  DEBUG_TurnOffObjectPlacers: 0
+  DEBUG_TurnOffBakeNavMeshes: 0
   navMeshSurfaces:
   - {fileID: 1996432428}
 --- !u!114 &9092503528081200850

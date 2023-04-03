@@ -6,10 +6,10 @@ public class ResObjectDestroying : PostProcessOnLoading
 {
     [SerializeField]
     bool isActive = false;
-    public override void Execute(System.Action<EGenerationStage, string> reportStatusFn = null)
+    public override void Execute()
     {
         enabled = true;
-        StartCoroutine(AsyncLoadingPostProcess(reportStatusFn));
+        StartCoroutine(AsyncLoadingPostProcess());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,10 +26,8 @@ public class ResObjectDestroying : PostProcessOnLoading
         
     }
 
-    public override IEnumerator AsyncLoadingPostProcess(System.Action<EGenerationStage, string> reportStatusFn = null)
+    public override IEnumerator AsyncLoadingPostProcess()
     {
-        if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.PostProcessOnLoading, "Overlapped ResourceObject Destroying");
-        
         yield return new WaitForSeconds(5f);
         Destroy(gameObject, 1f);
     }
