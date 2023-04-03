@@ -11,6 +11,7 @@ public class Appear : MonoBehaviour
     private Text TT = default;
     private int cnt = 0;
 
+    // Player Die Scene
     void Start()
     {
         Bg = UIManager.Instance.dead_1;

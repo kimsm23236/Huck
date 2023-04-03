@@ -139,8 +139,8 @@ public class PlayerStat : MonoBehaviour, IDamageable
         }
         isHit = false;
     } // WaitHitTime
-    // } TakeDamage
     // { Player Die
+    
     #region Die
     private void Die()
     {
