@@ -75,9 +75,10 @@ public class ItemRange : MonoBehaviour
             {
                 getItem = default;
             }
-
             if (hitItem.transform.tag == "Stove" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
-                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isWorkbenchOpen == false)
+                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isWorkbenchOpen == false
+                && PlayerMove.isWalk == false && PlayerMove.isRunning == false && PlayerMove.isJump == false
+                && PlayerAtk.isAttacking == false && PlayerMove.isEating == false)
             {
                 stoveItem = hitItem.transform.GetComponent<StoveItem>();
                 var interactResObj = hitItem.transform.gameObject.GetComponentMust<BaseResourceObject>();
@@ -90,7 +91,7 @@ public class ItemRange : MonoBehaviour
                 res_Hp.fillAmount = ((float)resObjCurrentHP / (float)resObjMaxHp);
                 ItemFound.SetActive(true);
 
-                if (Input.GetKeyUp(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     PlayerOther.isStoveOpen = !PlayerOther.isStoveOpen;
                     if (PlayerOther.isStoveOpen == true)
@@ -115,7 +116,9 @@ public class ItemRange : MonoBehaviour
             }
 
             if (hitItem.transform.tag == "Workbench" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
-            && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
+                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
+                && PlayerMove.isWalk == false && PlayerMove.isRunning == false && PlayerMove.isJump == false
+                && PlayerAtk.isAttacking == false && PlayerMove.isEating == false)
             {
                 var interactResObj = hitItem.transform.gameObject.GetComponentMust<BaseResourceObject>();
                 int resObjMaxHp = interactResObj.ResourceConfig.HP;
@@ -146,7 +149,9 @@ public class ItemRange : MonoBehaviour
             }
 
             if (hitItem.transform.tag == "Anvil" && PlayerOther.isWorkbenchOpen == false && PlayerOther.isInvenOpen == false
-                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
+                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
+                && PlayerMove.isWalk == false && PlayerMove.isRunning == false && PlayerMove.isJump == false
+                && PlayerAtk.isAttacking == false && PlayerMove.isEating == false)
             {
                 var interactResObj = hitItem.transform.gameObject.GetComponentMust<BaseResourceObject>();
                 int resObjMaxHp = interactResObj.ResourceConfig.HP;
@@ -182,7 +187,8 @@ public class ItemRange : MonoBehaviour
 
 
         hitinfo = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), Range);
-        if (hitinfo != null && PlayerOther.isInvenOpen == false && PlayerOther.isMapOpen == false)
+        if (hitinfo != null && PlayerOther.isWorkbenchOpen == false && PlayerOther.isInvenOpen == false
+                && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
         {
             for (int i = 0; i < hitinfo.Length; i++)
             {
@@ -200,106 +206,6 @@ public class ItemRange : MonoBehaviour
                     interect_T.text = $"{resName}";
                     res_Hp.fillAmount = ((float)resObjCurrentHP / (float)resObjMaxHp);
                 }
-
-                // if (hit.transform.tag == "Stove" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
-                //     && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isWorkbenchOpen == false)
-                // {
-                //     stoveItem = hit.transform.GetComponent<StoveItem>();
-                //     var interactResObj = hit.transform.gameObject.GetComponentMust<BaseResourceObject>();
-                //     int resObjMaxHp = interactResObj.ResourceConfig.HP;
-                //     int resObjCurrentHP = interactResObj.HP;
-
-                //     res_UI.SetActive(true);
-                //     panel_T.text = "Stove";
-                //     interect_T.text = "Stove";
-                //     res_Hp.fillAmount = ((float)resObjCurrentHP / (float)resObjMaxHp);
-                //     ItemFound.SetActive(true);
-
-                //     if (Input.GetKeyUp(KeyCode.E))
-                //     {
-                //         PlayerOther.isStoveOpen = !PlayerOther.isStoveOpen;
-                //         if (PlayerOther.isStoveOpen == true)
-                //         {
-                //             UIManager.Instance.stove.SetActive(true);
-                //             UI.transform.GetChild(0).gameObject.SetActive(false);
-                //             Cursor.visible = true;
-                //             Cursor.lockState = CursorLockMode.None;
-                //         }
-                //         else
-                //         {
-                //             UIManager.Instance.stove.SetActive(false);
-                //             UI.transform.GetChild(0).gameObject.SetActive(true);
-                //             Cursor.visible = false;
-                //             Cursor.lockState = CursorLockMode.Locked;
-                //         }
-                //     }
-                //     else
-                //     {
-                //         stoveItem = default;
-                //     }
-                // }
-
-                // if (hit.transform.tag == "Workbench" && PlayerOther.isAnvilOpen == false && PlayerOther.isInvenOpen == false
-                //     && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
-                // {
-                //     var interactResObj = hit.transform.gameObject.GetComponentMust<BaseResourceObject>();
-                //     int resObjMaxHp = interactResObj.ResourceConfig.HP;
-                //     int resObjCurrentHP = interactResObj.HP;
-                //     res_UI.SetActive(true);
-                //     panel_T.text = "Workbench";
-                //     interect_T.text = "Workbench";
-                //     res_Hp.fillAmount = ((float)resObjCurrentHP / (float)resObjMaxHp);
-                //     ItemFound.SetActive(true);
-                //     if (Input.GetKeyDown(KeyCode.E))
-                //     {
-                //         PlayerOther.isWorkbenchOpen = !PlayerOther.isWorkbenchOpen;
-                //         if (PlayerOther.isWorkbenchOpen == true)
-                //         {
-                //             UIManager.Instance.workBench.SetActive(true);
-                //             UI.transform.GetChild(0).gameObject.SetActive(false);
-                //             Cursor.visible = true;
-                //             Cursor.lockState = CursorLockMode.None;
-                //         }
-                //         else
-                //         {
-                //             UIManager.Instance.workBench.SetActive(false);
-                //             UI.transform.GetChild(0).gameObject.SetActive(true);
-                //             Cursor.visible = false;
-                //             Cursor.lockState = CursorLockMode.Locked;
-                //         }
-                //     }
-                // }
-
-                // if (hit.transform.tag == "Anvil" && PlayerOther.isWorkbenchOpen == false && PlayerOther.isInvenOpen == false
-                //     && PlayerOther.isMapOpen == false && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false)
-                // {
-                //     var interactResObj = hit.transform.gameObject.GetComponentMust<BaseResourceObject>();
-                //     int resObjMaxHp = interactResObj.ResourceConfig.HP;
-                //     int resObjCurrentHP = interactResObj.HP;
-                //     res_UI.SetActive(true);
-                //     panel_T.text = "Anvil";
-                //     interect_T.text = "Anvil";
-                //     res_Hp.fillAmount = ((float)resObjCurrentHP / (float)resObjMaxHp);
-                //     ItemFound.SetActive(true);
-                //     if (Input.GetKeyDown(KeyCode.E))
-                //     {
-                //         PlayerOther.isAnvilOpen = !PlayerOther.isAnvilOpen;
-                //         if (PlayerOther.isAnvilOpen == true)
-                //         {
-                //             UIManager.Instance.anvil.SetActive(true);
-                //             UI.transform.GetChild(0).gameObject.SetActive(false);
-                //             Cursor.visible = true;
-                //             Cursor.lockState = CursorLockMode.None;
-                //         }
-                //         else
-                //         {
-                //             UIManager.Instance.anvil.SetActive(false);
-                //             UI.transform.GetChild(0).gameObject.SetActive(true);
-                //             Cursor.visible = false;
-                //             Cursor.lockState = CursorLockMode.Locked;
-                //         }
-                //     }
-                // }
             }
         }
         // } Found Item & Get Item

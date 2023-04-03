@@ -40,7 +40,8 @@ public class PlayerAtk : MonoBehaviour
         if (isAttack == true && PlayerOther.isInvenOpen == false
             && PlayerOther.isMapOpen == false && PlayerMove.isDead == false
             && PlayerOther.isMenuOpen == false && PlayerOther.isStoveOpen == false
-            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false)
+            && PlayerOther.isAnvilOpen == false && PlayerOther.isWorkbenchOpen == false
+            && PlayerMove.isEating == false)
         {
             if (isAttacking == false)
             {

@@ -7,11 +7,7 @@ public class CurrentSlot : MonoBehaviour
 {
     public RectTransform curSlot_ = default;
 
-    void Start()
-    {
-
-    }
-
+    // { Current Quick Slot
     void Update()
     {
         curSlot();
@@ -52,4 +48,5 @@ public class CurrentSlot : MonoBehaviour
             curSlot_.anchoredPosition = new Vector3(-909 + 770, -488, 0);
         }
     }
+    // } Current Quick Slot
 }

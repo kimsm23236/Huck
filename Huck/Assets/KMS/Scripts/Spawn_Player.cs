@@ -6,6 +6,7 @@ public class Spawn_Player : MonoBehaviour
 {
     private void Start()
     {
+        // Move to Spawn Point
         GameManager.Instance.playerObj.transform.position = gameObject.transform.position;
         gameObject.SetActive(false);
     }
