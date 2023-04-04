@@ -16,8 +16,6 @@ public class MapUi : MonoBehaviour
     [SerializeField]
     private int mapSizeY = default;
 
-    Material material = default;
-
     // Start is called before the first frame update
     public delegate void EventHandler();
     public EventHandler onShowMap;
@@ -30,12 +28,11 @@ public class MapUi : MonoBehaviour
 
         LoadingManager.Instance.onFinishLoading += SetMapImage;
         LoadingManager.Instance.onFinishLoading += SetBossImagePos;
+        // onShowMap = new EventHandler(SetPlayerImagePos);
 
         mapSizeX = Mathf.FloorToInt(mapImage.rectTransform.sizeDelta.x);
         mapSizeY = Mathf.FloorToInt(mapImage.rectTransform.sizeDelta.y);
         Debug.Log($"mapSize, X : {mapSizeX}, Y : {mapSizeY}");
-
-        material = mapImage.material;
 
         transform.parent.gameObject.SetActive(false);;
     }
@@ -43,21 +40,22 @@ public class MapUi : MonoBehaviour
     {
         
     }
+    void Update()
+    {
+        SetPlayerImagePos();
+    }
     void SetMapImage()
     {
         Debug.Log($"SetMapImage()");
-        Texture2D texture2D = UIManager.Instance.worldMapTexture;
-        Texture2D fogTexture = new Texture2D(texture2D.width, texture2D.height, TextureFormat.RGB24, false);
-        // material.SetTexture("", fogTexture);
-        material.SetTexture("_MainTex2", texture2D);
-        Sprite sprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+        Texture2D mapTexture = UIManager.Instance.worldMapTexture;
+        
+        Sprite sprite = Sprite.Create(mapTexture, new Rect(0, 0, mapTexture.width, mapTexture.height), new Vector2(0.5f, 0.5f));
         mapImage.sprite = sprite;
     }
     void SetBossImagePos()
     {
         terrainSizeX = Mathf.FloorToInt(GameManager.Instance.terrain.terrainData.size.x);
         terrainSizeY = Mathf.FloorToInt(GameManager.Instance.terrain.terrainData.size.z);
-
 
         Vector3 bossPos = GameManager.Instance.bossPos.position;
         Debug.Log($"bossPos : {bossPos}");
@@ -72,6 +70,16 @@ public class MapUi : MonoBehaviour
     }
     void SetPlayerImagePos()
     {
-        Vector3 playerPos = GameManager.Instance.playerObj.transform.position;
+        Transform playerTransform = GameManager.Instance.playerObj.transform;
+        // position
+        Vector3 playerPos = playerTransform.position;
+        float xRatio = playerPos.x / terrainSizeX;
+        float yRatio = playerPos.z / terrainSizeY;
+        float newPlayerImagePosX = mapSizeX * xRatio;
+        float newPlayerImagePosY = mapSizeY * yRatio;
+        playerPosImage.rectTransform.anchoredPosition = new Vector3(newPlayerImagePosX, newPlayerImagePosY, 0f);
+        // rotation
+        Vector3 playerRotation = playerTransform.rotation.eulerAngles;
+        playerPosImage.rectTransform.rotation = Quaternion.Euler(0,0, -playerRotation.y);
     }
 }
