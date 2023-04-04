@@ -70,4 +70,12 @@ MonoBehaviour:
   - HeightMap: {fileID: 2800000, guid: bc5bd6a57e12e4243ab1a17b7f7f9972, type: 3}
     Height: 200
     Radius: 100
-    numToSpawn: 6
+    numToSpawn: 2
+  - HeightMap: {fileID: 2800000, guid: ca9d4366f22e86548aa429dd9932cfef, type: 3}
+    Height: 180
+    Radius: 200
+    numToSpawn: 1
+  - HeightMap: {fileID: 2800000, guid: b984242e747667349900f2de53d52522, type: 3}
+    Height: 160
+    Radius: 90
+    numToSpawn: 2

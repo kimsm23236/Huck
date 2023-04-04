@@ -13,6 +13,8 @@ public class GameManager : Singleton<GameManager>
 
     public TimeController timeController = default;
 
+    public Terrain terrain = default;
+
     //
     private bool isMidBossClear = false;
     public bool IsMidBossClear

@@ -29,9 +29,14 @@ public class ProcGenManager : MonoBehaviour
 
     float[,] SlopeMap;
 
+    public Terrain MainTerrain
+    {
+        get { return targetTerrain; }
+    }
+
     void Awake()
     {
-        
+        GameManager.Instance.terrain = targetTerrain;
     }
     // Start is called before the first frame update
     void Start()
@@ -153,9 +158,6 @@ public class ProcGenManager : MonoBehaviour
         if (reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Complete, "Terrain Generation complete");
         yield return new WaitForSeconds(1f);
 
-        //
-        // targetTerrain.terrainData.deta
-        //
     }
 
     void Perform_GenerateTextureMapping()
@@ -637,12 +639,12 @@ public class ProcGenManager : MonoBehaviour
             for (int x = 0; x < mapResolution; x++)
             {
                 Color workingColor = config.Biomes[(int)BiomeMap[x, y]].Biome.mapColor;
-                if(heightMap[x,y] * heightMapScale.y >= 80f)
+                if(heightMap[x,y] * heightMapScale.y >= 110f)
                     workingColor = heightColor_HighMountain;
                 else if(heightMap[x,y] * heightMapScale.y <= 15f)
                     workingColor = heightColor_Water;
 
-                biomeMapTexture.SetPixel(x, y, workingColor);
+                biomeMapTexture.SetPixel(y, x, workingColor);
             }
         }
         biomeMapTexture.Apply();

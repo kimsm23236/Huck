@@ -32,11 +32,12 @@ public class DestructibleObject : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(DamageMessage damageMessage)
     {
-        HP--;
-        if(HP <= 0)
+        if(damageMessage.causer.tag == "AttackRange")
         {
-            Destruction();
+            return;
         }
+
+        Destruction();
     }
 
     private void SetGravityAllRigidbody(bool value)

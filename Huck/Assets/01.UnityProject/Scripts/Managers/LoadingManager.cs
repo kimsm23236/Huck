@@ -42,10 +42,14 @@ public class LoadingManager : Singleton<LoadingManager>
     private ProcGenManager procGenManager = default;
     private Animator loadingScreenAnim = default;
 
+    public delegate void EventHandler();
+    public EventHandler onFinishLoading;
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(loadingCanvas);
+        onFinishLoading = new EventHandler(() => isLoadingEnd = true);
     }
     void Start()
     {
@@ -103,6 +107,6 @@ public class LoadingManager : Singleton<LoadingManager>
     public void LoadingScreenFadeOutPlay()
     {
         loadingScreenAnim.SetBool("isFadeOut", true);
-        isLoadingEnd = true;
+        onFinishLoading();
     }
 }

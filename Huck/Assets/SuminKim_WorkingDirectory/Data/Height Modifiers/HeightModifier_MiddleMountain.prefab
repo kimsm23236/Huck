@@ -67,7 +67,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Strength: 1
   Features:
-  - HeightMap: {fileID: 2800000, guid: bc5bd6a57e12e4243ab1a17b7f7f9972, type: 3}
+  - HeightMap: {fileID: 2800000, guid: 8fa0b36213d998f429d067477d2f86fd, type: 3}
+    Height: 80
+    Radius: 70
+    numToSpawn: 5
+  - HeightMap: {fileID: 2800000, guid: 414f5730d24462f4985e8fa5053e15bf, type: 3}
+    Height: 80
+    Radius: 70
+    numToSpawn: 5
+  - HeightMap: {fileID: 2800000, guid: ed402183ce9453c46a2ac71b6f82459e, type: 3}
     Height: 80
     Radius: 70
     numToSpawn: 5

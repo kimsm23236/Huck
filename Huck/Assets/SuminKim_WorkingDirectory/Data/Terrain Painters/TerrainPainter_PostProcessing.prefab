@@ -50,8 +50,8 @@ MonoBehaviour:
   Texture:
     Diffuse: {fileID: 2800000, guid: 94b8648c05465fb46bfa574e9aea873e, type: 3}
     NormalMap: {fileID: 2800000, guid: 25e8404e9d20aee479318ba8737bee01, type: 3}
-  StartHeight: 80
-  EndHeight: 250
+  StartHeight: 110
+  EndHeight: 300
   Intensity:
     serializedVersion: 2
     m_Curve:
@@ -76,16 +76,25 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  SuppressOtherTextures: 1
+  SuppressOtherTextures: 0
   SuppressionIntensity:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -109,7 +118,7 @@ MonoBehaviour:
     Diffuse: {fileID: 2800000, guid: c93c700a0d8b2b04288d5be4654deb4b, type: 3}
     NormalMap: {fileID: 0}
   StartHeight: 0
-  EndHeight: 10
+  EndHeight: 15
   Intensity:
     serializedVersion: 2
     m_Curve:
@@ -121,26 +130,26 @@ MonoBehaviour:
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.083778955
+      outWeight: 0.12540606
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -2.5311553
-      outSlope: -2.5311553
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04099834
+      inWeight: 0.022681415
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  SuppressOtherTextures: 1
+  SuppressOtherTextures: 0
   SuppressionIntensity:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
