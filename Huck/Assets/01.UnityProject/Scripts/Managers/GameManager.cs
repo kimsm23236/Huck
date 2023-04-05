@@ -38,6 +38,10 @@ public class GameManager : Singleton<GameManager>
     public int count = 0; // Day체크
     //! } [KKS] 몬스터 스폰관련 변수
 
+    //
+    public BossRoomLightControl bossRoomLightController = default;
+    //
+
     //! 게임매니져 초기화 함수
     protected override void Init()
     {
@@ -138,6 +142,7 @@ public class GameManager : Singleton<GameManager>
     } // StartBGM
     public void StartBossBGM()
     {
+        bossRoomLightController.onStartBattle();
         bgmAudio.clip = bossBgmSound;
         bgmAudio.Play();
     } // StartBGM

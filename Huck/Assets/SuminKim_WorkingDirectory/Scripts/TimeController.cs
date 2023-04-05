@@ -180,7 +180,6 @@ public class TimeController : MonoBehaviour
     private void UpdateLightSettings()
     {
         float dotProduct = Vector3.Dot(sunLight.transform.forward, Vector3.down);
-        Debug.Log($"{dotProduct}");
         sunLight.intensity = Mathf.Lerp(0, maxSunLightIntensity, lightChangeCurve.Evaluate(dotProduct));
         moonLight.intensity = Mathf.Lerp(maxMoonLightIntensity, 0, lightChangeCurve.Evaluate(dotProduct));
         RenderSettings.ambientLight = Color.Lerp(nightAmbientLight, dayAmbientLight, lightChangeCurve.Evaluate(dotProduct));
@@ -196,6 +195,14 @@ public class TimeController : MonoBehaviour
         }
 
         return diffTime;
+    }
+
+    // 보스전 전용
+
+    public void SetTime_Boss(int hour)
+    {
+        currentTime = DateTime.Now.Date + TimeSpan.FromHours(hour);
+        timeMultiplier = 0f;
     }
 
     #region Debugging Cheat

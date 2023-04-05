@@ -11,6 +11,9 @@ public class Door : MonoBehaviour, IInteractable
 {
     private Animator doorAnimator = default;
     private EDoorState doorState = default;
+    public BossRoomLightControl bossRoomLightControl = default;
+
+    private bool isOnceProcess = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,12 @@ public class Door : MonoBehaviour, IInteractable
             return;
         if (!GameManager.Instance.IsMidBossClear)
             return;
+
+        if(isOnceProcess)
+        {
+            bossRoomLightControl.onCloseDoor();
+            isOnceProcess = false;
+        }
         doorState = EDoorState.OPEN;
         doorAnimator.SetTrigger("DoorOpen");
         GameManager.Instance.BossSpwan();
