@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Skeleton_Mage
   m_EditorClassIdentifier: 
   monsterName: "\uD574\uACE8\uB9C8\uBC95\uC0AC"
-  monsterHp: 100
-  monsterMaxHp: 100
+  monsterHp: 150
+  monsterMaxHp: 150
   moveSpeed: 6
   damage: 10
   isNoRangeAttack: 0

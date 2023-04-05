@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Skeleton_King
   m_EditorClassIdentifier: 
   monsterName: "\uD574\uACE8\uC655"
-  monsterHp: 200
-  monsterMaxHp: 200
+  monsterHp: 1000
+  monsterMaxHp: 1000
   moveSpeed: 8
   damage: 16
   isNoRangeAttack: 0
   isNoRangeSkill: 0
   useSkill: 1
-  searchRange: 30
+  searchRange: 40
   attackRange: 25
   meleeAttackRange: 3
   roarAudio: {fileID: 8300000, guid: ff8873a9584ac4741ba153f56183d0d5, type: 3}

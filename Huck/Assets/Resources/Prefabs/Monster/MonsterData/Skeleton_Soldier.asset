@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Skeleton_Soldier
   m_EditorClassIdentifier: 
   monsterName: "\uD574\uACE8\uBCD1\uC0AC"
-  monsterHp: 100
-  monsterMaxHp: 100
+  monsterHp: 150
+  monsterMaxHp: 150
   moveSpeed: 7
   damage: 7
   isNoRangeAttack: 1

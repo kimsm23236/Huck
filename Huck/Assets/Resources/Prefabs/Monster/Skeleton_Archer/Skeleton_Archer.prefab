@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enumState: 0
   isBattle: 0
-  hpBar: {fileID: 8165150806892465761}
+  hpBar: {fileID: 8165150806892465763}
   attackIndicator: {fileID: 0}
   monster: {fileID: 0}
   monsterRb: {fileID: 0}
@@ -189,8 +189,8 @@ MonoBehaviour:
   isDelay: 0
   isHit: 0
   isDead: 0
-  target: {fileID: 0}
   distance: 0
+  target: {fileID: 0}
 --- !u!114 &247722647913602221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1744,7 +1744,7 @@ GameObject:
   - component: {fileID: 6504229004884452822}
   m_Layer: 0
   m_Name: Weapon
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2313,8 +2313,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a64ab5bdb156bc4c8cb2cf249b5675a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpFront: {fileID: 8165150807035183068}
   mController: {fileID: 247722647913602220}
+  hpFront: {fileID: 8165150807035183068}
 --- !u!1 &8165150807035183042
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class ParticleTrigger : MonoBehaviour
     private void OnParticleCollision(GameObject other)
     {
         IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
-        if (damageable != null)
+        if (damageable != null && other.tag != GData.ENEMY_MASK)
         {
             damageable.TakeDamage(damageMessage);
         }

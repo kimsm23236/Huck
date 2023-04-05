@@ -290,7 +290,7 @@ public class SkeletonKing : Monster
             mController.monsterAni.SetBool("isDead", false);
             mController.monsterAni.SetTrigger("isRoar");
             yield return new WaitForSeconds(0.1f);
-            mController.hpBar.SetActive(true);
+            mController.hpBar.gameObject.SetActive(true);
             float time = 0f;
             float endTime = mController.monsterAni.GetCurrentAnimatorStateInfo(0).length - 2f;
             GameManager.Instance.bgmAudio.Play();

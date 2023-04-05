@@ -24,7 +24,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     public MStateMachine MStateMachine { get; private set; }
     public MonsterState enumState = MonsterState.IDLE; // 몬스터의 현재 상태를 체크하기 위한 변수
     [SerializeField] private bool isBattle = false; // 몬스터의 감지범위에 따라 distance를 구하는 코드 실행 조건
-    public GameObject hpBar = default; // HpBar 오브젝트
+    public MonsterHpBar hpBar = default; // HpBar 오브젝트
     public AttackIndicator attackIndicator = default; // 공격범위 지시자 pool에 접근할 변수
     [HideInInspector] public Monster monster; // 몬스터 정보
     [HideInInspector] public Rigidbody monsterRb = default; // 리지드바디
@@ -36,10 +36,8 @@ public class MonsterController : MonoBehaviour, IDamageable
     [HideInInspector] public bool isDelay = false; // Delay상태 체크 변수
     [HideInInspector] public bool isHit = false; // HIT상태 체크 변수
     [HideInInspector] public bool isDead = false; // Dead상태 체크 변수
-    // { Test
+    [HideInInspector] public float distance; // 타겟과의 거리 변수
     public GameObject target;
-    public float distance; // 타겟과의 거리 변수
-    // } Test
 
     // Start is called before the first frame update
     void Start()
@@ -79,7 +77,7 @@ public class MonsterController : MonoBehaviour, IDamageable
         MStateMachine = new MStateMachine(idle, this);
         target = GameManager.Instance.playerObj;
         StartCoroutine(Spawn());
-        hpBar.SetActive(false);
+        hpBar.gameObject.SetActive(false);
     } // Start
 
     // Update is called once per frame
@@ -136,7 +134,7 @@ public class MonsterController : MonoBehaviour, IDamageable
         isSpawn = false;
         if (monster.monsterType == Monster.MonsterType.BOSS)
         {
-            hpBar.SetActive(true);
+            hpBar.gameObject.SetActive(true);
         }
     } // Spawn
 
@@ -149,11 +147,13 @@ public class MonsterController : MonoBehaviour, IDamageable
             return;
         }
         monster.monsterHp -= message.damageAmount;
+        // hpBar에 표시될 hp정보 전달
+        hpBar.InitHpBar((float)monster.monsterHp);
         // HP가 0 이하면 사망
         if (monster.monsterHp <= 0f)
         {
             isDead = true;
-            hpBar.SetActive(false);
+            hpBar.gameObject.SetActive(false);
             monster.ExitAttack();
             MStateMachine.SetState(dicState[MonsterState.DEAD]);
             return;
@@ -192,99 +192,83 @@ public class MonsterController : MonoBehaviour, IDamageable
     //! 몬스터 상태 정하는 함수
     private void MonsterSetState()
     {
-        // 공격상태 이후 딜레이 상태로 전환
-        if (isDelay == true)
+        // 탐색범위안의 타겟이 없으면 탐색상태로 전환
+        if (targetSearch.hit == null)
         {
-            MStateMachine.SetState(dicState[MonsterState.DELAY]);
+            MStateMachine.SetState(dicState[MonsterState.SEARCH]);
         }
-        // 공격을 당하면 HIT상태로 전환
-        if (isHit == true)
+        else
         {
-            MStateMachine.SetState(dicState[MonsterState.HIT]);
-        }
-        // 배틀중이 아닐 때는 Distance 구하는걸 멈추기 위한 예외처리 (최적화)
-        if (isBattle == false)
-        {
-            float _distance = Vector3.Distance(transform.position, target.transform.position);
-            //Debug.Log($"배틀중이 아님 : {_distance}");
-            // 타겟이 몬스터의 탐색범위 밖에 있으면 추적
-            if (_distance > monster.searchRange)
+            distance = Vector3.Distance(targetSearch.hit.transform.position, transform.position);
+            // 공격상태 이후 딜레이 상태로 전환
+            if (isDelay == true)
             {
-                MStateMachine.SetState(dicState[MonsterState.SEARCH]);
+                MStateMachine.SetState(dicState[MonsterState.DELAY]);
             }
-            else
+            // 공격을 당하면 HIT상태로 전환
+            if (isHit == true)
             {
-                isBattle = true;
+                MStateMachine.SetState(dicState[MonsterState.HIT]);
             }
-            return;
-        }
-        // 타겟이 몬스터의 탐색범위 안에 있을 때만 탐색 실행 (최적화)
-        targetSearch.SearchTarget();
-        distance = Vector3.Distance(targetSearch.hit.transform.position, transform.position);
-        // 타겟이 감지범위를 벗어나면 배틀종료
-        if (distance > monster.searchRange)
-        {
-            isBattle = false;
-            return;
-        }
 
-        if (monster.monsterType != Monster.MonsterType.BOSS)
-        {
-            if (distance < 10f)
+            if (monster.monsterType != Monster.MonsterType.BOSS)
             {
-                hpBar.SetActive(true);
-            }
-            else
-            {
-                hpBar.SetActive(false);
-            }
-        }
-
-        // 이동상태로 전환 체크
-        if (enumState != MonsterState.ATTACK
-            && enumState != MonsterState.SKILL
-            && enumState != MonsterState.HIT
-            && enumState != MonsterState.DELAY)
-        {
-            MStateMachine.SetState(dicState[MonsterState.MOVE]);
-        }
-        // { 타겟이 공격사거리 안에 있으면 공격 및 스킬 상태로 전환
-        if (distance <= monster.attackRange && enumState != MonsterState.DELAY && enumState != MonsterState.HIT)
-        {
-            // 몬스터의 스킬이 사용가능할 때
-            if (enumState != MonsterState.ATTACK && monster.useSkill == true)
-            {
-                // 몬스터의 원거리 스킬 유무에 따라 실행
-                switch (monster.isNoRangeSkill)
+                if (distance < 10f)
                 {
-                    case true:
-                        if (distance <= monster.meleeAttackRange)
-                        {
+                    hpBar.gameObject.SetActive(true);
+                }
+                else
+                {
+                    hpBar.gameObject.SetActive(false);
+                }
+            }
+
+            // 이동상태로 전환 체크
+            if (enumState != MonsterState.ATTACK
+                && enumState != MonsterState.SKILL
+                && enumState != MonsterState.HIT
+                && enumState != MonsterState.DELAY)
+            {
+                MStateMachine.SetState(dicState[MonsterState.MOVE]);
+            }
+            // { 타겟이 공격사거리 안에 있으면 공격 및 스킬 상태로 전환
+            if (distance <= monster.attackRange && enumState != MonsterState.DELAY && enumState != MonsterState.HIT)
+            {
+                // 몬스터의 스킬이 사용가능할 때
+                if (enumState != MonsterState.ATTACK && monster.useSkill == true)
+                {
+                    // 몬스터의 원거리 스킬 유무에 따라 실행
+                    switch (monster.isNoRangeSkill)
+                    {
+                        case true:
+                            if (distance <= monster.meleeAttackRange)
+                            {
+                                MStateMachine.SetState(dicState[MonsterState.SKILL]);
+                            }
+                            break;
+                        case false:
                             MStateMachine.SetState(dicState[MonsterState.SKILL]);
-                        }
-                        break;
-                    case false:
-                        MStateMachine.SetState(dicState[MonsterState.SKILL]);
-                        break;
-                } // switch end
-            } // if end
-            // 스킬상태가 아니면 공격상태 진입 여부 체크
-            if (enumState != MonsterState.SKILL)
-            {
-                // 몬스터의 원거리 공격 유무에 따라 실행
-                switch (monster.isNoRangeAttack)
+                            break;
+                    } // switch end
+                } // if end
+                  // 스킬상태가 아니면 공격상태 진입 여부 체크
+                if (enumState != MonsterState.SKILL)
                 {
-                    case true:
-                        if (distance <= monster.meleeAttackRange)
-                        {
+                    // 몬스터의 원거리 공격 유무에 따라 실행
+                    switch (monster.isNoRangeAttack)
+                    {
+                        case true:
+                            if (distance <= monster.meleeAttackRange)
+                            {
+                                MStateMachine.SetState(dicState[MonsterState.ATTACK]);
+                            }
+                            break;
+                        case false:
                             MStateMachine.SetState(dicState[MonsterState.ATTACK]);
-                        }
-                        break;
-                    case false:
-                        MStateMachine.SetState(dicState[MonsterState.ATTACK]);
-                        break;
-                } // switch end
-            } // if end
+                            break;
+                    } // switch end
+                } // if end
+            }
         }
         // } 타겟이 공격사거리 안에 있으면 공격 및 스킬 상태로 전환
     } // MonsterSetState

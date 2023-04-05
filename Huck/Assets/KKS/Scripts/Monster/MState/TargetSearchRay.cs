@@ -44,6 +44,11 @@ public class TargetSearchRay : MonoBehaviour
             // 가장 가까운 타겟을 hit에 캐싱 (타겟이 플레이어가 아닐 경우)
             hit = nearTarget;
         }
+        else
+        {
+            // 타겟이 없으면 null
+            hit = null;
+        }
     } // TagetCheckRay
 
     //! 몬스터의 감지범위를 Gizmo로 보여주는 함수

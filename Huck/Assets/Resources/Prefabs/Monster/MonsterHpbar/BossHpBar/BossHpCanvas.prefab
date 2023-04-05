@@ -2913,11 +2913,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8609830479527014176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65224df44db2f1b41bac8e27bb1a50d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a64ab5bdb156bc4c8cb2cf249b5675a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpFront: {fileID: 7709329791884811113}
   mController: {fileID: 0}
+  hpFront: {fileID: 7709329791884811113}
 --- !u!1 &8609830479588610566
 GameObject:
   m_ObjectHideFlags: 0

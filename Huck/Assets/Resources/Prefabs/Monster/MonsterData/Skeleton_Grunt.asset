@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Skeleton_Grunt
   m_EditorClassIdentifier: 
   monsterName: "\uD574\uACE8\uADF8\uB7F0\uD2B8"
-  monsterHp: 150
-  monsterMaxHp: 150
+  monsterHp: 600
+  monsterMaxHp: 600
   moveSpeed: 7
   damage: 13
   isNoRangeAttack: 0

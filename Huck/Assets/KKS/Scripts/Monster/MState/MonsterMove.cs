@@ -5,7 +5,6 @@ using UnityEngine;
 public class MonsterMove : IMonsterState
 {
     private MonsterController mController;
-    //private Vector3 dir; // 이동할 방향 변수
     private bool exitState; // 코루틴 while문 조건
     public void StateEnter(MonsterController _mController)
     {
@@ -38,10 +37,6 @@ public class MonsterMove : IMonsterState
         exitState = false;
         while (exitState == false)
         {
-            if (exitState == true)
-            {
-                yield break;
-            }
             mController.mAgent.SetDestination(mController.targetSearch.hit.transform.position);
             yield return null;
         }

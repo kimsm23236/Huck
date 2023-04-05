@@ -108,6 +108,8 @@ public class SkeletonSoldier : Monster
         shield.SetActive(false);
         mController.monsterAni.SetBool("isAttackA", false);
         mController.monsterAni.SetBool("isAttackB", false);
+        mController.monsterAni.SetBool("isSkillA_Start", false);
+        mController.monsterAni.SetBool("isSkillA_Loop", false);
         mController.monsterAni.SetBool("isSkillA_End", false);
         mController.monsterAni.SetBool("isSkillB", false);
         // 공격종료 후 딜레이 시작
@@ -156,6 +158,12 @@ public class SkeletonSoldier : Monster
         mController.mAgent.speed = moveSpeed * 2f;
         while (isSkillA == true)
         {
+            if (mController.targetSearch.hit == null)
+            {
+                mController.monsterAni.SetBool("isSkillA_Start", false);
+                mController.monsterAni.SetBool("isSkillA_Loop", false);
+                yield break;
+            }
             if (mController.monsterAni.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && isStart == true)
             {
                 // 돌진 시작 모션 끝나면 Loop모션으로 전환

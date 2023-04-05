@@ -18,14 +18,14 @@ public class ResourceBuildObject : BaseResourceObject
         float damageMultiplier_type = 0f;
         float damageMultiplier_level = 0f;
 
-
         if (hitItem != null && hitItem.ItemTool == EItemTool.AXE)
             damageMultiplier_type = 1f;
 
         if (hitItem != null && (int)hitItem.ItemLevel >= (int)resLevel)
             damageMultiplier_level = 1f;
 
-        message.damageAmount = message.damageAmount * (int)damageMultiplier_type * (int)damageMultiplier_level;
+        if(message.causer.tag == GData.PLAYER_MASK)
+            message.damageAmount = message.damageAmount * (int)damageMultiplier_type * (int)damageMultiplier_level;
 
         base.TakeDamage(message);
     }

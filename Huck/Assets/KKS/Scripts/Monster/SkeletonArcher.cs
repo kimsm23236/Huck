@@ -179,6 +179,12 @@ public class SkeletonArcher : Monster
         isAttackDelay = false;
         while (isAttackDelay == false)
         {
+            if (mController.enumState != MonsterController.MonsterState.SKILL
+                && mController.enumState != MonsterController.MonsterState.ATTACK)
+            {
+                isAttackDelay = true;
+                yield break;
+            }
             mController.transform.LookAt(mController.targetSearch.hit.transform.position);
             yield return null;
         }

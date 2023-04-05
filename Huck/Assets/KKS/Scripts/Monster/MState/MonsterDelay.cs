@@ -45,7 +45,7 @@ public class MonsterDelay : IMonsterState
                 while (isBackMove == false)
                 {
                     checkTime += Time.deltaTime;
-                    if (checkTime >= 1.5f)
+                    if (checkTime >= 1.5f || mController.targetSearch.hit == null)
                     {
                         isBackMove = true;
                     }
@@ -64,7 +64,7 @@ public class MonsterDelay : IMonsterState
                 while (isIdle == false)
                 {
                     checkTime2 += Time.deltaTime;
-                    if (checkTime2 >= 1.5f)
+                    if (checkTime2 >= 1.5f || mController.targetSearch.hit == null)
                     {
                         isIdle = true;
                     }
@@ -83,7 +83,7 @@ public class MonsterDelay : IMonsterState
                 while (isSideMove == false)
                 {
                     checkTime3 += Time.deltaTime;
-                    if (checkTime3 >= 2.5f)
+                    if (checkTime3 >= 2.5f || mController.targetSearch.hit == null)
                     {
                         isSideMove = true;
                     }
@@ -111,7 +111,8 @@ public class MonsterDelay : IMonsterState
                 yield return new WaitForSeconds(mController.monsterAni.GetCurrentAnimatorStateInfo(0).length);
                 break;
         }
-        // 공격딜레이가 끝났으면 Idle상태로 초기화
+        // 공격딜레이가 끝났으면 Idle상태로 초기화 및 탐색한번 실행
+        mController.targetSearch.SearchTarget();
         IMonsterState nextState = new MonsterIdle();
         mController.MStateMachine.onChangeState?.Invoke(nextState);
     } // AttackDelay

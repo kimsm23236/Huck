@@ -5,9 +5,9 @@ using UnityEngine;
 public static partial class GData
 {
     // Scene Name
-    public const string SCENENAME_TITLE = "SampleTitleSample";
-    public const string SCENENAME_LOADING = "SampleLoadingScene";
-    public const string SCENENAME_PLAY = "SampleTestScene";
+    public const string SCENENAME_TITLE = "TitleScene";
+    public const string SCENENAME_LOADING = "LoadingScene";
+    public const string SCENENAME_PLAY = "PlayScene";
 
     // Layer Mask
     public const string PLAYER_MASK = "Player";

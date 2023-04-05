@@ -41,7 +41,6 @@ public class ProcGenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // navMeshSurface = GFunc.GetRootObj("NavMesh").GetComponentMust<NavMeshSurface>();
 #if UNITY_EDITOR
         if(Application.isPlaying)
             StartCoroutine(AsyncRegenerateWorld(LoadingManager.Instance.OnStatusReported));

@@ -830,8 +830,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a64ab5bdb156bc4c8cb2cf249b5675a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpFront: {fileID: 2347848937517245236}
   mController: {fileID: 7069685898800043998}
+  hpFront: {fileID: 2347848937517245236}
 --- !u!1 &2518971935256301107
 GameObject:
   m_ObjectHideFlags: 0
@@ -2123,7 +2123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enumState: 0
   isBattle: 0
-  hpBar: {fileID: 2347848937642971785}
+  hpBar: {fileID: 2347848937642971787}
   attackIndicator: {fileID: 0}
   monster: {fileID: 0}
   monsterRb: {fileID: 0}
@@ -2162,6 +2162,10 @@ MonoBehaviour:
   attackRange: 0
   meleeAttackRange: 0
   roarClip: {fileID: 0}
+  deadClip: {fileID: 0}
+  moveClip: {fileID: 0}
+  hitClip: {fileID: 0}
+  weaponClip: {fileID: 0}
   monsterData: {fileID: 11400000, guid: f80aede6aa3850c4e9b11ce0a792f9ee, type: 2}
   summonObjPrefab: {fileID: 448846600250583453, guid: 5c9306571bbb2be4d8c4bae543bf9e5a,
     type: 3}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Skeleton_Archer
   m_EditorClassIdentifier: 
   monsterName: "\uD574\uACE8\uAD81\uC218"
-  monsterHp: 70
-  monsterMaxHp: 70
+  monsterHp: 100
+  monsterMaxHp: 100
   moveSpeed: 8
   damage: 8
   isNoRangeAttack: 0

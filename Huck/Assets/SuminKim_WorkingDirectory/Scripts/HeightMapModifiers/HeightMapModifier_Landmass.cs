@@ -8,11 +8,6 @@ public class HeightMapModifier_Landmass : BaseHeightMapModifier
     [SerializeField] float landmassRadius = 500f;
     [SerializeField] float TargetHeight;
 
-    [SerializeField] int SmoothingKernelSize = 5;
-    [SerializeField] bool useAdaptiveKernel = false;
-    [SerializeField][Range(0f, 1f)] float maxHeightThreshold = 0.5f;
-    [SerializeField] int minKernelSize = 2;
-    [SerializeField] int maxKernelSize = 7;
     public override void Execute(ProcGenConfigSO globalConfig, int mapResolution, float[,] heightMap, Vector3 heightmapScale, byte[,] biomeMap = null, int biomeIndex = -1, BiomeConfigSO biome = null)
     {
         if (biomeMap != null)
