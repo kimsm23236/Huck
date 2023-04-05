@@ -59,8 +59,7 @@ public class PlayerMove : MonoBehaviour
             MoveInput();
             JumpInput();
         }
-        Cheat_FindBossCastle();
-        Cheat_SpeedUp();
+        CheatInput();
     }
 
     private void PlayerAction()
@@ -295,6 +294,12 @@ public class PlayerMove : MonoBehaviour
     // } Player Grounded Check
 
     //
+    void CheatInput()
+    {
+        Cheat_FindBossCastle();
+        Cheat_SpeedUp();
+        Cheat_CharacterAddPosY();
+    }
     void Cheat_SpeedUp()
     {
         if(Input.GetKeyDown(KeyCode.Keypad1))
@@ -309,6 +314,13 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             transform.LookAt(GameManager.Instance.bossPos);
+        }
+    }
+    void Cheat_CharacterAddPosY()
+    {
+        if(Input.GetKey(KeyCode.Keypad8))
+        {
+            transform.position += Vector3.up;
         }
     }
     //

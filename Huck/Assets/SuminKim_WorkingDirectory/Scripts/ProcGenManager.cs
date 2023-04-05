@@ -17,16 +17,21 @@ public class ProcGenManager : MonoBehaviour
 {
     [SerializeField] ProcGenConfigSO config;
     [SerializeField] Terrain targetTerrain;
+    // 디버깅 멤버
     [Header("Debugging")]
     [SerializeField] bool DEBUG_TurnOffObjectPlacers = false;
     [SerializeField] bool DEBUG_TurnOffBakeNavMeshes = false;
+
+    // 네비게이션
     [SerializeField] NavMeshSurface[] navMeshSurfaces = default;
     Dictionary<TextureConfig, int> BiomeTextureToTerrainLayerIndex = new Dictionary<TextureConfig, int>();
     Dictionary<TerrainDetailConfig, int> BiomeTerrainDetailToDetailLayerIndex = new Dictionary<TerrainDetailConfig, int>();
 
+    // 바이옴 맵
     byte[,] BiomeMap;
+    // 바이옴 강세
     float[,] BiomeStrengths;
-
+    // 기울기 맵
     float[,] SlopeMap;
 
     public Terrain MainTerrain
@@ -46,7 +51,7 @@ public class ProcGenManager : MonoBehaviour
             StartCoroutine(AsyncRegenerateWorld(LoadingManager.Instance.OnStatusReported));
         else
         {
-            /* To do */
+            /* To do? */
         }
             
 #else
@@ -54,24 +59,22 @@ public class ProcGenManager : MonoBehaviour
 #endif
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    // 월드 비동기 재 생성 함수
     public IEnumerator AsyncRegenerateWorld(System.Action<EGenerationStage, string> reportStatusFn = null)
     {
-        // cache the map resolution
+        // 맵 해상도 캐싱
         int mapResolution = targetTerrain.terrainData.heightmapResolution;
         int alphaMapResolution = targetTerrain.terrainData.alphamapResolution;
         int detailMapResolution = targetTerrain.terrainData.detailResolution;
         int maxDetailsPerPatch = targetTerrain.terrainData.detailResolutionPerPatch;
 
+        // { 지형 생성 프로세스 시작
+        // 지형 생성 프로세스 중 어떤 스텝인지를 UI에 표시하는 함수를 매개변수로 받고
+        // 매 단계마다 실행하여 현재 어떤 스텝인인지 알림
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.Beginning, "Beginning Terrain Generation");
         yield return new WaitForSeconds(1f);
 
-        // clear out any previously spawn objects
+        // 이전에 스폰했었던 오브젝트 클리어
         for (int childIndex = transform.childCount - 1; childIndex >= 0; --childIndex)
         {
 #if UNITY_EDITOR
@@ -87,15 +90,16 @@ public class ProcGenManager : MonoBehaviour
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.BuildTextureMap, "Building texture map");
         yield return new WaitForSeconds(1f);
 
-        // Generate the texture mapping
+        // 텍스처 맵 생성
         Perform_GenerateTextureMapping();
 
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.BuildDetailMap, "Building detail map");
         yield return new WaitForSeconds(1f);
 
-        // Generate the terrain detail mapping
+        // 디테일 페인트 맵 생성
         Perform_GenerateTerrainDetailMapping();
 
+        // 바이옴 생성 및 보스 성 오브젝트 생성 검증 루프
         while(true)
         {
             if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.BuildBiomeMap, "Build biome map");
@@ -120,10 +124,12 @@ public class ProcGenManager : MonoBehaviour
             }
         }
 
+        // 월드맵 텍스처 생성 및 UI에 설정
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.SetupWorldMap, "Setup world map"); 
                 yield return new WaitForSeconds(1f);
         Perform_SetupWorldMap(config, mapResolution);
 
+        // 지형을 텍스처 레이어로 색칠
         if(reportStatusFn != null) reportStatusFn.Invoke(EGenerationStage.TerrainPainting, "Painting the terrain");
         yield return new WaitForSeconds(1f);
 
@@ -163,7 +169,7 @@ public class ProcGenManager : MonoBehaviour
     {
         BiomeTextureToTerrainLayerIndex.Clear();
 
-        // build up list of all textures
+        // 모든 바이옴의 텍스처 페인터로부터 텍스처 리스트 가져오기
         List<TextureConfig> allTextures = new List<TextureConfig>();
         foreach (var biomeMetadata in config.Biomes)
         {
@@ -175,9 +181,9 @@ public class ProcGenManager : MonoBehaviour
             allTextures.AddRange(biomeTextures);
         }
 
+        // 후처리 텍스처 페인터로부터 텍스터 리스트 가져오기
         if (config.PaintingPostProcessingModifier != null)
         {
-            // extract all textures from every painter
             BaseTexturePainter[] allPainters = config.PaintingPostProcessingModifier.GetComponents<BaseTexturePainter>();
             foreach (var painter in allPainters)
             {
@@ -190,10 +196,10 @@ public class ProcGenManager : MonoBehaviour
             }
         }
 
-        // filter out any duplicate entries
+        // 중복 제거
         allTextures = allTextures.Distinct().ToList();
 
-        // iterate over the texture configs
+        // 가져온 텍스처들을 dictionary에 index와 같이 설정
         int layerIndex = 0;
         foreach(var textureConfig in allTextures)
         {
@@ -206,7 +212,7 @@ public class ProcGenManager : MonoBehaviour
     {
         BiomeTerrainDetailToDetailLayerIndex.Clear();
 
-        // build up list of all terrain details
+        // 모든 바이옴의 디테일 페인터로부터 디테일 리스트 가져오기
         List<TerrainDetailConfig> allTerrainDetails = new List<TerrainDetailConfig>();
         foreach (var biomeMetadata in config.Biomes)
         {
@@ -218,9 +224,9 @@ public class ProcGenManager : MonoBehaviour
             allTerrainDetails.AddRange(biomeTerrainDetails);
         }
 
+        // 후처리 디테일 페인터로부터 디테일 리스트 가져오기
         if (config.DetailPaintingPostProcessingModifier != null)
         {
-            // extract all terrain details from every painter
             BaseDetailPainter[] allPainters = config.DetailPaintingPostProcessingModifier.GetComponents<BaseDetailPainter>();
             foreach (var painter in allPainters)
             {
@@ -233,10 +239,10 @@ public class ProcGenManager : MonoBehaviour
             }
         }
 
-        // filter out any duplicate entries
+        // 중복 제거
         allTerrainDetails = allTerrainDetails.Distinct().ToList();
 
-        // iterate over the terrain detail configs
+        // 가져온 디테일을 dictionaty에 index와 같이 설정
         int layerIndex = 0;
         foreach (var terrainDetail in allTerrainDetails)
         {
@@ -383,11 +389,11 @@ public class ProcGenManager : MonoBehaviour
 
     void Perform_BiomeGeneration(int mapResolution)
     {
-        // allocate the biome map and strength map
+        // 바이옴 맵, 바이옴 강세 맵 할당
         BiomeMap = new byte[mapResolution, mapResolution];
         BiomeStrengths = new float[mapResolution, mapResolution];
 
-        // execute any initial height modifiers
+        // 바이옴 생성기 실행
         if(config.BiomeGenerators != null)
         {
             BaseBiomeMapGenerator[] generators = config.BiomeGenerators.GetComponents<BaseBiomeMapGenerator>();
@@ -402,7 +408,7 @@ public class ProcGenManager : MonoBehaviour
     {
         float[,] heightMap = targetTerrain.terrainData.GetHeights(0, 0, mapResolution, mapResolution);
 
-        // execute any initial height modifiers
+        // 높이맵 선처리 작업
         if(config.InitialHeightModifier != null)
         {
             BaseHeightMapModifier[] modifiers = config.InitialHeightModifier.GetComponents<BaseHeightMapModifier>();
@@ -413,7 +419,7 @@ public class ProcGenManager : MonoBehaviour
             }
         }
 
-        // run heightmap generation for each biome
+        // 바이옴마다 설정되어있는 높이맵 수정자 실행
         for (int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
         {
             var biome = config.Biomes[biomeIndex].Biome;
@@ -430,7 +436,7 @@ public class ProcGenManager : MonoBehaviour
             }
         }
 
-        // execute any post processing height modifiers
+        // 높이맵 후처리 작업
         if (config.HeightPostProcessingModifier != null)
         {
             BaseHeightMapModifier[] modifiers = config.HeightPostProcessingModifier.GetComponents<BaseHeightMapModifier>();
@@ -441,9 +447,10 @@ public class ProcGenManager : MonoBehaviour
             }
         }
 
+        // 지형에 높이맵 설정
         targetTerrain.terrainData.SetHeights(0, 0, heightMap);
 
-        // generate the slope map
+        // 기울기 맵 설정
         SlopeMap = new float[alphaMapResolution, alphaMapResolution];
         for (int y = 0; y < alphaMapResolution; y++)
         {
@@ -465,11 +472,12 @@ public class ProcGenManager : MonoBehaviour
 
     void Perform_TerrainPainting(int mapResolution, int alphaMapResolution)
     {
+        // 높이맵, 알파맵 캐싱
         float[,] heightMap = targetTerrain.terrainData.GetHeights(0, 0, mapResolution, mapResolution);
         float[,,] alphaMaps =  targetTerrain.terrainData.GetAlphamaps(0, 0, alphaMapResolution, alphaMapResolution);
 
 
-        // zero out all layers
+        // 알파맵 초기화
         for (int y = 0; y < alphaMapResolution; y++)
         {
             for (int x = 0; x < alphaMapResolution; x++)
@@ -481,7 +489,7 @@ public class ProcGenManager : MonoBehaviour
             }
         }
 
-        // run terrain painting for each biome
+        // 바이옴마다 지형 페인터 실행
         for (int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
         {
             var biome = config.Biomes[biomeIndex].Biome;
@@ -498,7 +506,7 @@ public class ProcGenManager : MonoBehaviour
             }
         }
 
-        // run texture post processing 
+        // 후처리 페인터 작업
         if(config.PaintingPostProcessingModifier != null)
         {
             BaseTexturePainter[] modifiers = config.PaintingPostProcessingModifier.GetComponents<BaseTexturePainter>();
@@ -508,23 +516,23 @@ public class ProcGenManager : MonoBehaviour
                 modifier.Execute(this, mapResolution, heightMap, targetTerrain.terrainData.heightmapScale, SlopeMap, alphaMaps, alphaMapResolution);
             }
         }
-        
 
-
-
+        // 지형 알파맵 설정
         targetTerrain.terrainData.SetAlphamaps(0, 0, alphaMaps);
     } // Perform_TerrainPainting
 
     void Perform_ObjectPlacement(int mapResolution, int alphaMapResolution)
     {
+        // 디버깅 변수로 해당 함수의 실행여부 결정
         if(DEBUG_TurnOffObjectPlacers)
             return;
 
+        // 높이맵, 알파맵 캐싱
         float[,] heightMap = targetTerrain.terrainData.GetHeights(0, 0, mapResolution, mapResolution);
         float[,,] alphaMaps = targetTerrain.terrainData.GetAlphamaps(0, 0, alphaMapResolution, alphaMapResolution);
 
 
-        // run object placement for each biome
+        // 바이옴마다 오브젝트 배치자 실행
         for (int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
         {
             var biome = config.Biomes[biomeIndex].Biome;
@@ -543,11 +551,13 @@ public class ProcGenManager : MonoBehaviour
 
     void Perform_NavMeshBaking()
     {
+        // 디버깅 변수로 해당 함수의 실행여부 결정
         if(DEBUG_TurnOffBakeNavMeshes)
             return;
             
         Debug.Log("NavMesh Bake");
         
+        // 모든 지정된 네비메쉬 베이크
         for(int i = 0; i < navMeshSurfaces.Length; i++)
         {
             navMeshSurfaces[i].BuildNavMesh();
@@ -631,18 +641,21 @@ public class ProcGenManager : MonoBehaviour
         Color heightColor_HighMountain = Color.white;
         Color heightColor_Water = Color.cyan;
 
-        // save out the biome map
+        // 바이옴 맵 텍스쳐 할당
         Texture2D biomeMapTexture = new Texture2D(mapResolution, mapResolution, TextureFormat.RGB24, false);
         for (int y = 0; y < mapResolution; y++)
         {
             for (int x = 0; x < mapResolution; x++)
             {
+                // 바이옴맵 기반으로 바이옴의 맵 컬러값을 가져옴
                 Color workingColor = config.Biomes[(int)BiomeMap[x, y]].Biome.mapColor;
+                // 높이맵으로 높이값을 계산하여 특정 높이는 다른 색으로 설정
                 if(heightMap[x,y] * heightMapScale.y >= 110f)
                     workingColor = heightColor_HighMountain;
                 else if(heightMap[x,y] * heightMapScale.y <= 15f)
                     workingColor = heightColor_Water;
 
+                // 탐색 좌표에 색 설정
                 biomeMapTexture.SetPixel(y, x, workingColor);
             }
         }
@@ -654,26 +667,32 @@ public class ProcGenManager : MonoBehaviour
 #endif  // UNITY_EDITOR
     }
 
+    // 보스성 검증 불리언 함수
     bool IsValidHeightModifying()
     {
         bool bIsSuccessed = true;
 #if UNITY_EDITOR
         if(Application.isPlaying)
         {
+            // 보스성을 찾고
             GameObject bossCastle = gameObject.FindChildObj("BossCastle(Clone)");
+            // 없는 경우
             if(bossCastle == default)
             {
                 Debug.Log("Can't found Boss Castle");
                 bIsSuccessed = false;
             }
             else
+            {
+                // 있는 경우
                 Debug.Log("find Boss Castle");
+            }    
         }
         else
         {
             /* To do? */
         } 
-#else
+#else  
         GameObject bossCastle = gameObject.FindChildObj("BossCastle(Clone)");
         if(bossCastle == default)
         {

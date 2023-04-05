@@ -90,7 +90,6 @@ public class CombineMeshes : MonoBehaviour
 
         foreach (MeshFilter meshFilter in meshFilters)
         {
-            //DestroyImmediate(meshFilter.gameObject);
             Destroy(meshFilter.gameObject, 0.1f);
         }
 

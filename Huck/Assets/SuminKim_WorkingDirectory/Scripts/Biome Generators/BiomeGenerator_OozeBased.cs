@@ -13,6 +13,7 @@ public class BiomeGenerator_OozeBased : BaseBiomeMapGenerator
         Size_1024x1024 = 1024,
     }
 
+    // 시드 포인트 밀도
     [Range(0f, 1.0f)]
     public float BiomeSeedPointDensity = 0.1f;
 
@@ -40,30 +41,33 @@ public class BiomeGenerator_OozeBased : BaseBiomeMapGenerator
         float totalBiomeWeighting = config.TotalWeighting;
         for(int biomeIndex = 0; biomeIndex < config.NumBiomes; biomeIndex++)
         {
+            // 바이옴 별 가중치에 따라 시드포인트 나누기
             int numEntries = Mathf.RoundToInt(numSeedPoints * config.Biomes[biomeIndex].Weighting / totalBiomeWeighting);
 
             for(int entryIndex = 0; entryIndex < numEntries; ++entryIndex)
             {
+                // 계산된 바이옴 시드포인트의 갯수만큼 Add
                 biomeToSpawn.Add((byte)biomeIndex);
             }
         }
 
-        // spawn the individual biomes
+        // 각각의 바이옴 스폰
         while(biomeToSpawn.Count > 0)
         {
-            // pick a random seed point
+            // 시드 포인트 랜덤으로 뽑기
             int seedPointIndex = Random.Range(0, biomeToSpawn.Count);
 
-            // extract the biome index
+            // 뽑은 바이옴의 인덱스 변수
             byte biomeIndex = biomeToSpawn[seedPointIndex];
 
-            // remove seed point
+            // 리스트에서 제거
             biomeToSpawn.RemoveAt(seedPointIndex);
 
+            // 바이옴 스폰
             Perform_SpawnIndividualBiome(config, biomeIndex, mapResolution);
         }
 #if UNITY_EDITOR
-        // save out the biome map
+        // 바이옴 맵 저장
         Texture2D biomeMapTexture = new Texture2D(mapResolution, mapResolution, TextureFormat.RGB24, false);
         for(int y = 0; y < mapResolution; y++)
         {
@@ -79,56 +83,19 @@ public class BiomeGenerator_OozeBased : BaseBiomeMapGenerator
 #endif  // UNITY_EDITOR
     }
 
-    byte CalculateHighResBiomeIndex(int lowResMapSize, int lowResX, int lowResY, float fractionX, float fractionY)
-    {
-        float A = BiomeMap_LowResolution[lowResX,     lowResY];
-        float B = (lowResX + 1) < lowResMapSize ? BiomeMap_LowResolution[lowResX + 1, lowResY] : A;
-        float C = (lowResY + 1) < lowResMapSize ? BiomeMap_LowResolution[lowResX,     lowResY + 1] : A;
-        float D = 0;
-        if ((lowResX + 1) >= lowResMapSize)
-            D = C;
-        else if ((lowResY + 1) >= lowResMapSize)
-            D = B;
-        else
-            D = BiomeMap_LowResolution[lowResX + 1, lowResY + 1];
-
-        // perform bilinear filtering
-        float filteredindex =   A * (1 - fractionX) * (1 - fractionY) + B * fractionX * (1 - fractionY) * 
-                        C * fractionY * (1 - fractionX) + D * fractionX * fractionY;
-
-        // build an array of the possible biomes based on the values used to interpolate
-        float[] candidateBiome = new float[] { A, B, C, D };
-
-        // find the neighbouring biome closest to the interpolated biome
-        float bestBiome = -1f;
-        float bestDelta = float.MaxValue;
-
-        for(int biomeIndex = 0; biomeIndex < candidateBiome.Length; biomeIndex++)
-        {
-            float delta = Mathf.Abs(filteredindex - candidateBiome[biomeIndex]);
-
-            if(delta < bestDelta)
-            {
-                bestDelta = delta;
-                bestBiome = candidateBiome[biomeIndex];
-            }
-        }
-
-        return (byte)Mathf.RoundToInt(bestBiome);
-    }
-
+    // 고해상도 바이옴 생성
     void Perform_BiomeGeneration_HighResolution(ProcGenConfigSO config, int lowResMapSize, int highResMapSize, byte[,] biomeMap, float[,] biomeStrengths)
     {
-        // calculate map scale
+        // 맵 스케일 계산
         float mapScale = (float)lowResMapSize / highResMapSize;
 
         // calculate the high res map
-        for(int y = 0; y < highResMapSize; y++)
+        for (int y = 0; y < highResMapSize; y++)
         {
             int lowResY = Mathf.FloorToInt(y * mapScale);
             float yFraction = y * mapScale - lowResY;
 
-            for(int x = 0; x < highResMapSize; x++)
+            for (int x = 0; x < highResMapSize; x++)
             {
                 int lowResX = Mathf.FloorToInt(x * mapScale);
                 float xFraction = x * mapScale - lowResX;
@@ -155,6 +122,48 @@ public class BiomeGenerator_OozeBased : BaseBiomeMapGenerator
         System.IO.File.WriteAllBytes("BiomeMap_HighResolution.png", biomeMapTexture.EncodeToPNG());
 #endif  // UNITY_EDITOR
     }
+
+    // 저해상도 바이옴 맵을 고해상도 바이옴 맵으로 스케일링
+    byte CalculateHighResBiomeIndex(int lowResMapSize, int lowResX, int lowResY, float fractionX, float fractionY)
+    {
+        float A = BiomeMap_LowResolution[lowResX,     lowResY];
+        float B = (lowResX + 1) < lowResMapSize ? BiomeMap_LowResolution[lowResX + 1, lowResY] : A;
+        float C = (lowResY + 1) < lowResMapSize ? BiomeMap_LowResolution[lowResX,     lowResY + 1] : A;
+        float D = 0;
+
+        if ((lowResX + 1) >= lowResMapSize)
+            D = C;
+        else if ((lowResY + 1) >= lowResMapSize)
+            D = B;
+        else
+            D = BiomeMap_LowResolution[lowResX + 1, lowResY + 1];
+
+        // 이중 선형 보간 수행
+        float filteredindex =   A * (1 - fractionX) * (1 - fractionY) + B * fractionX * (1 - fractionY) * 
+                        C * fractionY * (1 - fractionX) + D * fractionX * fractionY;
+
+        // 보간에 사용된 값을 기반으로 가능한 바이옴 배열을 생성
+        float[] candidateBiome = new float[] { A, B, C, D };
+
+        // 보간된 바이옴에 가장 가까운 이웃 바이옴 탐색
+        float bestBiome = -1f;
+        float bestDelta = float.MaxValue;
+
+        for(int biomeIndex = 0; biomeIndex < candidateBiome.Length; biomeIndex++)
+        {
+            float delta = Mathf.Abs(filteredindex - candidateBiome[biomeIndex]);
+
+            if(delta < bestDelta)
+            {
+                bestDelta = delta;
+                bestBiome = candidateBiome[biomeIndex];
+            }
+        }
+
+        return (byte)Mathf.RoundToInt(bestBiome);
+    }
+    
+    // 8방향 탐색을 위한 방향배열
     Vector2Int[] NeighbourOffsets = new Vector2Int[]
     {
         new Vector2Int(0, 1),
@@ -170,63 +179,66 @@ public class BiomeGenerator_OozeBased : BaseBiomeMapGenerator
 
     void Perform_SpawnIndividualBiome(ProcGenConfigSO config, byte biomeIndex, int mapResolution)
     {
-        // cache biome config
+        // 바이옴 설정 캐싱
         BiomeConfigSO biomeConfig = config.Biomes[biomeIndex].Biome;
 
-        // pick spawn location
+        // 맵 해상도 범위 내에서 랜덤으로 스폰 위치 결정
         Vector2Int spawnLocation = new Vector2Int(Random.Range(0, mapResolution), Random.Range(0, mapResolution));
 
-        //pick the starting intensity
+        // 바이옴 설정에따라 시작 강도를 범위 내 랜덤으로 지정
         float startIntensity = Random.Range(biomeConfig.MinIntensity, biomeConfig.MaxIntensity);
 
-        // setup working list
+        // 워킹리스트 설정
         Queue<Vector2Int> workingList = new Queue<Vector2Int>();
         workingList.Enqueue(spawnLocation);
 
-        // setup the visit map and target intensity map
+        // 방문맵, 목표강도 맵 설정
         bool[,] visited = new bool[mapResolution, mapResolution];
         float[,] targetIntensity = new float[mapResolution, mapResolution];
 
-        // set the starting intensity
+        // 시작 강도 설정
         targetIntensity[spawnLocation.x, spawnLocation.y] = startIntensity;
 
-        // let the oozing begin
+        // Ooze 시작
         while(workingList.Count > 0) 
         {
             Vector2Int workingLocation = workingList.Dequeue();
 
-            // set the biome
+            // 바이옴 맵에 바이옴 설정
             BiomeMap_LowResolution[workingLocation.x, workingLocation.y] = biomeIndex;
             visited[workingLocation.x, workingLocation.y] = true;
+            // 강세 맵에 강세 설정
             BiomeStrengths_LowResolution[workingLocation.x, workingLocation.y] = targetIntensity[workingLocation.x, workingLocation.y];
 
-            // traverse neighbours
+            // 8방향 탐색 
             for(int neighbourIndex = 0; neighbourIndex < NeighbourOffsets.Length; neighbourIndex++)
             {
                 Vector2Int neighbourLocation = workingLocation + NeighbourOffsets[neighbourIndex];
 
-                // skip if invalid
+                // 범위 외 위치
                 if (neighbourLocation.x < 0 || neighbourLocation.y < 0 || neighbourLocation.x >= mapResolution || neighbourLocation.y >= mapResolution)
                     continue;
-                // skip if visited
+
+                // 이미 방문한 위치
                 if (visited[neighbourLocation.x, neighbourLocation.y])
                     continue;
 
-                // flag as visited
+                // 방문 표시
                 visited[neighbourLocation.x, neighbourLocation.y] = true;
 
-                // work out and store neighbour strength
+                // 감쇠치 계산
                 float decayAmount = Random.Range(biomeConfig.MinDecayRate, biomeConfig.MaxDecayRate) * NeighbourOffsets[neighbourIndex].magnitude;
+                // 탐색 위치 강세 계산
                 float neighbourStrength = targetIntensity[workingLocation.x, workingLocation.y] - decayAmount;
+                // 강세 맵에 대입
                 targetIntensity[neighbourLocation.x, neighbourLocation.y] = neighbourStrength;
 
-
-                // if the strength is too low - stop
-                if(neighbourStrength <= 0)
+                // 강세가 0이하일 경우 퍼지는것을 멈춤
+                if (neighbourStrength <= 0)
                 {
                     continue;
                 }
-
+                // 워킹 리스트에 푸쉬
                 workingList.Enqueue(neighbourLocation);
             }
         }
