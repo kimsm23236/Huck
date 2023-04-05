@@ -115,33 +115,9 @@ public class SkeletonKing : Monster
     public override void Skill()
     {
         mController.transform.LookAt(mController.targetSearch.hit.transform.position);
-        // 스킬A 소환스킬 조건 : 체력이 50%이하일 때만 사용가능
-        if (useSkillA == true && monsterHp <= monsterMaxHp * 0.5f)
-        {
-            useSkillA = false;
-            CheckUseSkill();
-            SkillA();
-            return;
-        }
-        else if (useSkillA == true && monsterHp > monsterMaxHp * 0.5f)
-        {
-            useSkillA = false;
-            CheckUseSkill();
-            StartCoroutine(CheckUseSkillA());
-            // 체력이 절반 초과면 사용X Idle상태로 초기화
-            IMonsterState nextState = new MonsterIdle();
-            mController.MStateMachine.onChangeState?.Invoke(nextState);
-            mController.isDelay = false;
-            return;
-        }
+        
 
-        if (useSkillD == true)
-        {
-            useSkillD = false;
-            SkillD();
-            CheckUseSkill();
-            return;
-        }
+        
 
         if (useSkillB == true && mController.distance >= 13f)
         {
@@ -169,6 +145,35 @@ public class SkeletonKing : Monster
             SkillC();
             return;
         }
+
+        if (useSkillD == true)
+        {
+            useSkillD = false;
+            SkillD();
+            CheckUseSkill();
+            return;
+        }
+
+        // 스킬A 소환스킬 조건 : 체력이 50%이하일 때만 사용가능
+        if (useSkillA == true && monsterHp <= monsterMaxHp * 0.5f)
+        {
+            useSkillA = false;
+            CheckUseSkill();
+            SkillA();
+            return;
+        }
+        else if (useSkillA == true && monsterHp > monsterMaxHp * 0.5f)
+        {
+            useSkillA = false;
+            CheckUseSkill();
+            StartCoroutine(CheckUseSkillA());
+            // 체력이 절반 초과면 사용X Idle상태로 초기화
+            IMonsterState nextState = new MonsterIdle();
+            mController.MStateMachine.onChangeState?.Invoke(nextState);
+            mController.isDelay = false;
+            return;
+        }
+
     } // Skill
 
     //! 사용가능한 스킬이 있는지 체크하는 함수 (몬스터컨트롤러에서 상태진입 체크하기 위함)
@@ -231,6 +236,10 @@ public class SkeletonKing : Monster
         float maxTime = 1.5f / mController.monsterAni.speed;
         while (time < maxTime)
         {
+            if(mController.isDead == true)
+            {
+                yield break;
+            }
             time += Time.deltaTime;
             mController.mAgent.Move(mController.transform.forward * moveSpeed * 0.5f * Time.deltaTime);
             yield return null;
@@ -241,7 +250,7 @@ public class SkeletonKing : Monster
     private void Skill_Damage(Vector3 _Pos, float _radius, float _damageMultiplier)
     {
         damageMessage.damageAmount = Mathf.FloorToInt(defaultDamage * _damageMultiplier);
-        RaycastHit[] hits = Physics.SphereCastAll(_Pos, _radius, Vector3.up, 0f, LayerMask.GetMask(GData.PLAYER_MASK, GData.BUILD_MASK));
+        RaycastHit[] hits = Physics.SphereCastAll(_Pos, _radius, Vector3.up, 0f, LayerMask.GetMask(GData.PLAYER_MASK, GData.BUILD_MASK, GData.WALL_MASK));
         if (hits.Length > 0)
         {
             foreach (var _hit in hits)
@@ -268,6 +277,7 @@ public class SkeletonKing : Monster
     private IEnumerator Dead()
     {
         GameManager.Instance.bgmAudio.Stop();
+        mController.mAgent.ResetPath();
         mController.monsterAni.speed = 1f;
         mController.monsterAni.SetBool("isDead", true);
         mController.monsterAudio.clip = deadClip;
@@ -301,6 +311,7 @@ public class SkeletonKing : Monster
                 // endTime 까지 Hp를 MaxHp까지 회복
                 float _hp = Mathf.Lerp(0f, monsterMaxHp, reviveTime);
                 monsterHp = (int)_hp;
+                mController.hpBar.InitHpBar(monsterHp);
                 // endTime 까지 scale을 1에서 1.5까지 늘림
                 mController.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * 1.5f, reviveTime);
                 yield return null;
@@ -328,6 +339,7 @@ public class SkeletonKing : Monster
                 yield return null;
             }
             GameManager.Instance.isExistenceBoss = false;
+            GameManager.Instance.StartEnding();
             Destroy(mController.gameObject);
         }
     } // Dead
@@ -406,6 +418,10 @@ public class SkeletonKing : Monster
         }
         while (time < mController.monsterAni.GetCurrentAnimatorStateInfo(0).length - waitTime)
         {
+            if (mController.isDead == true)
+            {
+                yield break;
+            }
             time += Time.deltaTime;
             mController.mAgent.Move(mController.transform.forward * speed * Time.deltaTime);
             yield return null;

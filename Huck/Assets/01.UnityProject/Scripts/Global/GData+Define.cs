@@ -16,6 +16,7 @@ public static partial class GData
     public const string GATHER_MASK = "Gather";
     public const string TERRAIN_MASK = "Terrain";
     public const string FLOOR_MASK = "Floor";
+    public const string WALL_MASK = "Wall";
     public const string ANIMAL_MASK = "Animal";
 
     public const string POSTPROCESS_ON_LOADING = "PostProcessObject";

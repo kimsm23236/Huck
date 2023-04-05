@@ -53,6 +53,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0
+    isNavAgent: 0
     weighting: 0.2
     prefabs:
     - {fileID: 5664719250160204779, guid: 51c89bb70db333447b1c9d24dd60e634, type: 3}
@@ -62,6 +63,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0
+    isNavAgent: 0
     weighting: 0.2
     prefabs:
     - {fileID: 5664719250160204779, guid: b4b19ea6c152fc841abcefd47cde9ca2, type: 3}
@@ -71,6 +73,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0
+    isNavAgent: 0
     weighting: 0.2
     prefabs:
     - {fileID: 5664719250160204779, guid: 6fe1e1c9a51ee774d933ba87287d478d, type: 3}
@@ -97,6 +100,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 1
+    isNavAgent: 0
     weighting: 0.4
     prefabs:
     - {fileID: 525703396560854713, guid: 9eda4a225becfde489916bee761c89f3, type: 3}
@@ -111,6 +115,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 1
+    isNavAgent: 0
     weighting: 0.4
     prefabs:
     - {fileID: 525703396560854713, guid: c7c463e45c64fdb48bbb457996d9a9c7, type: 3}
@@ -125,11 +130,12 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0
+    isNavAgent: 0
     weighting: 0.2
     prefabs:
     - {fileID: 7002624996615400611, guid: 188f38621d422ad47b618b406111ca8e, type: 3}
-  targetDensity: 10
-  maxSpawnCount: 500
+  targetDensity: 40
+  maxSpawnCount: 300
   maxInvalidLocationSkips: 10
   maxPositionJitter: 0.1
 --- !u!114 &-3790804668846987140
@@ -151,6 +157,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0
+    isNavAgent: 0
     weighting: 0.5
     prefabs:
     - {fileID: 2071363166586709132, guid: 1e0b8bd3c5e8b30458f54712e78ebadf, type: 3}
@@ -160,6 +167,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0
+    isNavAgent: 0
     weighting: 0.5
     prefabs:
     - {fileID: 254842831832662856, guid: 858507d58f4fc6e4fb97bc6a9862b6d2, type: 3}
@@ -169,6 +177,7 @@ MonoBehaviour:
     canGoInWater: 0
     canGoAboveWater: 1
     isEmbedded: 0
+    isNavAgent: 0
     weighting: 0.5
     prefabs:
     - {fileID: 4705080661020250721, guid: 4f048b8ef6673df46923dde262de8feb, type: 3}

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -4647320068589533504}
   - component: {fileID: -9140704032504034544}
   - component: {fileID: 5874209466628827612}
+  - component: {fileID: 459171705650530867}
   m_Layer: 0
   m_Name: ObjectPlacer_GrassyPlains
   m_TagString: Untagged
@@ -177,8 +178,8 @@ MonoBehaviour:
     weighting: 0.2
     prefabs:
     - {fileID: 7002624996615400611, guid: 188f38621d422ad47b618b406111ca8e, type: 3}
-  targetDensity: 30
-  maxSpawnCount: 500
+  targetDensity: 50
+  maxSpawnCount: 1000
   maxInvalidLocationSkips: 10
   maxPositionJitter: 0.1
 --- !u!114 &-9140704032504034544
@@ -233,5 +234,32 @@ MonoBehaviour:
     - {fileID: 8456342960129311167, guid: 4bc45a4444fc76043a9600ebf6fbb32e, type: 3}
   targetDensity: 50
   maxSpawnCount: 20
+  maxInvalidLocationSkips: 10
+  maxPositionJitter: 0.1
+--- !u!114 &459171705650530867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6337709003599619391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f680043b18ec39458474f40e07363f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - hasHeightLimits: 0
+    minHeightToSpawn: 0
+    maxHeightToSpawn: 0
+    canGoInWater: 0
+    canGoAboveWater: 1
+    isEmbedded: 0
+    isNavAgent: 0
+    weighting: 1
+    prefabs:
+    - {fileID: 7002624996615400611, guid: 188f38621d422ad47b618b406111ca8e, type: 3}
+  targetDensity: 60
+  maxSpawnCount: 800
   maxInvalidLocationSkips: 10
   maxPositionJitter: 0.1

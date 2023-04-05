@@ -38,6 +38,7 @@ public class LoadingManager : Singleton<LoadingManager>
     public GameObject loadingCanvas = default;
     public GameObject loadingScreen = default;
     public TMP_Text loadingText = default;
+    public TMP_Text endingText = default;
     [SerializeField]
     private ProcGenManager procGenManager = default;
     private Animator loadingScreenAnim = default;
@@ -104,9 +105,38 @@ public class LoadingManager : Singleton<LoadingManager>
         
     }
 
+    public void EndingStart()
+    {
+        StartCoroutine(EndingScreen());
+    }
+
+    IEnumerator EndingScreen()
+    {
+        loadingCanvas.SetActive(true);
+        loadingText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(5f);
+        LoadingScreenFadeInPlay();
+        endingText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(10f);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(GData.SCENENAME_TITLE);
+
+        while(!operation.isDone)
+        {
+            yield return null;
+        }
+
+        GameManager.Instance.bgmAudio.Stop();
+        loadingCanvas.SetActive(false);
+    }
+
     public void LoadingScreenFadeOutPlay()
     {
         loadingScreenAnim.SetBool("isFadeOut", true);
         onFinishLoading();
+    }
+    public void LoadingScreenFadeInPlay()
+    {
+        loadingScreenAnim.SetBool("isFadeIn", true);
     }
 }

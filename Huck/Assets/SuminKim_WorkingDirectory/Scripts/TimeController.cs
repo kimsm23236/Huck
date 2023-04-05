@@ -57,6 +57,10 @@ public class TimeController : MonoBehaviour
     private bool isNowDayTime;
     private bool isNowNight;
 
+    public Color skyboxColor = default;
+    public bool isSetSkyboxColor = false;
+    private Color defaultSkyboxColor = default;
+
     public delegate void EventHandler();
     public EventHandler onStartDaytime;
     public EventHandler onStartNight;
@@ -64,8 +68,8 @@ public class TimeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        onStartDaytime = new EventHandler(() => Debug.Log("³· ÁøÀÔ"));
-        onStartNight = new EventHandler(() => Debug.Log("¹ã ÁøÀÔ"));
+        onStartDaytime = new EventHandler(() => Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"));
+        onStartNight = new EventHandler(() => Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"));
         onStartNight += GameManager.Instance.SpawnMonster;
 
         timeMultiplier = defaultTimeMultiplier;
@@ -89,6 +93,8 @@ public class TimeController : MonoBehaviour
         }
         isNowNight = !isNowDayTime;
 
+        defaultSkyboxColor = RenderSettings.skybox.GetColor("_SkyTint");
+
     }
 
     // Update is called once per frame
@@ -98,7 +104,6 @@ public class TimeController : MonoBehaviour
         RotateSun();
         UpdateLightSettings();
         Cheat_ChangeTimeMultiplier();
-        // TransitionCheck();
     }
 
     private void UpdateTimeOfDay()
@@ -114,14 +119,14 @@ public class TimeController : MonoBehaviour
 
     private void EnterDaytimeCheck(int curHour)
     {
-        // ³·ÀÌ¸é Á¾·á
+        // ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (isNowDayTime)
             return;
 
-        // ÇöÀç ½Ã°£ÀÌ ÀÏÃâ ½Ã°£ÀÌ µÇ¾úÀ» ¶§ ½ÇÇà
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (curHour >= sunriseHour && curHour < sunsetHour)
         {
-            // ³· ½Ã°£ ÁøÀÔ ÇÁ·Î¼¼½º ½ÇÇà
+            // ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             onStartDaytime();
 
             isNowDayTime = true;
@@ -130,14 +135,14 @@ public class TimeController : MonoBehaviour
     }
     private void EnterNightCheck(int curHour)
     {
-        // ¹ãÀÌ¸é Á¾·á
+        // ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (isNowNight)
             return;
 
-        // ÇöÀç ½Ã°£ÀÌ ÀÏ¸ô ½Ã°£ÀÌ µÇ¾úÀ» ¶§ ½ÇÇà
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (curHour >= sunsetHour)
         {
-            // ¹ã ½Ã°£ ÁøÀÔ ÇÁ·Î¼¼½º ½ÇÇà
+            // ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             onStartNight();
 
             isNowDayTime = false;
@@ -152,7 +157,7 @@ public class TimeController : MonoBehaviour
 
         if (currentTime.TimeOfDay > sunriseTime && currentTime.TimeOfDay < sunsetTime)
         {
-            // ³· ½Ã°£ Ã³¸®
+            // ï¿½ï¿½ ï¿½Ã°ï¿½ Ã³ï¿½ï¿½
             TimeSpan sunriseToSunsetDuration = CalculateTimeDifference(sunriseTime, sunsetTime);
             TimeSpan timeSinceSunrise = CalculateTimeDifference(sunriseTime, currentTime.TimeOfDay);
 
@@ -163,7 +168,7 @@ public class TimeController : MonoBehaviour
         }
         else
         {
-            // ¹ã ½Ã°£ Ã³¸®
+            // ï¿½ï¿½ ï¿½Ã°ï¿½ Ã³ï¿½ï¿½
             TimeSpan sunsetToSunriseDuration = CalculateTimeDifference(sunsetTime, sunriseTime);
             TimeSpan timeSinceSunset = CalculateTimeDifference(sunsetTime, currentTime.TimeOfDay);
 
@@ -197,7 +202,7 @@ public class TimeController : MonoBehaviour
         return diffTime;
     }
 
-    // º¸½ºÀü Àü¿ë
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     public void SetTime_Boss(int hour)
     {
@@ -206,7 +211,7 @@ public class TimeController : MonoBehaviour
     }
 
     #region Debugging Cheat
-    // µð¹ö±ë¿ë Ä¡Æ® ¸â¹ö
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¡Æ® ï¿½ï¿½ï¿½
 
     private int multiplierIndex = 0;
     private float[] cheatTimeMultipliers = { 2000, 3500, 5000 };
@@ -239,13 +244,13 @@ public class TimeController : MonoBehaviour
 
         if(currentTime.Hour == sunriseHour - 1f)
         {
-            Debug.Log($"³·À¸·Î");
+            Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             isPlayingTransition = true;
             StartCoroutine(TransitionSkybox(false));
         }
         else if(currentTime.Hour == sunsetHour - 1f)
         {
-            Debug.Log($"¹ãÀ¸·Î");
+            Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             isPlayingTransition = true;
             StartCoroutine(TransitionSkybox(true));
         }

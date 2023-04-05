@@ -146,4 +146,9 @@ public class GameManager : Singleton<GameManager>
         bgmAudio.clip = bossBgmSound;
         bgmAudio.Play();
     } // StartBGM
+
+    public void StartEnding()
+    {
+        LoadingManager.Instance.EndingStart();
+    }
 }
