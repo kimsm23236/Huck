@@ -79,13 +79,16 @@ public class CraftInven : InventoryArray
                 ControlMouse();
                 if (PlayerOther.isStoveOpen)
                 {
-                    if (beginDragSlot == upSlots[0] || beginDragSlot == upSlots[1] || beginDragSlot == upSlots[1])
+                    if (beginDragSlot != null)
                     {
-                        upSlots[0].transform.parent.SetAsLastSibling();
-                    }
-                    else
-                    {
+                        if (beginDragSlot == upSlots[0] || beginDragSlot == upSlots[1] || beginDragSlot == upSlots[1])
+                        {
+                            upSlots[0].transform.parent.SetAsLastSibling();
+                        }
+                        else
+                        {
                         upSlots[0].transform.parent.SetSiblingIndex(1);
+                        }
                     }
                 }
                 break;
