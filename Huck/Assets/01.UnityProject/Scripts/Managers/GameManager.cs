@@ -27,6 +27,9 @@ public class GameManager : Singleton<GameManager>
     public AudioClip bgmSound = default;
     public AudioClip bossBgmSound = default;
     //
+    public delegate void EventHandler();
+    public EventHandler onPlayerDead;
+    //
 
     //! { [KKS] 몬스터 스폰관련 변수
     [Header("스폰할 몬스터 Prefab")]
@@ -48,6 +51,7 @@ public class GameManager : Singleton<GameManager>
         procGenManager = GFunc.GetRootObj("ProcGenManager");
         IsMidBossClear = false;
         bgmAudio = GetComponent<AudioSource>();
+        onPlayerDead = new EventHandler(() => Debug.Log("Player Dead"));
     }
     //! { [KKS] 몬스터 소환 함수
     public void SpawnMonster()

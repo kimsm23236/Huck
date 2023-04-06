@@ -31,7 +31,7 @@ public class PlayerStat : MonoBehaviour, IDamageable
         curHungry = maxHungry;
         curEnergy = maxEnergy;
 
-        onPlayerDead = new EventHandler(() => Debug.Log("Player Dead"));
+        onPlayerDead = new EventHandler(() => Debug.Log("Player stat : Player Dead"));
     }
 
     private void Update()
@@ -159,6 +159,7 @@ public class PlayerStat : MonoBehaviour, IDamageable
     private void Die()
     {
         UIManager.Instance.Dead.SetActive(true);
+        GameManager.Instance.onPlayerDead();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }

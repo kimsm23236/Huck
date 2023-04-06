@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -43,6 +44,7 @@ public class SkeletonKing : Monster
         skillB_Prefab = Resources.Load("Prefabs/Monster/MonsterEffect/Skeleton_King_Effect/LeapEffect") as GameObject;
         skillC_Prefab = Resources.Load("Prefabs/Monster/MonsterEffect/Skeleton_King_Effect/Thunder") as GameObject;
         CheckUseSkill();
+        GameManager.Instance.onPlayerDead += OffBossHpBar;
     } // Awake
 
     //! 해골왕 공격 오버라이드
@@ -547,9 +549,6 @@ public class SkeletonKing : Monster
     //! 스킬B (도약 공격) 코루틴함수
     private IEnumerator UseSkillB()
     {
-        mController.monsterAni.SetTrigger("isRoar");
-        yield return new WaitForSeconds(0.1f);
-        yield return new WaitForSeconds(mController.monsterAni.GetCurrentAnimatorStateInfo(0).length);
         StartCoroutine(SkillBCooldown());
         mController.monsterAni.SetBool("isSkillB", true);
         float waitTime = default;
@@ -874,4 +873,12 @@ public class SkeletonKing : Monster
     } // WeaponSound
     #endregion // 사운드 모음
     //! } 해골왕 항목별 region 모음
+
+    public void OffBossHpBar()
+    {
+        if (monsterType == Monster.MonsterType.BOSS)
+        {
+            mController.hpBar.gameObject.SetActive(false);
+        }
+    } // OffBossHpBar
 } // SkeletonKing
